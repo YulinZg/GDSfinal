@@ -16,7 +16,7 @@ public class RoomGenerator : MonoBehaviour
     public float xOffset;
     public float yOffset;
 
-    private List<GameObject> rooms = new List<GameObject>();
+    private List<Room> rooms = new List<Room>();
 
     private enum Direction {up, down, left, right };
     private Direction direction;
@@ -28,22 +28,13 @@ public class RoomGenerator : MonoBehaviour
     {
         for (int i = 0; i < roomNumber; i++)
         {
-            rooms.Add(Instantiate(roomPerfab, generatoPoint.position, Quaternion.identity));
-            roomPos.Add(generatoPoint.position);
-            ChangePointPos();
+            generateNormalRoom();
         }
 
         rooms[0].GetComponent<SpriteRenderer>().color = startColor;
+        endRoom = rooms[0].gameObject;
 
-        endRoom = rooms[0];
-        foreach (GameObject room in rooms)
-        {
-            if (room.transform.position.sqrMagnitude > endRoom.transform.position.sqrMagnitude)
-            {
-                endRoom = room;
-            }
-        }
-        endRoom.GetComponent<SpriteRenderer>().color = endColor;
+        generateBossRoom();
     }
 
     // Update is called once per frame
@@ -55,6 +46,64 @@ public class RoomGenerator : MonoBehaviour
         }
     }
 
+    public void generateNormalRoom()
+    {
+        rooms.Add(Instantiate(roomPerfab, generatoPoint.position, Quaternion.identity).GetComponent<Room>());
+        roomPos.Add(generatoPoint.position);
+        ChangePointPos();
+    }
+
+    public void generateBossRoom()
+    {
+        foreach (Room room in rooms)
+        {
+            SetupRoom(room, room.transform.position);
+            if (room.roomNumberToStart > endRoom.GetComponent<Room>().roomNumberToStart)
+            {
+                endRoom = room.gameObject;
+            }
+        }
+        if (!endRoom.GetComponent<Room>().roomDown && 
+            !roomPos.Contains(endRoom.transform.position + new Vector3(0, -yOffset, 0) + new Vector3(0, -yOffset, 0)) &&
+            !roomPos.Contains(endRoom.transform.position + new Vector3(0, -yOffset, 0) + new Vector3(-xOffset, 0, 0)) &&
+            !roomPos.Contains(endRoom.transform.position + new Vector3(0, -yOffset, 0) + new Vector3(xOffset, 0, 0)))
+        {
+            endRoom = Instantiate(roomPerfab, endRoom.transform.position + new Vector3(0, -yOffset, 0), Quaternion.identity);
+            Debug.Log(1);
+        }
+        else if (!endRoom.GetComponent<Room>().roomUp &&
+                 !roomPos.Contains(endRoom.transform.position + new Vector3(0, yOffset, 0) + new Vector3(0, yOffset, 0)) &&
+                 !roomPos.Contains(endRoom.transform.position + new Vector3(0, yOffset, 0) + new Vector3(-xOffset, 0, 0)) &&
+                 !roomPos.Contains(endRoom.transform.position + new Vector3(0, yOffset, 0) + new Vector3(xOffset, 0, 0)))
+        {
+            endRoom = Instantiate(roomPerfab, endRoom.transform.position + new Vector3(0, yOffset, 0), Quaternion.identity);
+            Debug.Log(2);
+        }
+        else if (!endRoom.GetComponent<Room>().roomLeft &&
+                 !roomPos.Contains(endRoom.transform.position + new Vector3(-xOffset, 0, 0) + new Vector3(0, yOffset, 0)) &&
+                 !roomPos.Contains(endRoom.transform.position + new Vector3(-xOffset, 0, 0) + new Vector3(-xOffset, 0, 0)) &&
+                 !roomPos.Contains(endRoom.transform.position + new Vector3(-xOffset, 0, 0) + new Vector3(0, -yOffset, 0)))
+        {
+            endRoom = Instantiate(roomPerfab, endRoom.transform.position + new Vector3(-xOffset, 0, 0), Quaternion.identity);
+            Debug.Log(3);
+        }
+        else if (!endRoom.GetComponent<Room>().roomRight &&
+                 !roomPos.Contains(endRoom.transform.position + new Vector3(xOffset, 0, 0) + new Vector3(0, yOffset, 0)) &&
+                 !roomPos.Contains(endRoom.transform.position + new Vector3(xOffset, 0, 0) + new Vector3(xOffset, 0, 0)) &&
+                 !roomPos.Contains(endRoom.transform.position + new Vector3(xOffset, 0, 0) + new Vector3(0, -yOffset, 0)))
+        {
+            endRoom = Instantiate(roomPerfab, endRoom.transform.position + new Vector3(xOffset, 0, 0), Quaternion.identity);
+            Debug.Log(4);
+        }
+        rooms.Add(endRoom.GetComponent<Room>());
+        roomPos.Add(endRoom.transform.position);
+        //SetupRoom(endRoom.GetComponent<Room>(), endRoom.transform.position);
+        foreach (Room room in rooms)
+        {
+            SetupRoom(room, room.transform.position);
+        }
+        endRoom.GetComponent<SpriteRenderer>().color = endColor;
+    }
     public void ChangePointPos()
     {
         do
@@ -79,5 +128,15 @@ public class RoomGenerator : MonoBehaviour
             }
         } while (roomPos.Contains(generatoPoint.position));
         
+    }
+
+    public void SetupRoom(Room newRoom, Vector3 roomPosition)
+    {
+        newRoom.roomUp = roomPos.Contains(roomPosition + new Vector3(0, yOffset, 0));
+        newRoom.roomDown = roomPos.Contains(roomPosition + new Vector3(0, -yOffset, 0));
+        newRoom.roomLeft = roomPos.Contains(roomPosition + new Vector3(-xOffset, 0, 0));
+        newRoom.roomRight = roomPos.Contains(roomPosition + new Vector3(xOffset, 0, 0));
+
+        newRoom.UpdateRoom(xOffset, yOffset);
     }
 }

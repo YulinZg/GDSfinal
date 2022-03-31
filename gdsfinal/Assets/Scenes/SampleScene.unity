@@ -176,7 +176,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 80
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -266,7 +266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomPerfab: {fileID: 28449461731659723, guid: 778c34a4ed5e80546acec1bc992f73b4, type: 3}
-  roomNumber: 30
+  roomNumber: 15
   startColor: {r: 1, g: 1, b: 0, a: 1}
   endColor: {r: 0, g: 1, b: 0, a: 1}
   generatoPoint: {fileID: 1802126701}
