@@ -176,7 +176,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 80
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -270,8 +270,25 @@ MonoBehaviour:
   startColor: {r: 1, g: 1, b: 0, a: 1}
   endColor: {r: 0, g: 1, b: 0, a: 1}
   generatoPoint: {fileID: 1802126701}
-  xOffset: 16
-  yOffset: 8
+  xOffset: 18
+  yOffset: 10
+  farestRooms: []
+  wallType:
+    l: {fileID: 4821586244723396581, guid: 0f0a61d2a91229b4b81c8e5acda2a1a1, type: 3}
+    r: {fileID: 4821586244723396581, guid: fbe81365922f503469c90e36bfb05213, type: 3}
+    u: {fileID: 4821586244723396581, guid: 708a887980eddf447a9c2a32f1a5eec6, type: 3}
+    d: {fileID: 4821586244723396581, guid: c4ddf37c71360454b80ba34361385cdb, type: 3}
+    lu: {fileID: 4821586244723396581, guid: c6ce750ed9c40384db99a19679e19ec0, type: 3}
+    lr: {fileID: 4821586244723396581, guid: 11ad4b8a1fa49a348afbf43f021ba1dd, type: 3}
+    ld: {fileID: 4821586244723396581, guid: 74c69a42cc400e14680c7fec9d293486, type: 3}
+    ur: {fileID: 4821586244723396581, guid: f258190b817a22543afc743546b50de7, type: 3}
+    ud: {fileID: 4821586244723396581, guid: 8eaf60cb1fda17847b2feb0910a62be3, type: 3}
+    rd: {fileID: 4821586244723396581, guid: a4e1ebca49dad964e9eae4a317f4c44b, type: 3}
+    lur: {fileID: 4821586244723396581, guid: 18fe0fb974d8b794a8654fd06914b15b, type: 3}
+    lud: {fileID: 4821586244723396581, guid: befcb2825a48561418417e0c63d6a1db, type: 3}
+    urd: {fileID: 4821586244723396581, guid: b30f765f711e9db41b55e4e2f510865d, type: 3}
+    lrd: {fileID: 4821586244723396581, guid: 809b2329d05d0984597dcfd04edacb73, type: 3}
+    lrud: {fileID: 4821586244723396581, guid: 6e1c5163bf68eb54d8cc0c39480734a8, type: 3}
 --- !u!4 &1925592224
 Transform:
   m_ObjectHideFlags: 0
