@@ -27,9 +27,9 @@ public class Bullet : MonoBehaviour
         transform.position += speed * Time.deltaTime * dir;
     }
 
-    public void Setup(Vector2 moveDir, float bulletSpeed, float bulletDamage, float bulletCritProbability, float bulletCritRate, float bulletLifetime, BulletType bulletType)
+    public void SetNormal(Vector2 moveDir, float bulletSpeed, float bulletDamage, float bulletCritProbability, float bulletCritRate, float bulletLifetime)
     {
-        type = bulletType;
+        type = BulletType.normal;
         dir = moveDir;
         transform.eulerAngles = GetAngle(dir);
         speed = bulletSpeed;
@@ -39,10 +39,30 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject, bulletLifetime);
     }
 
-    public void SetExplosion(GameObject bullet, float range)
+    public void SetStay(Vector2 moveDir, float bulletDamage, float bulletCritProbability, float bulletCritRate, float bulletLifetime)
     {
-        explosion = bullet;
-        explosionRange = range;
+        type = BulletType.stay;
+        dir = moveDir;
+        transform.eulerAngles = GetAngle(dir);
+        speed = 0;
+        damage = bulletDamage;
+        critProbability = bulletCritProbability;
+        critRate = bulletCritRate;
+        Destroy(gameObject, bulletLifetime);
+    }
+
+    public void SetExplode(Vector2 moveDir, float bulletSpeed, float bulletDamage, float bulletCritProbability, float bulletCritRate, float bulletLifetime, GameObject explodeBullet, float explodeRange)
+    {
+        type = BulletType.explode;
+        dir = moveDir;
+        transform.eulerAngles = GetAngle(dir);
+        speed = bulletSpeed;
+        damage = bulletDamage;
+        critProbability = bulletCritProbability;
+        critRate = bulletCritRate;
+        explosion = explodeBullet;
+        explosionRange = explodeRange;
+        Destroy(gameObject, bulletLifetime);
     }
 
     private Vector3 GetAngle(Vector2 dir)
@@ -68,7 +88,7 @@ public class Bullet : MonoBehaviour
                     break;
                 case BulletType.explode:
                     GameObject bulletInstance = Instantiate(explosion, transform.position, Quaternion.identity);
-                    bulletInstance.GetComponent<Bullet>().Setup(dir, 0, damage, critProbability, critRate, 0.2f, BulletType.stay);
+                    bulletInstance.GetComponent<Bullet>().SetStay(dir, damage, critProbability, critRate, 0.2f);
                     bulletInstance.transform.localScale = new Vector3(explosionRange, explosionRange, 1);
                     Destroy(gameObject);
                     break;

@@ -54,6 +54,9 @@ TagManager:
   - name: DoorDown
     uniqueID: 690361209
     locked: 0
+  - name: Bullet
+    uniqueID: 20592127
+    locked: 0
   - name: UI
     uniqueID: 376861589
     locked: 0

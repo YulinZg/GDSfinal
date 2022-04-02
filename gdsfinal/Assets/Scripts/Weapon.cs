@@ -238,13 +238,13 @@ public class Weapon : MonoBehaviour
     void NormalAttackF(int bulletNum)
     {
         GameObject bulletInstance = Instantiate(bulletsF[0], ShootPos(shootOffset), Quaternion.identity);
-        bulletInstance.GetComponent<Bullet>().Setup(ShootDir(), bulletSpeedF, damageF, critProbabilityF, critRateF, rangeF / bulletSpeedF, Bullet.BulletType.normal);
+        bulletInstance.GetComponent<Bullet>().SetNormal(ShootDir(), bulletSpeedF, damageF, critProbabilityF, critRateF, rangeF / bulletSpeedF);
         for (int i = 1; i < bulletNum + 1; i++)
         {
             bulletInstance = Instantiate(bulletsF[0], ShootPos(shootOffset), Quaternion.identity);
-            bulletInstance.GetComponent<Bullet>().Setup(RotateVector(ShootDir(), 10 * i), bulletSpeedF, damageF, critProbabilityF, critRateF, rangeF / bulletSpeedF, Bullet.BulletType.normal);
+            bulletInstance.GetComponent<Bullet>().SetNormal(RotateVector(ShootDir(), 10 * i), bulletSpeedF, damageF, critProbabilityF, critRateF, rangeF / bulletSpeedF);
             bulletInstance = Instantiate(bulletsF[0], ShootPos(shootOffset), Quaternion.identity);
-            bulletInstance.GetComponent<Bullet>().Setup(RotateVector(ShootDir(), -10 * i), bulletSpeedF, damageF, critProbabilityF, critRateF, rangeF / bulletSpeedF, Bullet.BulletType.normal);
+            bulletInstance.GetComponent<Bullet>().SetNormal(RotateVector(ShootDir(), -10 * i), bulletSpeedF, damageF, critProbabilityF, critRateF, rangeF / bulletSpeedF);
         }
     }
 
@@ -285,12 +285,12 @@ public class Weapon : MonoBehaviour
         {
             currentMaganizeW--;
             bulletInstance = Instantiate(bulletsW[0], ShootPos(shootOffset), Quaternion.identity);
-            bulletInstance.GetComponent<Bullet>().Setup(ShootDir(), bulletSpeedW, damage0W, critProbabilityW, critRateW, range0W / bulletSpeedW, Bullet.BulletType.normal);
+            bulletInstance.GetComponent<Bullet>().SetNormal(ShootDir(), bulletSpeedW, damage0W, critProbabilityW, critRateW, range0W / bulletSpeedW);
         }
         else
         {
             bulletInstance = Instantiate(bulletsW[1], ShootPos(range1W * 0.5f + shootOffset), Quaternion.identity);
-            bulletInstance.GetComponent<Bullet>().Setup(ShootDir(), 0, damage1W, critProbabilityW, critRateW, attackTime1, Bullet.BulletType.stay);
+            bulletInstance.GetComponent<Bullet>().SetStay(ShootDir(), damage1W, critProbabilityW, critRateW, attackTime1);
             bulletInstance.transform.localScale = new Vector3(range1W, bulletInstance.transform.localScale.y, 1);
             StartCoroutine(ChargeAttacking(attackTime1));
         }
@@ -340,7 +340,7 @@ public class Weapon : MonoBehaviour
     void NormalAttackE()
     {
         GameObject bulletInstance = Instantiate(bulletsE[0], ShootPos(shootOffset), Quaternion.identity);
-        bulletInstance.GetComponent<Bullet>().Setup(ShootDir(), bulletSpeedE, damageE, critProbabilityE, critRateE, rangeE / bulletSpeedE, Bullet.BulletType.normal);
+        bulletInstance.GetComponent<Bullet>().SetNormal(ShootDir(), bulletSpeedE, damageE, critProbabilityE, critRateE, rangeE / bulletSpeedE);
     }
 
     //Earth////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -364,8 +364,7 @@ public class Weapon : MonoBehaviour
     void NormalAttackT()
     {
         GameObject bulletInstance = Instantiate(bulletsT[0], ShootPos(shootOffset), Quaternion.identity);
-        bulletInstance.GetComponent<Bullet>().Setup(ShootDir(), bulletSpeedT, damageT, critProbabilityT, critRateT, rangeT / bulletSpeedT, Bullet.BulletType.explode);
-        bulletInstance.GetComponent<Bullet>().SetExplosion(bulletsT[1], explosionRange);
+        bulletInstance.GetComponent<Bullet>().SetExplode(ShootDir(), bulletSpeedT, damageT, critProbabilityT, critRateT, rangeT / bulletSpeedT, bulletsT[1], explosionRange);
     }
 
     //Thunder//////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -386,7 +385,7 @@ public class Weapon : MonoBehaviour
     void NormalAttackM()
     {
         GameObject bulletInstance = Instantiate(bulletsM[0], ShootPos(shootOffset), Quaternion.identity);
-        bulletInstance.GetComponent<Bullet>().Setup(ShootDir(), 0, damageM, critProbabilityM, critRateM, attackTime, Bullet.BulletType.stay);
+        bulletInstance.GetComponent<Bullet>().SetStay(ShootDir(), damageM, critProbabilityM, critRateM, attackTime);
         bulletInstance.transform.localScale = new Vector3(rangeM, rangeM, 1);
         bulletInstance.transform.parent = transform;
     }

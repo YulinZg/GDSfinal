@@ -9,12 +9,15 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 moveDir;
     private Rigidbody2D rigid;
+    private Camera cam;
+    private Vector2 mousePos;
     private Weapon weapon;
 
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         weapon = GetComponent<Weapon>();
+        cam = Camera.main;
     }
 
     // Start is called before the first frame update
@@ -45,6 +48,7 @@ public class PlayerController : MonoBehaviour
             moveX = 1f;
         }
         moveDir = new Vector3(moveX, moveY).normalized;
+        mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
 
         if (canInput)
         {
@@ -63,7 +67,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rigid.velocity = moveDir * speed;
+        rigid.velocity = speed * moveDir;
         if (canInput)
         {
             Rotate();
@@ -72,9 +76,16 @@ public class PlayerController : MonoBehaviour
 
     void Rotate()
     {
-        transform.right = (Vector2)(Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
+        // Without rigidbody
+        //1:
+        //transform.right = (Vector2)(Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
+        //2:
         //Vector3 dir = ((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - (Vector2)transform.position).normalized;
         //float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         //transform.eulerAngles = new Vector3(0, 0, angle);
+
+        Vector2 dir = mousePos - rigid.position;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        rigid.rotation = angle;
     }
 }
