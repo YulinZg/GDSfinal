@@ -74,40 +74,40 @@ public class RoomGenerator : MonoBehaviour
         GameObject temp = endRoom;
         foreach (Room room in farestRooms)
         {
-            temp = endRoom;
-            if (!endRoom.GetComponent<Room>().roomDown &&
-            !roomPos.Contains(endRoom.transform.position + new Vector3(0, -yOffset, 0) + new Vector3(0, -yOffset, 0)) &&
-            !roomPos.Contains(endRoom.transform.position + new Vector3(0, -yOffset, 0) + new Vector3(-xOffset, 0, 0)) &&
-            !roomPos.Contains(endRoom.transform.position + new Vector3(0, -yOffset, 0) + new Vector3(xOffset, 0, 0)))
+            temp = room.gameObject;
+            if (!room.roomDown &&
+            !roomPos.Contains(room.transform.position + new Vector3(0, -yOffset, 0) + new Vector3(0, -yOffset, 0)) &&
+            !roomPos.Contains(room.transform.position + new Vector3(0, -yOffset, 0) + new Vector3(-xOffset, 0, 0)) &&
+            !roomPos.Contains(room.transform.position + new Vector3(0, -yOffset, 0) + new Vector3(xOffset, 0, 0)))
             {
-                endRoom = Instantiate(roomPerfab, endRoom.transform.position + new Vector3(0, -yOffset, 0), Quaternion.identity);
+                endRoom = Instantiate(roomPerfab, room.transform.position + new Vector3(0, -yOffset, 0), Quaternion.identity);
                 break;
                 //Debug.Log(1);
             }
-            else if (!endRoom.GetComponent<Room>().roomUp &&
-                     !roomPos.Contains(endRoom.transform.position + new Vector3(0, yOffset, 0) + new Vector3(0, yOffset, 0)) &&
-                     !roomPos.Contains(endRoom.transform.position + new Vector3(0, yOffset, 0) + new Vector3(-xOffset, 0, 0)) &&
-                     !roomPos.Contains(endRoom.transform.position + new Vector3(0, yOffset, 0) + new Vector3(xOffset, 0, 0)))
+            else if (!room.roomUp &&
+                     !roomPos.Contains(room.transform.position + new Vector3(0, yOffset, 0) + new Vector3(0, yOffset, 0)) &&
+                     !roomPos.Contains(room.transform.position + new Vector3(0, yOffset, 0) + new Vector3(-xOffset, 0, 0)) &&
+                     !roomPos.Contains(room.transform.position + new Vector3(0, yOffset, 0) + new Vector3(xOffset, 0, 0)))
             {
-                endRoom = Instantiate(roomPerfab, endRoom.transform.position + new Vector3(0, yOffset, 0), Quaternion.identity);
+                endRoom = Instantiate(roomPerfab, room.transform.position + new Vector3(0, yOffset, 0), Quaternion.identity);
                 break;
                 //Debug.Log(2);
             }
-            else if (!endRoom.GetComponent<Room>().roomLeft &&
-                     !roomPos.Contains(endRoom.transform.position + new Vector3(-xOffset, 0, 0) + new Vector3(0, yOffset, 0)) &&
-                     !roomPos.Contains(endRoom.transform.position + new Vector3(-xOffset, 0, 0) + new Vector3(-xOffset, 0, 0)) &&
-                     !roomPos.Contains(endRoom.transform.position + new Vector3(-xOffset, 0, 0) + new Vector3(0, -yOffset, 0)))
+            else if (!room.roomLeft &&
+                     !roomPos.Contains(room.transform.position + new Vector3(-xOffset, 0, 0) + new Vector3(0, yOffset, 0)) &&
+                     !roomPos.Contains(room.transform.position + new Vector3(-xOffset, 0, 0) + new Vector3(-xOffset, 0, 0)) &&
+                     !roomPos.Contains(room.transform.position + new Vector3(-xOffset, 0, 0) + new Vector3(0, -yOffset, 0)))
             {
-                endRoom = Instantiate(roomPerfab, endRoom.transform.position + new Vector3(-xOffset, 0, 0), Quaternion.identity);
+                endRoom = Instantiate(roomPerfab, room.transform.position + new Vector3(-xOffset, 0, 0), Quaternion.identity);
                 break;
                 //Debug.Log(3);
             }
-            else if (!endRoom.GetComponent<Room>().roomRight &&
-                     !roomPos.Contains(endRoom.transform.position + new Vector3(xOffset, 0, 0) + new Vector3(0, yOffset, 0)) &&
-                     !roomPos.Contains(endRoom.transform.position + new Vector3(xOffset, 0, 0) + new Vector3(xOffset, 0, 0)) &&
-                     !roomPos.Contains(endRoom.transform.position + new Vector3(xOffset, 0, 0) + new Vector3(0, -yOffset, 0)))
+            else if (!room.roomRight &&
+                     !roomPos.Contains(room.transform.position + new Vector3(xOffset, 0, 0) + new Vector3(0, yOffset, 0)) &&
+                     !roomPos.Contains(room.transform.position + new Vector3(xOffset, 0, 0) + new Vector3(xOffset, 0, 0)) &&
+                     !roomPos.Contains(room.transform.position + new Vector3(xOffset, 0, 0) + new Vector3(0, -yOffset, 0)))
             {
-                endRoom = Instantiate(roomPerfab, endRoom.transform.position + new Vector3(xOffset, 0, 0), Quaternion.identity);
+                endRoom = Instantiate(roomPerfab, room.transform.position + new Vector3(xOffset, 0, 0), Quaternion.identity);
                 break;
                 //Debug.Log(4);
             }
