@@ -9,7 +9,6 @@ public class RoomGenerator : MonoBehaviour
     [Header("room info")]
     public GameObject roomPerfab;
     public int roomNumber;
-    public Color startColor, endColor;
 
     [Header("pos controller")]
     public Transform generatoPoint;
@@ -34,7 +33,6 @@ public class RoomGenerator : MonoBehaviour
             generateNormalRoom();
         }
 
-        rooms[0].GetComponent<SpriteRenderer>().color = startColor;
         endRoom = rooms[0].gameObject;
 
         generateBossRoom();
@@ -43,7 +41,7 @@ public class RoomGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.anyKeyDown)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
@@ -76,6 +74,7 @@ public class RoomGenerator : MonoBehaviour
         GameObject temp = endRoom;
         foreach (Room room in farestRooms)
         {
+            temp = endRoom;
             if (!endRoom.GetComponent<Room>().roomDown &&
             !roomPos.Contains(endRoom.transform.position + new Vector3(0, -yOffset, 0) + new Vector3(0, -yOffset, 0)) &&
             !roomPos.Contains(endRoom.transform.position + new Vector3(0, -yOffset, 0) + new Vector3(-xOffset, 0, 0)) &&
@@ -121,9 +120,12 @@ public class RoomGenerator : MonoBehaviour
         {
             generateWall(room, room.transform.position);
         }
-        endRoom.GetComponent<SpriteRenderer>().color = endColor;
+
+        rooms[0].name = "Start";
         rooms[0].step.text = "Start";
+        temp.GetComponent<Room>().step.text = "next is boss";
         endRoom.GetComponent<Room>().step.text = "Boss";
+        endRoom.name = "Boss";
     }
     public void ChangePointPos()
     {

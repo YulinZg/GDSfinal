@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -11,7 +12,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Room
   - 
   - 
   - 
@@ -44,9 +45,15 @@ TagManager:
   - name: Ground
     uniqueID: 3494083323
     locked: 0
+  - name: DoorUp
+    uniqueID: 3359024167
+    locked: 0
   - name: Player
     uniqueID: 678415073
     locked: 0
-  - name: Door
-    uniqueID: 3359024167
+  - name: DoorDown
+    uniqueID: 690361209
+    locked: 0
+  - name: UI
+    uniqueID: 376861589
     locked: 0
