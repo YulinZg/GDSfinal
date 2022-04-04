@@ -13,7 +13,8 @@ public class Room : MonoBehaviour
 
     public int doorNumber;
     // Start is called before the first frame update
-
+    public RoomTerrainGenerator roomTerrainGenerator;
+    public EnemyGenerator enemyGenerator;
     public void UpdateRoom(float xOffset, float yOffset, bool isUpDataDoorNumber)
     {
         doorDown.SetActive(roomDown);
@@ -38,5 +39,14 @@ public class Room : MonoBehaviour
             doorNumber++;
         }
         step.text = roomNumberToStart.ToString();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            roomTerrainGenerator.generateTerrain();
+            enemyGenerator.generateEnemy();
+        }
     }
 }
