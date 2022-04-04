@@ -11,7 +11,17 @@ public class Bullet : MonoBehaviour
         explode
     }
 
+    public enum BulletProperty
+    {
+        fire,
+        water,
+        earth,
+        lightning,
+        metal
+    }
+
     public BulletType type;
+    public BulletProperty property;
 
     private Vector3 dir;
     private float speed;
@@ -27,9 +37,10 @@ public class Bullet : MonoBehaviour
         transform.position += speed * Time.deltaTime * dir;
     }
 
-    public void Setup(Vector2 moveDir, float bulletSpeed, float bulletDamage, float bulletCritProbability, float bulletCritRate, float bulletLifetime, BulletType bulletType)
+    public void Setup(Vector2 moveDir, float bulletSpeed, float bulletDamage, float bulletCritProbability, float bulletCritRate, float bulletLifetime, BulletType bulletType, BulletProperty bulletProperty)
     {
         type = bulletType;
+        property = bulletProperty;
         dir = moveDir;
         transform.eulerAngles = GetAngle(dir);
         speed = bulletSpeed;
@@ -47,18 +58,6 @@ public class Bullet : MonoBehaviour
     void SetZeroSpeed()
     {
         speed = 0;
-    }
-
-    public void SetStay(Vector2 moveDir, float bulletDamage, float bulletCritProbability, float bulletCritRate, float bulletLifetime)
-    {
-        type = BulletType.penetrable;
-        dir = moveDir;
-        transform.eulerAngles = GetAngle(dir);
-        speed = 0;
-        damage = bulletDamage;
-        critProbability = bulletCritProbability;
-        critRate = bulletCritRate;
-        Destroy(gameObject, bulletLifetime);
     }
 
     public void SetExplode(GameObject explodeBullet, float explodeRange)
@@ -90,7 +89,7 @@ public class Bullet : MonoBehaviour
                     break;
                 case BulletType.explode:
                     GameObject bulletInstance = Instantiate(explosion, transform.position, Quaternion.identity);
-                    bulletInstance.GetComponent<Bullet>().Setup(dir, 0, damage, critProbability, critRate, 0.2f, BulletType.penetrable);
+                    bulletInstance.GetComponent<Bullet>().Setup(dir, 0, damage, critProbability, critRate, 0.2f, BulletType.penetrable, property);
                     bulletInstance.transform.localScale = new Vector3(explosionRange, explosionRange, 1);
                     Destroy(gameObject);
                     break;
