@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1095739407213342471
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1470505764301515668}
+  m_Layer: 0
+  m_Name: BulletRotater
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1470505764301515668
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1095739407213342471}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8995325589162135095}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2139542439630320291
 GameObject:
   m_ObjectHideFlags: 0
@@ -29,7 +59,7 @@ Transform:
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 8995325589162135095}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3080938003869827883
 SpriteRenderer:
@@ -82,6 +112,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &5297646316335393566
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6804369092124270766}
+  m_Layer: 0
+  m_Name: Arrow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6804369092124270766
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5297646316335393566}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 8995325588008339120}
+  m_Father: {fileID: 8995325589162135095}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8995325588008339121
 GameObject:
   m_ObjectHideFlags: 0
@@ -106,11 +167,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8995325588008339121}
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0.5, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.10000001, y: 0.5, z: 1}
   m_Children: []
-  m_Father: {fileID: 8995325589162135095}
+  m_Father: {fileID: 6804369092124270766}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!212 &8995325588008339135
@@ -196,8 +257,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 8995325588008339120}
   - {fileID: 5163265983274475519}
+  - {fileID: 6804369092124270766}
+  - {fileID: 1470505764301515668}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -303,32 +365,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   property: 0
   shootOffset: 1
+  bulletRotater: {fileID: 1095739407213342471}
+  bulletsInWorld: {fileID: 0}
   damageF: 10
   critProbabilityF: 0.2
   critRateF: 1.5
   maganizeF: 5
-  intervalF: 0.2
+  intervalF: 1
   reloadTimeF: 2
-  bulletSpeedF: 10
-  rangeF: 5
+  bulletSpeedF: 20
+  rangeF: 15
   moveSpeedF: 5
-  sideBulletNumber: 2
+  standTimeF: 0.5
+  bulletNumber: 6
+  bulletRotateRange: 1.5
+  bulletLifeTimeBase: 1
   bulletsF:
   - {fileID: 2606326994937094072, guid: ba23d3e50b4cd004d9956e37a34d8d4e, type: 3}
-  damage0W: 20
-  damage1W: 50
-  critProbabilityW: 0.5
+  damageW: 20
+  damageW1: 45
+  damageW2: 70
+  damageW3: 100
+  critProbabilityW: 0.2
   critRateW: 1.5
   maganizeW: 5
-  intervalW: 0.5
+  intervalW: 1
   reloadTimeW: 2
   bulletSpeedW: 15
-  range0W: 10
-  range1W: 15
-  moveSpeed0W: 5
-  moveSpeed1W: 2
+  rangeW: 10
+  rangeW1: 10
+  rangeW2: 15
+  rangeW3: 30
+  moveSpeedW: 5
+  moveSpeedW1: 2
   chargeTime: 1
-  attackTime1: 0.5
+  standTimeW: 0.5
+  standTimeW1: 1
   bulletsW:
   - {fileID: 6951538845093579234, guid: 3308648e2b92a444fbb2f7345d5169ab, type: 3}
   - {fileID: 2547056815218795847, guid: 3b5160945700990498e37af847bc0a71, type: 3}
@@ -341,31 +413,36 @@ MonoBehaviour:
   bulletSpeedE: 20
   rangeE: 20
   moveSpeedE: 5
-  preheatTimes: 4
+  moveSpeedE1: 2
+  preheatTimes: 5
+  scatterAngle: 15
   bulletsE:
   - {fileID: 5642134625065331139, guid: 808439a9302cb5a449cde01394bcf224, type: 3}
-  damageT: 30
-  critProbabilityT: 0.3
-  critRateT: 1.5
-  maganizeT: 5
-  intervalT: 1
-  reloadTimeT: 2
-  bulletSpeedT: 15
-  rangeT: 10
-  moveSpeedT: 5
-  explosionRange: 3
-  bulletsT:
+  damageL: 5
+  damageL1: 50
+  critProbabilityL: 0.5
+  critRateL: 1.5
+  maganizeL: 5
+  intervalL: 0.5
+  reloadTimeL: 2
+  moveSpeedL: 8
+  standTimeL: 0.2
+  maxBulletNum: 5
+  stayTime: 10
+  bulletsL:
   - {fileID: 1737174646277754179, guid: e0b16e40cf3d306439964c0ef71b58b2, type: 3}
-  - {fileID: 536820486700848232, guid: 7e2462d82ae1faa4d8c7d72ff4352e5b, type: 3}
-  damageM: 30
+  - {fileID: 763227751222126540, guid: 591cbaf6122f0f049bdd8c87c8929e6d, type: 3}
+  damageM: 80
   critProbabilityM: 0.5
   critRateM: 1.5
-  intervalM: 0.3
-  rangeM: 1
+  intervalM: 0.5
+  rangeM: 1.5
   moveSpeedM: 8
+  attackAngle: 45
   attackTime: 0.2
+  attackTime1: 0.5
   bulletsM:
-  - {fileID: 5395672817107242102, guid: 7d29d23692853804c9fed2854db1846c, type: 3}
+  - {fileID: 9037767510273740695, guid: 7d29d23692853804c9fed2854db1846c, type: 3}
 --- !u!114 &2741019207210238514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,5 +455,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa78e7b5c6f75a749aed96d8328caae9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  arrow: {fileID: 5297646316335393566}
   canInput: 1
+  canRotate: 1
