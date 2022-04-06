@@ -72,7 +72,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  property: 0
+  property: 3
 --- !u!1001 &5866497588083949564
 PrefabInstance:
   m_ObjectHideFlags: 0
