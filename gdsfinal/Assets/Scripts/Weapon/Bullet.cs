@@ -37,10 +37,9 @@ public class Bullet : MonoBehaviour
         transform.position += speed * Time.deltaTime * dir;
     }
 
-    public void Setup(Vector2 moveDir, float bulletSpeed, float bulletDamage, float bulletCritProbability, float bulletCritRate, float bulletLifetime, BulletType bulletType, BulletProperty bulletProperty)
+    public void Setup(Vector2 moveDir, float bulletSpeed, float bulletDamage, float bulletCritProbability, float bulletCritRate, float bulletLifetime, BulletType bulletType)
     {
         type = bulletType;
-        property = bulletProperty;
         dir = moveDir;
         transform.eulerAngles = GetAngle(dir);
         speed = bulletSpeed;
@@ -89,7 +88,7 @@ public class Bullet : MonoBehaviour
                     break;
                 case BulletType.explode:
                     GameObject bulletInstance = Instantiate(explosion, transform.position, Quaternion.identity);
-                    bulletInstance.GetComponent<Bullet>().Setup(dir, 0, damage, critProbability, critRate, 0.2f, BulletType.penetrable, property);
+                    bulletInstance.GetComponent<Bullet>().Setup(dir, 0, damage, critProbability, critRate, 0.2f, BulletType.penetrable);
                     bulletInstance.transform.localScale = new Vector3(explosionRange, explosionRange, 1);
                     Destroy(gameObject);
                     break;
@@ -102,26 +101,6 @@ public class Bullet : MonoBehaviour
         int i = Random.Range(0, 100);
         if (i < 100 * critProbability)
             damage *= critRate;
-        string type = "";
-
-        switch (property)
-        {
-            case BulletProperty.fire:
-                type = "fire";
-                break;
-            case BulletProperty.water:
-                type = "water";
-                break;
-            case BulletProperty.earth:
-                type = "earth";
-                break;
-            case BulletProperty.lightning:
-                type = "lightning";
-                break;
-            case BulletProperty.metal:
-                type = "metal";
-                break;
-        }
-        enemy.GetComponent<Enemy>().TakeDamage(Mathf.Floor(damage * Random.Range(0.9f, 1.1f)), type);
+        enemy.GetComponent<Enemy>().TakeDamage(Mathf.Floor(damage * Random.Range(0.9f, 1.1f)), property.ToString());
     }
 }

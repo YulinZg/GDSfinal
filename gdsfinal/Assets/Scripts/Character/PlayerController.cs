@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 mouseDir;
     private Weapon weapon;
     private Animator animator;
+    private bool isFacingRight = true;
 
     private void Awake()
     {
@@ -61,10 +62,6 @@ public class PlayerController : MonoBehaviour
         }
         moveDir = new Vector3(moveX, moveY).normalized;
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
-    }
-
-    private void LateUpdate()
-    {
         if (canInput)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -106,18 +103,28 @@ public class PlayerController : MonoBehaviour
         }
         if (rigid.velocity.x > 0)
         {
-            animator.SetBool("isMovingRight", true);
-            animator.SetBool("isMovingLeft", false);
+            isFacingRight = true;
+            animator.SetBool("isMovingRight", isFacingRight);
+            animator.SetBool("isMovingLeft", !isFacingRight);
         }
         else if (rigid.velocity.x < 0)
         {
-            animator.SetBool("isMovingRight", false);
-            animator.SetBool("isMovingLeft", true);
+            isFacingRight = false;
+            animator.SetBool("isMovingRight", isFacingRight);
+            animator.SetBool("isMovingLeft", !isFacingRight);
         }
         else
         {
-            animator.SetBool("isMovingRight", false);
-            animator.SetBool("isMovingLeft", false);
+            if (rigid.velocity.y == 0)
+            {
+                animator.SetBool("isMovingRight", false);
+                animator.SetBool("isMovingLeft", false);
+            }
+            else
+            {
+                animator.SetBool("isMovingRight", isFacingRight);
+                animator.SetBool("isMovingLeft", !isFacingRight);
+            }
         }
     }
 
