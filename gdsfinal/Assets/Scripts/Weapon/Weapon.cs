@@ -221,9 +221,11 @@ public class Weapon : MonoBehaviour
         isAttacking = true;
         player.canInput = false;
         player.canRotate = false;
+        player.isAttacking = true;
         player.SetSpeed(0);
         yield return new WaitForSeconds(time);
         player.SetSpeed(speed);
+        player.isAttacking = false;
         player.canRotate = true;
         player.canInput = true;
         isAttacking = false;
@@ -232,8 +234,8 @@ public class Weapon : MonoBehaviour
     void Reload()
     {
         float reloadTime = 0;
-        isReloading = true;
         player.canInput = false;
+        isReloading = true;
         switch (property)
         {
             case Property.fire:
@@ -273,13 +275,18 @@ public class Weapon : MonoBehaviour
                 currentMaganizeL = maganizeL;
                 break;
         }
-        player.canInput = true;
         isReloading = false;
+        player.canInput = true;
     }
 
     void RotateBullet(float speed)
     {
         bulletRotater.transform.Rotate(0, 0, speed * Time.deltaTime);
+    }
+
+    void SetPlayerAttackingFalse()
+    {
+        player.isAttacking = false;
     }
 
     //Fire/////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -317,7 +324,10 @@ public class Weapon : MonoBehaviour
                 RotateVector(MouseDir(), (360f / bulletNum) * (i + 1)), bulletSpeedF * 0.5f, damageF, critProbabilityF, critRateF, bulletLifeTimeBase * (i + 1), Bullet.BulletType.normal, Bullet.BulletProperty.fire);
             bulletInstance.GetComponent<Bullet>().SetFire(bulletRotateRange);
         }
-        Invoke(nameof(SetCanLaunch), bulletRotateRange / (bulletSpeedF * 0.5f));
+        float invokeTime = bulletRotateRange / (bulletSpeedF * 0.5f);
+        Invoke(nameof(SetCanLaunch), invokeTime);
+        player.isAttacking = true;
+        Invoke(nameof(SetPlayerAttackingFalse), invokeTime);
     }
 
     void SetCanLaunch()
@@ -473,10 +483,12 @@ public class Weapon : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && currentMaganizeE != 0)
         {
             isShooting = true;
+            player.isAttacking = true;
         }
         if (Input.GetMouseButtonUp(0) || currentMaganizeE == 0)
         {
             isShooting = false;
+            player.isAttacking = false;
             if (!isAiming || currentMaganizeE == 0)
                 preheatBullet = preheatTimes;
         }
@@ -538,6 +550,8 @@ public class Weapon : MonoBehaviour
             bulletInstance.GetComponent<Bullet>().Setup(
                 MouseDir(), 0, damageL, critProbabilityL, critRateL, stayTime, Bullet.BulletType.penetrable, Bullet.BulletProperty.lightning);
             bulletInstance.transform.parent = bulletsInWorld.transform;
+            player.isAttacking = true;
+            Invoke(nameof(SetPlayerAttackingFalse), 0.2f);
         }
     }
 
@@ -590,6 +604,8 @@ public class Weapon : MonoBehaviour
         bulletInstance.transform.parent = bulletRotater.transform;
         attackSpeed = angle * 2 / time;
         Invoke(nameof(SetNotCombating), time);
+        player.isAttacking = true;
+        Invoke(nameof(SetPlayerAttackingFalse), time);
     }
 
     void SetNotCombating()

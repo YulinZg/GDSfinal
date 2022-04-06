@@ -239,6 +239,7 @@ GameObject:
   - component: {fileID: 8995325589162135094}
   - component: {fileID: 8554495002776236972}
   - component: {fileID: 2741019207210238514}
+  - component: {fileID: 6585175857875858874}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -364,7 +365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   property: 0
-  shootOffset: 1
+  shootOffset: 0
   bulletRotater: {fileID: 1095739407213342471}
   bulletsInWorld: {fileID: 0}
   damageF: 10
@@ -376,7 +377,7 @@ MonoBehaviour:
   bulletSpeedF: 20
   rangeF: 15
   moveSpeedF: 5
-  standTimeF: 0.5
+  standTimeF: 0.2
   bulletNumber: 6
   bulletRotateRange: 1.5
   bulletLifeTimeBase: 1
@@ -426,20 +427,20 @@ MonoBehaviour:
   intervalL: 0.5
   reloadTimeL: 2
   moveSpeedL: 8
-  standTimeL: 0.2
+  standTimeL: 0.5
   maxBulletNum: 5
-  stayTime: 10
+  stayTime: 5
   bulletsL:
   - {fileID: 1737174646277754179, guid: e0b16e40cf3d306439964c0ef71b58b2, type: 3}
   - {fileID: 763227751222126540, guid: 591cbaf6122f0f049bdd8c87c8929e6d, type: 3}
   damageM: 80
   critProbabilityM: 0.5
   critRateM: 1.5
-  intervalM: 0.5
+  intervalM: 0.3
   rangeM: 1.5
   moveSpeedM: 8
-  attackAngle: 45
-  attackTime: 0.2
+  attackAngle: 60
+  attackTime: 0.3
   attackTime1: 0.5
   bulletsM:
   - {fileID: 9037767510273740695, guid: 7d29d23692853804c9fed2854db1846c, type: 3}
@@ -458,3 +459,23 @@ MonoBehaviour:
   arrow: {fileID: 5297646316335393566}
   canInput: 1
   canRotate: 1
+  isAttacking: 0
+--- !u!95 &6585175857875858874
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8995325589162135081}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2788db613aee0b84dbc6919a741be25a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
