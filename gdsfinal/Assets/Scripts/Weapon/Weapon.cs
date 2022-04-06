@@ -153,9 +153,9 @@ public class Weapon : MonoBehaviour
                 Metal();
                 break;
         }
-        if (!isAttacking && !isReloading && (Input.GetKeyDown(KeyCode.R) 
+        if (!isAttacking && !isReloading && (Input.GetKeyDown(KeyCode.R)
             || currentMaganizeF == 0 || currentMaganizeW == 0 || currentMaganizeE == 0 || currentMaganizeL == 0))
-            Reload();
+            StartCoroutine(Reload());
     }
 
     public void GetWeapon(Property type)
@@ -190,6 +190,9 @@ public class Weapon : MonoBehaviour
         }
         if (bulletRotater.transform.childCount > 0)
             foreach (Transform child in bulletRotater.transform)
+                Destroy(child.gameObject);
+        if (bulletsInWorld.transform.childCount > 0)
+            foreach (Transform child in bulletsInWorld.transform)
                 Destroy(child.gameObject);
     }
 
@@ -231,7 +234,7 @@ public class Weapon : MonoBehaviour
         isAttacking = false;
     }
 
-    void Reload()
+    IEnumerator Reload()
     {
         float reloadTime = 0;
         player.canInput = false;
@@ -255,11 +258,7 @@ public class Weapon : MonoBehaviour
                 reloadTime = reloadTimeL;
                 break;
         }
-        Invoke(nameof(Reloaded), reloadTime);
-    }
-
-    void Reloaded()
-    {
+        yield return new WaitForSeconds(reloadTime);
         switch (property)
         {
             case Property.fire:
@@ -342,7 +341,7 @@ public class Weapon : MonoBehaviour
             GameObject bulletInstance;
             foreach (Transform child in bulletRotater.transform)
             {
-                bulletInstance = Instantiate(bulletsF[0], child.position, Quaternion.identity);
+                bulletInstance = Instantiate(bulletsF[1], child.position, Quaternion.identity);
                 bulletInstance.GetComponent<Bullet>().Setup(
                     Direction(Camera.main.ScreenToWorldPoint(Input.mousePosition), child.position), bulletSpeedF, damageF, critProbabilityF, critRateF, rangeF / bulletSpeedF, Bullet.BulletType.normal, Bullet.BulletProperty.fire);
                 Destroy(child.gameObject);
@@ -546,7 +545,7 @@ public class Weapon : MonoBehaviour
         if (bulletsInWorld.transform.childCount < maxBulletNum)
         {
             currentMaganizeL--;
-            GameObject bulletInstance = Instantiate(bulletsL[0], transform.position, Quaternion.identity);
+            GameObject bulletInstance = Instantiate(bulletsL[0], ShootPos(shootOffset), Quaternion.identity);
             bulletInstance.GetComponent<Bullet>().Setup(
                 MouseDir(), 0, damageL, critProbabilityL, critRateL, stayTime, Bullet.BulletType.penetrable, Bullet.BulletProperty.lightning);
             bulletInstance.transform.parent = bulletsInWorld.transform;
@@ -567,7 +566,7 @@ public class Weapon : MonoBehaviour
                 bulletInstance = Instantiate(bulletsL[1], 0.5f * Vector3.Distance(child.position, transform.position) * Direction(transform.position, child.position) + child.position, Quaternion.identity);
                 bulletInstance.GetComponent<Bullet>().Setup(
                     Direction(transform.position, child.position), 0, damageL1, critProbabilityL, critRateL, standTimeL, Bullet.BulletType.penetrable, Bullet.BulletProperty.lightning);
-                bulletInstance.transform.localScale = new Vector3(Vector3.Distance(child.position, transform.position), 0.1f, 1);
+                bulletInstance.transform.localScale = new Vector3(Vector3.Distance(child.position, transform.position), 2, 1);
                 Destroy(child.gameObject);
             }
             StartCoroutine(StandAttack(standTimeL, moveSpeedL));

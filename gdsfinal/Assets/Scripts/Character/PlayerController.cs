@@ -61,7 +61,10 @@ public class PlayerController : MonoBehaviour
         }
         moveDir = new Vector3(moveX, moveY).normalized;
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+    }
 
+    private void LateUpdate()
+    {
         if (canInput)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))

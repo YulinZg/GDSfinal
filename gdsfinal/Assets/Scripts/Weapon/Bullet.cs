@@ -122,6 +122,6 @@ public class Bullet : MonoBehaviour
                 type = "metal";
                 break;
         }
-        enemy.GetComponent<Enemy>().takeDamage(Mathf.Floor(damage),type);
+        enemy.GetComponent<Enemy>().TakeDamage(Mathf.Floor(damage * Random.Range(0.9f, 1.1f)), type);
     }
 }
