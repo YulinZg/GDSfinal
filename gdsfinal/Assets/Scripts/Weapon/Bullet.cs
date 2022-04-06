@@ -102,6 +102,26 @@ public class Bullet : MonoBehaviour
         int i = Random.Range(0, 100);
         if (i < 100 * critProbability)
             damage *= critRate;
-        enemy.GetComponent<Enemy>().TakeDamage(Mathf.Floor(damage));
+        string type = "";
+
+        switch (property)
+        {
+            case BulletProperty.fire:
+                type = "fire";
+                break;
+            case BulletProperty.water:
+                type = "water";
+                break;
+            case BulletProperty.earth:
+                type = "earth";
+                break;
+            case BulletProperty.lightning:
+                type = "lightning";
+                break;
+            case BulletProperty.metal:
+                type = "metal";
+                break;
+        }
+        enemy.GetComponent<Enemy>().takeDamage(Mathf.Floor(damage),type);
     }
 }
