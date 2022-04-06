@@ -62,7 +62,11 @@ public class PlayerController : MonoBehaviour
         }
         moveDir = new Vector3(moveX, moveY).normalized;
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
-        if (canInput)
+    }
+
+    private void LateUpdate()
+    {
+        if (canInput && !weapon.GetIsReloading())
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
                 weapon.GetWeapon(Weapon.Property.fire);

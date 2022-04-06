@@ -135,6 +135,13 @@ public class Weapon : MonoBehaviour
     void Update()
     {
         shootTimer += Time.deltaTime;
+        if (!isAttacking && !isReloading && (Input.GetKeyDown(KeyCode.R)
+            || currentMaganizeF == 0 || currentMaganizeW == 0 || currentMaganizeE == 0 || currentMaganizeL == 0))
+            StartCoroutine(Reload());
+    }
+
+    private void LateUpdate()
+    {
         switch (property)
         {
             case Property.fire:
@@ -153,13 +160,6 @@ public class Weapon : MonoBehaviour
                 Metal();
                 break;
         }
-    }
-
-    private void LateUpdate()
-    {
-        if (!isAttacking && !isReloading && (Input.GetKeyDown(KeyCode.R)
-            || currentMaganizeF == 0 || currentMaganizeW == 0 || currentMaganizeE == 0 || currentMaganizeL == 0))
-            StartCoroutine(Reload());
     }
 
     public void GetWeapon(Property type)
@@ -282,6 +282,11 @@ public class Weapon : MonoBehaviour
         player.canInput = true;
     }
 
+    public bool GetIsReloading()
+    {
+        return isReloading;
+    }
+
     void RotateBullet(float speed)
     {
         bulletRotater.transform.Rotate(0, 0, speed * Time.deltaTime);
@@ -388,14 +393,14 @@ public class Weapon : MonoBehaviour
                 }
                 else
                 {
-                    NormalAttackW1(rangeW1, rangeW1 * 0.01f, damageW1);
+                    NormalAttackW1(rangeW1, rangeW1 * 0.25f, damageW1);
                 }
             }
             if (charged2)
             {
                 if (chargeTimer < chargeTime * 3)
                 {
-                    NormalAttackW1(rangeW2, rangeW2 * 0.01f, damageW2);
+                    NormalAttackW1(rangeW2, rangeW2 * 0.25f, damageW2);
                 }
             }
         }
@@ -405,26 +410,26 @@ public class Weapon : MonoBehaviour
             {
                 if (chargeTimer < chargeTime * 2)
                 {
-                    NormalAttackW1(rangeW1, rangeW1 * 0.01f, damageW1);
+                    NormalAttackW1(rangeW1, rangeW1 * 0.25f, damageW1);
                 }
                 else
                 {
-                    NormalAttackW1(rangeW2, rangeW2 * 0.01f, damageW2);
+                    NormalAttackW1(rangeW2, rangeW2 * 0.25f, damageW2);
                 }
             }
         }
 
         if (chargeTimer > chargeTime + 0.5 && !charged1 && isCharging)
         {
-            NormalAttackW1(rangeW1, rangeW1 * 0.01f, damageW1);
+            NormalAttackW1(rangeW1, rangeW1 * 0.25f, damageW1);
         }
         else if (chargeTimer > chargeTime * 2 + 0.5 && charged1 && !charged2 && isCharging)
         {
-            NormalAttackW1(rangeW2, rangeW2 * 0.01f, damageW2);
+            NormalAttackW1(rangeW2, rangeW2 * 0.25f, damageW2);
         }
         else if (chargeTimer >= chargeTime * 3 && charged1 && charged2 && isCharging)
         {
-            NormalAttackW1(rangeW3, rangeW3 * 0.02f, damageW3);
+            NormalAttackW1(rangeW3, rangeW3 * 0.25f, damageW3);
         }
         
         if (isCharging)

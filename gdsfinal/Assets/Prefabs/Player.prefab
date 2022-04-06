@@ -397,15 +397,15 @@ MonoBehaviour:
   rangeW: 10
   rangeW1: 10
   rangeW2: 15
-  rangeW3: 30
+  rangeW3: 20
   moveSpeedW: 3
   moveSpeedW1: 1.5
   chargeTime: 1
   standTimeW: 0.5
   standTimeW1: 1
   bulletsW:
-  - {fileID: 2531646637473057862, guid: cc3614a27abe4ca44afa934ec273a7ec, type: 3}
-  - {fileID: 2547056815218795847, guid: 3b5160945700990498e37af847bc0a71, type: 3}
+  - {fileID: 4896306263825385891, guid: cc3614a27abe4ca44afa934ec273a7ec, type: 3}
+  - {fileID: 7169208002471941264, guid: d45954436935e4f4aa21d81e4fca983e, type: 3}
   damageE: 5
   critProbabilityE: 0.2
   critRateE: 1.5
@@ -413,7 +413,7 @@ MonoBehaviour:
   intervalE: 0.1
   reloadTimeE: 5
   bulletSpeedE: 20
-  rangeE: 20
+  rangeE: 15
   moveSpeedE: 3
   moveSpeedE1: 1.5
   preheatTimes: 5
