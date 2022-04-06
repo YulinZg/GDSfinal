@@ -20,13 +20,14 @@ public class BasicEnemy : Enemy
         canGoBack = false;
         anim = GetComponent<Animator>();
         mySprite = GetComponent<SpriteRenderer>();
-        hp = 100000;
+        //hp = 100000;
         rid = GetComponent<Rigidbody2D>();
-        dizzinessValue = 100;
+        //dizzinessValue = 100;
         moveSpeed = ownSpeed;
         isburnning = false;
         isWater = false;
         isEarth = false;
+        isLighting = false;
     }
 
     // Update is called once per frame
@@ -52,18 +53,24 @@ public class BasicEnemy : Enemy
         hp -= damage;
         damageUI damageNumber = Instantiate(damageText, transform.position + new Vector3 (Random.Range(-1, 1.5f), 0 , 0), Quaternion.identity).GetComponent<damageUI>();
         damageNumber.showUIDamage(Mathf.FloorToInt(damage));
-        if (damageType != "")
+        int rand = Random.Range(0, 100);
+        if (damageType != "" && rand >= resistance)
         {
             takenAttactk(damageType);
         }
         if (hp <= 0)
         {
             rid.simulated = false;
+            hp = 0;
             anim.Play("die");
         }
+        //Debug.LogError(hp);
 
     }
-
+    public void destroySelf()
+    {
+        Destroy(gameObject);
+    }
     public override void takenAttactk(string type)
     {
         switch (type)
@@ -73,7 +80,7 @@ public class BasicEnemy : Enemy
                 {
                     if (!isWater)
                     {
-                        burnning(3f);
+                        burnning(burnningDamage);
                         fireCoroutine.Add(StartCoroutine(DoBlinks(Color.red, 30, burnningTime / 30)));
                         isburnning = true;
                         burnningEffect.SetActive(true);
@@ -86,7 +93,7 @@ public class BasicEnemy : Enemy
                         StopCoroutine(item);
                     }
 
-                    burnning(3f);
+                    burnning(burnningDamage);
                     fireCoroutine.Add(StartCoroutine(DoBlinks(Color.red, 30, burnningTime / 30)));
                 }
                 break;
@@ -120,15 +127,21 @@ public class BasicEnemy : Enemy
             case "earth":
                 if (!isEarth)
                 {
-                    increaseDizzinessValue(2);
+                    increaseDizzinessValue(increaseDizziness);
                 }
                 break;
             case "lightning":
-                Debug.Log("lightning");
+                if (!isLighting)
+                {
+                    isLighting = true;
+                    lightingEffect.SetActive(true);
+                    StartCoroutine(continueDamage(lightningDamage, lightningTimes, lightningTime / lightningTimes, "lightning"));
+                    Debug.Log("lightning");
+                }
                 break;
             case "metal":
                 goBack(backDis);
-                Debug.Log("metal");
+                //Debug.Log("metal");
                 break;
         }
     }
@@ -200,34 +213,63 @@ public class BasicEnemy : Enemy
 
     public override void burnning(float damage)
     {
-        fireCoroutine.Add(StartCoroutine(continueDamage(damage, 6, burnningTime / 6, "fire")));
+        fireCoroutine.Add(StartCoroutine(continueDamage(damage, burnningTimes, burnningTime / burnningTimes, "fire")));
     }
 
     IEnumerator continueDamage(float damage, int damageTimes, float time, string damageType)
     {
         for (int i = 0; i < damageTimes; i++)
         {
+            if (isWater && damageType == "lightning")
+            {
+                damage += 10;
+            }
             takeDamage(damage, "");
+            if(damageType == "lightning")
+            {
+                paralysis(paralysisTime);
+            }
             yield return new WaitForSeconds(time);
         }
+        if (damageType == "lightning")
+        {
+            isLighting = false;
+            lightingEffect.SetActive(false);
+        }
+        
     }
 
     public override void goBack(float dis)
     {
-
         startPos = transform.position;
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         destination = transform.position + (mousePos - transform.position).normalized * dis;
         destination.z = 0;
         canGoBack = true;
-        //Vector3 dir = (mousePos - transform.position).normalized;
-        //Vector3 knockbackPosition = (transform.position + (mousePos - transform.position).normalized * dis); // calculation is missing here! Calculate the new position by the knockback direction 
-        //transform.position = Vector2.MoveTowards(transform.position, destination, 5 * Time.deltaTime);
-        //rid.MovePosition();
     }
     public override void move()
     {
-        //transform.position.x += moveSpeed * Time.deltaTime;
         throw new System.NotImplementedException();
+    }
+
+    public override void paralysis(float time)
+    {
+        if (isWater)
+            bigLightingEffect.SetActive(true);
+        isParalysis = true;
+        moveSpeed = 0;
+        mySprite.color = Color.yellow;
+        anim.enabled = false;
+        mySprite.sprite = paralysisSprit;
+        Invoke("cancelParalysis", time); 
+    }
+
+    private void cancelParalysis()
+    {
+        moveSpeed = ownSpeed;
+        isParalysis = false;
+        anim.enabled = true;
+        mySprite.color = Color.white;
+        bigLightingEffect.SetActive(false);
     }
 }

@@ -4,25 +4,41 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
-    [Header("debuff")]
+    [Header("Earth")]
     public float dizzinessTime;
-    public float burnningTime;
-    public float waterTime;
-    public float backDis;
     public int dizzinessValue;
-    public bool isburnning;
-    public bool isWater;
     public bool isEarth;
-    public bool isLighting;
-    public GameObject lightingEffect;
-    public GameObject burnningEffect;
-    public GameObject waterEffect;
+    public int increaseDizziness;
     public GameObject dizzinessEffect;
+    [Header("Fire")]
+    public float burnningTime;
+    public int burnningTimes;
+    public float burnningDamage;
+    public bool isburnning;
+    public GameObject burnningEffect;
+    [Header("Water")]
+    public float waterTime;
+    public bool isWater;
+    public GameObject waterEffect;
+    [Header("Lightning")]
+    public float lightningTime;
+    public int lightningTimes;
+    public float lightningDamage;
+    public bool isLighting;
+    public bool isParalysis;
+    public Sprite paralysisSprit;
+    public float paralysisTime;
+    public GameObject lightingEffect;
+    public GameObject bigLightingEffect;
+    [Header("Metal")]
+    public float backDis;
 
+    [Header("Enemy Value")]
     public float hp;
     public float moveSpeed;
+    public float resistance;
 
-    [Header("component")]
+    [Header("Component")]
     public GameObject damageText;
     public SpriteRenderer mySprite;
     public Rigidbody2D rid;
@@ -40,4 +56,6 @@ public abstract class Enemy : MonoBehaviour
     public abstract void burnning(float damge);
 
     public abstract void goBack(float dis);
+
+    public abstract void paralysis(float time);
 }
