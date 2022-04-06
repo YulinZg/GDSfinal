@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyGenerator : MonoBehaviour
 {
-    //public int numOfEnemy;
+    public int numOfEnemy;
     private int[,] map = new int[26, 14];
     //private List<GameObject> enemyArray = new List<GameObject>();
     [SerializeField]
@@ -12,7 +12,7 @@ public class EnemyGenerator : MonoBehaviour
     public void generateEnemy()
     {
         Instantiate(basicEnemy, transform.position + new Vector3(5, 7, 0), Quaternion.identity);
-        //numOfEnemy++;
+        numOfEnemy++;
         Debug.LogWarning("Enemy coming!");
     }
 
