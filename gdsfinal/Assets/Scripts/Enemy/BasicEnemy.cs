@@ -9,6 +9,7 @@ public class BasicEnemy : Enemy
     private List<Coroutine> fireCoroutine = new List<Coroutine>();
     private List<Coroutine> waterCoroutine = new List<Coroutine>();
     private List<Coroutine> earthCoroutine = new List<Coroutine>();
+    private List<Coroutine> lightningCoroutine = new List<Coroutine>();
 
     private bool canGoBack;
     private Vector3 startPos;
@@ -48,7 +49,7 @@ public class BasicEnemy : Enemy
         //TakeDamage(2);
     }
 
-    public override void takeDamage(float damage, string damageType)
+    public override void TakeDamage(float damage, string damageType)
     {
         hp -= damage;
         damageUI damageNumber = Instantiate(damageText, transform.position + new Vector3 (Random.Range(-1, 1.5f), 0 , 0), Quaternion.identity).GetComponent<damageUI>();
@@ -56,7 +57,7 @@ public class BasicEnemy : Enemy
         int rand = Random.Range(0, 100);
         if (damageType != "" && rand >= resistance)
         {
-            takenAttactk(damageType);
+            TakenAttactk(damageType);
         }
         if (hp <= 0)
         {
@@ -67,11 +68,12 @@ public class BasicEnemy : Enemy
         //Debug.LogError(hp);
 
     }
-    public void destroySelf()
+    public void DestroySelf()
     {
         Destroy(gameObject);
     }
-    public override void takenAttactk(string type)
+
+    public override void TakenAttactk(string type)
     {
         switch (type)
         {
@@ -80,7 +82,7 @@ public class BasicEnemy : Enemy
                 {
                     if (!isWater)
                     {
-                        burnning(burnningDamage);
+                        Burnning(burnningDamage);
                         fireCoroutine.Add(StartCoroutine(DoBlinks(Color.red, 30, burnningTime / 30)));
                         isburnning = true;
                         burnningEffect.SetActive(true);
@@ -93,7 +95,7 @@ public class BasicEnemy : Enemy
                         StopCoroutine(item);
                     }
 
-                    burnning(burnningDamage);
+                    Burnning(burnningDamage);
                     fireCoroutine.Add(StartCoroutine(DoBlinks(Color.red, 30, burnningTime / 30)));
                 }
                 break;
@@ -108,6 +110,7 @@ public class BasicEnemy : Enemy
                         }
                         fireCoroutine.Clear();
                         isburnning = false;
+                        burnningEffect.SetActive(false);
                     }
                     waterCoroutine.Add(StartCoroutine(DoBlinks(Color.blue, 30, waterTime / 30)));
                     moveSpeed = ownSpeed * 0.5f;
@@ -127,7 +130,7 @@ public class BasicEnemy : Enemy
             case "earth":
                 if (!isEarth)
                 {
-                    increaseDizzinessValue(increaseDizziness);
+                    IncreaseDizzinessValue(increaseDizziness);
                 }
                 break;
             case "lightning":
@@ -135,26 +138,34 @@ public class BasicEnemy : Enemy
                 {
                     isLighting = true;
                     lightingEffect.SetActive(true);
-                    StartCoroutine(continueDamage(lightningDamage, lightningTimes, lightningTime / lightningTimes, "lightning"));
+                    StartCoroutine(ContinueDamage(lightningDamage, lightningTimes, lightningTime / lightningTimes, "lightning"));
                     Debug.Log("lightning");
+                }
+                else
+                {
+                    foreach (Coroutine item in lightningCoroutine)
+                    {
+                        StopCoroutine(item);
+                    }
+                    lightningCoroutine.Add(StartCoroutine(ContinueDamage(lightningDamage, lightningTimes, lightningTime / lightningTimes, "lightning")));
                 }
                 break;
             case "metal":
-                goBack(backDis);
+                GoBack(backDis);
                 //Debug.Log("metal");
                 break;
         }
     }
 
-    private void increaseDizzinessValue(int value)
+    private void IncreaseDizzinessValue(int value)
     {
         ownDizzinessValue += value;
         if (ownDizzinessValue >= dizzinessValue)
         {
-            dizziness();
+            Dizziness();
         }
     }
-    public override void dizziness()
+    public override void Dizziness()
     {
         isEarth = true;
         earthCoroutine.Add(StartCoroutine(DoBlinks(new Color(1, 1, 1, 0), 30, dizzinessTime / 30)));
@@ -163,7 +174,7 @@ public class BasicEnemy : Enemy
         Debug.Log("earth");
     }
 
-    public override void exitDizziness()
+    public override void ExitDizziness()
     {
         foreach (Coroutine item in earthCoroutine)
         {
@@ -205,18 +216,18 @@ public class BasicEnemy : Enemy
         }
         else if (blinkColor == new Color(1, 1, 1, 0))
         {
-            exitDizziness();
+            ExitDizziness();
         }
 
         //Debug.LogError(moveSpeed);
     }
 
-    public override void burnning(float damage)
+    public override void Burnning(float damage)
     {
-        fireCoroutine.Add(StartCoroutine(continueDamage(damage, burnningTimes, burnningTime / burnningTimes, "fire")));
+        fireCoroutine.Add(StartCoroutine(ContinueDamage(damage, burnningTimes, burnningTime / burnningTimes, "fire")));
     }
 
-    IEnumerator continueDamage(float damage, int damageTimes, float time, string damageType)
+    IEnumerator ContinueDamage(float damage, int damageTimes, float time, string damageType)
     {
         for (int i = 0; i < damageTimes; i++)
         {
@@ -224,10 +235,10 @@ public class BasicEnemy : Enemy
             {
                 damage += 10;
             }
-            takeDamage(damage, "");
+            TakeDamage(damage, "");
             if(damageType == "lightning")
             {
-                paralysis(paralysisTime);
+                Paralysis(paralysisTime);
             }
             yield return new WaitForSeconds(time);
         }
@@ -235,11 +246,11 @@ public class BasicEnemy : Enemy
         {
             isLighting = false;
             lightingEffect.SetActive(false);
+            lightningCoroutine.Clear();
         }
-        
     }
 
-    public override void goBack(float dis)
+    public override void GoBack(float dis)
     {
         startPos = transform.position;
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -247,12 +258,12 @@ public class BasicEnemy : Enemy
         destination.z = 0;
         canGoBack = true;
     }
-    public override void move()
+    public override void Move()
     {
         throw new System.NotImplementedException();
     }
 
-    public override void paralysis(float time)
+    public override void Paralysis(float time)
     {
         if (isWater)
             bigLightingEffect.SetActive(true);
@@ -261,10 +272,10 @@ public class BasicEnemy : Enemy
         mySprite.color = Color.yellow;
         anim.enabled = false;
         mySprite.sprite = paralysisSprit;
-        Invoke("cancelParalysis", time); 
+        Invoke(nameof(CancelParalysis), time); 
     }
 
-    private void cancelParalysis()
+    private void CancelParalysis()
     {
         moveSpeed = ownSpeed;
         isParalysis = false;

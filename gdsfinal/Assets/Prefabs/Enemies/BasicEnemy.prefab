@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 349566089}
   - component: {fileID: 349566091}
   - component: {fileID: 349566090}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: electricDebuff
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 520462054}
   - component: {fileID: 520462056}
   - component: {fileID: 520462055}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: 06 0 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -215,7 +215,7 @@ GameObject:
   - component: {fileID: 1379417897}
   - component: {fileID: 1379417899}
   - component: {fileID: 1379417898}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: 06 0 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -315,7 +315,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1646749438}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: fireDebuff
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -350,7 +350,7 @@ GameObject:
   - component: {fileID: 1763444287}
   - component: {fileID: 1763444286}
   - component: {fileID: 1763444285}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: 06 0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -452,7 +452,7 @@ GameObject:
   - component: {fileID: 1772258348}
   - component: {fileID: 1772258350}
   - component: {fileID: 1772258349}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: 01 0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -553,7 +553,7 @@ GameObject:
   m_Component:
   - component: {fileID: 207990867920897212}
   - component: {fileID: 207990867920897203}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -639,7 +639,7 @@ GameObject:
   - component: {fileID: -7151914493289304812}
   - component: {fileID: 8983591604089493673}
   - component: {fileID: 4086279697263165523}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BasicEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -654,7 +654,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 207990868200254069}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.15, y: -0.18656205, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 207990867920897212}
@@ -747,11 +747,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c171ac3cb233ce4abed38db9a59383b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dizzinessTime: 1
-  dizzinessValue: 100
-  isEarth: 0
-  increaseDizziness: 2
-  dizzinessEffect: {fileID: 0}
   burnningTime: 3
   burnningTimes: 6
   burnningDamage: 10
@@ -760,6 +755,11 @@ MonoBehaviour:
   waterTime: 3
   isWater: 0
   waterEffect: {fileID: 1772258347}
+  dizzinessTime: 1
+  dizzinessValue: 100
+  isEarth: 0
+  increaseDizziness: 2
+  dizzinessEffect: {fileID: 0}
   lightningTime: 5
   lightningTimes: 3
   lightningDamage: 8
@@ -770,7 +770,7 @@ MonoBehaviour:
   lightingEffect: {fileID: 349566088}
   bigLightingEffect: {fileID: 1125999590010443551}
   backDis: 5
-  hp: 100
+  hp: 1000
   moveSpeed: 0
   resistance: 0
   damageText: {fileID: 4318804278247988162, guid: d8ab669f8ef30064497cad64bd4f4f2f, type: 3}
@@ -790,7 +790,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.011358738, y: 0.35527578}
+  m_Offset: {x: 0, y: 0.35}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -801,7 +801,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.0741377, y: 0.71055156}
+  m_Size: {x: 1, y: 0.7}
   m_EdgeRadius: 0
 --- !u!50 &4086279697263165523
 Rigidbody2D:
@@ -834,6 +834,10 @@ PrefabInstance:
     - target: {fileID: 955524252249327304, guid: 6b7701bbf9117db4896e8d3a083f7c37, type: 3}
       propertyPath: m_Name
       value: Electric_10
+      objectReference: {fileID: 0}
+    - target: {fileID: 955524252249327304, guid: 6b7701bbf9117db4896e8d3a083f7c37, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 955524252249327305, guid: 6b7701bbf9117db4896e8d3a083f7c37, type: 3}
       propertyPath: m_RootOrder

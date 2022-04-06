@@ -4,22 +4,26 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
-    [Header("Earth")]
-    public float dizzinessTime;
-    public int dizzinessValue;
-    public bool isEarth;
-    public int increaseDizziness;
-    public GameObject dizzinessEffect;
+
     [Header("Fire")]
     public float burnningTime;
     public int burnningTimes;
     public float burnningDamage;
     public bool isburnning;
     public GameObject burnningEffect;
+
     [Header("Water")]
     public float waterTime;
     public bool isWater;
     public GameObject waterEffect;
+
+    [Header("Earth")]
+    public float dizzinessTime;
+    public int dizzinessValue;
+    public bool isEarth;
+    public int increaseDizziness;
+    public GameObject dizzinessEffect;
+
     [Header("Lightning")]
     public float lightningTime;
     public int lightningTimes;
@@ -30,6 +34,7 @@ public abstract class Enemy : MonoBehaviour
     public float paralysisTime;
     public GameObject lightingEffect;
     public GameObject bigLightingEffect;
+
     [Header("Metal")]
     public float backDis;
 
@@ -46,16 +51,16 @@ public abstract class Enemy : MonoBehaviour
    
     //public Weapon playerWeapon;
     //public enum BeAttackedType { fire, water, earth, thunder, metal }
-    public abstract void takeDamage(float damage, string damageType);
-    public abstract void dizziness();
-    public abstract void exitDizziness();
-    public abstract void move();
+    public abstract void TakeDamage(float damage, string damageType);
+    public abstract void Dizziness();
+    public abstract void ExitDizziness();
+    public abstract void Move();
 
-    public abstract void takenAttactk(string type);
+    public abstract void TakenAttactk(string type);
 
-    public abstract void burnning(float damge);
+    public abstract void Burnning(float damge);
 
-    public abstract void goBack(float dis);
+    public abstract void GoBack(float dis);
 
-    public abstract void paralysis(float time);
+    public abstract void Paralysis(float time);
 }
