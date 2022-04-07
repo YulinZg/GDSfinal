@@ -122,7 +122,7 @@ public class Weapon : MonoBehaviour
     private bool canCombo = false;
     private bool leftDown = false;
     private bool rightDown = false;
-
+    private int lastClick = 0;
 
     private void Awake()
     {
@@ -198,6 +198,7 @@ public class Weapon : MonoBehaviour
                 canCombo = false;
                 leftDown = false;
                 rightDown = false;
+                lastClick = 0;
                 break;
         }
         if (bulletRotater.transform.childCount > 0)
@@ -604,8 +605,6 @@ public class Weapon : MonoBehaviour
             {
                 canCombo = false;
                 comboTimer = 0;
-                leftDown = false;
-                rightDown = false;
                 comboCount = 0;
             }
             if (Input.GetMouseButtonDown(0))
@@ -711,15 +710,24 @@ public class Weapon : MonoBehaviour
                 break;
             case 1:
                 if (leftDown)
+                {
+                    lastClick = 1;
                     NormalAttackM01();
+                }
                 else if (rightDown)
+                {
+                    lastClick = 2;
                     NormalAttackM11();
+                }
                 break;
             case 2:
-                if (leftDown)
+                if (leftDown && lastClick == 2)
                     NormalAttackM02();
-                else if (rightDown)
+                else if (rightDown && lastClick == 1)
                     NormalAttackM12();
+                lastClick = 0;
+                comboCount = 0;
+                player.SetSpeed(moveSpeedM);
                 break;
         }
         leftDown = false;

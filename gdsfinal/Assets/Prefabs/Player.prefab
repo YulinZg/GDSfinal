@@ -434,11 +434,11 @@ MonoBehaviour:
   bulletsL:
   - {fileID: 3424080037288897046, guid: b8610db4bf6dcfd49801aedb00397a6c, type: 3}
   - {fileID: 5866497586695878717, guid: 8ee3ba1e91eadf344a636aad453c6212, type: 3}
-  damageM0: 30
-  damageM1: 40
-  damageM2: 50
-  damageM3: 50
-  damageM4: 30
+  damageM0: 20
+  damageM1: 30
+  damageM2: 40
+  damageM3: 30
+  damageM4: 20
   damageM5: 100
   critProbabilityM: 0.5
   critRateM: 1.5
