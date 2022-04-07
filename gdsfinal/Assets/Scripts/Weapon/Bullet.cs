@@ -75,16 +75,21 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        HitEnemy(collision);
+    }
+
+    public void HitEnemy(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Enemy"))
         {
             switch (type)
             {
                 case BulletType.normal:
-                    Hit(collision.gameObject);
+                    Hit(col.gameObject);
                     Destroy(gameObject);
                     break;
                 case BulletType.penetrable:
-                    Hit(collision.gameObject);
+                    Hit(col.gameObject);
                     break;
                 case BulletType.explode:
                     GameObject bulletInstance = Instantiate(explosion, transform.position, Quaternion.identity);

@@ -438,13 +438,12 @@ MonoBehaviour:
   critProbabilityM: 0.5
   critRateM: 1.5
   intervalM: 0.3
-  rangeM: 1.5
+  rangeM: 1
   moveSpeedM: 5
-  attackAngle: 60
-  attackTime: 0.3
-  attackTime1: 0.5
   bulletsM:
-  - {fileID: 9037767510273740695, guid: 7d29d23692853804c9fed2854db1846c, type: 3}
+  - {fileID: 8863458536095413964, guid: aff20e241ec0e3b459d0c283c4cc667f, type: 3}
+  - {fileID: 1448791491170086823, guid: 1732463cb0ef83545bb633bd1a7b50e4, type: 3}
+  - {fileID: 391417019922150648, guid: d52f124ea26879542b25319a7655c180, type: 3}
 --- !u!114 &2741019207210238514
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -110,12 +110,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float intervalM;
     [SerializeField] private float rangeM;
     [SerializeField] private float moveSpeedM;
-    [SerializeField] private float attackAngle;
-    [SerializeField] private float attackTime;
-    [SerializeField] private float attackTime1;
     [SerializeField] private GameObject[] bulletsM;
-    private bool isCombating = false;
-    private float attackSpeed = 0;
 
     private void Awake()
     {
@@ -189,7 +184,6 @@ public class Weapon : MonoBehaviour
                 break;
             case Property.metal:
                 player.SetSpeed(moveSpeedM);
-                isCombating = false;
                 break;
         }
         if (bulletRotater.transform.childCount > 0)
@@ -587,39 +581,58 @@ public class Weapon : MonoBehaviour
 
     void Metal()
     {
-        if (Input.GetMouseButtonDown(0) && !isCombating)
+        if (Input.GetMouseButtonDown(0))
         {
             if (shootTimer >= intervalM)
             {
-                NormalAttackM(attackAngle, attackTime);
+                NormalAttackM02();
                 shootTimer = 0;
             }
         }
-        if (isCombating)
-        {
-            RotateBullet(attackSpeed);
-        }
     }
 
-    void NormalAttackM(float angle, float time)
+    void SetPlayerCanInput()
     {
-        isCombating = true;
+        player.canInput = true;
+    }
+
+    void NormalAttackM00()
+    {
         player.canInput = false;
         GameObject bulletInstance = Instantiate(bulletsM[0], transform.position, Quaternion.identity);
         bulletInstance.GetComponent<Bullet>().Setup(
-            RotateVector(MouseDir(), -angle), 0, damageM, critProbabilityM, critRateM, time, Bullet.BulletType.penetrable);
-        bulletInstance.transform.localScale = new Vector3(rangeM, rangeM / bulletInstance.transform.localScale.x * bulletInstance.transform.localScale.y, 1);
-        bulletInstance.transform.parent = bulletRotater.transform;
-        attackSpeed = angle * 2 / time;
-        Invoke(nameof(SetNotCombating), time);
+            MouseDir(), 0, damageM, critProbabilityM, critRateM, 0.25f, Bullet.BulletType.penetrable);
+        bulletInstance.transform.localScale = new Vector3(rangeM, rangeM, 1);
+        bulletInstance.transform.parent = transform;
         player.isAttacking = true;
-        Invoke(nameof(SetPlayerAttackingFalse), time);
+        Invoke(nameof(SetPlayerAttackingFalse), 0.25f);
+        StartCoroutine(StandAttack(0.25f, moveSpeedM));
     }
 
-    void SetNotCombating()
+    void NormalAttackM01()
     {
-        isCombating = false;
-        player.canInput = true;
+        player.canInput = false;
+        GameObject bulletInstance = Instantiate(bulletsM[1], transform.position, Quaternion.identity);
+        bulletInstance.GetComponent<Bullet>().Setup(
+            MouseDir(), 0, damageM, critProbabilityM, critRateM, 0.3f, Bullet.BulletType.penetrable);
+        bulletInstance.transform.localScale = new Vector3(rangeM, rangeM, 1);
+        bulletInstance.transform.parent = transform;
+        player.isAttacking = true;
+        Invoke(nameof(SetPlayerAttackingFalse), 0.3f);
+        StartCoroutine(StandAttack(0.3f, moveSpeedM));
+    }
+
+    void NormalAttackM02()
+    {
+        player.canInput = false;
+        GameObject bulletInstance = Instantiate(bulletsM[2], transform.position, Quaternion.identity);
+        bulletInstance.GetComponent<Bullet>().Setup(
+            MouseDir(), 0, damageM, critProbabilityM, critRateM, 1.05f, Bullet.BulletType.penetrable);
+        bulletInstance.transform.localScale = new Vector3(rangeM, rangeM, 1);
+        bulletInstance.transform.parent = transform;
+        player.isAttacking = true;
+        Invoke(nameof(SetPlayerAttackingFalse), 1.05f);
+        StartCoroutine(StandAttack(1.05f, moveSpeedM));
     }
 
     //Metal////////////////////////////////////////////////////////////////////////////////////////////////////////////
