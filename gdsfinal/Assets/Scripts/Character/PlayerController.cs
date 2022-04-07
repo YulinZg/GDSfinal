@@ -83,6 +83,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        mouseDir = ((Vector2)mousePos - (Vector2)transform.position).normalized;
         Move();
         RotateArrow();
     }
@@ -136,7 +137,6 @@ public class PlayerController : MonoBehaviour
     {
         if (canRotate)
         {
-            mouseDir = (mousePos - transform.position).normalized;
             float angle = Mathf.Atan2(mouseDir.y, mouseDir.x) * Mathf.Rad2Deg;
             arrow.transform.rotation = Quaternion.Euler(0, 0, angle);
         }
@@ -145,5 +145,30 @@ public class PlayerController : MonoBehaviour
     public void SetSpeed(float s)
     {
         speed = s;
+    }
+
+    IEnumerator DoDash(Vector3 dir, float distance, float time, float resetSpeed, bool setBack, bool rotate)
+    {
+        float timer = 0;
+        speed = 0;
+        canInput = false;
+        canRotate = rotate;
+        isAttacking = true;
+        Vector3 start = transform.position;
+        while (timer < time - Time.fixedDeltaTime)
+        {
+            rigid.MovePosition(Vector3.Lerp(start, start + dir * distance, timer/ time));
+            timer += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        isAttacking = !setBack;
+        speed = resetSpeed;
+        canInput = setBack;
+        canRotate = setBack;
+    }
+
+    public void Dash(Vector3 dir, float distance, float time, float resetSpeed, bool setBack, bool rotate)
+    {
+        StartCoroutine(DoDash(dir, distance, time, resetSpeed, setBack, rotate));
     }
 }

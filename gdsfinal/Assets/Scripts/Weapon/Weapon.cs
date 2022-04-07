@@ -104,13 +104,25 @@ public class Weapon : MonoBehaviour
     private int currentMaganizeL;
 
     [Header("Metal")]
-    [SerializeField] private float damageM;
+    [SerializeField] private float damageM0;
+    [SerializeField] private float damageM1;
+    [SerializeField] private float damageM2;
+    [SerializeField] private float damageM3;
+    [SerializeField] private float damageM4;
+    [SerializeField] private float damageM5;
     [SerializeField] private float critProbabilityM;
     [SerializeField] private float critRateM;
     [SerializeField] private float intervalM;
     [SerializeField] private float rangeM;
     [SerializeField] private float moveSpeedM;
     [SerializeField] private GameObject[] bulletsM;
+    private bool isCombating = false;
+    private int comboCount = 0;
+    private float comboTimer = 0;
+    private bool canCombo = false;
+    private bool leftDown = false;
+    private bool rightDown = false;
+
 
     private void Awake()
     {
@@ -133,10 +145,6 @@ public class Weapon : MonoBehaviour
         if (!isAttacking && !isReloading && (Input.GetKeyDown(KeyCode.R)
             || currentMaganizeF == 0 || currentMaganizeW == 0 || currentMaganizeE == 0 || currentMaganizeL == 0))
             StartCoroutine(Reload());
-    }
-
-    private void LateUpdate()
-    {
         switch (property)
         {
             case Property.fire:
@@ -184,6 +192,12 @@ public class Weapon : MonoBehaviour
                 break;
             case Property.metal:
                 player.SetSpeed(moveSpeedM);
+                isCombating = false;
+                comboCount = 0;
+                comboTimer = 0;
+                canCombo = false;
+                leftDown = false;
+                rightDown = false;
                 break;
         }
         if (bulletRotater.transform.childCount > 0)
@@ -217,14 +231,16 @@ public class Weapon : MonoBehaviour
         return transform.position + MouseDir() * distance;
     }
 
-    IEnumerator StandAttack(float time, float speed)
+    IEnumerator StandAttack(float time, float speed, bool canRotate)
     {
+        yield return null;
+        yield return null;
         isAttacking = true;
         player.canInput = false;
-        player.canRotate = false;
+        player.canRotate = canRotate;
         player.isAttacking = true;
         player.SetSpeed(0);
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSeconds(time - Time.deltaTime * 3);
         player.SetSpeed(speed);
         player.isAttacking = false;
         player.canRotate = true;
@@ -349,7 +365,7 @@ public class Weapon : MonoBehaviour
                     Direction(Camera.main.ScreenToWorldPoint(Input.mousePosition), child.position), bulletSpeedF, damageF, critProbabilityF, critRateF, rangeF / bulletSpeedF, Bullet.BulletType.normal);
                 Destroy(child.gameObject);
             }
-            StartCoroutine(StandAttack(standTimeF, moveSpeedF));
+            StartCoroutine(StandAttack(standTimeF, moveSpeedF, false));
         }
     }
 
@@ -446,7 +462,7 @@ public class Weapon : MonoBehaviour
         bulletInstance = Instantiate(bulletsW[0], ShootPos(shootOffset), Quaternion.identity);
         bulletInstance.GetComponent<Bullet>().Setup(
             MouseDir(), bulletSpeedW, damageW, critProbabilityW, critRateW, rangeW / bulletSpeedW, Bullet.BulletType.normal);
-        StartCoroutine(StandAttack(standTimeW, moveSpeedW));
+        StartCoroutine(StandAttack(standTimeW, moveSpeedW, false));
     }
 
     void NormalAttackW1(float rangeY, float rangeX, float damage)
@@ -462,7 +478,7 @@ public class Weapon : MonoBehaviour
         bulletInstance.GetComponent<Bullet>().Setup(
             MouseDir(), 0, damage, critProbabilityW, critRateW, standTimeW1, Bullet.BulletType.penetrable);
         bulletInstance.transform.localScale = new Vector3(rangeY, rangeX, 1);
-        StartCoroutine(StandAttack(standTimeW1, moveSpeedW));
+        StartCoroutine(StandAttack(standTimeW1, moveSpeedW, false));
     }
 
     //Water////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -572,7 +588,7 @@ public class Weapon : MonoBehaviour
                 bulletInstance.transform.localScale = new Vector3(Vector3.Distance(child.position, transform.position), 2, 1);
                 Destroy(child.gameObject);
             }
-            StartCoroutine(StandAttack(standTimeL, moveSpeedL));
+            StartCoroutine(StandAttack(standTimeL, moveSpeedL, false));
         }
     }
 
@@ -581,58 +597,212 @@ public class Weapon : MonoBehaviour
 
     void Metal()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (canCombo)
         {
-            if (shootTimer >= intervalM)
+            comboTimer += Time.deltaTime;
+            if (comboTimer > intervalM * 2)
             {
-                NormalAttackM02();
-                shootTimer = 0;
+                canCombo = false;
+                comboTimer = 0;
+                leftDown = false;
+                rightDown = false;
+                comboCount = 0;
+            }
+            if (Input.GetMouseButtonDown(0))
+            {
+                leftDown = true;
+                rightDown = false;
+                canCombo = false;
+                comboTimer = 0;
+            }
+            else if (Input.GetMouseButtonDown(1))
+            {
+                leftDown = false;
+                rightDown = true;
+                canCombo = false;
+                comboTimer = 0;
             }
         }
-    }
-
-    void SetPlayerCanInput()
-    {
-        player.canInput = true;
+        else if (!leftDown && !rightDown)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                NormalAttackM00();
+            }
+            else if (Input.GetMouseButtonDown(1))
+            {
+                NormalAttackM10();
+            }
+        }
+        if (!isCombating && (leftDown || rightDown))
+            Combo();
     }
 
     void NormalAttackM00()
     {
-        player.canInput = false;
-        GameObject bulletInstance = Instantiate(bulletsM[0], transform.position, Quaternion.identity);
-        bulletInstance.GetComponent<Bullet>().Setup(
-            MouseDir(), 0, damageM, critProbabilityM, critRateM, 0.25f, Bullet.BulletType.penetrable);
-        bulletInstance.transform.localScale = new Vector3(rangeM, rangeM, 1);
-        bulletInstance.transform.parent = transform;
-        player.isAttacking = true;
-        Invoke(nameof(SetPlayerAttackingFalse), 0.25f);
-        StartCoroutine(StandAttack(0.25f, moveSpeedM));
+        if (!isCombating)
+        {
+            StartCoroutine(NormalAttackM0(0.35f, 0, damageM0));
+            StartCoroutine(SetCombo(0.35f));
+            comboCount++;
+        }
     }
 
     void NormalAttackM01()
     {
-        player.canInput = false;
-        GameObject bulletInstance = Instantiate(bulletsM[1], transform.position, Quaternion.identity);
-        bulletInstance.GetComponent<Bullet>().Setup(
-            MouseDir(), 0, damageM, critProbabilityM, critRateM, 0.3f, Bullet.BulletType.penetrable);
-        bulletInstance.transform.localScale = new Vector3(rangeM, rangeM, 1);
-        bulletInstance.transform.parent = transform;
-        player.isAttacking = true;
-        Invoke(nameof(SetPlayerAttackingFalse), 0.3f);
-        StartCoroutine(StandAttack(0.3f, moveSpeedM));
+        if (!isCombating)
+        {
+            StartCoroutine(NormalAttackM0(0.4f, 1, damageM1));
+            StartCoroutine(SetCombo(0.4f));
+            comboCount++;
+        }
     }
 
     void NormalAttackM02()
     {
-        player.canInput = false;
-        GameObject bulletInstance = Instantiate(bulletsM[2], transform.position, Quaternion.identity);
+        if (!isCombating)
+        {
+            StartCoroutine(NormalAttackM0(1f, 2, damageM2));
+            StartCoroutine(SetCombo(1f));
+            comboCount = 0;
+        }
+    }
+
+    void NormalAttackM10()
+    {
+        if (!isCombating)
+        {
+            StartCoroutine(NormalAttackM1());
+            StartCoroutine(SetCombo(0.5f));
+            comboCount++;
+        }
+    }
+
+    void NormalAttackM11()
+    {
+        if (!isCombating)
+        {
+            StartCoroutine(NormalAttackM2());
+            StartCoroutine(SetCombo(0.5f));
+            comboCount++;
+        }
+    }
+
+    void NormalAttackM12()
+    {
+        if (!isCombating)
+        {
+            StartCoroutine(NormalAttackM3());
+            StartCoroutine(SetCombo(1f));
+            comboCount = 0;
+        }
+    }
+
+    void Combo()
+    {
+        player.SetSpeed(0);
+        switch (comboCount)
+        {
+            case 0:
+                if (leftDown)
+                    NormalAttackM00();
+                else if(rightDown)
+                    NormalAttackM10();
+                break;
+            case 1:
+                if (leftDown)
+                    NormalAttackM01();
+                else if (rightDown)
+                    NormalAttackM11();
+                break;
+            case 2:
+                if (leftDown)
+                    NormalAttackM02();
+                else if (rightDown)
+                    NormalAttackM12();
+                break;
+        }
+        leftDown = false;
+        rightDown = false;
+    }
+
+    IEnumerator SetCombo(float time)
+    {
+        leftDown = false;
+        rightDown = false;
+        canCombo = false;
+        yield return new WaitForSeconds(time - intervalM);
+        canCombo = true;
+    }
+
+    IEnumerator NormalAttackM0(float time, int bulletNo, float damage)
+    {
+        StartCoroutine(StandAttack(time, moveSpeedM, true));
+        isCombating = true;
+        GameObject bulletInstance = Instantiate(bulletsM[bulletNo], transform.position, Quaternion.identity);
         bulletInstance.GetComponent<Bullet>().Setup(
-            MouseDir(), 0, damageM, critProbabilityM, critRateM, 1.05f, Bullet.BulletType.penetrable);
+            MouseDir(), 0, damage, critProbabilityM, critRateM, time, Bullet.BulletType.penetrable);
         bulletInstance.transform.localScale = new Vector3(rangeM, rangeM, 1);
         bulletInstance.transform.parent = transform;
-        player.isAttacking = true;
-        Invoke(nameof(SetPlayerAttackingFalse), 1.05f);
-        StartCoroutine(StandAttack(1.05f, moveSpeedM));
+        yield return new WaitForSeconds(time);
+        isCombating = false;
+    }
+
+    IEnumerator NormalAttackM1()
+    {
+        StartCoroutine(StandAttack(0.25f, 0, true));
+        isCombating = true;
+        Vector3 dir = MouseDir();
+        GameObject bulletInstance = Instantiate(bulletsM[3], ShootPos(shootOffset), Quaternion.identity);
+        bulletInstance.GetComponent<Bullet>().Setup(
+            dir, 0, damageM3, critProbabilityM, critRateM, 0.5f, Bullet.BulletType.penetrable);
+        bulletInstance.transform.localScale = new Vector3(rangeM, rangeM, 1);
+        yield return new WaitForSeconds(0.25f);
+        player.Dash(dir, 2.0f * rangeM, 0.25f, MoveSpeedM(), true, true);
+        yield return new WaitForSeconds(0.25f);
+        isCombating = false;
+    }
+
+    IEnumerator NormalAttackM2()
+    {
+        isCombating = true;
+        Vector3 dir = MouseDir();
+        GameObject bulletInstance = Instantiate(bulletsM[4], ShootPos(shootOffset), Quaternion.identity);
+        bulletInstance.GetComponent<Bullet>().Setup(
+            dir, 0, damageM4, critProbabilityM, critRateM, 0.5f, Bullet.BulletType.penetrable);
+        bulletInstance.transform.localScale = new Vector3(rangeM, rangeM, 1);
+        player.Dash(dir, 1.0f * rangeM, 0.17f, 0, false, true);
+        yield return new WaitForSeconds(0.17f);
+        StartCoroutine(StandAttack(0.16f, 0, true));
+        yield return new WaitForSeconds(0.16f);
+        player.Dash(dir, 1.0f * rangeM, 0.17f, MoveSpeedM(), true, true);
+        yield return new WaitForSeconds(0.17f);
+        isCombating = false;
+    }
+
+    IEnumerator NormalAttackM3()
+    {
+        StartCoroutine(StandAttack(0.62f, 0, true));
+        isCombating = true;
+        Vector3 dir = MouseDir();
+        GameObject bulletInstance = Instantiate(bulletsM[5], ShootPos(shootOffset), Quaternion.identity);
+        bulletInstance.GetComponent<Bullet>().Setup(
+            dir, 0, damageM5, critProbabilityM, critRateM, 1f, Bullet.BulletType.penetrable);
+        bulletInstance.transform.localScale = new Vector3(rangeM, rangeM, 1);
+        yield return new WaitForSeconds(0.62f);
+        player.Dash(dir, 3.5f * rangeM, 0.23f, 0, false, true);
+        yield return new WaitForSeconds(0.23f);
+        StartCoroutine(StandAttack(0.15f, moveSpeedM, true));
+        yield return new WaitForSeconds(0.15f);
+        isCombating = false;
+    }
+
+    float MoveSpeedM()
+    {
+        if (leftDown || rightDown)
+            return 0;
+        else
+            return moveSpeedM;
     }
 
     //Metal////////////////////////////////////////////////////////////////////////////////////////////////////////////
