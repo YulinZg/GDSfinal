@@ -365,7 +365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   property: 0
-  shootOffset: 0.25
+  shootOffset: 0.5
   bulletRotater: {fileID: 1095739407213342471}
   bulletsInWorld: {fileID: 0}
   damageF: 10
@@ -397,15 +397,15 @@ MonoBehaviour:
   rangeW: 10
   rangeW1: 10
   rangeW2: 15
-  rangeW3: 30
+  rangeW3: 20
   moveSpeedW: 3
   moveSpeedW1: 1.5
   chargeTime: 1
   standTimeW: 0.5
   standTimeW1: 1
   bulletsW:
-  - {fileID: 2531646637473057862, guid: cc3614a27abe4ca44afa934ec273a7ec, type: 3}
-  - {fileID: 2547056815218795847, guid: 3b5160945700990498e37af847bc0a71, type: 3}
+  - {fileID: 4896306263825385891, guid: cc3614a27abe4ca44afa934ec273a7ec, type: 3}
+  - {fileID: 7169208002471941264, guid: d45954436935e4f4aa21d81e4fca983e, type: 3}
   damageE: 5
   critProbabilityE: 0.2
   critRateE: 1.5
@@ -413,7 +413,7 @@ MonoBehaviour:
   intervalE: 0.1
   reloadTimeE: 5
   bulletSpeedE: 20
-  rangeE: 20
+  rangeE: 15
   moveSpeedE: 3
   moveSpeedE1: 1.5
   preheatTimes: 5
@@ -434,17 +434,24 @@ MonoBehaviour:
   bulletsL:
   - {fileID: 3424080037288897046, guid: b8610db4bf6dcfd49801aedb00397a6c, type: 3}
   - {fileID: 5866497586695878717, guid: 8ee3ba1e91eadf344a636aad453c6212, type: 3}
-  damageM: 50
+  damageM0: 20
+  damageM1: 30
+  damageM2: 40
+  damageM3: 30
+  damageM4: 20
+  damageM5: 100
   critProbabilityM: 0.5
   critRateM: 1.5
-  intervalM: 0.3
-  rangeM: 1.5
+  intervalM: 0.25
+  rangeM: 1
   moveSpeedM: 5
-  attackAngle: 60
-  attackTime: 0.3
-  attackTime1: 0.5
   bulletsM:
-  - {fileID: 9037767510273740695, guid: 7d29d23692853804c9fed2854db1846c, type: 3}
+  - {fileID: 8863458536095413964, guid: aff20e241ec0e3b459d0c283c4cc667f, type: 3}
+  - {fileID: 1448791491170086823, guid: 1732463cb0ef83545bb633bd1a7b50e4, type: 3}
+  - {fileID: 391417019922150648, guid: d52f124ea26879542b25319a7655c180, type: 3}
+  - {fileID: 1017864019808257222, guid: fd1cb4a1df0e8834ab227b408cb07e4a, type: 3}
+  - {fileID: 3201939229812467401, guid: 1675a3ab658a388419f1e7b97fbcf369, type: 3}
+  - {fileID: 4652189084665895369, guid: acb1df547825df241995822f974ad73d, type: 3}
 --- !u!114 &2741019207210238514
 MonoBehaviour:
   m_ObjectHideFlags: 0
