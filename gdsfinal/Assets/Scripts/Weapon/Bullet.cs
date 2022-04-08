@@ -31,6 +31,27 @@ public class Bullet : MonoBehaviour
     private GameObject explosion;
     private float explosionRange;
 
+    //Fire
+    private float burnDamage;
+    private float burnTime;
+    private float burnInterval;
+
+    //Water
+    private float decelerateRate;
+    private float decelerateTime;
+
+    //Earth
+    private float stunValue;
+    private float stunTime;
+
+    //Lightning
+    private float palsyDamage;
+    private float palsyTime;
+    private float palsyInterval;
+
+    //Metal
+    private float repelDistance;
+
     // Update is called once per frame
     void Update()
     {
@@ -47,6 +68,37 @@ public class Bullet : MonoBehaviour
         critProbability = bulletCritProbability;
         critRate = bulletCritRate;
         Destroy(gameObject, bulletLifetime);
+    }
+
+    public void SetBurn(float damdge, float time, float interval)
+    {
+        burnDamage = damdge;
+        burnTime = time;
+        burnInterval = interval;
+    }
+
+    public void SetDecelerate(float rate, float time)
+    {
+        decelerateRate = rate;
+        decelerateTime = time;
+    }
+
+    public void SetStun(float value, float time)
+    {
+        stunValue = value;
+        stunTime = time;
+    }
+
+    public void SetPalsy(float damage, float time, float interval)
+    {
+        palsyDamage = damage;
+        palsyTime = time;
+        palsyInterval = interval;
+    }
+
+    public void SetRepel(float distance)
+    {
+        repelDistance = distance;
     }
 
     public void SetFire(float range)
@@ -101,11 +153,30 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    private void Hit(GameObject enemy)
+    private void Hit(GameObject e)
     {
+        Enemy enemy = e.GetComponent<Enemy>();
         int i = Random.Range(0, 100);
         if (i < 100 * critProbability)
             damage *= critRate;
-        enemy.GetComponent<Enemy>().TakeDamage(Mathf.Floor(damage * Random.Range(0.9f, 1.1f)), property.ToString());
+        enemy.TakeDamage(damage * Random.Range(0.9f, 1.1f));
+        switch (property)
+        {
+            case BulletProperty.fire:
+                enemy.Burn(burnDamage, burnTime, burnInterval);
+                break;
+            case BulletProperty.water:
+                enemy.Decelerate(decelerateRate, decelerateTime);
+                break;
+            case BulletProperty.earth:
+                enemy.Stun(stunValue, stunTime);
+                break;
+            case BulletProperty.lightning:
+                enemy.Palsy(palsyDamage, palsyTime, palsyInterval);
+                break;
+            case BulletProperty.metal:
+                enemy.Repel(repelDistance);
+                break;
+        }
     }
 }

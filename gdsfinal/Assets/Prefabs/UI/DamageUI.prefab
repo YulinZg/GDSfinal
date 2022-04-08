@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3914492154957105345}
   - component: {fileID: 1356473301}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: DamageUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -83,7 +83,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &3914492154957105345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damgeText: {fileID: 7309913798072698747}
-  lifeTimer: 1
+  lifeTime: 0.5
   upSpeed: 2
 --- !u!1 &7438548284339960095
 GameObject:

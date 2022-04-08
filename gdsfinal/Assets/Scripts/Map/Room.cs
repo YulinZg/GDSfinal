@@ -12,7 +12,6 @@ public class Room : MonoBehaviour
     public Text step;
 
     public int doorNumber;
-    // Start is called before the first frame update
     public RoomTerrainGenerator roomTerrainGenerator;
     public EnemyGenerator enemyGenerator;
 
@@ -55,18 +54,18 @@ public class Room : MonoBehaviour
             enemyGenerator.gameObject.SetActive(true);
             roomTerrainGenerator.gameObject.SetActive(true);
             roomTerrainGenerator.generateTerrain();
-            enemyGenerator.generateEnemy();
+            enemyGenerator.GenerateEnemy();
         }
     }
 
-   // private void OnTriggerStay2D(Collider2D collision)
+    //private void OnTriggerStay2D(Collider2D collision)
     //{
         //if (collision.CompareTag("Player"))
         //{
+            //Debug.LogError("no enemy");
+        //}
+    //}
 
-//Debug.LogError("no enemy");
-//}
-//}
 private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -76,8 +75,8 @@ private void OnTriggerExit2D(Collider2D collision)
         }
         if (collision.CompareTag("Enemy"))
         {
-            enemyGenerator.numOfEnemy--;
-            if (enemyGenerator.numOfEnemy == 0)
+            enemyGenerator.enemyCount--;
+            if (enemyGenerator.enemyCount == 0)
             {
                 switch (doorNumber)
                 {

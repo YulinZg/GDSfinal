@@ -4,63 +4,44 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
-
-    [Header("Fire")]
-    public float burnningTime;
-    public int burnningTimes;
-    public float burnningDamage;
-    public bool isburnning;
-    public GameObject burnningEffect;
-
-    [Header("Water")]
-    public float waterTime;
-    public bool isWater;
-    public GameObject waterEffect;
-
-    [Header("Earth")]
-    public float dizzinessTime;
-    public int dizzinessValue;
-    public bool isEarth;
-    public int increaseDizziness;
-    public GameObject dizzinessEffect;
-
-    [Header("Lightning")]
-    public float lightningTime;
-    public int lightningTimes;
-    public float lightningDamage;
-    public bool isLighting;
-    public bool isParalysis;
-    public Sprite paralysisSprit;
-    public float paralysisTime;
-    public GameObject lightingEffect;
-    public GameObject bigLightingEffect;
-
-    [Header("Metal")]
-    public float backDis;
-
-    [Header("Enemy Value")]
-    public float hp;
+    public float health;
     public float moveSpeed;
-    public float resistance;
+    public float burnResistance;
+    public float decelerateResistance;
+    public float maxStunValue;
+    public float palsyResistance;
+    public float repelResistance;
 
-    [Header("Component")]
+    public Transform player;
     public GameObject damageText;
-    public SpriteRenderer mySprite;
-    public Rigidbody2D rid;
+    public SpriteRenderer sprite;
+    public Rigidbody2D rigid;
     public Animator anim;
-   
-    //public Weapon playerWeapon;
-    //public enum BeAttackedType { fire, water, earth, thunder, metal }
-    public abstract void TakeDamage(float damage, string damageType);
-    public abstract void Dizziness();
-    public abstract void ExitDizziness();
+
+    public float effectSize; 
+    public float effectOffsetY;
+    public GameObject burnEffect;
+    public GameObject decelerateEffect;
+    public GameObject stunEffect;
+    public GameObject palsyEffect;
+
+    public bool isBurn = false;
+    public bool isDecelerate = false;
+    public bool isStun = false;
+    public bool isPalsy = false;
+    public bool isRepel = false;
+
     public abstract void Move();
 
-    public abstract void TakenAttactk(string type);
+    public abstract void TakeDamage(float damage);
 
-    public abstract void Burnning(float damge);
+    public abstract void Burn(float damage, float time, float interval);
 
-    public abstract void GoBack(float dis);
+    public abstract void Decelerate(float rate, float time);
 
-    public abstract void Paralysis(float time);
+    public abstract void Stun(float value, float time);
+
+    public abstract void Palsy(float damage, float time, float interval);
+
+    public abstract void Repel(float distance);
 }
