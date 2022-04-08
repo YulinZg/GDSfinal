@@ -368,7 +368,7 @@ MonoBehaviour:
   shootOffset: 0.5
   bulletRotater: {fileID: 1095739407213342471}
   bulletsInWorld: {fileID: 0}
-  damageF: 10
+  damageF: 5
   critProbabilityF: 0.2
   critRateF: 1.5
   maganizeF: 5
@@ -384,6 +384,9 @@ MonoBehaviour:
   bulletsF:
   - {fileID: 6096084274419158081, guid: 8653544e5d1a4684abef28fe85c1d69a, type: 3}
   - {fileID: 5707396638559966051, guid: c2f4de82a4546e34f961a96fb6daa441, type: 3}
+  burnDamage: 8
+  burnTime: 5
+  burnInterval: 1
   damageW: 40
   damageW1: 70
   damageW2: 100
@@ -406,6 +409,8 @@ MonoBehaviour:
   bulletsW:
   - {fileID: 4896306263825385891, guid: cc3614a27abe4ca44afa934ec273a7ec, type: 3}
   - {fileID: 7169208002471941264, guid: d45954436935e4f4aa21d81e4fca983e, type: 3}
+  decelerateRate: 0.5
+  decelerateTime: 10
   damageE: 5
   critProbabilityE: 0.2
   critRateE: 1.5
@@ -420,6 +425,8 @@ MonoBehaviour:
   scatterAngle: 15
   bulletsE:
   - {fileID: 7155690323364293923, guid: 33387e5d792fa554ea58f3347cb39fc5, type: 3}
+  stunValue: 1.5
+  stunTime: 5
   damageL: 20
   damageL1: 60
   critProbabilityL: 0.5
@@ -434,6 +441,9 @@ MonoBehaviour:
   bulletsL:
   - {fileID: 3424080037288897046, guid: b8610db4bf6dcfd49801aedb00397a6c, type: 3}
   - {fileID: 5866497586695878717, guid: 8ee3ba1e91eadf344a636aad453c6212, type: 3}
+  palsyDamage: 5
+  palsyTime: 15
+  palsyInterval: 3
   damageM0: 20
   damageM1: 30
   damageM2: 40
@@ -452,6 +462,7 @@ MonoBehaviour:
   - {fileID: 1017864019808257222, guid: fd1cb4a1df0e8834ab227b408cb07e4a, type: 3}
   - {fileID: 3201939229812467401, guid: 1675a3ab658a388419f1e7b97fbcf369, type: 3}
   - {fileID: 4652189084665895369, guid: acb1df547825df241995822f974ad73d, type: 3}
+  repelDistance: 1
 --- !u!114 &2741019207210238514
 MonoBehaviour:
   m_ObjectHideFlags: 0
