@@ -19,7 +19,6 @@ public class Weapon : MonoBehaviour
     private PlayerController player;
     private float shootTimer = 10;
     private bool isAttacking = false;
-    private bool isReloading = false;
     [SerializeField] private GameObject bulletRotater;
     [SerializeField] private GameObject bulletsInWorld;
 
@@ -27,9 +26,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float damageF;
     [SerializeField] private float critProbabilityF;
     [SerializeField] private float critRateF;
-    [SerializeField] private int maganizeF;
     [SerializeField] private float intervalF;
-    [SerializeField] private float reloadTimeF;
     [SerializeField] private float bulletSpeedF;
     [SerializeField] private float rangeF;
     [SerializeField] private float moveSpeedF;
@@ -38,7 +35,6 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float bulletRotateRange;
     [SerializeField] private float bulletLifeTimeBase;
     [SerializeField] private GameObject[] bulletsF;
-    private int currentMaganizeF;
     private bool canLaunch = true;
 
     [SerializeField] private float burnDamage;
@@ -52,9 +48,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float damageW3;
     [SerializeField] private float critProbabilityW;
     [SerializeField] private float critRateW;
-    [SerializeField] private int maganizeW;
     [SerializeField] private float intervalW;
-    [SerializeField] private float reloadTimeW;
     [SerializeField] private float bulletSpeedW;
     [SerializeField] private float rangeW;
     [SerializeField] private float rangeW1;
@@ -66,7 +60,6 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float standTimeW;
     [SerializeField] private float standTimeW1;
     [SerializeField] private GameObject[] bulletsW;
-    private int currentMaganizeW;
     private float chargeTimer = 0;
     private bool isCharging = false;
     private bool charged1 = false;
@@ -80,9 +73,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float damageE;
     [SerializeField] private float critProbabilityE;
     [SerializeField] private float critRateE;
-    [SerializeField] private int maganizeE;
     [SerializeField] private float intervalE;
-    [SerializeField] private float reloadTimeE;
     [SerializeField] private float bulletSpeedE;
     [SerializeField] private float rangeE;
     [SerializeField] private float moveSpeedE;
@@ -90,7 +81,6 @@ public class Weapon : MonoBehaviour
     [SerializeField] private int preheatTimes;
     [SerializeField] private float scatterAngle;
     [SerializeField] private GameObject[] bulletsE;
-    private int currentMaganizeE;
     private int preheatBullet;
     private bool isShooting = false;
     private bool isAiming = false;
@@ -103,15 +93,12 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float damageL1;
     [SerializeField] private float critProbabilityL;
     [SerializeField] private float critRateL;
-    [SerializeField] private int maganizeL;
     [SerializeField] private float intervalL;
-    [SerializeField] private float reloadTimeL;
     [SerializeField] private float moveSpeedL;
     [SerializeField] private float standTimeL;
     [SerializeField] private int maxBulletNum;
     [SerializeField] private float stayTime;
     [SerializeField] private GameObject[] bulletsL;
-    private int currentMaganizeL;
 
     [SerializeField] private float palsyDamage;
     [SerializeField] private float palsyTime;
@@ -153,19 +140,13 @@ public class Weapon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentMaganizeF = maganizeF;
-        currentMaganizeW = maganizeW;
-        currentMaganizeE = maganizeE;
-        currentMaganizeL = maganizeL;
+
     }
 
     // Update is called once per frame
     void Update()
     {
         shootTimer += Time.deltaTime;
-        if (!isAttacking && !isReloading && (Input.GetKeyDown(KeyCode.R)
-            || currentMaganizeF == 0 || currentMaganizeW == 0 || currentMaganizeE == 0 || currentMaganizeL == 0))
-            StartCoroutine(Reload());
         switch (property)
         {
             case Property.fire:
@@ -270,55 +251,6 @@ public class Weapon : MonoBehaviour
         isAttacking = false;
     }
 
-    IEnumerator Reload()
-    {
-        float reloadTime = 0;
-        player.canInput = false;
-        isReloading = true;
-        switch (property)
-        {
-            case Property.fire:
-                currentMaganizeF = 0;
-                reloadTime = reloadTimeF;
-                break;
-            case Property.water:
-                currentMaganizeW = 0;
-                reloadTime = reloadTimeW;
-                break;
-            case Property.earth:
-                currentMaganizeE = 0;
-                reloadTime = reloadTimeE;
-                break;
-            case Property.lightning:
-                currentMaganizeL = 0;
-                reloadTime = reloadTimeL;
-                break;
-        }
-        yield return new WaitForSeconds(reloadTime);
-        switch (property)
-        {
-            case Property.fire:
-                currentMaganizeF = maganizeF;
-                break;
-            case Property.water:
-                currentMaganizeW = maganizeW;
-                break;
-            case Property.earth:
-                currentMaganizeE = maganizeE;
-                break;
-            case Property.lightning:
-                currentMaganizeL = maganizeL;
-                break;
-        }
-        isReloading = false;
-        player.canInput = true;
-    }
-
-    public bool GetIsReloading()
-    {
-        return isReloading;
-    }
-
     private void RotateBullet(float speed)
     {
         bulletRotater.transform.Rotate(0, 0, speed * Time.deltaTime);
@@ -333,7 +265,7 @@ public class Weapon : MonoBehaviour
 
     private void Fire()
     {
-        if (Input.GetMouseButtonDown(0) && currentMaganizeF != 0 && !isAttacking)
+        if (Input.GetMouseButtonDown(0) && !isAttacking)
         {
             if (shootTimer >= intervalF)
             {
@@ -350,7 +282,6 @@ public class Weapon : MonoBehaviour
 
     private void NormalAttackF(int bulletNum)
     {
-        currentMaganizeF--;
         if (bulletRotater.transform.childCount > 0)
             foreach (Transform child in bulletRotater.transform)
                 Destroy(child.gameObject);
@@ -361,11 +292,11 @@ public class Weapon : MonoBehaviour
             bulletInstance = Instantiate(bulletsF[0], transform.position, Quaternion.identity);
             bulletInstance.transform.parent = bulletRotater.transform;
             bulletInstance.GetComponent<Bullet>().Setup(
-                RotateVector(MouseDir(), (360f / bulletNum) * (i + 1)), bulletSpeedF * 0.5f, damageF, critProbabilityF, critRateF, bulletLifeTimeBase * (i + 1), Bullet.BulletType.normal);
+                RotateVector(MouseDir(), (360f / bulletNum) * (i + 1)), bulletSpeedF * 0.25f, damageF, critProbabilityF, critRateF, bulletLifeTimeBase * (i + 1), Bullet.BulletType.normal);
             bulletInstance.GetComponent<Bullet>().SetFire(bulletRotateRange);
             SetBurn(bulletInstance.GetComponent<Bullet>());
         }
-        float invokeTime = bulletRotateRange / (bulletSpeedF * 0.5f);
+        float invokeTime = bulletRotateRange / (bulletSpeedF * 0.25f);
         Invoke(nameof(SetCanLaunch), invokeTime);
         player.isAttacking = true;
         Invoke(nameof(SetPlayerAttackingFalse), invokeTime);
@@ -406,7 +337,7 @@ public class Weapon : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (currentMaganizeW != 0 && !isAttacking && shootTimer >= intervalW && !isCharging)
+            if (!isAttacking && shootTimer >= intervalW && !isCharging)
             {
                 isCharging = true;
                 shootTimer = 0;
@@ -486,7 +417,6 @@ public class Weapon : MonoBehaviour
         charged1 = false;
         charged2 = false;
         chargeTimer = 0;
-        currentMaganizeW--;
         chargeTimer = 0;
         GameObject bulletInstance;
         bulletInstance = Instantiate(bulletsW[0], ShootPos(shootOffset), Quaternion.identity);
@@ -502,7 +432,6 @@ public class Weapon : MonoBehaviour
         charged1 = false;
         charged2 = false;
         chargeTimer = 0;
-        currentMaganizeW--;
         chargeTimer = 0;
         GameObject bulletInstance;
         bulletInstance = Instantiate(bulletsW[1], ShootPos(rangeY * 0.5f + shootOffset), Quaternion.identity);
@@ -523,28 +452,28 @@ public class Weapon : MonoBehaviour
 
     private void Earth()
     {
-        if (Input.GetMouseButtonDown(1) && currentMaganizeE != 0)
+        if (Input.GetMouseButtonDown(1))
         {
             isAiming = true;
             player.SetSpeed(moveSpeedE1);
         }
-        if (Input.GetMouseButtonUp(1) || currentMaganizeE == 0)
+        if (Input.GetMouseButtonUp(1))
         {
             isAiming = false;
             player.SetSpeed(moveSpeedE);
             if (!isShooting)
                 preheatBullet = preheatTimes;
         }
-        if (Input.GetMouseButtonDown(0) && currentMaganizeE != 0)
+        if (Input.GetMouseButtonDown(0))
         {
             isShooting = true;
             player.isAttacking = true;
         }
-        if (Input.GetMouseButtonUp(0) || currentMaganizeE == 0)
+        if (Input.GetMouseButtonUp(0))
         {
             isShooting = false;
             player.isAttacking = false;
-            if (!isAiming || currentMaganizeE == 0)
+            if (!isAiming)
                 preheatBullet = preheatTimes;
         }
         if (isShooting || isAiming)
@@ -571,7 +500,6 @@ public class Weapon : MonoBehaviour
 
     private void NormalAttackE(Vector3 dir)
     {
-        currentMaganizeE--;
         GameObject bulletInstance = Instantiate(bulletsE[0], ShootPos(shootOffset), Quaternion.identity);
         bulletInstance.GetComponent<Bullet>().Setup(
             dir, bulletSpeedE, damageE, critProbabilityE, critRateE, rangeE / bulletSpeedE, Bullet.BulletType.normal);
@@ -588,7 +516,7 @@ public class Weapon : MonoBehaviour
 
     private void Lightning()
     {
-        if (Input.GetMouseButtonDown(0) && currentMaganizeL != 0 && !isAttacking)
+        if (Input.GetMouseButtonDown(0) && !isAttacking)
         {
             if (shootTimer >= intervalL)
             {
@@ -606,7 +534,6 @@ public class Weapon : MonoBehaviour
     {
         if (bulletsInWorld.transform.childCount < maxBulletNum)
         {
-            currentMaganizeL--;
             GameObject bulletInstance = Instantiate(bulletsL[0], ShootPos(shootOffset), Quaternion.identity);
             bulletInstance.GetComponent<Bullet>().Setup(
                 MouseDir(), 0, damageL, critProbabilityL, critRateL, stayTime, Bullet.BulletType.penetrable);
@@ -784,12 +711,12 @@ public class Weapon : MonoBehaviour
         rightDown = false;
     }
 
-    IEnumerator SetCombo(float time)
+    IEnumerator SetCombo(float attackTime)
     {
         leftDown = false;
         rightDown = false;
         canCombo = false;
-        yield return new WaitForSeconds(time - intervalM);
+        yield return new WaitForSeconds(attackTime - intervalM);
         canCombo = true;
     }
 

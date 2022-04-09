@@ -371,16 +371,14 @@ MonoBehaviour:
   damageF: 8
   critProbabilityF: 0.2
   critRateF: 1.5
-  maganizeF: 5
   intervalF: 1
-  reloadTimeF: 2
   bulletSpeedF: 20
   rangeF: 15
   moveSpeedF: 3
   standTimeF: 0.2
   bulletNumber: 6
   bulletRotateRange: 1.5
-  bulletLifeTimeBase: 1
+  bulletLifeTimeBase: 1.5
   bulletsF:
   - {fileID: 6096084274419158081, guid: 8653544e5d1a4684abef28fe85c1d69a, type: 3}
   - {fileID: 5707396638559966051, guid: c2f4de82a4546e34f961a96fb6daa441, type: 3}
@@ -393,9 +391,7 @@ MonoBehaviour:
   damageW3: 130
   critProbabilityW: 0.2
   critRateW: 1.5
-  maganizeW: 5
   intervalW: 1
-  reloadTimeW: 2
   bulletSpeedW: 15
   rangeW: 10
   rangeW1: 10
@@ -414,9 +410,7 @@ MonoBehaviour:
   damageE: 5
   critProbabilityE: 0.2
   critRateE: 1.5
-  maganizeE: 100
   intervalE: 0.1
-  reloadTimeE: 5
   bulletSpeedE: 20
   rangeE: 15
   moveSpeedE: 3
@@ -431,9 +425,7 @@ MonoBehaviour:
   damageL1: 60
   critProbabilityL: 0.5
   critRateL: 1.5
-  maganizeL: 5
-  intervalL: 0.5
-  reloadTimeL: 3
+  intervalL: 0.25
   moveSpeedL: 5
   standTimeL: 0.5
   maxBulletNum: 5
