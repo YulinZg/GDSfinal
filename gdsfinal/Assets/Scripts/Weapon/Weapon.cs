@@ -16,11 +16,13 @@ public class Weapon : MonoBehaviour
 
     public Property property;
     [SerializeField] private float shootOffset;
+    [SerializeField] private GameObject bulletRotater;
+    [SerializeField] private GameObject bulletsInWorld;
+    [SerializeField] private GameObject[] effects;
+    private GameObject effectInstance;
     private PlayerController player;
     private float shootTimer = 10;
     private bool isAttacking = false;
-    [SerializeField] private GameObject bulletRotater;
-    [SerializeField] private GameObject bulletsInWorld;
 
     [Header("Fire")]
     [SerializeField] private float damageF;
@@ -64,6 +66,9 @@ public class Weapon : MonoBehaviour
     private bool isCharging = false;
     private bool charged1 = false;
     private bool charged2 = false;
+    private bool spawnedEffect1 = false;
+    private bool spawnedEffect2 = false;
+    private bool spawned2Effect2 = false;
 
     [SerializeField] private float decelerateRate;
     [SerializeField] private float decelerateTime;
@@ -261,6 +266,16 @@ public class Weapon : MonoBehaviour
         player.isAttacking = false;
     }
 
+    private void SpawnEffect(int effectNo)
+    {
+        Instantiate(effects[effectNo], transform);
+    }
+
+    private void SpawnEffectInstance(int effectNo)
+    {
+        effectInstance = Instantiate(effects[effectNo], transform);
+    }
+
     //Fire/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void Fire()
@@ -301,6 +316,7 @@ public class Weapon : MonoBehaviour
         player.isAttacking = true;
         Invoke(nameof(SetPlayerAttackingFalse), invokeTime);
         StartCoroutine(StandAttack(invokeTime, moveSpeedF, false));
+        SpawnEffect(0);
     }
 
     private void SetCanLaunch()
@@ -401,13 +417,29 @@ public class Weapon : MonoBehaviour
         else if (chargeTimer >= chargeTime * 3 && charged1 && charged2 && isCharging)
         {
             NormalAttackW1(rangeW3, rangeW3 * 0.25f, damageW3);
+            SpawnEffect(2);
         }
-        
+
+        if (chargeTimer >= chargeTime && !spawnedEffect2)
+        {
+            SpawnEffect(2);
+            spawnedEffect2 = true;
+        }
+        if (chargeTimer >= chargeTime * 2 && !spawned2Effect2)
+        {
+            SpawnEffect(2);
+            spawned2Effect2 = true;
+        }
+
         if (isCharging)
         {
             chargeTimer += Time.deltaTime;
-            if (chargeTimer > 0.2)
+            if (chargeTimer > 0.2 && !spawnedEffect1)
+            {
                 player.SetSpeed(moveSpeedW1);
+                SpawnEffectInstance(1);
+                spawnedEffect1 = true;
+            }
         }
     }
 
@@ -424,6 +456,11 @@ public class Weapon : MonoBehaviour
             MouseDir(), bulletSpeedW, damageW, critProbabilityW, critRateW, rangeW / bulletSpeedW, Bullet.BulletType.normal);
         SetDecelerate(bulletInstance.GetComponent<Bullet>());
         StartCoroutine(StandAttack(standTimeW, moveSpeedW, false));
+        spawnedEffect1 = false;
+        spawnedEffect2 = false;
+        spawned2Effect2 = false;
+        if (effectInstance)
+            Destroy(effectInstance);
     }
 
     private void NormalAttackW1(float rangeY, float rangeX, float damage)
@@ -440,6 +477,11 @@ public class Weapon : MonoBehaviour
         SetDecelerate(bulletInstance.GetComponent<Bullet>());
         bulletInstance.transform.localScale = new Vector3(rangeY, rangeX, 1);
         StartCoroutine(StandAttack(standTimeW1, moveSpeedW, false));
+        spawnedEffect1 = false;
+        spawnedEffect2 = false;
+        spawned2Effect2 = false;
+        if (effectInstance)
+            Destroy(effectInstance);
     }
 
     private void SetDecelerate(Bullet bullet)
@@ -456,6 +498,7 @@ public class Weapon : MonoBehaviour
         {
             isAiming = true;
             player.SetSpeed(moveSpeedE1);
+            SpawnEffectInstance(3);
         }
         if (Input.GetMouseButtonUp(1))
         {
@@ -463,6 +506,8 @@ public class Weapon : MonoBehaviour
             player.SetSpeed(moveSpeedE);
             if (!isShooting)
                 preheatBullet = preheatTimes;
+            if (effectInstance)
+                Destroy(effectInstance);
         }
         if (Input.GetMouseButtonDown(0))
         {
@@ -550,18 +595,22 @@ public class Weapon : MonoBehaviour
         {
             foreach(Transform child in bulletsInWorld.transform)
             {
-                GameObject bulletInstance = Instantiate(bulletsL[0], child.position, Quaternion.identity);
-                bulletInstance.GetComponent<Bullet>().Setup(
-                    Direction(transform.position, child.position), 0, damageL, critProbabilityL, critRateL, standTimeL, Bullet.BulletType.penetrable);
-                SetPalsy(bulletInstance.GetComponent<Bullet>());
-                bulletInstance = Instantiate(bulletsL[1], 0.5f * Vector3.Distance(child.position, transform.position) * Direction(transform.position, child.position) + child.position, Quaternion.identity);
-                bulletInstance.GetComponent<Bullet>().Setup(
-                    Direction(transform.position, child.position), 0, damageL1, critProbabilityL, critRateL, standTimeL, Bullet.BulletType.penetrable);
-                SetPalsy(bulletInstance.GetComponent<Bullet>());
-                bulletInstance.transform.localScale = new Vector3(Vector3.Distance(child.position, transform.position), 2, 1);
-                Destroy(child.gameObject);
+                if (child.name == "lightningBullet(Clone)")
+                {
+                    GameObject bulletInstance = Instantiate(bulletsL[0], child.position, Quaternion.identity);
+                    bulletInstance.GetComponent<Bullet>().Setup(
+                        Direction(transform.position, child.position), 0, damageL, critProbabilityL, critRateL, standTimeL, Bullet.BulletType.penetrable);
+                    SetPalsy(bulletInstance.GetComponent<Bullet>());
+                    bulletInstance = Instantiate(bulletsL[1], 0.5f * Vector3.Distance(child.position, transform.position) * Direction(transform.position, child.position) + child.position, Quaternion.identity);
+                    bulletInstance.GetComponent<Bullet>().Setup(
+                        Direction(transform.position, child.position), 0, damageL1, critProbabilityL, critRateL, standTimeL, Bullet.BulletType.penetrable);
+                    SetPalsy(bulletInstance.GetComponent<Bullet>());
+                    bulletInstance.transform.localScale = new Vector3(Vector3.Distance(child.position, transform.position), 2, 1);
+                    Destroy(child.gameObject);
+                }
             }
             StartCoroutine(StandAttack(standTimeL, moveSpeedL, false));
+            SpawnEffect(4);
         }
     }
 

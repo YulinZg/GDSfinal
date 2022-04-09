@@ -249,7 +249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAlive: 0
-  health: 100
+  health: 500
   moveSpeed: 1
   burnResistance: 0
   decelerateResistance: 0

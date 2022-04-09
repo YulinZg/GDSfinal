@@ -84,8 +84,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5878c36e7162544ea7137159c8b045f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletEffect: {fileID: 0}
   type: 0
   property: 1
+  blinkTime: 0.5
+  blinkColor: {r: 0, g: 0, b: 1, a: 1}
+  ifHurtStop: 0
 --- !u!1 &8423251387732492200
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,7 +160,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 20592127
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 783092905571151625, guid: f66972770c06b9942bb9c0013c78f7cc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
