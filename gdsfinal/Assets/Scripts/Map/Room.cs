@@ -44,6 +44,7 @@ public class Room : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        
         if (collision.CompareTag("Player") && !isPlayerEnter)
         {
             doorDown.GetComponent<BoxCollider2D>().isTrigger = false;
@@ -55,6 +56,7 @@ public class Room : MonoBehaviour
             roomTerrainGenerator.gameObject.SetActive(true);
             roomTerrainGenerator.generateTerrain();
             enemyGenerator.GenerateEnemy();
+            //Debug.Log(1);
         }
     }
 
@@ -73,7 +75,7 @@ private void OnTriggerExit2D(Collider2D collision)
             enemyGenerator.gameObject.SetActive(false);
             roomTerrainGenerator.gameObject.SetActive(false);
         }
-        if (collision.CompareTag("Enemy"))
+        if (collision.CompareTag("Enemy") && !collision.GetComponent<Enemy>().isAlive)
         {
             enemyGenerator.enemyCount--;
             if (enemyGenerator.enemyCount == 0)

@@ -69,7 +69,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 678415073
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0.23529412}
@@ -156,8 +156,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 678415073
-  m_SortingLayer: 3
+  m_SortingLayerID: 1972021319
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_Sprite: {fileID: 4177297117688230344, guid: b1649de93efeffb41b5bcafc1c2bf029, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -248,6 +248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c171ac3cb233ce4abed38db9a59383b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAlive: 0
   health: 500
   moveSpeed: 1
   burnResistance: 0
@@ -262,6 +263,10 @@ MonoBehaviour:
   anim: {fileID: 0}
   effectSize: 1.25
   effectOffsetY: 0.75
+  damageTextOffsetXLeftLimt: -0.5
+  damageTextOffsetXRightLimt: 1
+  damageTextOffsetYBottomLimt: -0.5
+  damageTextOffsetYUpLimt: 1
   burnEffect: {fileID: 5038591547534441582, guid: 4e726f7935d9eca4faf212ca8a9b0a31, type: 3}
   decelerateEffect: {fileID: 737469681386818583, guid: 8b4d96607cfc9114783b5df93d76d647, type: 3}
   stunEffect: {fileID: 8964234654960140829, guid: 9312f7be5492cfe4a89e6c6660e8dc90, type: 3}

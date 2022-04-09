@@ -13,7 +13,6 @@ public class EnemyGenerator : MonoBehaviour
     {
         Instantiate(enemy, transform.position + new Vector3(5, 7, 0), Quaternion.identity);
         enemyCount++;
-        Debug.LogWarning("Enemy coming!");
     }
 
     //private void Update()
