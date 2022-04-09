@@ -71,8 +71,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5878c36e7162544ea7137159c8b045f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletEffect: {fileID: 0}
   type: 0
   property: 3
+  blinkTime: 1
+  blinkColor: {r: 1, g: 1, b: 0, a: 1}
+  ifHurtStop: 1
 --- !u!1001 &3424080037983802901
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -126,7 +130,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6436324989013520626, guid: aa2a3b2181e8d4cab882154bef5763ef, type: 3}
       propertyPath: m_SortingLayer
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6436324989013520626, guid: aa2a3b2181e8d4cab882154bef5763ef, type: 3}
       propertyPath: m_SortingLayerID

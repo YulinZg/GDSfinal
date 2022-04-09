@@ -35,8 +35,8 @@ public abstract class Enemy : MonoBehaviour
     public bool isStun = false;
     public bool isPalsy = false;
     public bool isRepel = false;
+    public bool isHurt = false;
 
-    protected Color currentColor;
     protected float currentSpeed;
     protected float speed;
     protected Vector3 moveDir;
@@ -45,12 +45,13 @@ public abstract class Enemy : MonoBehaviour
     private float currentStunValue = 0;
     private float decelerateTimer = 0;
     private float palsyTimer = 0;
+    private float stopTimer = 0;
     private Coroutine burnCoroutine;
     private Coroutine decelerateCoroutine;
 
     public abstract void Move();
 
-    public void TakeDamage(float d)
+    public void TakeDamage(float d, float blinkTime, Color blinkColor, bool hurtStop)
     {
         float damage = Mathf.Floor(d);
         health -= damage;
@@ -62,6 +63,17 @@ public abstract class Enemy : MonoBehaviour
             isAlive = false;
             rigid.simulated = false;
             anim.Play("die");
+        }
+        if (blinkTime != 0)
+            StartCoroutine(DoBlinks(blinkColor, (int)(blinkTime / 0.1f), 0.1f));
+        if (hurtStop)
+        {
+            stopTimer = 0;
+            if (!isHurt)
+            {
+                isHurt = true;
+                StartCoroutine(StopMove(blinkTime));
+            }
         }
     }
 
@@ -75,7 +87,6 @@ public abstract class Enemy : MonoBehaviour
             isDecelerate = false;
             currentSpeed = speed = moveSpeed;
             StopCoroutine(decelerateCoroutine);
-            currentColor = sprite.color = Color.white;
             if (transform.childCount > 0)
                 foreach (Transform child in transform)
                 {
@@ -98,8 +109,7 @@ public abstract class Enemy : MonoBehaviour
             timer += Time.deltaTime;
             if (timer >= interval)
             {
-                TakeDamage(damage);
-                StartCoroutine(DoBlinks(Color.red, 5, 0.1f));
+                TakeDamage(damage, 0.5f, Color.red, false);
                 timer = 0;
             }
             yield return null;
@@ -130,7 +140,6 @@ public abstract class Enemy : MonoBehaviour
     {
         isDecelerate = true;
         currentSpeed = speed *= 1 - rate;
-        currentColor = sprite.color = Color.blue;
         GameObject effectInstance = Instantiate(decelerateEffect, transform);
         effectInstance.transform.localPosition += Vector3.up * effectOffsetY;
         effectInstance.transform.localScale = new Vector3(effectSize, effectSize, 1);
@@ -141,7 +150,6 @@ public abstract class Enemy : MonoBehaviour
         }
         isDecelerate = false;
         currentSpeed = speed = moveSpeed;
-        currentColor = sprite.color = Color.white;
         Destroy(effectInstance);
     }
 
@@ -153,6 +161,7 @@ public abstract class Enemy : MonoBehaviour
         {
             currentStunValue = 0;
             isStun = true;
+            stopTimer = 0;
             StartCoroutine(StopMove(time));
             StartCoroutine(DoBlinks(Color.gray, (int)(time / 0.1f), 0.1f));
             GameObject effectInstance = Instantiate(stunEffect, transform);
@@ -196,9 +205,7 @@ public abstract class Enemy : MonoBehaviour
                 float d = damage;
                 if (isDecelerate)
                     d *= 2;
-                TakeDamage(d);
-                StartCoroutine(DoBlinks(Color.yellow, 10, 0.1f));
-                StartCoroutine(StopMove(1f));
+                TakeDamage(d, 1f, Color.yellow, true);
                 timer = 0;
             }
             yield return null;
@@ -233,10 +240,16 @@ public abstract class Enemy : MonoBehaviour
     IEnumerator StopMove(float time)
     {
         speed = 0;
-        yield return new WaitForSeconds(time);
-        //yield return null;
+        while (stopTimer <= time)
+        {
+            stopTimer += Time.deltaTime;
+            yield return null;
+        }
+        isHurt = false;
         if (!isStun)
+        {
             speed = currentSpeed;
+        }
     }
 
     IEnumerator DoBlinks(Color color, int blinkNum, float interval)
@@ -246,11 +259,10 @@ public abstract class Enemy : MonoBehaviour
             if (i % 2 == 0)
                 sprite.color = color;
             else
-                sprite.color = currentColor;
+                sprite.color = Color.white;
             yield return new WaitForSeconds(interval);
         }
-        //yield return new WaitForSeconds(interval);
-        sprite.color = currentColor;
+        sprite.color = Color.white;
     }
 
     public void DestroySelf()

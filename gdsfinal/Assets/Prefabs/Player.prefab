@@ -368,6 +368,12 @@ MonoBehaviour:
   shootOffset: 0.5
   bulletRotater: {fileID: 1095739407213342471}
   bulletsInWorld: {fileID: 0}
+  effects:
+  - {fileID: 2417711028289302586, guid: 37b1e2dfbc576964e9fa4962ad5b39b4, type: 3}
+  - {fileID: 8373990537675748762, guid: efd495f7e87a7bc4dbfbc3f98913b22c, type: 3}
+  - {fileID: 4513186292420534017, guid: eee4c1febdca851409069e4811dda038, type: 3}
+  - {fileID: 8293550579373383261, guid: ce5cddaf9d1908245a70cd6fae5a21d4, type: 3}
+  - {fileID: 7090674513177284307, guid: 13584b280151bae49ab3fa823dbc5d4b, type: 3}
   damageF: 8
   critProbabilityF: 0.2
   critRateF: 1.5
@@ -377,7 +383,7 @@ MonoBehaviour:
   moveSpeedF: 3
   standTimeF: 0.2
   bulletNumber: 6
-  bulletRotateRange: 1.5
+  bulletRotateRange: 1
   bulletLifeTimeBase: 1.5
   bulletsF:
   - {fileID: 6096084274419158081, guid: 8653544e5d1a4684abef28fe85c1d69a, type: 3}
@@ -410,13 +416,13 @@ MonoBehaviour:
   damageE: 5
   critProbabilityE: 0.2
   critRateE: 1.5
-  intervalE: 0.1
+  intervalE: 0.15
   bulletSpeedE: 20
   rangeE: 15
   moveSpeedE: 3
-  moveSpeedE1: 1.5
+  moveSpeedE1: 1
   preheatTimes: 5
-  scatterAngle: 15
+  scatterAngle: 22.5
   bulletsE:
   - {fileID: 7155690323364293923, guid: 33387e5d792fa554ea58f3347cb39fc5, type: 3}
   stunValue: 1.5
@@ -427,7 +433,7 @@ MonoBehaviour:
   critRateL: 1.5
   intervalL: 0.25
   moveSpeedL: 5
-  standTimeL: 0.5
+  standTimeL: 1
   maxBulletNum: 5
   stayTime: 5
   bulletsL:

@@ -17,7 +17,6 @@ public class BasicEnemy : Enemy
     {
         isAlive = true;
         currentSpeed = speed = moveSpeed;
-        currentColor = sprite.color;
     }
 
     // Update is called once per frame

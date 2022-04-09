@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public GameObject bulletEffect;
     private readonly IDictionary<int, Transform> dic = new Dictionary<int, Transform>();
 
     public enum BulletType
     {
         normal,
-        penetrable,
-        explode
+        penetrable
     }
 
     public enum BulletProperty
@@ -30,8 +30,9 @@ public class Bullet : MonoBehaviour
     private float damage;
     private float critProbability;
     private float critRate;
-    private GameObject explosion;
-    private float explosionRange;
+    public float blinkTime;
+    public Color blinkColor;
+    public bool ifHurtStop = false;
 
     //Fire
     private float burnDamage;
@@ -113,12 +114,6 @@ public class Bullet : MonoBehaviour
         speed = 0;
     }
 
-    public void SetExplode(GameObject explodeBullet, float explodeRange)
-    {
-        explosion = explodeBullet;
-        explosionRange = explodeRange;
-    }
-
     private Vector3 GetAngle(Vector2 dir)
     {
         float z = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
@@ -145,16 +140,11 @@ public class Bullet : MonoBehaviour
             {
                 case BulletType.normal:
                     Hit(col.gameObject);
+                    Instantiate(bulletEffect, transform.position, transform.rotation);
                     Destroy(gameObject);
                     break;
                 case BulletType.penetrable:
                     Hit(col.gameObject);
-                    break;
-                case BulletType.explode:
-                    GameObject bulletInstance = Instantiate(explosion, transform.position, Quaternion.identity);
-                    bulletInstance.GetComponent<Bullet>().Setup(dir, 0, damage, critProbability, critRate, 0.2f, BulletType.penetrable);
-                    bulletInstance.transform.localScale = new Vector3(explosionRange, explosionRange, 1);
-                    Destroy(gameObject);
                     break;
             }
         }
@@ -166,7 +156,7 @@ public class Bullet : MonoBehaviour
         int i = Random.Range(0, 100);
         if (i < 100 * critProbability)
             damage *= critRate;
-        enemy.TakeDamage(damage * Random.Range(0.9f, 1.1f));
+        enemy.TakeDamage(damage * Random.Range(0.9f, 1.1f), blinkTime, blinkColor, ifHurtStop);
         switch (property)
         {
             case BulletProperty.fire:
