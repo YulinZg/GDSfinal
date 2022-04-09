@@ -138,7 +138,12 @@ public class Weapon : MonoBehaviour
     private bool rightDown = false;
     private int lastClick = 0;
 
-    [SerializeField] private float repelDistance;
+    [SerializeField] private float repelDistance0;
+    [SerializeField] private float repelDistance1;
+    [SerializeField] private float repelDistance2;
+    [SerializeField] private float repelDistance3;
+    [SerializeField] private float repelDistance4;
+    [SerializeField] private float repelDistance5;
 
     private void Awake()
     {
@@ -686,7 +691,7 @@ public class Weapon : MonoBehaviour
     {
         if (!isCombating)
         {
-            StartCoroutine(NormalAttackM0(0.35f, 0, damageM0));
+            StartCoroutine(NormalAttackM0(0.35f, 0, damageM0, repelDistance0));
             StartCoroutine(SetCombo(0.35f));
             comboCount++;
         }
@@ -696,7 +701,7 @@ public class Weapon : MonoBehaviour
     {
         if (!isCombating)
         {
-            StartCoroutine(NormalAttackM0(0.4f, 1, damageM1));
+            StartCoroutine(NormalAttackM0(0.4f, 1, damageM1, repelDistance1));
             StartCoroutine(SetCombo(0.4f));
             comboCount++;
         }
@@ -706,7 +711,7 @@ public class Weapon : MonoBehaviour
     {
         if (!isCombating)
         {
-            StartCoroutine(NormalAttackM0(1f, 2, damageM2));
+            StartCoroutine(NormalAttackM0(1f, 2, damageM2, repelDistance2));
             StartCoroutine(SetCombo(1f));
             comboCount = 0;
         }
@@ -788,14 +793,14 @@ public class Weapon : MonoBehaviour
         canCombo = true;
     }
 
-    IEnumerator NormalAttackM0(float time, int bulletNo, float damage)
+    IEnumerator NormalAttackM0(float time, int bulletNo, float damage, float repelDistance)
     {
         StartCoroutine(StandAttack(time, moveSpeedM, true));
         isCombating = true;
         GameObject bulletInstance = Instantiate(bulletsM[bulletNo], transform.position, Quaternion.identity);
         bulletInstance.GetComponent<Bullet>().Setup(
             MouseDir(), 0, damage, critProbabilityM, critRateM, time, Bullet.BulletType.penetrable);
-        SetRepel(bulletInstance.GetComponent<Bullet>());
+        SetRepel(bulletInstance.GetComponent<Bullet>(), repelDistance);
         bulletInstance.transform.localScale = new Vector3(rangeM, rangeM, 1);
         bulletInstance.transform.parent = transform;
         yield return new WaitForSeconds(time);
@@ -810,7 +815,7 @@ public class Weapon : MonoBehaviour
         GameObject bulletInstance = Instantiate(bulletsM[3], ShootPos(shootOffset), Quaternion.identity);
         bulletInstance.GetComponent<Bullet>().Setup(
             dir, 0, damageM3, critProbabilityM, critRateM, 0.5f, Bullet.BulletType.penetrable);
-        SetRepel(bulletInstance.GetComponent<Bullet>());
+        SetRepel(bulletInstance.GetComponent<Bullet>(), repelDistance3);
         bulletInstance.transform.localScale = new Vector3(rangeM, rangeM, 1);
         yield return new WaitForSeconds(0.25f);
         player.Dash(dir, 2.0f * rangeM, 0.25f, MoveSpeedM(), true, true);
@@ -825,7 +830,7 @@ public class Weapon : MonoBehaviour
         GameObject bulletInstance = Instantiate(bulletsM[4], ShootPos(shootOffset), Quaternion.identity);
         bulletInstance.GetComponent<Bullet>().Setup(
             dir, 0, damageM4, critProbabilityM, critRateM, 0.5f, Bullet.BulletType.penetrable);
-        SetRepel(bulletInstance.GetComponent<Bullet>());
+        SetRepel(bulletInstance.GetComponent<Bullet>(), repelDistance4);
         bulletInstance.transform.localScale = new Vector3(rangeM, rangeM, 1);
         player.Dash(dir, 1.0f * rangeM, 0.17f, 0, false, true);
         yield return new WaitForSeconds(0.17f);
@@ -844,7 +849,7 @@ public class Weapon : MonoBehaviour
         GameObject bulletInstance = Instantiate(bulletsM[5], ShootPos(shootOffset), Quaternion.identity);
         bulletInstance.GetComponent<Bullet>().Setup(
             dir, 0, damageM5, critProbabilityM, critRateM, 1f, Bullet.BulletType.penetrable);
-        SetRepel(bulletInstance.GetComponent<Bullet>());
+        SetRepel(bulletInstance.GetComponent<Bullet>(), repelDistance5);
         bulletInstance.transform.localScale = new Vector3(rangeM, rangeM, 1);
         yield return new WaitForSeconds(0.62f);
         player.Dash(dir, 3.5f * rangeM, 0.23f, 0, false, true);
@@ -862,9 +867,9 @@ public class Weapon : MonoBehaviour
             return moveSpeedM;
     }
 
-    private void SetRepel(Bullet bullet)
+    private void SetRepel(Bullet bullet, float distance)
     {
-        bullet.SetRepel(repelDistance);
+        bullet.SetRepel(distance);
     }
 
     //Metal////////////////////////////////////////////////////////////////////////////////////////////////////////////

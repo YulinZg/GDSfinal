@@ -368,7 +368,7 @@ MonoBehaviour:
   shootOffset: 0.5
   bulletRotater: {fileID: 1095739407213342471}
   bulletsInWorld: {fileID: 0}
-  damageF: 5
+  damageF: 8
   critProbabilityF: 0.2
   critRateF: 1.5
   maganizeF: 5
@@ -462,7 +462,12 @@ MonoBehaviour:
   - {fileID: 1017864019808257222, guid: fd1cb4a1df0e8834ab227b408cb07e4a, type: 3}
   - {fileID: 3201939229812467401, guid: 1675a3ab658a388419f1e7b97fbcf369, type: 3}
   - {fileID: 4652189084665895369, guid: acb1df547825df241995822f974ad73d, type: 3}
-  repelDistance: 1
+  repelDistance0: 1
+  repelDistance1: 1
+  repelDistance2: 1
+  repelDistance3: 2
+  repelDistance4: 1
+  repelDistance5: 3
 --- !u!114 &2741019207210238514
 MonoBehaviour:
   m_ObjectHideFlags: 0

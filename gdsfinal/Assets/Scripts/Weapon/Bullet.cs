@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    private readonly IDictionary<int, Transform> dic = new Dictionary<int, Transform>();
+
     public enum BulletType
     {
         normal,
@@ -127,7 +129,12 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        HitEnemy(collision);
+        Transform t = collision.transform;
+        if (!dic.ContainsKey(t.GetInstanceID()))
+        {
+            dic.Add(t.GetInstanceID(), t);
+            HitEnemy(collision);
+        }
     }
 
     public void HitEnemy(Collider2D col)
