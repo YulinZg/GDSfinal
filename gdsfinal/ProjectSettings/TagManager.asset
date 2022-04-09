@@ -48,7 +48,13 @@ TagManager:
   - name: DoorUp
     uniqueID: 3359024167
     locked: 0
-  - name: Player
+  - name: PlayerUp
+    uniqueID: 290615169
+    locked: 0
+  - name: enemy
+    uniqueID: 1972021319
+    locked: 0
+  - name: PlayerDown
     uniqueID: 678415073
     locked: 0
   - name: DoorDown
