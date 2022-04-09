@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (canInput && !weapon.GetIsReloading())
+        if (canInput && !isAttacking)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
                 weapon.GetWeapon(Weapon.Property.fire);
