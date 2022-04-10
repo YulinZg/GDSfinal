@@ -74,7 +74,7 @@ MonoBehaviour:
   bulletEffect: {fileID: 0}
   type: 0
   property: 3
-  blinkTime: 1
+  blinkTime: 0.5
   blinkColor: {r: 1, g: 1, b: 0, a: 1}
   ifHurtStop: 1
 --- !u!1001 &3424080037983802901
@@ -130,7 +130,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6436324989013520626, guid: aa2a3b2181e8d4cab882154bef5763ef, type: 3}
       propertyPath: m_SortingLayer
-      value: 7
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6436324989013520626, guid: aa2a3b2181e8d4cab882154bef5763ef, type: 3}
       propertyPath: m_SortingLayerID

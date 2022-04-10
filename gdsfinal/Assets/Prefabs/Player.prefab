@@ -378,10 +378,10 @@ MonoBehaviour:
   critProbabilityF: 0.2
   critRateF: 1.5
   intervalF: 1
-  bulletSpeedF: 20
+  bulletSpeedF: 10
   rangeF: 15
   moveSpeedF: 3
-  standTimeF: 0.2
+  standTimeF: 0.5
   bulletNumber: 6
   bulletRotateRange: 1
   bulletLifeTimeBase: 1.5
@@ -413,9 +413,9 @@ MonoBehaviour:
   - {fileID: 7169208002471941264, guid: d45954436935e4f4aa21d81e4fca983e, type: 3}
   decelerateRate: 0.5
   decelerateTime: 10
-  damageE: 5
-  critProbabilityE: 0.2
-  critRateE: 1.5
+  damageE: 7
+  critProbabilityE: 0.5
+  critRateE: 1.2
   intervalE: 0.15
   bulletSpeedE: 20
   rangeE: 15
@@ -425,12 +425,12 @@ MonoBehaviour:
   scatterAngle: 22.5
   bulletsE:
   - {fileID: 7155690323364293923, guid: 33387e5d792fa554ea58f3347cb39fc5, type: 3}
-  stunValue: 1.5
+  stunValue: 3
   stunTime: 5
   damageL: 20
   damageL1: 60
   critProbabilityL: 0.5
-  critRateL: 1.5
+  critRateL: 1.2
   intervalL: 0.25
   moveSpeedL: 5
   standTimeL: 1
