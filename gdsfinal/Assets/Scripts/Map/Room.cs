@@ -54,7 +54,8 @@ public class Room : MonoBehaviour
             isPlayerEnter = true;
             enemyGenerator.gameObject.SetActive(true);
             roomTerrainGenerator.gameObject.SetActive(true);
-            roomTerrainGenerator.generateTerrain();
+            roomTerrainGenerator.GenerateTerrain();
+            roomTerrainGenerator.GeneratePathPoint();
             enemyGenerator.GenerateEnemy();
             //Debug.Log(1);
         }
