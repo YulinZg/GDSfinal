@@ -7,11 +7,13 @@ public abstract class Enemy : MonoBehaviour
     public bool isAlive;
     public float health;
     public float moveSpeed;
-    public float burnResistance;
-    public float decelerateResistance;
+    public int debuffResistance;
+    public float fireResistance;
+    public float waterResistance;
+    public float earthResistance;
     public float maxStunValue;
-    public float palsyResistance;
-    public float repelResistance;
+    public float lightningResistance;
+    public float metalResistance;
     
     public Transform player;
     public GameObject damageText;
@@ -21,10 +23,10 @@ public abstract class Enemy : MonoBehaviour
 
     public float effectSize; 
     public float effectOffsetY;
-    public float damageTextOffsetXLeftLimt;
-    public float damageTextOffsetXRightLimt;
-    public float damageTextOffsetYBottomLimt;
-    public float damageTextOffsetYUpLimt;
+    public float damageUIOffsetXMin;
+    public float damageUIOffsetXMax;
+    public float damageUIOffsetYMin;
+    public float damageUIOffsetYMax;
     public GameObject burnEffect;
     public GameObject decelerateEffect;
     public GameObject stunEffect;
@@ -51,12 +53,30 @@ public abstract class Enemy : MonoBehaviour
     
     public abstract void Move();
 
-    public void TakeDamage(float d, float blinkTime, Color blinkColor, bool hurtStop)
+    public void TakeDamage(float damage, float blinkTime, Color blinkColor, bool hurtStop, Bullet.DamageProperty property)
     {
-        float damage = Mathf.Floor(d);
-        health -= damage;
-        Damage damageUI = Instantiate(damageText, transform.position + new Vector3(Random.Range(damageTextOffsetXLeftLimt, damageTextOffsetXRightLimt), Random.Range(damageTextOffsetYBottomLimt, damageTextOffsetYUpLimt), 0), Quaternion.identity).GetComponent<Damage>();
-        damageUI.ShowUIDamage(damage);
+        switch (property)
+        {
+            case Bullet.DamageProperty.fire:
+                damage *= 1 - fireResistance;
+                break;
+            case Bullet.DamageProperty.water:
+                damage *= 1 - waterResistance;
+                break;
+            case Bullet.DamageProperty.earth:
+                damage *= 1 - earthResistance;
+                break;
+            case Bullet.DamageProperty.lightning:
+                damage *= 1 - lightningResistance;
+                break;
+            case Bullet.DamageProperty.metal:
+                damage *= 1 - metalResistance;
+                break;
+        }
+        float d = Mathf.Floor(damage);
+        health -= d;
+        Damage damageUI = Instantiate(damageText, transform.position + new Vector3(Random.Range(damageUIOffsetXMin, damageUIOffsetXMax), Random.Range(damageUIOffsetYMin, damageUIOffsetYMin), 0), Quaternion.identity).GetComponent<Damage>();
+        damageUI.ShowUIDamage(d);
         if (health <= 0)
         {
             health = 0;
@@ -80,22 +100,25 @@ public abstract class Enemy : MonoBehaviour
 
     public void Burn(float damage, float time, float interval)
     {
-        burnTimer = 0;
-        if (!isBurn)
-            burnCoroutine = StartCoroutine(Burnning(damage * (1 - burnResistance), time * (1 - burnResistance), interval));
-        if (isDecelerate)
+        int i = Random.Range(0, 100);
+        if (i < debuffResistance)
         {
-            isDecelerate = false;
-            currentSpeed = speed = moveSpeed;
-            StopCoroutine(decelerateCoroutine);
-            if (transform.childCount > 0)
-                foreach (Transform child in transform)
-                {
-                    if (child.name == "waterEffect(Clone)")
-                        Destroy(child.gameObject);
-                }
-        }
-    }
+            burnTimer = 0;
+            if (!isBurn)
+                burnCoroutine = StartCoroutine(Burnning(damage, time * (1 - fireResistance), interval));
+            if (isDecelerate)
+            {
+                isDecelerate = false;
+                currentSpeed = speed = moveSpeed;
+                StopCoroutine(decelerateCoroutine);
+                if (transform.childCount > 0)
+                    foreach (Transform child in transform)
+                    {
+                        if (child.name == "waterEffect(Clone)")
+                            Destroy(child.gameObject);
+                    }
+            }
+        }    }
 
     IEnumerator Burnning(float damage, float time, float interval)
     {
@@ -110,7 +133,7 @@ public abstract class Enemy : MonoBehaviour
             timer += Time.deltaTime;
             if (timer >= interval)
             {
-                TakeDamage(damage, 0.5f, Color.red, false);
+                TakeDamage(damage, 0.5f, Color.red, false, Bullet.DamageProperty.fire);
                 timer = 0;
             }
             yield return null;
@@ -121,19 +144,23 @@ public abstract class Enemy : MonoBehaviour
 
     public void Decelerate(float rate, float time)
     {
-        decelerateTimer = 0;
-        if (!isDecelerate)
-            decelerateCoroutine = StartCoroutine(Decelerating(rate, time * (1 - decelerateResistance)));
-        if (isBurn)
+        int i = Random.Range(0, 100);
+        if (i <= debuffResistance)
         {
-            isBurn = false;
-            StopCoroutine(burnCoroutine);
-            if (transform.childCount > 0)
-                foreach (Transform child in transform)
-                {
-                    if (child.name == "burnEffect(Clone)")
-                        Destroy(child.gameObject);
-                }
+            decelerateTimer = 0;
+            if (!isDecelerate)
+                decelerateCoroutine = StartCoroutine(Decelerating(rate, time * (1 - waterResistance)));
+            if (isBurn)
+            {
+                isBurn = false;
+                StopCoroutine(burnCoroutine);
+                if (transform.childCount > 0)
+                    foreach (Transform child in transform)
+                    {
+                        if (child.name == "burnEffect(Clone)")
+                            Destroy(child.gameObject);
+                    }
+            }
         }
     }
 
@@ -183,42 +210,46 @@ public abstract class Enemy : MonoBehaviour
     {
         palsyTimer = 0;
         if (!isPalsy)
-            StartCoroutine(Palsying(damage * (1 - palsyResistance), time * (1 - palsyResistance), interval));
+            StartCoroutine(Palsying(damage, time * (1 - lightningResistance), interval));
     }
 
     IEnumerator Palsying(float damage, float time, float interval)
     {
-        float timer = 0;
-        isPalsy = true;
-        GameObject effectInstance = Instantiate(palsyEffect, transform);
-        effectInstance.transform.localPosition += Vector3.up * effectOffsetY;
-        effectInstance.transform.localScale = new Vector3(effectSize, effectSize, 1);
-        while (palsyTimer <= time)
+        int i = Random.Range(0, 100);
+        if (i <= debuffResistance)
         {
-            palsyTimer += Time.deltaTime;
-            timer += Time.deltaTime;
-            if (isDecelerate)
-                effectInstance.transform.localScale = new Vector3(effectSize * 1.5f, effectSize * 1.5f, 1);
-            else
-                effectInstance.transform.localScale = new Vector3(effectSize, effectSize, 1);
-            if (timer >= interval)
+            float timer = 0;
+            isPalsy = true;
+            GameObject effectInstance = Instantiate(palsyEffect, transform);
+            effectInstance.transform.localPosition += Vector3.up * effectOffsetY;
+            effectInstance.transform.localScale = new Vector3(effectSize, effectSize, 1);
+            while (palsyTimer <= time)
             {
-                float d = damage;
+                palsyTimer += Time.deltaTime;
+                timer += Time.deltaTime;
                 if (isDecelerate)
-                    d *= 2;
-                TakeDamage(d, 0.5f, Color.yellow, true);
-                timer = 0;
+                    effectInstance.transform.localScale = new Vector3(effectSize * 1.5f, effectSize * 1.5f, 1);
+                else
+                    effectInstance.transform.localScale = new Vector3(effectSize, effectSize, 1);
+                if (timer >= interval)
+                {
+                    float d = damage;
+                    if (isDecelerate)
+                        d *= 2;
+                    TakeDamage(d, 0.5f, Color.yellow, true, Bullet.DamageProperty.lightning);
+                    timer = 0;
+                }
+                yield return null;
             }
-            yield return null;
+            isPalsy = false;
+            Destroy(effectInstance);
         }
-        isPalsy = false;
-        Destroy(effectInstance);
     }
 
     public void Repel(float distance)
     {
         Vector3 dir = ((Vector2)transform.position - (Vector2)player.position).normalized;
-        StartCoroutine(Repeling(dir, distance * (1 - repelResistance), 0.2f));
+        StartCoroutine(Repeling(dir, distance * (1 - metalResistance), 0.2f));
     }
 
     IEnumerator Repeling(Vector3 dir, float distance, float time)
