@@ -13,7 +13,7 @@ public class Bullet : MonoBehaviour
         penetrable
     }
 
-    public enum BulletProperty
+    public enum DamageProperty
     {
         fire,
         water,
@@ -23,7 +23,7 @@ public class Bullet : MonoBehaviour
     }
 
     public BulletType type;
-    public BulletProperty property;
+    public DamageProperty property;
 
     private Vector3 dir;
     private float speed;
@@ -158,22 +158,22 @@ public class Bullet : MonoBehaviour
             damage *= critRate;
         switch (property)
         {
-            case BulletProperty.fire:
+            case DamageProperty.fire:
                 enemy.Burn(burnDamage, burnTime, burnInterval);
                 break;
-            case BulletProperty.water:
+            case DamageProperty.water:
                 enemy.Decelerate(decelerateRate, decelerateTime);
                 break;
-            case BulletProperty.earth:
+            case DamageProperty.earth:
                 enemy.Stun(stunValue, stunTime);
                 break;
-            case BulletProperty.lightning:
+            case DamageProperty.lightning:
                 enemy.Palsy(palsyDamage, palsyTime, palsyInterval);
                 break;
-            case BulletProperty.metal:
+            case DamageProperty.metal:
                 enemy.Repel(repelDistance);
                 break;
         }
-        enemy.TakeDamage(damage * Random.Range(0.9f, 1.1f), blinkTime, blinkColor, ifHurtStop);
+        enemy.TakeDamage(damage * Random.Range(0.9f, 1.1f), blinkTime, blinkColor, ifHurtStop, property);
     }
 }

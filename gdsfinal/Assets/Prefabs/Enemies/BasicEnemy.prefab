@@ -251,11 +251,13 @@ MonoBehaviour:
   isAlive: 0
   health: 500
   moveSpeed: 1
-  burnResistance: 0
-  decelerateResistance: 0
+  debuffResistance: 100
+  fireResistance: 0
+  waterResistance: 0
+  earthResistance: 0
   maxStunValue: 100
-  palsyResistance: 0
-  repelResistance: 0
+  lightningResistance: 0
+  metalResistance: 0
   player: {fileID: 0}
   damageText: {fileID: 4318804278247988162, guid: d8ab669f8ef30064497cad64bd4f4f2f, type: 3}
   sprite: {fileID: 0}
@@ -263,10 +265,10 @@ MonoBehaviour:
   anim: {fileID: 0}
   effectSize: 1.25
   effectOffsetY: 0.75
-  damageTextOffsetXLeftLimt: -0.5
-  damageTextOffsetXRightLimt: 1
-  damageTextOffsetYBottomLimt: -0.5
-  damageTextOffsetYUpLimt: 1
+  damageUIOffsetXMin: -0.5
+  damageUIOffsetXMax: 1
+  damageUIOffsetYMin: -0.5
+  damageUIOffsetYMax: 1
   burnEffect: {fileID: 5038591547534441582, guid: 4e726f7935d9eca4faf212ca8a9b0a31, type: 3}
   decelerateEffect: {fileID: 737469681386818583, guid: 8b4d96607cfc9114783b5df93d76d647, type: 3}
   stunEffect: {fileID: 8964234654960140829, guid: 9312f7be5492cfe4a89e6c6660e8dc90, type: 3}
@@ -276,6 +278,7 @@ MonoBehaviour:
   isStun: 0
   isPalsy: 0
   isRepel: 0
+  isHurt: 0
 --- !u!1 &1528988917447627548
 GameObject:
   m_ObjectHideFlags: 0

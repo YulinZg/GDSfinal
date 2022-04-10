@@ -214,6 +214,8 @@ public class Weapon : MonoBehaviour
         if (bulletsInWorld.transform.childCount > 0)
             foreach (Transform child in bulletsInWorld.transform)
                 Destroy(child.gameObject);
+        if (effectInstance)
+            Destroy(effectInstance);
     }
 
     private Vector3 MouseDir()
