@@ -307,15 +307,14 @@ public class Weapon : MonoBehaviour
             bulletInstance = Instantiate(bulletsF[0], transform.position, Quaternion.identity);
             bulletInstance.transform.parent = bulletRotater.transform;
             bulletInstance.GetComponent<Bullet>().Setup(
-                RotateVector(MouseDir(), (360f / bulletNum) * (i + 1)), bulletSpeedF * 0.25f, damageF, critProbabilityF, critRateF, bulletLifeTimeBase * (i + 1), Bullet.BulletType.normal);
+                RotateVector(MouseDir(), (360f / bulletNum) * (i + 1)), bulletRotateRange / standTimeF, damageF, critProbabilityF, critRateF, standTimeF + bulletLifeTimeBase * (i + 1), Bullet.BulletType.normal);
             bulletInstance.GetComponent<Bullet>().SetFire(bulletRotateRange);
             SetBurn(bulletInstance.GetComponent<Bullet>());
         }
-        float invokeTime = bulletRotateRange / (bulletSpeedF * 0.25f);
-        Invoke(nameof(SetCanLaunch), invokeTime);
+        Invoke(nameof(SetCanLaunch), standTimeF);
         player.isAttacking = true;
-        Invoke(nameof(SetPlayerAttackingFalse), invokeTime);
-        StartCoroutine(StandAttack(invokeTime, moveSpeedF, false));
+        Invoke(nameof(SetPlayerAttackingFalse), standTimeF);
+        StartCoroutine(StandAttack(standTimeF, moveSpeedF, false));
         SpawnEffect(0);
     }
 
@@ -337,7 +336,8 @@ public class Weapon : MonoBehaviour
                 SetBurn(bulletInstance.GetComponent<Bullet>());
                 Destroy(child.gameObject);
             }
-            StartCoroutine(StandAttack(standTimeF, moveSpeedF, false));
+            player.isAttacking = true;
+            Invoke(nameof(SetPlayerAttackingFalse), 0.2f);
         }
     }
 

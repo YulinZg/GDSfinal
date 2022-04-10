@@ -48,7 +48,7 @@ public abstract class Enemy : MonoBehaviour
     private float stopTimer = 0;
     private Coroutine burnCoroutine;
     private Coroutine decelerateCoroutine;
-
+    
     public abstract void Move();
 
     public void TakeDamage(float d, float blinkTime, Color blinkColor, bool hurtStop)
@@ -72,6 +72,7 @@ public abstract class Enemy : MonoBehaviour
             if (!isHurt)
             {
                 isHurt = true;
+                anim.SetBool("isHurt", true);
                 StartCoroutine(StopMove(blinkTime));
             }
         }
@@ -205,7 +206,7 @@ public abstract class Enemy : MonoBehaviour
                 float d = damage;
                 if (isDecelerate)
                     d *= 2;
-                TakeDamage(d, 1f, Color.yellow, true);
+                TakeDamage(d, 0.5f, Color.yellow, true);
                 timer = 0;
             }
             yield return null;
@@ -239,11 +240,17 @@ public abstract class Enemy : MonoBehaviour
 
     IEnumerator StopMove(float time)
     {
+        bool set = false;
         speed = 0;
         while (stopTimer <= time)
         {
             stopTimer += Time.deltaTime;
             yield return null;
+            if (!set)
+            {
+                set = true;
+                anim.SetBool("isHurt", false);
+            }
         }
         isHurt = false;
         if (!isStun)

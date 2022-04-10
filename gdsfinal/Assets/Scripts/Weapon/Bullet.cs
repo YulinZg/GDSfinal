@@ -156,7 +156,6 @@ public class Bullet : MonoBehaviour
         int i = Random.Range(0, 100);
         if (i < 100 * critProbability)
             damage *= critRate;
-        enemy.TakeDamage(damage * Random.Range(0.9f, 1.1f), blinkTime, blinkColor, ifHurtStop);
         switch (property)
         {
             case BulletProperty.fire:
@@ -175,5 +174,6 @@ public class Bullet : MonoBehaviour
                 enemy.Repel(repelDistance);
                 break;
         }
+        enemy.TakeDamage(damage * Random.Range(0.9f, 1.1f), blinkTime, blinkColor, ifHurtStop);
     }
 }
