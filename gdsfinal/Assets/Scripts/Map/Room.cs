@@ -81,6 +81,7 @@ private void OnTriggerExit2D(Collider2D collision)
             enemyGenerator.enemyCount--;
             if (enemyGenerator.enemyCount == 0)
             {
+                roomTerrainGenerator.DestroyAllPoints();
                 switch (doorNumber)
                 {
                     case 1:

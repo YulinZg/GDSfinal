@@ -9,7 +9,6 @@ public class BasicEnemy : Enemy
         Wander,
         Chase,
         Attack,
-        Dead,
     };
 
     public EnemyState currentState;
@@ -26,12 +25,14 @@ public class BasicEnemy : Enemy
     {
         isAlive = true;
         currentSpeed = speed = moveSpeed;
+        
         pathPoints = GameObject.FindGameObjectsWithTag("Point");
     }
 
     // Update is called once per frame
     void Update()
     {
+        //IsLookAtWall();
         UpdateState();
         //IsPlayerInView();
         //moveDir = ((Vector2)player.position - (Vector2)transform.position).normalized;
@@ -39,6 +40,7 @@ public class BasicEnemy : Enemy
 
     private void FixedUpdate()
     {
+        
         if (!isRepel)
         {
             Move();
@@ -47,7 +49,11 @@ public class BasicEnemy : Enemy
 
     public override void Move()
     {
+        //Debug.DrawRay((Vector2)transform.position + senseOffset, new Vector2(moveDir.x, 0).normalized * rayDis);
+        //Debug.Log(1111);
+        //IsNearOtherEnemy();
         rigid.velocity = speed * moveDir;
+        filp();
     }
 
     public override void UpdateState()
@@ -56,31 +62,35 @@ public class BasicEnemy : Enemy
         {
             case EnemyState.Wander:
                 Wander();
-                Debug.LogError("wander");
-                if (IsPlayerInView())
+                //Debug.LogError("wander");
+                if (IsPlayerInSense() || beAttacked)
                 {
-                    desTraget = player;
+                    desTraget = (Vector2)player.position + new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
                     currentState = EnemyState.Chase;
                 }
                 break;
             case EnemyState.Chase:
                 Chasing();
-                Debug.LogError("chasing");
-                if (!IsPlayerInView())
-                {
-                    GetNewTargetPoint();
-                    currentState = EnemyState.Wander;
-                }
-                if ((player.position - transform.position).magnitude < 1f)
+                //Debug.LogError("chasing");
+                //if (!IsPlayerInView() && !beAttacked)
+                //{
+                //    GetNewTargetPoint();
+                //    currentState = EnemyState.Wander;
+                //}
+                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) <= 0.8f)
                 {
                     currentState = EnemyState.Attack;
                 }
                 break;
-            case EnemyState.Attack:
-                speed = 0;
-                Debug.LogError("Attack");
-                break;
-            case EnemyState.Dead:
+            case EnemyState.Attack:              
+                Attack();
+                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) > 0.8f)
+                {
+                    currentState = EnemyState.Chase;
+                    desTraget = (Vector2)player.position;
+                    stopAttack();
+                }
+                //Debug.LogError("Attack");
                 break;
             default:
                 break;
@@ -89,14 +99,34 @@ public class BasicEnemy : Enemy
 
     private void Chasing()
     {
-        moveDir = ((Vector2)desTraget.position + new Vector2(Random.Range(-1, 1), Random.Range(-1, 1)) - (Vector2)transform.position).normalized;
+        if (Vector2.Distance(desTraget, transform.position) < 0.1f)
+        {
+            desTraget = (Vector2)player.position + new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
+        }
+        moveDir = ((Vector2)desTraget - (Vector2)transform.position).normalized;
     }
     private void Wander()
     {
-        if (!desTraget || (desTraget.position - transform.position).magnitude < 0.1f)
+        if (desTraget == new Vector2(0,0) || Vector2.Distance(desTraget, transform.position) < 0.1f)
         {
             GetNewTargetPoint();
         }
-        moveDir = ((Vector2)desTraget.position - (Vector2)transform.position).normalized;
+        moveDir = ((Vector2)desTraget - (Vector2)transform.position).normalized;
+    }
+
+    private void Attack()
+    {
+        speed = 0;
+        isAttacking = true;
+        moveDir = ((Vector2)player.position - (Vector2)transform.position).normalized;
+        //需要让怪物面向玩家
+        anim.SetBool("isAttacking", true);
+    }
+
+    private void stopAttack()
+    {
+        speed = currentSpeed;
+        isAttacking = false;
+        anim.SetBool("isAttacking", false);
     }
 }
