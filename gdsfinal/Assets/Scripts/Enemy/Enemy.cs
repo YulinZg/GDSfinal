@@ -7,7 +7,7 @@ public abstract class Enemy : MonoBehaviour
     public bool isAlive;
     public float health;
     public float moveSpeed;
-    public int debuffResistance;
+    public float debuffResistance;
     public float fireResistance;
     public float waterResistance;
     public float earthResistance;
@@ -63,30 +63,30 @@ public abstract class Enemy : MonoBehaviour
         desTraget = pathPoints[Random.Range(0, pathPoints.Length)].transform;
     }
 
-    public void TakeDamage(float damage, float blinkTime, Color blinkColor, bool hurtStop, Bullet.DamageProperty property)
+    public void TakeDamage(float damage, Color damageColor, float blinkTime, Color blinkColor, bool hurtStop, DamageProperty property)
     {
         switch (property)
         {
-            case Bullet.DamageProperty.fire:
+            case DamageProperty.fire:
                 damage *= 1 - fireResistance;
                 break;
-            case Bullet.DamageProperty.water:
+            case DamageProperty.water:
                 damage *= 1 - waterResistance;
                 break;
-            case Bullet.DamageProperty.earth:
+            case DamageProperty.earth:
                 damage *= 1 - earthResistance;
                 break;
-            case Bullet.DamageProperty.lightning:
+            case DamageProperty.lightning:
                 damage *= 1 - lightningResistance;
                 break;
-            case Bullet.DamageProperty.metal:
+            case DamageProperty.metal:
                 damage *= 1 - metalResistance;
                 break;
         }
         float d = Mathf.Floor(damage);
         health -= d;
         Damage damageUI = Instantiate(damageText, transform.position + new Vector3(Random.Range(damageUIOffsetXMin, damageUIOffsetXMax), Random.Range(damageUIOffsetYMin, damageUIOffsetYMin), 0), Quaternion.identity).GetComponent<Damage>();
-        damageUI.ShowUIDamage(d);
+        damageUI.ShowUIDamage(d, damageColor);
         if (health <= 0)
         {
             health = 0;
@@ -111,7 +111,7 @@ public abstract class Enemy : MonoBehaviour
     public void Burn(float damage, float time, float interval)
     {
         int i = Random.Range(0, 100);
-        if (i < debuffResistance)
+        if (i < 100 * ( 1 - debuffResistance))
         {
             burnTimer = 0;
             if (!isBurn)
@@ -144,7 +144,7 @@ public abstract class Enemy : MonoBehaviour
             timer += Time.deltaTime;
             if (timer >= interval)
             {
-                TakeDamage(damage, 0.5f, Color.red, false, Bullet.DamageProperty.fire);
+                TakeDamage(damage, Color.gray, 0.5f, Color.red, false, DamageProperty.fire);
                 timer = 0;
             }
             yield return null;
@@ -156,7 +156,7 @@ public abstract class Enemy : MonoBehaviour
     public void Decelerate(float rate, float time)
     {
         int i = Random.Range(0, 100);
-        if (i <= debuffResistance)
+        if (i <= 100 * (1 - debuffResistance))
         {
             decelerateTimer = 0;
             if (!isDecelerate)
@@ -227,7 +227,7 @@ public abstract class Enemy : MonoBehaviour
     IEnumerator Palsying(float damage, float time, float interval)
     {
         int i = Random.Range(0, 100);
-        if (i <= debuffResistance)
+        if (i <= 100 * (1 - debuffResistance))
         {
             float timer = 0;
             isPalsy = true;
@@ -247,7 +247,7 @@ public abstract class Enemy : MonoBehaviour
                     float d = damage;
                     if (isDecelerate)
                         d *= 2;
-                    TakeDamage(d, 0.5f, Color.yellow, true, Bullet.DamageProperty.lightning);
+                    TakeDamage(d, Color.gray, 0.5f, Color.yellow, true, DamageProperty.lightning);
                     timer = 0;
                 }
                 yield return null;
@@ -327,10 +327,10 @@ public abstract class Enemy : MonoBehaviour
         //Physics2D.Raycast(transform.position + new Vector3(-0.275f, -0.1f, 0), new Vector2(moveDir.normalized.x, 0), viewLength, playerLayer);
     }
 
-    void OnDrawGizmos()//»æÖÆ¸¨ÖúÏß
+    void OnDrawGizmos()//Â»Ã¦Ã–Ã†Â¸Â¨Ã–ÃºÃÃŸ
     {
-        Gizmos.color = Color.red;//¸¨ÖúÏßÑÕÉ«
-        Gizmos.DrawWireSphere((Vector2)transform.position, senseRadius);//»æÖÆÉäÏß
-                                                                        // Gizmos.DrawLine((Vector2)transform.position, (Vector2)transform.position + (new Vector2(moveDir.x, 0) + new Vector2(0, -1)) * senseRadius);//»æÖÆÔ²ÐÎ
+        Gizmos.color = Color.red;//Â¸Â¨Ã–ÃºÃÃŸÃ‘Ã•Ã‰Â«
+        Gizmos.DrawWireSphere((Vector2)transform.position, senseRadius);//Â»Ã¦Ã–Ã†Ã‰Ã¤ÃÃŸ
+                                                                        // Gizmos.DrawLine((Vector2)transform.position, (Vector2)transform.position + (new Vector2(moveDir.x, 0) + new Vector2(0, -1)) * senseRadius);//Â»Ã¦Ã–Ã†Ã”Â²ÃÃŽ
     }
 }

@@ -251,7 +251,7 @@ MonoBehaviour:
   isAlive: 0
   health: 500
   moveSpeed: 1
-  debuffResistance: 100
+  debuffResistance: 0
   fireResistance: 0
   waterResistance: 0
   earthResistance: 0
@@ -267,7 +267,7 @@ MonoBehaviour:
   effectOffsetY: 0.75
   damageUIOffsetXMin: -0.5
   damageUIOffsetXMax: 1
-  damageUIOffsetYMin: -0.5
+  damageUIOffsetYMin: 0.5
   damageUIOffsetYMax: 1
   burnEffect: {fileID: 5038591547534441582, guid: 4e726f7935d9eca4faf212ca8a9b0a31, type: 3}
   decelerateEffect: {fileID: 737469681386818583, guid: 8b4d96607cfc9114783b5df93d76d647, type: 3}
