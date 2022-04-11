@@ -394,9 +394,7 @@ MonoBehaviour:
   - {fileID: 4513186292420534017, guid: eee4c1febdca851409069e4811dda038, type: 3}
   - {fileID: 8293550579373383261, guid: ce5cddaf9d1908245a70cd6fae5a21d4, type: 3}
   - {fileID: 7090674513177284307, guid: 13584b280151bae49ab3fa823dbc5d4b, type: 3}
-  damageF: 8
-  critProbabilityF: 0.2
-  critRateF: 1.5
+  damageF: 1.5
   intervalF: 1
   bulletSpeedF: 10
   rangeF: 15
@@ -411,12 +409,10 @@ MonoBehaviour:
   burnDamage: 8
   burnTime: 5
   burnInterval: 1
-  damageW: 40
-  damageW1: 70
-  damageW2: 100
-  damageW3: 130
-  critProbabilityW: 0.2
-  critRateW: 1.5
+  damageW: 4
+  damageW1: 6
+  damageW2: 10
+  damageW3: 16
   intervalW: 1
   bulletSpeedW: 15
   rangeW: 10
@@ -433,10 +429,8 @@ MonoBehaviour:
   - {fileID: 7169208002471941264, guid: d45954436935e4f4aa21d81e4fca983e, type: 3}
   decelerateRate: 0.5
   decelerateTime: 10
-  damageE: 7
-  critProbabilityE: 0.5
-  critRateE: 1.2
-  intervalE: 0.15
+  damageE: 1
+  intervalE: 0.1
   bulletSpeedE: 20
   rangeE: 15
   moveSpeedE: 3
@@ -445,12 +439,10 @@ MonoBehaviour:
   scatterAngle: 22.5
   bulletsE:
   - {fileID: 7155690323364293923, guid: 33387e5d792fa554ea58f3347cb39fc5, type: 3}
-  stunValue: 3
+  stunValue: 2
   stunTime: 5
-  damageL: 20
-  damageL1: 60
-  critProbabilityL: 0.5
-  critRateL: 1.2
+  damageL: 2
+  damageL1: 4
   intervalL: 0.25
   moveSpeedL: 5
   standTimeL: 1
@@ -462,14 +454,12 @@ MonoBehaviour:
   palsyDamage: 5
   palsyTime: 15
   palsyInterval: 3
-  damageM0: 20
-  damageM1: 30
-  damageM2: 40
-  damageM3: 30
-  damageM4: 20
-  damageM5: 100
-  critProbabilityM: 0.5
-  critRateM: 1.5
+  damageM0: 2
+  damageM1: 3
+  damageM2: 4
+  damageM3: 3
+  damageM4: 2
+  damageM5: 9
   intervalM: 0.25
   rangeM: 1
   moveSpeedM: 5
@@ -498,17 +488,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba643dae812721746819b3fcaa6c354a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
-  attack: 1
-  critProbability: 0.5
-  critRate: 1.5
-  defense: 1
-  moveSpeed: 1
+  health: 10
+  healthUnit: 10
+  attack: 10
+  critProbability: 10
+  critProbabilityUnit: 0.01
+  critRate: 10
+  critRateUnit: 0.01
+  defense: 10
+  defenseUnit: 5
+  moveSpeed: 10
+  moveSpeedUnit: 0.1
   damageText: {fileID: 4318804278247988162, guid: d8ab669f8ef30064497cad64bd4f4f2f, type: 3}
-  damageUIOffsetXMin: 0
-  damageUIOffsetXMax: 0
-  damageUIOffsetYMin: 0
-  damageUIOffsetYMax: 0
+  damageUIOffsetXMin: -0.5
+  damageUIOffsetXMax: 0.5
+  damageUIOffsetYMin: -0.5
+  damageUIOffsetYMax: 0.5
 --- !u!114 &2741019207210238514
 MonoBehaviour:
   m_ObjectHideFlags: 0

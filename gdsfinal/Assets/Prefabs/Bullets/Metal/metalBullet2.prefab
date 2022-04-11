@@ -181,6 +181,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   property: 4
+  bulletEffect: {fileID: 0}
+  blinkTime: 0
+  blinkColor: {r: 0, g: 0, b: 0, a: 0}
+  ifHurtStop: 0
 --- !u!1 &391417020810852948
 GameObject:
   m_ObjectHideFlags: 0
