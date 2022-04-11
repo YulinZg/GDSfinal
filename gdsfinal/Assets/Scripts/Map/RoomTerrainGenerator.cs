@@ -8,7 +8,7 @@ public class RoomTerrainGenerator : MonoBehaviour
     private int[,] map = new int[25, 13];
 
     public GameObject floor;
-
+    public List<GameObject> points = new List<GameObject>();
     public GameObject pathPoint;
 
     public void GeneratePathPoint()
@@ -17,9 +17,17 @@ public class RoomTerrainGenerator : MonoBehaviour
         {
             for (int j = 0; j < map.GetLength(1); j++)
             {
-                Instantiate(pathPoint, transform.position + new Vector3(i, j), Quaternion.identity);
+                points.Add(Instantiate(pathPoint, transform.position + new Vector3(i, j), Quaternion.identity));
                 //map[i, j] = 1;
             }
+        }
+    }
+
+    public void DestroyAllPoints()
+    {
+        foreach (GameObject point in points)
+        {
+            Destroy(point);
         }
     }
     public void GenerateTerrain()

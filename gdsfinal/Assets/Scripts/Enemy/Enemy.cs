@@ -32,12 +32,15 @@ public abstract class Enemy : MonoBehaviour
     public GameObject stunEffect;
     public GameObject palsyEffect;
 
-    public bool isBurn = false;
-    public bool isDecelerate = false;
-    public bool isStun = false;
-    public bool isPalsy = false;
-    public bool isRepel = false;
-    public bool isHurt = false;
+    protected bool isBurn = false;
+    protected bool isDecelerate = false;
+    protected bool isStun = false;
+    protected bool isPalsy = false;
+    protected bool isRepel = false;
+    protected bool isHurt = false;
+    protected bool isAttacking = false;
+    protected bool beAttacked = false;
+    //public float disarmingTime;
 
     protected float currentSpeed;
     protected float speed;
@@ -51,20 +54,27 @@ public abstract class Enemy : MonoBehaviour
     private Coroutine burnCoroutine;
     private Coroutine decelerateCoroutine;
 
+    [Header("AI")]
     public float senseRadius;
+    public float enemySeneseRadius;
+    public LayerMask enemyLayer;
     public LayerMask playerLayer;
     protected GameObject[] pathPoints;
-    protected Transform desTraget;
+    protected Vector2 desTraget;
+    public Vector2 senseOffset;
+    public float rayDis;
+    public LayerMask wall;
     public abstract void Move();
 
     public abstract void UpdateState();
     public void GetNewTargetPoint()
     {
-        desTraget = pathPoints[Random.Range(0, pathPoints.Length)].transform;
+        desTraget = pathPoints[Random.Range(0, pathPoints.Length)].transform.position;
     }
 
     public void TakeDamage(float damage, Color damageColor, float blinkTime, Color blinkColor, bool hurtStop, DamageProperty property)
     {
+        beAttacked = true;
         switch (property)
         {
             case DamageProperty.fire:
@@ -192,6 +202,10 @@ public abstract class Enemy : MonoBehaviour
         Destroy(effectInstance);
     }
 
+    public void filp()
+    {
+        transform.localScale = new Vector3(moveDir.x > 0 ? 1 : -1, 1, 1);
+    }
     public void Stun(float value, float time)
     {
         if (!isStun)
@@ -199,7 +213,7 @@ public abstract class Enemy : MonoBehaviour
         if (currentStunValue >= maxStunValue)
         {
             currentStunValue = 0;
-            isStun = true;
+            isStun = true;           
             stopTimer = 0;
             StartCoroutine(StopMove(time));
             StartCoroutine(DoBlinks(Color.gray, (int)(time / 0.05f), 0.05f));
@@ -213,6 +227,7 @@ public abstract class Enemy : MonoBehaviour
 
     private void SetNotStun()
     {
+        //anim.SetBool("isHurt", false);
         isStun = false;
         speed = currentSpeed;
     }
@@ -253,6 +268,7 @@ public abstract class Enemy : MonoBehaviour
                 yield return null;
             }
             isPalsy = false;
+            //anim.SetBool("isHurt", false);
             Destroy(effectInstance);
         }
     }
@@ -282,19 +298,21 @@ public abstract class Enemy : MonoBehaviour
 
     IEnumerator StopMove(float time)
     {
-        bool set = false;
+        //bool set = false;
+        anim.SetBool("isHurt", true);
         speed = 0;
         while (stopTimer <= time)
         {
             stopTimer += Time.deltaTime;
             yield return null;
-            if (!set)
-            {
-                set = true;
-                anim.SetBool("isHurt", false);
-            }
+            //if (!set)
+            //{
+            //    set = true;
+            //    anim.SetBool("isHurt", false);
+            //}
         }
         isHurt = false;
+        anim.SetBool("isHurt", false);
         if (!isStun)
         {
             speed = currentSpeed;
@@ -318,19 +336,30 @@ public abstract class Enemy : MonoBehaviour
     {
         Destroy(gameObject);
     }
-    public Collider2D IsPlayerInView()
+    public Collider2D IsPlayerInSense()
     {
-        //Debug.Log("attack!");
-        //Gizmos.DrawWireSphere((Vector2)transform.position, senseRadius);
-        //Physics2D.CircleCast(transform.position, senseRadius, playerLayer);
         return Physics2D.OverlapCircle(transform.position, senseRadius, playerLayer);
-        //Physics2D.Raycast(transform.position + new Vector3(-0.275f, -0.1f, 0), new Vector2(moveDir.normalized.x, 0), viewLength, playerLayer);
     }
 
-    void OnDrawGizmos()//»æÖÆ¸¨ÖúÏß
-    {
-        Gizmos.color = Color.red;//¸¨ÖúÏßÑÕÉ«
-        Gizmos.DrawWireSphere((Vector2)transform.position, senseRadius);//»æÖÆÉäÏß
-                                                                        // Gizmos.DrawLine((Vector2)transform.position, (Vector2)transform.position + (new Vector2(moveDir.x, 0) + new Vector2(0, -1)) * senseRadius);//»æÖÆÔ²ÐÎ
-    }
+    //public bool IsLookAtPlayer()
+    //{
+        
+    //    return Physics2D.Raycast((Vector2)transform.position + senseOffset, new Vector2(moveDir.x, 0).normalized, rayDis, wall);
+    //}
+    //public bool IsNearOtherEnemy()
+    //{
+    //    Collider2D temp = Physics2D.OverlapCircle(transform.position, enemySeneseRadius, enemyLayer);
+    //    if (temp)
+    //    {
+    //        return true;
+    //    }
+    //    else
+    //        return false;
+    //}
+    //void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.red;
+    //    //Gizmos.DrawWireSphere((Vector2)transform.position + senseOffset, enemySeneseRadius);    
+    //    // Gizmos.DrawLine((Vector2)transform.position, (Vector2)transform.position + (new Vector2(moveDir.x, 0) + new Vector2(0, -1)) * senseRadius);//»æÖÆÔ²ÐÎ
+    //}
 }
