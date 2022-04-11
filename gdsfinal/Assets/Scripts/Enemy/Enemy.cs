@@ -14,14 +14,14 @@ public abstract class Enemy : MonoBehaviour
     public float maxStunValue;
     public float lightningResistance;
     public float metalResistance;
-    
+
     public Transform player;
     public GameObject damageText;
     public SpriteRenderer sprite;
     public Rigidbody2D rigid;
     public Animator anim;
 
-    public float effectSize; 
+    public float effectSize;
     public float effectOffsetY;
     public float damageUIOffsetXMin;
     public float damageUIOffsetXMax;
@@ -50,8 +50,18 @@ public abstract class Enemy : MonoBehaviour
     private float stopTimer = 0;
     private Coroutine burnCoroutine;
     private Coroutine decelerateCoroutine;
-    
+
+    public float senseRadius;
+    public LayerMask playerLayer;
+    protected GameObject[] pathPoints;
+    protected Transform desTraget;
     public abstract void Move();
+
+    public abstract void UpdateState();
+    public void GetNewTargetPoint()
+    {
+        desTraget = pathPoints[Random.Range(0, pathPoints.Length)].transform;
+    }
 
     public void TakeDamage(float damage, Color damageColor, float blinkTime, Color blinkColor, bool hurtStop, DamageProperty property)
     {
@@ -118,7 +128,8 @@ public abstract class Enemy : MonoBehaviour
                             Destroy(child.gameObject);
                     }
             }
-        }    }
+        }
+    }
 
     IEnumerator Burnning(float damage, float time, float interval)
     {
@@ -306,5 +317,20 @@ public abstract class Enemy : MonoBehaviour
     public void DestroySelf()
     {
         Destroy(gameObject);
+    }
+    public Collider2D IsPlayerInView()
+    {
+        //Debug.Log("attack!");
+        //Gizmos.DrawWireSphere((Vector2)transform.position, senseRadius);
+        //Physics2D.CircleCast(transform.position, senseRadius, playerLayer);
+        return Physics2D.OverlapCircle(transform.position, senseRadius, playerLayer);
+        //Physics2D.Raycast(transform.position + new Vector3(-0.275f, -0.1f, 0), new Vector2(moveDir.normalized.x, 0), viewLength, playerLayer);
+    }
+
+    void OnDrawGizmos()//»æÖÆ¸¨ÖúÏß
+    {
+        Gizmos.color = Color.red;//¸¨ÖúÏßÑÕÉ«
+        Gizmos.DrawWireSphere((Vector2)transform.position, senseRadius);//»æÖÆÉäÏß
+                                                                        // Gizmos.DrawLine((Vector2)transform.position, (Vector2)transform.position + (new Vector2(moveDir.x, 0) + new Vector2(0, -1)) * senseRadius);//»æÖÆÔ²ÐÎ
     }
 }

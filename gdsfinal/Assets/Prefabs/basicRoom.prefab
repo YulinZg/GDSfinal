@@ -214,7 +214,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 690361209
-  m_SortingLayer: 6
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -6740941336522150861, guid: bae4792fbc88d5f43b72010b1040b115, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -5636,7 +5636,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5385719680761229817}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14, y: -7, z: 0}
+  m_LocalPosition: {x: -12, y: -6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1358346349217189652}
@@ -5655,6 +5655,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   floor: {fileID: 0}
+  pathPoint: {fileID: 4747762131144913379, guid: e65d3a1ca73cb684c9624d055fdfa134, type: 3}
 --- !u!1 &5628348025540946404
 GameObject:
   m_ObjectHideFlags: 0
@@ -5943,5 +5944,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e359d6fde892184990c160516db537f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyCount: 0
+  enemyCount: 5
   enemy: {fileID: 207990868200254069, guid: 1cf5ef791ebb40e459914593c6c7597d, type: 3}
