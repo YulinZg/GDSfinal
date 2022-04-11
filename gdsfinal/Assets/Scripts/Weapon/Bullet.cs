@@ -2,9 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum DamageProperty
+{
+    fire,
+    water,
+    earth,
+    lightning,
+    metal
+}
+
 public class Bullet : MonoBehaviour
 {
-    public GameObject bulletEffect;
     private readonly IDictionary<int, Transform> dic = new Dictionary<int, Transform>();
 
     public enum BulletType
@@ -13,26 +21,18 @@ public class Bullet : MonoBehaviour
         penetrable
     }
 
-    public enum DamageProperty
-    {
-        fire,
-        water,
-        earth,
-        lightning,
-        metal
-    }
-
     public BulletType type;
     public DamageProperty property;
 
+    public GameObject bulletEffect;
+    public float blinkTime;
+    public Color blinkColor;
+    public bool ifHurtStop = false;
     private Vector3 dir;
     private float speed;
     private float damage;
     private float critProbability;
     private float critRate;
-    public float blinkTime;
-    public Color blinkColor;
-    public bool ifHurtStop = false;
 
     //Fire
     private float burnDamage;
@@ -153,9 +153,13 @@ public class Bullet : MonoBehaviour
     private void Hit(GameObject e)
     {
         Enemy enemy = e.GetComponent<Enemy>();
+        Color color = Color.white;
         int i = Random.Range(0, 100);
         if (i < 100 * critProbability)
+        {
             damage *= critRate;
+            color = Color.yellow;
+        }
         switch (property)
         {
             case DamageProperty.fire:
@@ -174,6 +178,6 @@ public class Bullet : MonoBehaviour
                 enemy.Repel(repelDistance);
                 break;
         }
-        enemy.TakeDamage(damage * Random.Range(0.9f, 1.1f), blinkTime, blinkColor, ifHurtStop, property);
+        enemy.TakeDamage(damage * Random.Range(0.9f, 1.1f), color, blinkTime, blinkColor, ifHurtStop, property);
     }
 }

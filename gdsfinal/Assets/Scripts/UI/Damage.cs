@@ -19,8 +19,9 @@ public class Damage : MonoBehaviour
         transform.position += Time.deltaTime * upSpeed * Vector3.up;
     }
 
-    public void ShowUIDamage(float amount)
+    public void ShowUIDamage(float amount, Color color)
     {
         damgeText.text = amount.ToString();
+        damgeText.color = color;
     }
 }

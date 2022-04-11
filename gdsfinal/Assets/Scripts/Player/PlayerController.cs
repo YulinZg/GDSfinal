@@ -10,21 +10,23 @@ public class PlayerController : MonoBehaviour
     public bool isAttacking = false;
 
     private float speed;
-    private Vector3 moveDir;
-    private Rigidbody2D rigid;
     private Camera cam;
+    private Animator animator;
+    private Rigidbody2D rigid;
+    private Vector3 moveDir;
     private Vector3 mousePos;
     private Vector3 mouseDir;
     private Weapon weapon;
-    private Animator animator;
+    private Status status;
     private bool isFacingRight = true;
 
     private void Awake()
     {
-        rigid = GetComponent<Rigidbody2D>();
-        weapon = GetComponent<Weapon>();
         cam = Camera.main;
         animator = GetComponent<Animator>();
+        rigid = GetComponent<Rigidbody2D>();
+        weapon = GetComponent<Weapon>();
+        status = GetComponent<Status>();
     }
 
     // Start is called before the first frame update
@@ -88,7 +90,7 @@ public class PlayerController : MonoBehaviour
         RotateArrow();
     }
 
-    void Move()
+    private void Move()
     {
         rigid.velocity = speed * moveDir;
         if (isAttacking && mouseDir.x >= 0)
@@ -133,7 +135,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void RotateArrow()
+    private void RotateArrow()
     {
         if (canRotate)
         {
@@ -142,12 +144,22 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void SetSpeed(float s)
+    public void Die()
     {
-        speed = s;
+
     }
 
-    IEnumerator DoDash(Vector3 dir, float distance, float time, float resetSpeed, bool setBack, bool rotate)
+    public void SetSpeed(float s)
+    {
+        speed = s * status.GetSpeed();
+    }
+
+    public void Dash(Vector3 dir, float distance, float time, float resetSpeed, bool setBack, bool rotate)
+    {
+        StartCoroutine(Dashing(dir, distance, time, resetSpeed, setBack, rotate));
+    }
+
+    IEnumerator Dashing(Vector3 dir, float distance, float time, float resetSpeed, bool setBack, bool rotate)
     {
         float timer = 0;
         speed = 0;
@@ -165,10 +177,5 @@ public class PlayerController : MonoBehaviour
         speed = resetSpeed;
         canInput = setBack;
         canRotate = setBack;
-    }
-
-    public void Dash(Vector3 dir, float distance, float time, float resetSpeed, bool setBack, bool rotate)
-    {
-        StartCoroutine(DoDash(dir, distance, time, resetSpeed, setBack, rotate));
     }
 }
