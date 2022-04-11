@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
     [SerializeField] private GameObject arrow;
     public bool canInput = true;
     public bool canRotate = true;
@@ -23,6 +24,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         cam = Camera.main;
+        instance = this;
         animator = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
         weapon = GetComponent<Weapon>();
