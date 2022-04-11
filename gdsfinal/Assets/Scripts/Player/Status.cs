@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class Status : MonoBehaviour
 {
-    [SerializeField] private float health;
-    [SerializeField] private float attack;
-    [SerializeField] private float critProbability;
-    [SerializeField] private float critRate;
-    [SerializeField] private float defense;
-    [SerializeField] private float moveSpeed;
+    [SerializeField] private int health;
+    [SerializeField] private float healthUnit;
+    [SerializeField] private int attack;
+    [SerializeField] private int critProbability;
+    [SerializeField] private float critProbabilityUnit;
+    [SerializeField] private int critRate;
+    [SerializeField] private float critRateUnit;
+    [SerializeField] private int defense;
+    [SerializeField] private float defenseUnit;
+    [SerializeField] private int moveSpeed;
+    [SerializeField] private float moveSpeedUnit;
 
     [SerializeField] private GameObject damageText;
     [SerializeField] private float damageUIOffsetXMin;
@@ -17,7 +22,8 @@ public class Status : MonoBehaviour
     [SerializeField] private float damageUIOffsetYMin;
     [SerializeField] private float damageUIOffsetYMax;
 
-    private float currentHealth;
+    private float maxHp;
+    private float currentHp;
     private PlayerController player;
 
     private void Awake()
@@ -28,39 +34,73 @@ public class Status : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentHealth = health;
+        currentHp = maxHp = health * healthUnit;
     }
 
     public void TakeDamage(float damage)
     {
-        damage *= 1 - defense;
+        damage -= defense * defenseUnit;
         float d = Mathf.Floor(damage);
-        currentHealth -= d;
+        if (d < 0)
+            d = 0;
+        currentHp -= d;
         Damage damageUI = Instantiate(damageText, transform.position + new Vector3(Random.Range(damageUIOffsetXMin, damageUIOffsetXMax), Random.Range(damageUIOffsetYMin, damageUIOffsetYMin), 0), Quaternion.identity).GetComponent<Damage>();
         damageUI.ShowUIDamage(d, Color.red);
-        if (currentHealth < 0)
-            currentHealth = 0;
-        if (currentHealth == 0)
+        if (currentHp < 0)
+            currentHp = 0;
+        if (currentHp == 0)
             player.Die();
     }
 
-    public float GetAttack()
+    public void AddHealth(int amount)
+    {
+        health += amount;
+        maxHp = health * healthUnit;
+        currentHp += amount * healthUnit;
+    }
+
+    public void AddAttack(int amount)
+    {
+        attack += amount;
+    }
+
+    public void AddCritProbability(int amount)
+    {
+        critProbability += amount;
+    }
+
+    public void AddCritRate(int amount)
+    {
+        critRate += amount;
+    }
+
+    public void AddDefense(int amount)
+    {
+        defense += amount;
+    }
+
+    public void AddMoveSpeed(int amount)
+    {
+        moveSpeed += amount;
+    }
+
+    public int GetAttack()
     {
         return attack;
     }
 
     public float GetCritProbability()
     {
-        return critProbability;
+        return critProbability * critProbabilityUnit;
     }
 
     public float GetCritRate()
     {
-        return critRate;
+        return 1.2f + critRate * critRateUnit;
     }
 
     public float GetSpeed()
     {
-        return moveSpeed;
+        return moveSpeed * moveSpeedUnit;
     }
 }

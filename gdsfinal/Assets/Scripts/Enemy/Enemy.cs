@@ -85,7 +85,7 @@ public abstract class Enemy : MonoBehaviour
             anim.Play("die");
         }
         if (blinkTime != 0)
-            StartCoroutine(DoBlinks(blinkColor, (int)(blinkTime / 0.1f), 0.1f));
+            StartCoroutine(DoBlinks(blinkColor, (int)(blinkTime / 0.05f), 0.05f));
         if (hurtStop)
         {
             stopTimer = 0;
@@ -191,7 +191,7 @@ public abstract class Enemy : MonoBehaviour
             isStun = true;
             stopTimer = 0;
             StartCoroutine(StopMove(time));
-            StartCoroutine(DoBlinks(Color.gray, (int)(time / 0.1f), 0.1f));
+            StartCoroutine(DoBlinks(Color.gray, (int)(time / 0.05f), 0.05f));
             GameObject effectInstance = Instantiate(stunEffect, transform);
             effectInstance.transform.localPosition += Vector3.up * effectOffsetY;
             effectInstance.transform.localScale = new Vector3(effectSize, effectSize, 1);
