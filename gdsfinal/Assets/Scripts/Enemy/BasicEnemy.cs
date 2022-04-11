@@ -53,7 +53,7 @@ public class BasicEnemy : Enemy
         //Debug.Log(1111);
         //IsNearOtherEnemy();
         rigid.velocity = speed * moveDir;
-        filp();
+        Filp();
     }
 
     public override void UpdateState()
@@ -88,7 +88,7 @@ public class BasicEnemy : Enemy
                 {
                     currentState = EnemyState.Chase;
                     desTraget = (Vector2)player.position;
-                    stopAttack();
+                    StopAttack();
                 }
                 //Debug.LogError("Attack");
                 break;
@@ -123,7 +123,7 @@ public class BasicEnemy : Enemy
         anim.SetBool("isAttacking", true);
     }
 
-    private void stopAttack()
+    private void StopAttack()
     {
         speed = currentSpeed;
         isAttacking = false;

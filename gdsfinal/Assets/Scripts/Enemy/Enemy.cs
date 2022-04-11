@@ -6,6 +6,7 @@ public abstract class Enemy : MonoBehaviour
 {
     public bool isAlive;
     public float health;
+    public float attack;
     public float moveSpeed;
     public float debuffResistance;
     public float fireResistance;
@@ -64,9 +65,16 @@ public abstract class Enemy : MonoBehaviour
     public Vector2 senseOffset;
     public float rayDis;
     public LayerMask wall;
+
     public abstract void Move();
 
+    public void Filp()
+    {
+        transform.localScale = new Vector3(moveDir.x > 0 ? 1 : -1, 1, 1);
+    }
+
     public abstract void UpdateState();
+
     public void GetNewTargetPoint()
     {
         desTraget = pathPoints[Random.Range(0, pathPoints.Length)].transform.position;
@@ -202,10 +210,6 @@ public abstract class Enemy : MonoBehaviour
         Destroy(effectInstance);
     }
 
-    public void filp()
-    {
-        transform.localScale = new Vector3(moveDir.x > 0 ? 1 : -1, 1, 1);
-    }
     public void Stun(float value, float time)
     {
         if (!isStun)
@@ -227,7 +231,6 @@ public abstract class Enemy : MonoBehaviour
 
     private void SetNotStun()
     {
-        //anim.SetBool("isHurt", false);
         isStun = false;
         speed = currentSpeed;
     }
@@ -268,7 +271,6 @@ public abstract class Enemy : MonoBehaviour
                 yield return null;
             }
             isPalsy = false;
-            //anim.SetBool("isHurt", false);
             Destroy(effectInstance);
         }
     }
@@ -298,18 +300,12 @@ public abstract class Enemy : MonoBehaviour
 
     IEnumerator StopMove(float time)
     {
-        //bool set = false;
         anim.SetBool("isHurt", true);
         speed = 0;
         while (stopTimer <= time)
         {
             stopTimer += Time.deltaTime;
             yield return null;
-            //if (!set)
-            //{
-            //    set = true;
-            //    anim.SetBool("isHurt", false);
-            //}
         }
         isHurt = false;
         anim.SetBool("isHurt", false);
@@ -336,6 +332,7 @@ public abstract class Enemy : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
     public Collider2D IsPlayerInSense()
     {
         return Physics2D.OverlapCircle(transform.position, senseRadius, playerLayer);
@@ -343,7 +340,6 @@ public abstract class Enemy : MonoBehaviour
 
     //public bool IsLookAtPlayer()
     //{
-        
     //    return Physics2D.Raycast((Vector2)transform.position + senseOffset, new Vector2(moveDir.x, 0).normalized, rayDis, wall);
     //}
     //public bool IsNearOtherEnemy()
@@ -359,7 +355,7 @@ public abstract class Enemy : MonoBehaviour
     //void OnDrawGizmos()
     //{
     //    Gizmos.color = Color.red;
-    //    //Gizmos.DrawWireSphere((Vector2)transform.position + senseOffset, enemySeneseRadius);    
-    //    // Gizmos.DrawLine((Vector2)transform.position, (Vector2)transform.position + (new Vector2(moveDir.x, 0) + new Vector2(0, -1)) * senseRadius);//»æÖÆÔ²ÐÎ
+    //    Gizmos.DrawWireSphere((Vector2)transform.position + senseOffset, enemySeneseRadius);    
+    //    Gizmos.DrawLine((Vector2)transform.position, (Vector2)transform.position + (new Vector2(moveDir.x, 0) + new Vector2(0, -1)) * senseRadius);
     //}
 }

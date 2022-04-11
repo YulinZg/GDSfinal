@@ -44,7 +44,7 @@ public class Status : MonoBehaviour
         if (d < 0)
             d = 0;
         currentHp -= d;
-        Damage damageUI = Instantiate(damageText, transform.position + new Vector3(Random.Range(damageUIOffsetXMin, damageUIOffsetXMax), Random.Range(damageUIOffsetYMin, damageUIOffsetYMin), 0), Quaternion.identity).GetComponent<Damage>();
+        Damage damageUI = Instantiate(damageText, transform.position + new Vector3(Random.Range(damageUIOffsetXMin, damageUIOffsetXMax), Random.Range(damageUIOffsetYMin, damageUIOffsetYMax), 0), Quaternion.identity).GetComponent<Damage>();
         damageUI.ShowUIDamage(d, Color.red);
         if (currentHp < 0)
             currentHp = 0;
@@ -96,7 +96,7 @@ public class Status : MonoBehaviour
 
     public float GetCritRate()
     {
-        return 1.2f + critRate * critRateUnit;
+        return 1f + critRate * critRateUnit;
     }
 
     public float GetSpeed()

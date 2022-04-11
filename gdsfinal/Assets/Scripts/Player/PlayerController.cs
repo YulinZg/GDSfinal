@@ -148,7 +148,7 @@ public class PlayerController : MonoBehaviour
 
     public void Die()
     {
-
+        //Debug.LogError("Die");
     }
 
     public void SetSpeed(float s)
