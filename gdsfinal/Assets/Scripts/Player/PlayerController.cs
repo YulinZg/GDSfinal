@@ -6,6 +6,16 @@ public class PlayerController : MonoBehaviour
 {
     public static PlayerController instance;
     [SerializeField] private GameObject arrow;
+    [SerializeField] private WeaponUI weaponUI;
+
+    private Camera cam;
+    private Animator anim;
+    private Rigidbody2D rigid;
+    private Vector3 moveDir;
+    private Vector3 mousePos;
+    private Vector3 mouseDir;
+    private Weapon weapon;
+    private Status status;
 
     private float speed;
     private bool canInput = true;
@@ -15,14 +25,19 @@ public class PlayerController : MonoBehaviour
     private float attackTimer;
     public bool isHurting = false;
     private float hurtTimer;
-    private Camera cam;
-    private Animator anim;
-    private Rigidbody2D rigid;
-    private Vector3 moveDir;
-    private Vector3 mousePos;
-    private Vector3 mouseDir;
-    private Weapon weapon;
-    private Status status;
+
+    private List<Weapon.Property> weapons = new List<Weapon.Property>
+    {
+        Weapon.Property.fire,
+        Weapon.Property.water,
+        Weapon.Property.earth,
+        Weapon.Property.lightning,
+        Weapon.Property.metal
+    };
+    private Weapon.Property weapon1;
+    private Weapon.Property weapon2;
+    private Weapon.Property currentWeapon;
+
 
     private void Awake()
     {
@@ -37,7 +52,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        weapon.GetWeapon(Weapon.Property.fire);
+        GetWeapons();
     }
 
     // Update is called once per frame
@@ -73,18 +88,13 @@ public class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (canInput && !isAttacking)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canInput && !isAttacking)
+            SwitchWeapon();
+        if (Input.GetKeyDown(KeyCode.R) && canInput && !isAttacking)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-                weapon.GetWeapon(Weapon.Property.fire);
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-                weapon.GetWeapon(Weapon.Property.water);
-            if (Input.GetKeyDown(KeyCode.Alpha3))
-                weapon.GetWeapon(Weapon.Property.earth);
-            if (Input.GetKeyDown(KeyCode.Alpha4))
-                weapon.GetWeapon(Weapon.Property.lightning);
-            if (Input.GetKeyDown(KeyCode.Alpha5))
-                weapon.GetWeapon(Weapon.Property.metal);
+            weapons.Add(weapon1);
+            weapons.Add(weapon2);
+            GetWeapons();
         }
     }
 
@@ -246,5 +256,53 @@ public class PlayerController : MonoBehaviour
         anim.SetBool("isRightAttacking", false);
         anim.SetBool("isLeftAttacking", false);
         anim.SetBool("isHurt", false);
+    }
+
+    private void GetWeapons()
+    {
+        int i = Random.Range(0, 5);
+        weapon1 = weapons[i];
+        weaponUI.SetWeapon1Icon(SpriteNo(weapon1));
+        weapons.RemoveAt(i);
+        i = Random.Range(0, 4);
+        weapon2 = weapons[i];
+        weaponUI.SetWeapon2Icon(SpriteNo(weapon2));
+        weapons.RemoveAt(i);
+        currentWeapon = weapon1;
+        weapon.GetWeapon(currentWeapon);
+    }
+
+    private void SwitchWeapon()
+    {
+        if (currentWeapon == weapon1)
+            currentWeapon = weapon2;
+        else
+            currentWeapon = weapon1;
+        weapon.GetWeapon(currentWeapon);
+        weaponUI.SwitchWeapon();
+    }
+
+    private int SpriteNo(Weapon.Property property)
+    {
+        int n = 0;
+        switch(property)
+        {
+            case Weapon.Property.fire:
+                n = 0;
+                break;
+            case Weapon.Property.water:
+                n = 1;
+                break;
+            case Weapon.Property.earth:
+                n = 2;
+                break;
+            case Weapon.Property.lightning:
+                n = 3;
+                break;
+            case Weapon.Property.metal:
+                n = 4;
+                break;
+        }
+        return n;
     }
 }

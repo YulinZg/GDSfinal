@@ -18,6 +18,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float shootOffset;
     [SerializeField] private GameObject bulletRotater;
     [SerializeField] private Transform bulletsInWorld;
+    [SerializeField] private Transform lightningBalls;
     [SerializeField] private GameObject[] effects;
     private GameObject effectInstance;
     private GameObject effectInstance1;
@@ -97,6 +98,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] private int maxBulletNum;
     [SerializeField] private float stayTime;
     [SerializeField] private GameObject[] bulletsL;
+    private bool isLinking = false;
 
     [SerializeField] private float palsyDamage;
     [SerializeField] private float palsyTime;
@@ -157,10 +159,12 @@ public class Weapon : MonoBehaviour
                     Metal();
                     break;
             }
+        RotateBullet(bulletSpeedF * 10);
     }
 
     public void GetWeapon(Property type)
     {
+        shootTimer = 0;
         property = type;
         switch (property)
         {
@@ -183,6 +187,7 @@ public class Weapon : MonoBehaviour
                 break;
             case Property.lightning:
                 player.SetSpeed(moveSpeedL);
+                isLinking = false;
                 break;
             case Property.metal:
                 player.SetSpeed(moveSpeedM);
@@ -195,9 +200,6 @@ public class Weapon : MonoBehaviour
                 lastClick = 0;
                 break;
         }
-        if (bulletRotater.transform.childCount > 0)
-            foreach (Transform child in bulletRotater.transform)
-                Destroy(child.gameObject);
         if (bulletsInWorld.transform.childCount > 0)
             foreach (Transform child in bulletsInWorld.transform)
                 Destroy(child.gameObject);
@@ -261,7 +263,6 @@ public class Weapon : MonoBehaviour
         {
             NormalAttackF1();
         }
-        RotateBullet(bulletSpeedF * 10);
     }
 
     private void NormalAttackF(int bulletNum)
@@ -527,57 +528,59 @@ public class Weapon : MonoBehaviour
 
     private void Lightning()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !isLinking)
         {
-            if (shootTimer >= intervalL)
+            if (shootTimer >= intervalL && lightningBalls.childCount < maxBulletNum)
             {
                 NormalAttackL();
                 shootTimer = 0;
             }
         }
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && !isLinking)
         {
-            NormalAttackL1();
+            if (shootTimer >= intervalL && lightningBalls.childCount > 0)
+            {
+                NormalAttackL1();
+                shootTimer = 0;
+            }
         }
     }
 
     private void NormalAttackL()
     {
-        if (bulletsInWorld.childCount < maxBulletNum)
-        {
-            GameObject bulletInstance = Instantiate(bulletsL[0], ShootPos(shootOffset), Quaternion.identity);
-            bulletInstance.GetComponent<Bullet>().Setup(
-                MouseDir(), 0, damageL * status.GetAttack(), status.GetCritProbability(), status.GetCritRate(), stayTime, Bullet.BulletType.penetrable);
-            SetPalsy(bulletInstance.GetComponent<Bullet>());
-            bulletInstance.transform.parent = bulletsInWorld;
-            player.Attack(MouseDir(), 0.2f, false, moveSpeedL, false);
-        }
+        GameObject bulletInstance = Instantiate(bulletsL[0], ShootPos(shootOffset), Quaternion.identity);
+        bulletInstance.GetComponent<Bullet>().Setup(
+            MouseDir(), 0, damageL * status.GetAttack(), status.GetCritProbability(), status.GetCritRate(), stayTime, Bullet.BulletType.penetrable);
+        SetPalsy(bulletInstance.GetComponent<Bullet>());
+        bulletInstance.transform.parent = lightningBalls;
+        player.Attack(MouseDir(), 0.2f, false, moveSpeedL, false);
     }
 
     private void NormalAttackL1()
     {
-        if (bulletsInWorld.childCount > 0)
+        isLinking = true;
+        foreach (Transform child in lightningBalls)
         {
-            foreach(Transform child in bulletsInWorld)
-            {
-                if (child.name == "lightningBullet(Clone)")
-                {
-                    GameObject bulletInstance = Instantiate(bulletsL[0], child.position, Quaternion.identity);
-                    bulletInstance.GetComponent<Bullet>().Setup(
-                        Direction(transform.position, child.position), 0, damageL * status.GetAttack(), status.GetCritProbability(), status.GetCritRate(), standTimeL, Bullet.BulletType.penetrable);
-                    SetPalsy(bulletInstance.GetComponent<Bullet>());
-                    bulletInstance = Instantiate(bulletsL[1], 0.5f * Vector3.Distance(child.position, transform.position) * Direction(transform.position, child.position) + child.position, Quaternion.identity);
-                    bulletInstance.GetComponent<Bullet>().Setup(
-                        Direction(transform.position, child.position), 0, damageL1 * status.GetAttack(), status.GetCritProbability(), status.GetCritRate(), standTimeL, Bullet.BulletType.penetrable);
-                    SetPalsy(bulletInstance.GetComponent<Bullet>());
-                    bulletInstance.transform.localScale = new Vector3(Vector3.Distance(child.position, transform.position), 2, 1);
-                    bulletInstance.transform.parent = bulletsInWorld;
-                    Destroy(child.gameObject);
-                }
-            }
-            player.Attack(MouseDir(), standTimeL, true, moveSpeedL, true);
-            SpawnEffect(4);
+                GameObject bulletInstance = Instantiate(bulletsL[0], child.position, Quaternion.identity);
+                bulletInstance.GetComponent<Bullet>().Setup(
+                    Direction(transform.position, child.position), 0, damageL * status.GetAttack(), status.GetCritProbability(), status.GetCritRate(), standTimeL, Bullet.BulletType.penetrable);
+                SetPalsy(bulletInstance.GetComponent<Bullet>());
+                bulletInstance = Instantiate(bulletsL[1], 0.5f * Vector3.Distance(child.position, transform.position) * Direction(transform.position, child.position) + child.position, Quaternion.identity);
+                bulletInstance.GetComponent<Bullet>().Setup(
+                    Direction(transform.position, child.position), 0, damageL1 * status.GetAttack(), status.GetCritProbability(), status.GetCritRate(), standTimeL, Bullet.BulletType.penetrable);
+                SetPalsy(bulletInstance.GetComponent<Bullet>());
+                bulletInstance.transform.localScale = new Vector3(Vector3.Distance(child.position, transform.position), 2, 1);
+                bulletInstance.transform.parent = bulletsInWorld;
+                Destroy(child.gameObject);
         }
+        player.Attack(MouseDir(), standTimeL, true, moveSpeedL, true);
+        Invoke(nameof(SetNotLinking), standTimeL);
+        SpawnEffect(4);
+    }
+
+    private void SetNotLinking()
+    {
+        isLinking = false;
     }
 
     private void SetPalsy(Bullet bullet)

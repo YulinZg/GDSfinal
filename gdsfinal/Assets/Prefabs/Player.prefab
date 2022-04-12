@@ -446,6 +446,7 @@ MonoBehaviour:
   shootOffset: 0.5
   bulletRotater: {fileID: 1095739407213342471}
   bulletsInWorld: {fileID: 0}
+  lightningBalls: {fileID: 0}
   effects:
   - {fileID: 2417711028289302586, guid: 37b1e2dfbc576964e9fa4962ad5b39b4, type: 3}
   - {fileID: 8373990537675748762, guid: efd495f7e87a7bc4dbfbc3f98913b22c, type: 3}
@@ -512,12 +513,12 @@ MonoBehaviour:
   palsyDamage: 5
   palsyTime: 15
   palsyInterval: 3
-  damageM0: 2
-  damageM1: 3
-  damageM2: 4
-  damageM3: 3
-  damageM4: 2
-  damageM5: 9
+  damageM0: 4
+  damageM1: 5
+  damageM2: 5
+  damageM3: 5
+  damageM4: 3
+  damageM5: 12
   intervalM: 0.25
   rangeM: 1
   moveSpeedM: 5
@@ -531,9 +532,9 @@ MonoBehaviour:
   repelDistance0: 1
   repelDistance1: 1
   repelDistance2: 1
-  repelDistance3: 2
+  repelDistance3: 1.5
   repelDistance4: 1
-  repelDistance5: 3
+  repelDistance5: 2.5
 --- !u!114 &936681498720812073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -587,6 +588,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrow: {fileID: 5297646316335393566}
-  canInput: 1
-  canRotate: 1
-  isAttacking: 0
+  weaponUI: {fileID: 0}
+  isHurting: 0
