@@ -114,6 +114,7 @@ MonoBehaviour:
   roomDown: 0
   roomNumberToStart: 0
   step: {fileID: 3126341593174233908}
+  isCleanAllEnemy: 0
   doorNumber: 0
   roomTerrainGenerator: {fileID: 3231157448882060418}
   enemyGenerator: {fileID: 6488910984884397606}
@@ -240,7 +241,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.0486331}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -251,7 +252,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 0.90625}
+  m_Size: {x: 1.5, y: 0.8089838}
   m_EdgeRadius: 0
 --- !u!114 &3418672593846543011
 MonoBehaviour:
@@ -265,6 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a28c826ca4f5ccf418489f4ab00bc5ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  room: {fileID: 7353805396260524626}
 --- !u!1 &2558242262352474133
 GameObject:
   m_ObjectHideFlags: 0
@@ -5464,7 +5466,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.04863286}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -5475,7 +5477,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 0.90625}
+  m_Size: {x: 1.5, y: 0.8089843}
   m_EdgeRadius: 0
 --- !u!114 &7462483780793316679
 MonoBehaviour:
@@ -5489,6 +5491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a28c826ca4f5ccf418489f4ab00bc5ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  room: {fileID: 7353805396260524626}
 --- !u!1 &3709321886649278850
 GameObject:
   m_ObjectHideFlags: 0
@@ -5586,7 +5589,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.030395411, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -5597,7 +5600,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.25, y: 1.6875}
+  m_Size: {x: 0.31079084, y: 1.6875}
   m_EdgeRadius: 0
 --- !u!114 &1424644008975445301
 MonoBehaviour:
@@ -5611,6 +5614,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a28c826ca4f5ccf418489f4ab00bc5ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  room: {fileID: 7353805396260524626}
 --- !u!1 &5385719680761229817
 GameObject:
   m_ObjectHideFlags: 0
@@ -5655,6 +5659,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   floor: {fileID: 0}
+  points: []
   pathPoint: {fileID: 4747762131144913379, guid: e65d3a1ca73cb684c9624d055fdfa134, type: 3}
 --- !u!1 &5628348025540946404
 GameObject:
@@ -5876,7 +5881,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.030395709, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -5887,7 +5892,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.25, y: 1.6875}
+  m_Size: {x: 0.31079143, y: 1.6875}
   m_EdgeRadius: 0
 --- !u!114 &4764394919272660717
 MonoBehaviour:
@@ -5901,6 +5906,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a28c826ca4f5ccf418489f4ab00bc5ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  room: {fileID: 7353805396260524626}
 --- !u!1 &7303495662586135625
 GameObject:
   m_ObjectHideFlags: 0

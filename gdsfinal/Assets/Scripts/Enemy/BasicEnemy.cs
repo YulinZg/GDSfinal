@@ -99,7 +99,7 @@ public class BasicEnemy : Enemy
 
     private void Chasing()
     {
-        if (Vector2.Distance(desTraget, transform.position) < 0.1f)
+        if (Vector2.Distance(desTraget, transform.position) < 1f)
         {
             desTraget = (Vector2)player.position + new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
         }
@@ -107,7 +107,7 @@ public class BasicEnemy : Enemy
     }
     private void Wander()
     {
-        if (desTraget == new Vector2(0,0) || Vector2.Distance(desTraget, transform.position) < 0.1f)
+        if (desTraget == new Vector2(0,0) || Vector2.Distance(desTraget, transform.position) < 1f)
         {
             GetNewTargetPoint();
         }
