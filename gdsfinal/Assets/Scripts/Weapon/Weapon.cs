@@ -236,7 +236,7 @@ public class Weapon : MonoBehaviour
         player.canRotate = canRotate;
         player.isAttacking = true;
         player.SetSpeed(0);
-        yield return new WaitForSeconds(time - Time.deltaTime * 3);
+        yield return new WaitForSeconds(time - Time.deltaTime * 4);
         player.SetSpeed(speed);
         player.isAttacking = false;
         player.canRotate = true;
@@ -719,7 +719,7 @@ public class Weapon : MonoBehaviour
             case 0:
                 if (leftDown)
                     NormalAttackM00();
-                else if(rightDown)
+                else if (rightDown)
                     NormalAttackM10();
                 break;
             case 1:

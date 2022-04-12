@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
+    [SerializeField] private Enemy enemy;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
         if (collision.CompareTag("Player"))
         {
-            Debug.Log("lose hp!!");
+            collision.GetComponent<Status>().TakeDamage(enemy.attack);
         }
     }
 }

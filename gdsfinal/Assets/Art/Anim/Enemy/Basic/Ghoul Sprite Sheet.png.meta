@@ -190,12 +190,12 @@ TextureImporter:
       name: Ghoul Sprite Sheet_0
       rect:
         serializedVersion: 2
-        x: 3
+        x: 0
         y: 128
-        width: 27
-        height: 23
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -211,12 +211,12 @@ TextureImporter:
       name: Ghoul Sprite Sheet_1
       rect:
         serializedVersion: 2
-        x: 35
+        x: 32
         y: 128
-        width: 28
-        height: 22
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -232,12 +232,12 @@ TextureImporter:
       name: Ghoul Sprite Sheet_2
       rect:
         serializedVersion: 2
-        x: 66
+        x: 64
         y: 128
-        width: 29
-        height: 22
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -253,12 +253,12 @@ TextureImporter:
       name: Ghoul Sprite Sheet_3
       rect:
         serializedVersion: 2
-        x: 98
+        x: 96
         y: 128
-        width: 29
-        height: 23
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -274,12 +274,12 @@ TextureImporter:
       name: Ghoul Sprite Sheet_4
       rect:
         serializedVersion: 2
-        x: 3
+        x: 0
         y: 96
-        width: 27
-        height: 23
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -295,12 +295,12 @@ TextureImporter:
       name: Ghoul Sprite Sheet_5
       rect:
         serializedVersion: 2
-        x: 34
+        x: 32
         y: 96
-        width: 26
-        height: 24
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -316,12 +316,12 @@ TextureImporter:
       name: Ghoul Sprite Sheet_6
       rect:
         serializedVersion: 2
-        x: 66
+        x: 64
         y: 96
-        width: 27
-        height: 25
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -337,12 +337,12 @@ TextureImporter:
       name: Ghoul Sprite Sheet_7
       rect:
         serializedVersion: 2
-        x: 98
+        x: 96
         y: 96
-        width: 27
-        height: 25
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -358,12 +358,12 @@ TextureImporter:
       name: Ghoul Sprite Sheet_8
       rect:
         serializedVersion: 2
-        x: 131
+        x: 128
         y: 96
-        width: 27
-        height: 21
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -379,12 +379,12 @@ TextureImporter:
       name: Ghoul Sprite Sheet_9
       rect:
         serializedVersion: 2
-        x: 163
+        x: 160
         y: 96
-        width: 26
-        height: 22
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -400,12 +400,12 @@ TextureImporter:
       name: Ghoul Sprite Sheet_10
       rect:
         serializedVersion: 2
-        x: 194
+        x: 192
         y: 96
-        width: 27
-        height: 25
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -421,12 +421,12 @@ TextureImporter:
       name: Ghoul Sprite Sheet_11
       rect:
         serializedVersion: 2
-        x: 226
+        x: 224
         y: 96
-        width: 27
-        height: 25
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -442,12 +442,12 @@ TextureImporter:
       name: Ghoul Sprite Sheet_12
       rect:
         serializedVersion: 2
-        x: 3
+        x: 0
         y: 64
-        width: 27
-        height: 23
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -463,12 +463,12 @@ TextureImporter:
       name: Ghoul Sprite Sheet_13
       rect:
         serializedVersion: 2
-        x: 35
+        x: 32
         y: 64
-        width: 26
-        height: 24
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -484,12 +484,12 @@ TextureImporter:
       name: Ghoul Sprite Sheet_14
       rect:
         serializedVersion: 2
-        x: 66
+        x: 64
         y: 64
-        width: 27
-        height: 24
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -505,12 +505,12 @@ TextureImporter:
       name: Ghoul Sprite Sheet_15
       rect:
         serializedVersion: 2
-        x: 97
+        x: 96
         y: 64
-        width: 27
-        height: 26
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -526,12 +526,12 @@ TextureImporter:
       name: Ghoul Sprite Sheet_16
       rect:
         serializedVersion: 2
-        x: 132
+        x: 128
         y: 64
-        width: 28
-        height: 23
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -547,12 +547,12 @@ TextureImporter:
       name: Ghoul Sprite Sheet_17
       rect:
         serializedVersion: 2
-        x: 164
+        x: 160
         y: 64
-        width: 26
-        height: 19
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -568,12 +568,12 @@ TextureImporter:
       name: Ghoul Sprite Sheet_18
       rect:
         serializedVersion: 2
-        x: 3
+        x: 0
         y: 32
-        width: 27
-        height: 23
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -589,12 +589,12 @@ TextureImporter:
       name: Ghoul Sprite Sheet_19
       rect:
         serializedVersion: 2
-        x: 35
+        x: 32
         y: 32
-        width: 26
-        height: 21
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -610,12 +610,12 @@ TextureImporter:
       name: Ghoul Sprite Sheet_20
       rect:
         serializedVersion: 2
-        x: 68
+        x: 64
         y: 32
-        width: 25
-        height: 19
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -631,12 +631,12 @@ TextureImporter:
       name: Ghoul Sprite Sheet_21
       rect:
         serializedVersion: 2
-        x: 99
+        x: 96
         y: 32
-        width: 26
-        height: 21
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -652,12 +652,12 @@ TextureImporter:
       name: Ghoul Sprite Sheet_22
       rect:
         serializedVersion: 2
-        x: 3
+        x: 0
         y: 0
-        width: 27
-        height: 23
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -673,12 +673,12 @@ TextureImporter:
       name: Ghoul Sprite Sheet_23
       rect:
         serializedVersion: 2
-        x: 35
+        x: 32
         y: 0
-        width: 26
-        height: 21
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -694,12 +694,12 @@ TextureImporter:
       name: Ghoul Sprite Sheet_24
       rect:
         serializedVersion: 2
-        x: 68
+        x: 64
         y: 0
-        width: 24
-        height: 18
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -715,12 +715,12 @@ TextureImporter:
       name: Ghoul Sprite Sheet_25
       rect:
         serializedVersion: 2
-        x: 100
+        x: 96
         y: 0
-        width: 25
-        height: 15
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -736,12 +736,12 @@ TextureImporter:
       name: Ghoul Sprite Sheet_26
       rect:
         serializedVersion: 2
-        x: 132
+        x: 128
         y: 0
-        width: 26
-        height: 13
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -757,12 +757,12 @@ TextureImporter:
       name: Ghoul Sprite Sheet_27
       rect:
         serializedVersion: 2
-        x: 163
+        x: 160
         y: 0
-        width: 28
-        height: 11
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
