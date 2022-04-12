@@ -11,6 +11,7 @@ public class Room : MonoBehaviour
     public int roomNumberToStart;
     public Text step;
 
+    public bool isCleanAllEnemy;
     public int doorNumber;
     public RoomTerrainGenerator roomTerrainGenerator;
     public EnemyGenerator enemyGenerator;
@@ -81,6 +82,7 @@ private void OnTriggerExit2D(Collider2D collision)
             enemyGenerator.enemyCount--;
             if (enemyGenerator.enemyCount == 0)
             {
+                isCleanAllEnemy = true;
                 roomTerrainGenerator.DestroyAllPoints();
                 switch (doorNumber)
                 {
