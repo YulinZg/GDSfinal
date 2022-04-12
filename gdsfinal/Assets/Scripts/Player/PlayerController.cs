@@ -6,26 +6,29 @@ public class PlayerController : MonoBehaviour
 {
     public static PlayerController instance;
     [SerializeField] private GameObject arrow;
-    public bool canInput = true;
-    public bool canRotate = true;
-    public bool isAttacking = false;
 
     private float speed;
+    private bool canInput = true;
+    private bool canRotate = true;
+    private bool isFacingRight = true;
+    private bool isAttacking = false;
+    private float attackTimer;
+    public bool isHurting = false;
+    private float hurtTimer;
     private Camera cam;
-    private Animator animator;
+    private Animator anim;
     private Rigidbody2D rigid;
     private Vector3 moveDir;
     private Vector3 mousePos;
     private Vector3 mouseDir;
     private Weapon weapon;
     private Status status;
-    private bool isFacingRight = true;
 
     private void Awake()
     {
-        cam = Camera.main;
         instance = this;
-        animator = GetComponent<Animator>();
+        cam = Camera.main;
+        anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
         weapon = GetComponent<Weapon>();
         status = GetComponent<Status>();
@@ -95,44 +98,29 @@ public class PlayerController : MonoBehaviour
     private void Move()
     {
         rigid.velocity = speed * moveDir;
-        if (isAttacking && mouseDir.x >= 0)
-        {
-            animator.SetBool("isRightAttacking", true);
-            animator.SetBool("isLeftAttacking", false);
-        }
-        else if (isAttacking && mouseDir.x < 0)
-        {
-            animator.SetBool("isRightAttacking", false);
-            animator.SetBool("isLeftAttacking", true);
-        }
-        else if (!isAttacking)
-        {
-            animator.SetBool("isRightAttacking", false);
-            animator.SetBool("isLeftAttacking", false);
-        }
         if (rigid.velocity.x > 0)
         {
             isFacingRight = true;
-            animator.SetBool("isMovingRight", isFacingRight);
-            animator.SetBool("isMovingLeft", !isFacingRight);
+            anim.SetBool("isMovingRight", isFacingRight);
+            anim.SetBool("isMovingLeft", !isFacingRight);
         }
         else if (rigid.velocity.x < 0)
         {
             isFacingRight = false;
-            animator.SetBool("isMovingRight", isFacingRight);
-            animator.SetBool("isMovingLeft", !isFacingRight);
+            anim.SetBool("isMovingRight", isFacingRight);
+            anim.SetBool("isMovingLeft", !isFacingRight);
         }
         else
         {
             if (rigid.velocity.y == 0)
             {
-                animator.SetBool("isMovingRight", false);
-                animator.SetBool("isMovingLeft", false);
+                anim.SetBool("isMovingRight", false);
+                anim.SetBool("isMovingLeft", false);
             }
             else
             {
-                animator.SetBool("isMovingRight", isFacingRight);
-                animator.SetBool("isMovingLeft", !isFacingRight);
+                anim.SetBool("isMovingRight", isFacingRight);
+                anim.SetBool("isMovingLeft", !isFacingRight);
             }
         }
     }
@@ -156,18 +144,66 @@ public class PlayerController : MonoBehaviour
         speed = s * status.GetSpeed();
     }
 
-    public void Dash(Vector3 dir, float distance, float time, float resetSpeed, bool setBack, bool rotate)
+    public void Attack(Vector3 dir, float time, bool ifStop, float resetSpeed, bool canRotate)
     {
-        StartCoroutine(Dashing(dir, distance, time, resetSpeed, setBack, rotate));
+        attackTimer = 0;
+        if (!isAttacking)
+            StartCoroutine(Attacking(dir, time, ifStop, resetSpeed, canRotate));
     }
 
-    IEnumerator Dashing(Vector3 dir, float distance, float time, float resetSpeed, bool setBack, bool rotate)
+    IEnumerator Attacking(Vector3 dir, float time, bool ifStop, float resetSpeed, bool canRotate)
+    {
+        isAttacking = true;
+        yield return null;
+        canInput = false;
+        this.canRotate = canRotate;
+        if (ifStop)
+            SetSpeed(0);
+        if (dir.x >= 0)
+        {
+            anim.SetBool("isRightAttacking", true);
+            anim.SetBool("isLeftAttacking", false);
+        }
+        else
+        {
+            anim.SetBool("isRightAttacking", false);
+            anim.SetBool("isLeftAttacking", true);
+        }
+        while (attackTimer <= time - Time.deltaTime * 2)
+        {
+            attackTimer += Time.deltaTime;
+            if (!ifStop)
+            {
+                if (mouseDir.x >= 0)
+                {
+                    anim.SetBool("isRightAttacking", true);
+                    anim.SetBool("isLeftAttacking", false);
+                }
+                else
+                {
+                    anim.SetBool("isRightAttacking", false);
+                    anim.SetBool("isLeftAttacking", true);
+                }
+            }
+            yield return null;
+        }
+        if (ifStop)
+            SetSpeed(resetSpeed);
+        this.canRotate = true;
+        canInput = true;
+        isAttacking = false;
+        anim.SetBool("isRightAttacking", false);
+        anim.SetBool("isLeftAttacking", false);
+    }
+
+    public void Dash(Vector3 dir, float distance, float time)
+    {
+        StartCoroutine(Dashing(dir, distance, time));
+    }
+
+    IEnumerator Dashing(Vector3 dir, float distance, float time)
     {
         float timer = 0;
-        speed = 0;
-        canInput = false;
-        canRotate = rotate;
-        isAttacking = true;
         Vector3 start = transform.position;
         while (timer < time - Time.fixedDeltaTime)
         {
@@ -175,9 +211,40 @@ public class PlayerController : MonoBehaviour
             timer += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
-        isAttacking = !setBack;
-        speed = resetSpeed;
-        canInput = setBack;
-        canRotate = setBack;
+    }
+
+    public void Hurt(float time)
+    {
+        hurtTimer = 0;
+        anim.SetBool("isHurt", true);
+        if (isFacingRight)
+            anim.Play("takeDamage_right", 0, 0);
+        else
+            anim.Play("takeDamage_left", 0, 0);
+        if (!isHurting)
+        {
+            StopAllCoroutines();
+            StartCoroutine(Hurting(time));
+        }
+    }
+
+    IEnumerator Hurting(float time)
+    {
+        isHurting = true;
+        weapon.StartHurt();
+        speed = 0;
+        while (hurtTimer < time)
+        {
+            hurtTimer += Time.deltaTime;
+            yield return null;
+        }
+        isHurting = false;
+        weapon.FinishHurt();
+        canRotate = true;
+        canInput = true;
+        isAttacking = false;
+        anim.SetBool("isRightAttacking", false);
+        anim.SetBool("isLeftAttacking", false);
+        anim.SetBool("isHurt", false);
     }
 }

@@ -103,7 +103,7 @@ public abstract class Enemy : MonoBehaviour
         }
         float d = Mathf.Floor(damage);
         health -= d;
-        Damage damageUI = Instantiate(damageText, transform.position + new Vector3(Random.Range(damageUIOffsetXMin, damageUIOffsetXMax), Random.Range(damageUIOffsetYMin, damageUIOffsetYMin), 0), Quaternion.identity).GetComponent<Damage>();
+        DamageUI damageUI = Instantiate(damageText, transform.position + new Vector3(Random.Range(damageUIOffsetXMin, damageUIOffsetXMax), Random.Range(damageUIOffsetYMin, damageUIOffsetYMin), 0), Quaternion.identity).GetComponent<DamageUI>();
         damageUI.ShowUIDamage(d, damageColor);
         if (health <= 0)
         {
@@ -120,7 +120,6 @@ public abstract class Enemy : MonoBehaviour
             if (!isHurt)
             {
                 isHurt = true;
-                anim.SetBool("isHurt", true);
                 StartCoroutine(StopMove(blinkTime));
             }
         }

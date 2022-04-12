@@ -16,11 +16,14 @@ public class Status : MonoBehaviour
     [SerializeField] private int moveSpeed;
     [SerializeField] private float moveSpeedUnit;
 
+    [SerializeField] private HealthBar healthBar;
     [SerializeField] private GameObject damageText;
     [SerializeField] private float damageUIOffsetXMin;
     [SerializeField] private float damageUIOffsetXMax;
     [SerializeField] private float damageUIOffsetYMin;
     [SerializeField] private float damageUIOffsetYMax;
+
+    [SerializeField] private GameObject[] bloodEffects;
 
     private float maxHp;
     private float currentHp;
@@ -35,6 +38,7 @@ public class Status : MonoBehaviour
     void Start()
     {
         currentHp = maxHp = health * healthUnit;
+        healthBar.SetMaxHealth(health);
     }
 
     public void TakeDamage(float damage)
@@ -44,8 +48,11 @@ public class Status : MonoBehaviour
         if (d < 0)
             d = 0;
         currentHp -= d;
-        Damage damageUI = Instantiate(damageText, transform.position + new Vector3(Random.Range(damageUIOffsetXMin, damageUIOffsetXMax), Random.Range(damageUIOffsetYMin, damageUIOffsetYMax), 0), Quaternion.identity).GetComponent<Damage>();
+        healthBar.SetHealth(currentHp, maxHp);
+        DamageUI damageUI = Instantiate(damageText, transform.position + new Vector3(Random.Range(damageUIOffsetXMin, damageUIOffsetXMax), Random.Range(damageUIOffsetYMin, damageUIOffsetYMax), 0), Quaternion.identity).GetComponent<DamageUI>();
         damageUI.ShowUIDamage(d, Color.red);
+        Instantiate(bloodEffects[Random.Range(0, 10)], transform);
+        player.Hurt(0.2f);
         if (currentHp < 0)
             currentHp = 0;
         if (currentHp == 0)
@@ -57,6 +64,8 @@ public class Status : MonoBehaviour
         health += amount;
         maxHp = health * healthUnit;
         currentHp += amount * healthUnit;
+        healthBar.SetMaxHealth(health);
+        healthBar.SetHealth(currentHp, maxHp);
     }
 
     public void AddAttack(int amount)

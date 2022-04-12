@@ -557,11 +557,23 @@ MonoBehaviour:
   defenseUnit: 5
   moveSpeed: 10
   moveSpeedUnit: 0.1
+  healthBar: {fileID: 0}
   damageText: {fileID: 4318804278247988162, guid: d8ab669f8ef30064497cad64bd4f4f2f, type: 3}
   damageUIOffsetXMin: -0.5
   damageUIOffsetXMax: 0.5
   damageUIOffsetYMin: -0.5
   damageUIOffsetYMax: 0.5
+  bloodEffects:
+  - {fileID: 3599427726562046272, guid: c6f1ebe1ad200314abc9e3bf1fd97e22, type: 3}
+  - {fileID: 8696772878897534742, guid: 88b0400b9b2d1c74cb67ce57f0d63005, type: 3}
+  - {fileID: 5821549190899430897, guid: 73742e3f8ca78974ea3e286a98088d20, type: 3}
+  - {fileID: 1511045362219109121, guid: 049fe5d15d8e7ce4397c0312e816dc74, type: 3}
+  - {fileID: 4798008779327276890, guid: 074ae23c90982524da407f682efcb105, type: 3}
+  - {fileID: 2997017023590030082, guid: 8acd1fe2bed81fe459a7a39615084e5a, type: 3}
+  - {fileID: 2184299164706336161, guid: 300344ad975c36145b0639bfe8e91055, type: 3}
+  - {fileID: 5734430898581893748, guid: f3cc3d9e9fbb4a64aae1da21d472b57a, type: 3}
+  - {fileID: 6904164871745819824, guid: a729ff4586a3e1e47a220dd0f70917ae, type: 3}
+  - {fileID: 3630192060672997483, guid: 5457c36b6398ede4a8009f19f3fc4cb8, type: 3}
 --- !u!114 &2741019207210238514
 MonoBehaviour:
   m_ObjectHideFlags: 0
