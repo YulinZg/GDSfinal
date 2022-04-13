@@ -160,7 +160,7 @@ MonoBehaviour:
   health: 50
   attack: 100
   moveSpeed: 3
-  debuffResistance: 100
+  debuffResistance: 1
   fireResistance: 0
   waterResistance: 0
   earthResistance: 0
@@ -178,6 +178,7 @@ MonoBehaviour:
   decelerateEffect: {fileID: 737469681386818583, guid: 8b4d96607cfc9114783b5df93d76d647, type: 3}
   stunEffect: {fileID: 8964234654960140829, guid: 9312f7be5492cfe4a89e6c6660e8dc90, type: 3}
   palsyEffect: {fileID: 2398475190484583915, guid: a94ce03ea23267e4d9cbcf348a444add, type: 3}
+  canBeAttacked: 1
   senseRadius: 13
   playerLayer:
     serializedVersion: 2

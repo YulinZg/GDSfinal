@@ -75,7 +75,7 @@ public class SelfBurstingEnemy : Enemy
                     gameObject.layer = 8;
                     speed = 0;
                 }
-                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) <= 1.2f)
+                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) <= 1.2f && !isPalsy && !isStun)
                 {
                     //Die();
                     currentState = EnemyState.Charge;

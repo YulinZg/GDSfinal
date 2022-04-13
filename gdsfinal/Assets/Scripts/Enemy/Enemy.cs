@@ -316,7 +316,7 @@ public abstract class Enemy : MonoBehaviour
     {
         anim.SetBool("isHurt", true);
         speed = 0;
-        Debug.Log(speed);
+        //Debug.Log(speed);
         while (stopTimer <= time)
         {
             stopTimer += Time.deltaTime;
@@ -326,7 +326,7 @@ public abstract class Enemy : MonoBehaviour
         }
         isHurt = false;
         anim.SetBool("isHurt", false);
-        if (!isStun)
+        if (!isStun && canBeAttacked)
         {
             speed = currentSpeed;
         }
