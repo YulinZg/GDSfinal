@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 391417019647339288}
   - component: {fileID: 3053786592865080200}
   - component: {fileID: 9031146896590117470}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 21
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,7 +143,7 @@ GameObject:
   m_Component:
   - component: {fileID: 391417019922150651}
   - component: {fileID: 8386116901670437982}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: metalBullet2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ GameObject:
   m_Component:
   - component: {fileID: 391417020810852951}
   - component: {fileID: 391417020810852950}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 20
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -248,7 +248,7 @@ GameObject:
   - component: {fileID: 3586466324401110255}
   - component: {fileID: 582809791285341519}
   - component: {fileID: 2922555066519580121}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 22
   m_TagString: Untagged
   m_Icon: {fileID: 0}

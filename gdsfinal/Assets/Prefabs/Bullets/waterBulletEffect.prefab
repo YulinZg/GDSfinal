@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2564222721012180607}
   - component: {fileID: 2564222721012180605}
   - component: {fileID: 2564222721012180606}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WaterBall - Impact_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2564222721703694587}
   - component: {fileID: 1931240311460573320}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: waterBulletEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 654681082561822737}
   - component: {fileID: 654681082561822750}
   - component: {fileID: 654681082561822751}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Earth projectile Spritesheet _6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6618915911059595130}
   - component: {fileID: 7627544375055558227}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: earthBulletEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}

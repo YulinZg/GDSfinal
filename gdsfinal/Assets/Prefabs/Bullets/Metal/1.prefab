@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9068852144475572649}
   - component: {fileID: 9068852144475572654}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Flash_02_domo 0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 9068852145699567820}
   - component: {fileID: 481699431574956563}
   - component: {fileID: 2940473103994887951}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

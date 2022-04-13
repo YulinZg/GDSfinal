@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6433160890710537276}
   - component: {fileID: 8572980739251135795}
   - component: {fileID: 7898895907856303905}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 03 0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3785425737952285155}
   - component: {fileID: 4236372765345115599}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: fireBulletEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}

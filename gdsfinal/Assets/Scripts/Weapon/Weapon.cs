@@ -64,6 +64,7 @@ public class Weapon : MonoBehaviour
     private bool isCharging = false;
     private bool charged1 = false;
     private bool charged2 = false;
+    private bool isSpraying = false;
     private bool spawnedEffect1 = false;
     private bool spawnedEffect2 = false;
     private bool spawned2Effect2 = false;
@@ -178,6 +179,7 @@ public class Weapon : MonoBehaviour
                 isCharging = false;
                 charged1 = false;
                 charged2 = false;
+                isSpraying = false;
                 break;
             case Property.earth:
                 player.SetSpeed(moveSpeedE);
@@ -318,7 +320,7 @@ public class Weapon : MonoBehaviour
 
     private void Water()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !isSpraying)
         {
             if (shootTimer >= intervalW && !isCharging)
             {
@@ -432,6 +434,7 @@ public class Weapon : MonoBehaviour
 
     private void NormalAttackW1(float rangeY, float rangeX, float damage)
     {
+        isSpraying = true;
         isCharging = false;
         charged1 = false;
         charged2 = false;
@@ -448,8 +451,14 @@ public class Weapon : MonoBehaviour
         spawnedEffect1 = false;
         spawnedEffect2 = false;
         spawned2Effect2 = false;
+        Invoke(nameof(SetNotSpraying), standTimeW1);
         if (effectInstance)
             Destroy(effectInstance);
+    }
+
+    private void SetNotSpraying()
+    {
+        isSpraying = false;
     }
 
     private void SetDecelerate(Bullet bullet)
