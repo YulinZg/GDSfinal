@@ -350,6 +350,7 @@ public abstract class Enemy : MonoBehaviour
     public void DestroySelf()
     {
         Destroy(gameObject);
+        PlayerController.instance.SuckBlood();
     }
 
     public Collider2D IsPlayerInSense()

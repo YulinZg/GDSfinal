@@ -8,6 +8,7 @@ public class DamageUI : MonoBehaviour
     public Text damgeText;
     public float lifeTime;
     public float upSpeed;
+    public Font font;
 
     private void Start()
     {       
@@ -23,5 +24,12 @@ public class DamageUI : MonoBehaviour
     {
         damgeText.text = amount.ToString();
         damgeText.color = color;
+    }
+
+    public void ShowStrengthen(string s, Color color)
+    {
+        damgeText.text = s;
+        damgeText.color = color;
+        damgeText.font = font;
     }
 }

@@ -166,7 +166,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9161512756679264895}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 9161512756593839745}
@@ -263,6 +263,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52e9387f311222f4f94ab4554f8824f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reels: []
-  sundries: []
+  scrolls:
+  - {fileID: 5266362378348981095, guid: d77c2f7e6c67e31499ea26b0ff31f40d, type: 3}
+  sundries:
+  - {fileID: 3846612648607274792, guid: 280e0c2a7dc2d6347bafe6b41e24da90, type: 3}
+  - {fileID: 9176723722062149276, guid: 96b01f572b2521249b718ca08dc3c20b, type: 3}
+  - {fileID: 9625785905893481, guid: faeb95462731a4b4b9e6669ff9f3b787, type: 3}
+  - {fileID: 5580126734907854814, guid: c49f855efde77b842b987357ef651e00, type: 3}
+  - {fileID: 1870935099029424337, guid: be926184a0304c748b785eec0e502c1f, type: 3}
+  - {fileID: 8236219528873415335, guid: 733cf84e116a5b94792a2f8a803e6482, type: 3}
   openedSprite: {fileID: 21300000, guid: 7b1ead5fe9f272f429b4469a7531ddc7, type: 3}

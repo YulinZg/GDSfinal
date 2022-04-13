@@ -10,12 +10,23 @@ public class Chest : MonoBehaviour
     private GameObject scroll;
     private bool canOpen = false;
     private int randomNum;
+    private Transform chests;
+
+    private ChestUI chestUI;
+    private Color color;
+    private string title;
+    private string description;
 
     // Start is called before the first frame update
     void Start()
     {
         randomNum = Random.Range(0, scrolls.Length);
         scroll = scrolls[randomNum];
+        chests = transform.parent;
+        chestUI = GameObject.FindGameObjectWithTag("Canvas").GetComponent<ChestUI>();
+        color = scroll.GetComponent<SpriteRenderer>().color;
+        title = scroll.GetComponent<Pickup>().title;
+        description = scroll.GetComponent<Pickup>().description;
     }
 
     // Update is called once per frame
@@ -28,19 +39,30 @@ public class Chest : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
+        {
             canOpen = true;
+            chestUI.Setup(color, title, description);
+            chestUI.panel.SetActive(true);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
+        {
             canOpen = false;
+            chestUI.panel.SetActive(false);
+        }
     }
 
     private void Open()
     {
         GetComponent<SpriteRenderer>().sprite = openedSprite;
         GetComponent<BoxCollider2D>().enabled = false;
+        chestUI.panel.SetActive(false);
+        transform.parent = null;
+        foreach (Transform child in chests)
+            Destroy(child.gameObject);
         StartCoroutine(SpawnTreasure(0.2f));
     }
 

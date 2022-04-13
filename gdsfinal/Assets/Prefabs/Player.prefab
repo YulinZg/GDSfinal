@@ -553,11 +553,11 @@ MonoBehaviour:
   critProbability: 10
   critProbabilityUnit: 0.01
   critRate: 10
-  critRateUnit: 0.02
+  critRateUnit: 0.01
   defense: 10
-  defenseUnit: 5
+  defenseUnit: 1
   moveSpeed: 10
-  moveSpeedUnit: 0.1
+  moveSpeedUnit: 0.01
   healthBar: {fileID: 0}
   damageText: {fileID: 4318804278247988162, guid: d8ab669f8ef30064497cad64bd4f4f2f, type: 3}
   damageUIOffsetXMin: -0.5
@@ -590,3 +590,5 @@ MonoBehaviour:
   arrow: {fileID: 5297646316335393566}
   weaponUI: {fileID: 0}
   isHurting: 0
+  canSuckBlood: 0
+  suckBloodAmount: 5
