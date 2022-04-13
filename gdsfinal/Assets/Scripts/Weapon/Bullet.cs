@@ -153,31 +153,34 @@ public class Bullet : MonoBehaviour
     private void Hit(GameObject e)
     {
         Enemy enemy = e.GetComponent<Enemy>();
-        Color color = Color.white;
-        int i = Random.Range(0, 100);
-        if (i < 100 * critProbability)
+        if (enemy.canBeAttacked)
         {
-            damage *= critRate;
-            color = Color.yellow;
+            Color color = Color.white;
+            int i = Random.Range(0, 100);
+            if (i < 100 * critProbability)
+            {
+                damage *= critRate;
+                color = Color.yellow;
+            }
+            switch (property)
+            {
+                case DamageProperty.fire:
+                    enemy.Burn(burnDamage, burnTime, burnInterval);
+                    break;
+                case DamageProperty.water:
+                    enemy.Decelerate(decelerateRate, decelerateTime);
+                    break;
+                case DamageProperty.earth:
+                    enemy.Stun(stunValue, stunTime);
+                    break;
+                case DamageProperty.lightning:
+                    enemy.Palsy(palsyDamage, palsyTime, palsyInterval);
+                    break;
+                case DamageProperty.metal:
+                    enemy.Repel(repelDistance);
+                    break;
+            }
+            enemy.TakeDamage(damage * Random.Range(0.9f, 1.1f), color, blinkTime, blinkColor, ifHurtStop, property);
         }
-        switch (property)
-        {
-            case DamageProperty.fire:
-                enemy.Burn(burnDamage, burnTime, burnInterval);
-                break;
-            case DamageProperty.water:
-                enemy.Decelerate(decelerateRate, decelerateTime);
-                break;
-            case DamageProperty.earth:
-                enemy.Stun(stunValue, stunTime);
-                break;
-            case DamageProperty.lightning:
-                enemy.Palsy(palsyDamage, palsyTime, palsyInterval);
-                break;
-            case DamageProperty.metal:
-                enemy.Repel(repelDistance);
-                break;
-        }
-        enemy.TakeDamage(damage * Random.Range(0.9f, 1.1f), color, blinkTime, blinkColor, ifHurtStop, property);
     }
 }

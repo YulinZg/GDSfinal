@@ -6,16 +6,27 @@ public class EnemyGenerator : MonoBehaviour
 {
     public int enemyCount;
     //public int currentEnemyNum;
-    [SerializeField] private GameObject enemy;
+    [SerializeField] private GameObject enemyBasic;
+    [SerializeField] private GameObject enemySelfBursting;
+    [SerializeField] private int enemyBasicNum;
+    [SerializeField] private int enemySelfBurstingNum;
     private int[,] map = new int[26, 14];
     //private List<GameObject> enemyArray = new List<GameObject>();
 
     public void GenerateEnemy()
     {
-        for (int i = 0; i < enemyCount; i++)
+        for (int i = 0; i < enemyBasicNum; i++)
         {
             //currentEnemyNumt++;
-            Instantiate(enemy, transform.position + new Vector3(Random.Range(3, 9), Random.Range(3, 12), 0), Quaternion.identity);
+            enemyCount++;
+            Instantiate(enemyBasic, transform.position + new Vector3(Random.Range(3, 9), Random.Range(3, 12), 0), Quaternion.identity);
+        }
+
+        for(int i = 0; i < enemySelfBurstingNum; i++)
+        {
+            //currentEnemyNumt++;
+            enemyCount++;
+            Instantiate(enemySelfBursting, transform.position + new Vector3(Random.Range(3, 9), Random.Range(3, 12), 0), Quaternion.identity);
         }
 
 

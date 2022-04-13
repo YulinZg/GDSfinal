@@ -252,7 +252,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 0.8089838}
+  m_Size: {x: 1.5, y: 0.93}
   m_EdgeRadius: 0
 --- !u!114 &3418672593846543011
 MonoBehaviour:
@@ -5627,7 +5627,7 @@ GameObject:
   - component: {fileID: 3231157448882060418}
   m_Layer: 0
   m_Name: terrainController
-  m_TagString: Untagged
+  m_TagString: TerrainGenerator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5950,5 +5950,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e359d6fde892184990c160516db537f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyCount: 2
-  enemy: {fileID: 207990868200254069, guid: 1cf5ef791ebb40e459914593c6c7597d, type: 3}
+  enemyCount: 0
+  enemyBasic: {fileID: 207990868200254069, guid: 1cf5ef791ebb40e459914593c6c7597d, type: 3}
+  enemySelfBursting: {fileID: 2923880042827918057, guid: fded80e77a19f064cacc1a8bea91133d, type: 3}
+  enemyBasicNum: 1
+  enemySelfBurstingNum: 1

@@ -80,6 +80,7 @@ private void OnTriggerExit2D(Collider2D collision)
         if (collision.CompareTag("Enemy") && !collision.GetComponent<Enemy>().isAlive)
         {
             enemyGenerator.enemyCount--;
+            Debug.Log(enemyGenerator.enemyCount);
             if (enemyGenerator.enemyCount == 0)
             {
                 isCleanAllEnemy = true;

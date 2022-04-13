@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
-    public bool isAlive;
+    public bool isAlive = true;
     public float health;
     public float attack;
     public float moveSpeed;
@@ -16,11 +16,11 @@ public abstract class Enemy : MonoBehaviour
     public float lightningResistance;
     public float metalResistance;
 
-    public Transform player;
+    protected Transform player;
     public GameObject damageText;
-    public SpriteRenderer sprite;
-    public Rigidbody2D rigid;
-    public Animator anim;
+    protected SpriteRenderer sprite;
+    protected Rigidbody2D rigid;
+    protected Animator anim;
 
     public float effectSize;
     public float effectOffsetY;
@@ -41,6 +41,7 @@ public abstract class Enemy : MonoBehaviour
     protected bool isHurt = false;
     protected bool isAttacking = false;
     protected bool beAttacked = false;
+    public bool canBeAttacked = true;
     //public float disarmingTime;
 
     protected float currentSpeed;
@@ -56,24 +57,28 @@ public abstract class Enemy : MonoBehaviour
     private Coroutine decelerateCoroutine;
 
     [Header("AI")]
+    //public float attackInterval;
     public float senseRadius;
-    public float enemySeneseRadius;
-    public LayerMask enemyLayer;
+    //public float enemySeneseRadius;
+    //public LayerMask enemyLayer;
     public LayerMask playerLayer;
     protected GameObject[] pathPoints;
     protected Vector2 desTraget;
     public Vector2 senseOffset;
-    public float rayDis;
-    public LayerMask wall;
+    //public float rayDis;
+    //public LayerMask wall;
 
-    public abstract void Move();
-
-    public void Filp()
-    {
-        transform.localScale = new Vector3(moveDir.x > 0 ? 1 : -1, 1, 1);
-    }
 
     public abstract void UpdateState();
+    public abstract void Move();
+
+    public void Filp(string type)
+    {
+        if (type == "normal")
+            transform.localScale = new Vector3(moveDir.x > 0 ? 1 : -1, 1, 1);
+        else
+            transform.localScale = new Vector3(moveDir.x > 0 ? -1 : 1, 1, 1);
+    }
 
     public void GetNewTargetPoint()
     {
@@ -82,53 +87,64 @@ public abstract class Enemy : MonoBehaviour
 
     public void TakeDamage(float damage, Color damageColor, float blinkTime, Color blinkColor, bool hurtStop, DamageProperty property)
     {
-        beAttacked = true;
-        switch (property)
+        if (canBeAttacked)
         {
-            case DamageProperty.fire:
-                damage *= 1 - fireResistance;
-                break;
-            case DamageProperty.water:
-                damage *= 1 - waterResistance;
-                break;
-            case DamageProperty.earth:
-                damage *= 1 - earthResistance;
-                break;
-            case DamageProperty.lightning:
-                damage *= 1 - lightningResistance;
-                break;
-            case DamageProperty.metal:
-                damage *= 1 - metalResistance;
-                break;
-        }
-        float d = Mathf.Floor(damage);
-        health -= d;
-        DamageUI damageUI = Instantiate(damageText, transform.position + new Vector3(Random.Range(damageUIOffsetXMin, damageUIOffsetXMax), Random.Range(damageUIOffsetYMin, damageUIOffsetYMin), 0), Quaternion.identity).GetComponent<DamageUI>();
-        damageUI.ShowUIDamage(d, damageColor);
-        if (health <= 0)
-        {
-            health = 0;
-            isAlive = false;
-            rigid.simulated = false;
-            anim.Play("die");
-        }
-        if (blinkTime != 0)
-            StartCoroutine(DoBlinks(blinkColor, (int)(blinkTime / 0.05f), 0.05f));
-        if (hurtStop)
-        {
-            stopTimer = 0;
-            if (!isHurt)
+            beAttacked = true;
+            switch (property)
             {
-                isHurt = true;
-                StartCoroutine(StopMove(blinkTime));
+                case DamageProperty.fire:
+                    damage *= 1 - fireResistance;
+                    break;
+                case DamageProperty.water:
+                    damage *= 1 - waterResistance;
+                    break;
+                case DamageProperty.earth:
+                    damage *= 1 - earthResistance;
+                    break;
+                case DamageProperty.lightning:
+                    damage *= 1 - lightningResistance;
+                    break;
+                case DamageProperty.metal:
+                    damage *= 1 - metalResistance;
+                    break;
+            }
+            float d = Mathf.Floor(damage);
+            health -= d;
+            DamageUI damageUI = Instantiate(damageText, transform.position + new Vector3(Random.Range(damageUIOffsetXMin, damageUIOffsetXMax), Random.Range(damageUIOffsetYMin, damageUIOffsetYMin), 0), Quaternion.identity).GetComponent<DamageUI>();
+            damageUI.ShowUIDamage(d, damageColor);
+
+            if (blinkTime != 0)
+                StartCoroutine(DoBlinks(blinkColor, (int)(blinkTime / 0.05f), 0.05f));
+            if (hurtStop)
+            {
+                stopTimer = 0;
+                if (!isHurt)
+                {
+                    isHurt = true;
+                    StartCoroutine(StopMove(blinkTime));
+                }
+            }
+            if (health <= 0)
+            {
+                Die();
             }
         }
     }
 
+    public void Die()
+    {
+        //gameObject.GetComponent<Collider2D>().enabled = false;
+        health = 0;
+
+        rigid.simulated = false;
+        anim.Play("die");
+        speed = 0;
+        isAlive = false;
+    }
     public void Burn(float damage, float time, float interval)
     {
         int i = Random.Range(0, 100);
-        if (i < 100 * ( 1 - debuffResistance))
+        if (i < 100 * (1 - debuffResistance))
         {
             burnTimer = 0;
             if (!isBurn)
@@ -216,7 +232,7 @@ public abstract class Enemy : MonoBehaviour
         if (currentStunValue >= maxStunValue)
         {
             currentStunValue = 0;
-            isStun = true;           
+            isStun = true;
             stopTimer = 0;
             StartCoroutine(StopMove(time));
             StartCoroutine(DoBlinks(Color.gray, (int)(time / 0.05f), 0.05f));
@@ -294,7 +310,7 @@ public abstract class Enemy : MonoBehaviour
         }
         rigid.MovePosition(start + dir * distance);
         isRepel = false;
-        if (!isStun)
+        if (!isStun && canBeAttacked && !isAttacking)
             speed = currentSpeed;
     }
 
@@ -302,6 +318,7 @@ public abstract class Enemy : MonoBehaviour
     {
         anim.SetBool("isHurt", true);
         speed = 0;
+        //Debug.Log(speed);
         while (stopTimer <= time)
         {
             stopTimer += Time.deltaTime;
@@ -311,7 +328,7 @@ public abstract class Enemy : MonoBehaviour
         }
         isHurt = false;
         anim.SetBool("isHurt", false);
-        if (!isStun)
+        if (!isStun && canBeAttacked && !isAttacking)
         {
             speed = currentSpeed;
         }
@@ -354,10 +371,10 @@ public abstract class Enemy : MonoBehaviour
     //    else
     //        return false;
     //}
-    //void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.red;
-    //    Gizmos.DrawWireSphere((Vector2)transform.position + senseOffset, enemySeneseRadius);    
-    //    Gizmos.DrawLine((Vector2)transform.position, (Vector2)transform.position + (new Vector2(moveDir.x, 0) + new Vector2(0, -1)) * senseRadius);
-    //}
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere((Vector2)transform.position + senseOffset, senseRadius);
+        //Gizmos.DrawLine((Vector2)transform.position, (Vector2)transform.position + (new Vector2(moveDir.x, 0) + new Vector2(0, -1)) * senseRadius);
+    }
 }
