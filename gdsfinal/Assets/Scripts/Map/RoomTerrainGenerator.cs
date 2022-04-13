@@ -29,6 +29,7 @@ public class RoomTerrainGenerator : MonoBehaviour
         {
             Destroy(point);
         }
+        points.Clear();
     }
     public void GenerateTerrain()
     {

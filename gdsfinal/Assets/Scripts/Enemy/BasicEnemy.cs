@@ -81,15 +81,18 @@ public class BasicEnemy : Enemy
                 }
                 break;
             case EnemyState.Attack:
-                Attack();
-                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) > 0.9f && !isPalsy && !isStun)
+                if (!isStun)
+                {
+                    Attack();
+                }
+                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) > 0.9f && !isStun)
                 {
                     chasingRange = Random.Range(0.9f, 2f);
                     currentState = EnemyState.Chase;
                     desTraget = (Vector2)player.position;
                     StopAttack();
                 }
-                if (isPalsy || isStun)
+                if (isStun)
                 {
                     isAttacking = false;
                     anim.SetBool("isAttacking", false);

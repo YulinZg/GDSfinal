@@ -326,7 +326,7 @@ public abstract class Enemy : MonoBehaviour
         }
         isHurt = false;
         anim.SetBool("isHurt", false);
-        if (!isStun && canBeAttacked)
+        if (!isStun && canBeAttacked && !isAttacking)
         {
             speed = currentSpeed;
         }
