@@ -87,46 +87,48 @@ public abstract class Enemy : MonoBehaviour
 
     public void TakeDamage(float damage, Color damageColor, float blinkTime, Color blinkColor, bool hurtStop, DamageProperty property)
     {
-        beAttacked = true;
-        switch (property)
+        if (canBeAttacked)
         {
-            case DamageProperty.fire:
-                damage *= 1 - fireResistance;
-                break;
-            case DamageProperty.water:
-                damage *= 1 - waterResistance;
-                break;
-            case DamageProperty.earth:
-                damage *= 1 - earthResistance;
-                break;
-            case DamageProperty.lightning:
-                damage *= 1 - lightningResistance;
-                break;
-            case DamageProperty.metal:
-                damage *= 1 - metalResistance;
-                break;
-        }
-        float d = Mathf.Floor(damage);
-        health -= d;
-        DamageUI damageUI = Instantiate(damageText, transform.position + new Vector3(Random.Range(damageUIOffsetXMin, damageUIOffsetXMax), Random.Range(damageUIOffsetYMin, damageUIOffsetYMin), 0), Quaternion.identity).GetComponent<DamageUI>();
-        damageUI.ShowUIDamage(d, damageColor);
-
-        if (blinkTime != 0)
-            StartCoroutine(DoBlinks(blinkColor, (int)(blinkTime / 0.05f), 0.05f));
-        if (hurtStop)
-        {
-            stopTimer = 0;
-            if (!isHurt)
+            beAttacked = true;
+            switch (property)
             {
-                isHurt = true;
-                StartCoroutine(StopMove(blinkTime));
+                case DamageProperty.fire:
+                    damage *= 1 - fireResistance;
+                    break;
+                case DamageProperty.water:
+                    damage *= 1 - waterResistance;
+                    break;
+                case DamageProperty.earth:
+                    damage *= 1 - earthResistance;
+                    break;
+                case DamageProperty.lightning:
+                    damage *= 1 - lightningResistance;
+                    break;
+                case DamageProperty.metal:
+                    damage *= 1 - metalResistance;
+                    break;
+            }
+            float d = Mathf.Floor(damage);
+            health -= d;
+            DamageUI damageUI = Instantiate(damageText, transform.position + new Vector3(Random.Range(damageUIOffsetXMin, damageUIOffsetXMax), Random.Range(damageUIOffsetYMin, damageUIOffsetYMin), 0), Quaternion.identity).GetComponent<DamageUI>();
+            damageUI.ShowUIDamage(d, damageColor);
+
+            if (blinkTime != 0)
+                StartCoroutine(DoBlinks(blinkColor, (int)(blinkTime / 0.05f), 0.05f));
+            if (hurtStop)
+            {
+                stopTimer = 0;
+                if (!isHurt)
+                {
+                    isHurt = true;
+                    StartCoroutine(StopMove(blinkTime));
+                }
+            }
+            if (health <= 0)
+            {
+                Die();
             }
         }
-        if (health <= 0)
-        {
-            Die();
-        }
-
     }
 
     public void Die()
@@ -308,7 +310,7 @@ public abstract class Enemy : MonoBehaviour
         }
         rigid.MovePosition(start + dir * distance);
         isRepel = false;
-        if (!isStun)
+        if (!isStun && canBeAttacked && !isAttacking)
             speed = currentSpeed;
     }
 

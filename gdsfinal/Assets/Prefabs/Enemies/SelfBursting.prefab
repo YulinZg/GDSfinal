@@ -160,7 +160,7 @@ MonoBehaviour:
   health: 50
   attack: 100
   moveSpeed: 3
-  debuffResistance: 1
+  debuffResistance: 0
   fireResistance: 0
   waterResistance: 0
   earthResistance: 0
