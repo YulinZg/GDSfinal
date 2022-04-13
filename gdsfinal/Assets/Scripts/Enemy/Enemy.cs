@@ -108,7 +108,7 @@ public abstract class Enemy : MonoBehaviour
         }
         float d = Mathf.Floor(damage);
         health -= d;
-        Damage damageUI = Instantiate(damageText, transform.position + new Vector3(Random.Range(damageUIOffsetXMin, damageUIOffsetXMax), Random.Range(damageUIOffsetYMin, damageUIOffsetYMin), 0), Quaternion.identity).GetComponent<Damage>();
+        DamageUI damageUI = Instantiate(damageText, transform.position + new Vector3(Random.Range(damageUIOffsetXMin, damageUIOffsetXMax), Random.Range(damageUIOffsetYMin, damageUIOffsetYMin), 0), Quaternion.identity).GetComponent<DamageUI>();
         damageUI.ShowUIDamage(d, damageColor);
 
         if (blinkTime != 0)
@@ -119,7 +119,6 @@ public abstract class Enemy : MonoBehaviour
             if (!isHurt)
             {
                 isHurt = true;
-                anim.SetBool("isHurt", true);
                 StartCoroutine(StopMove(blinkTime));
             }
         }
@@ -210,7 +209,7 @@ public abstract class Enemy : MonoBehaviour
     IEnumerator Decelerating(float rate, float time)
     {
         isDecelerate = true;
-        currentSpeed = speed *= 1 - rate;
+        currentSpeed = speed = moveSpeed * (1 - rate);
         GameObject effectInstance = Instantiate(decelerateEffect, transform);
         effectInstance.transform.localPosition += Vector3.up * effectOffsetY;
         effectInstance.transform.localScale = new Vector3(effectSize, effectSize, 1);
@@ -297,17 +296,18 @@ public abstract class Enemy : MonoBehaviour
 
     IEnumerator Repeling(Vector3 dir, float distance, float time)
     {
-        isPalsy = true;
+        isRepel = true;
         float timer = 0;
         speed = 0;
         Vector3 start = transform.position;
         while (timer < time - Time.fixedDeltaTime)
         {
-            rigid.MovePosition(Vector3.Lerp(start, start + dir * distance, timer / time));
+            rigid.MovePosition(Vector3.Lerp(transform.position, start + dir * distance, timer / time));
             timer += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
-        isPalsy = false;
+        rigid.MovePosition(start + dir * distance);
+        isRepel = false;
         if (!isStun)
             speed = currentSpeed;
     }
@@ -320,6 +320,8 @@ public abstract class Enemy : MonoBehaviour
         while (stopTimer <= time)
         {
             stopTimer += Time.deltaTime;
+            if (isDecelerate)
+                speed = 0;
             yield return null;
         }
         isHurt = false;

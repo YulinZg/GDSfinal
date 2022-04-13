@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Damage : MonoBehaviour
+public class DamageUI : MonoBehaviour
 {
     public Text damgeText;
     public float lifeTime;
