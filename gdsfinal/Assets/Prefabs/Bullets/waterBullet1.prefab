@@ -84,9 +84,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5878c36e7162544ea7137159c8b045f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletEffect: {fileID: 0}
   type: 0
   property: 1
+  bulletEffect: {fileID: 0}
   blinkTime: 0.5
   blinkColor: {r: 0, g: 0, b: 1, a: 1}
   ifHurtStop: 1

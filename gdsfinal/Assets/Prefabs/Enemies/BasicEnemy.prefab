@@ -257,14 +257,10 @@ MonoBehaviour:
   fireResistance: 0
   waterResistance: 0
   earthResistance: 0
-  maxStunValue: 100
+  maxStunValue: 2
   lightningResistance: 0
   metalResistance: 0
-  player: {fileID: 0}
   damageText: {fileID: 4318804278247988162, guid: d8ab669f8ef30064497cad64bd4f4f2f, type: 3}
-  sprite: {fileID: 0}
-  rigid: {fileID: 0}
-  anim: {fileID: 0}
   effectSize: 1
   effectOffsetY: -0.1
   damageUIOffsetXMin: -0.5
@@ -276,19 +272,10 @@ MonoBehaviour:
   stunEffect: {fileID: 8964234654960140829, guid: 9312f7be5492cfe4a89e6c6660e8dc90, type: 3}
   palsyEffect: {fileID: 2398475190484583915, guid: a94ce03ea23267e4d9cbcf348a444add, type: 3}
   senseRadius: 5
-  enemySeneseRadius: 1
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 128
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
   senseOffset: {x: 0, y: 0}
-  rayDis: 1
-  wall:
-    serializedVersion: 2
-    m_Bits: 8
-  currentState: 0
 --- !u!1 &1528988917447627548
 GameObject:
   m_ObjectHideFlags: 0
