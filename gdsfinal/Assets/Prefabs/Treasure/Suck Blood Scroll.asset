@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d6736765fdf968488f4f34a5163bd1e, type: 3}
   m_Name: Suck Blood Scroll
   m_EditorClassIdentifier: 
+  strengthenText: {fileID: 4318804278247988162, guid: d8ab669f8ef30064497cad64bd4f4f2f, type: 3}

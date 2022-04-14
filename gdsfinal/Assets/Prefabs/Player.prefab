@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1470505764301515668}
   m_Layer: 3
-  m_Name: BulletRotater
+  m_Name: FireRotater
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,6 +29,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8995325589162135095}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2097828597628292616
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5490512919895986329}
+  m_Layer: 3
+  m_Name: WaterRotater
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5490512919895986329
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2097828597628292616}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8995325589162135095}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2139542439630320291
 GameObject:
@@ -254,7 +284,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8995325589162135095}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &3493657101627048008
 CircleCollider2D:
@@ -309,6 +339,7 @@ Transform:
   - {fileID: 5163265983274475519}
   - {fileID: 6804369092124270766}
   - {fileID: 1470505764301515668}
+  - {fileID: 5490512919895986329}
   - {fileID: 5378020188075596924}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -444,7 +475,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   property: 0
   shootOffset: 0.5
-  bulletRotater: {fileID: 1095739407213342471}
+  fireRotater: {fileID: 1470505764301515668}
+  waterRotater: {fileID: 5490512919895986329}
   bulletsInWorld: {fileID: 0}
   lightningBalls: {fileID: 0}
   effects:
@@ -456,7 +488,7 @@ MonoBehaviour:
   damageF: 1.5
   intervalF: 1
   bulletSpeedF: 10
-  rangeF: 15
+  rangeF: 10
   moveSpeedF: 3
   standTimeF: 0.5
   bulletNumber: 6
@@ -472,6 +504,7 @@ MonoBehaviour:
   damageW1: 6
   damageW2: 10
   damageW3: 16
+  damageW4: 5
   intervalW: 1
   bulletSpeedW: 15
   rangeW: 10
@@ -480,25 +513,33 @@ MonoBehaviour:
   rangeW3: 20
   moveSpeedW: 3
   moveSpeedW1: 1.5
-  chargeTime: 1
   standTimeW: 0.5
   standTimeW1: 1
+  chargeTime: 1
+  sprayTime: 2
+  sprayRotateSpeed: 15
   bulletsW:
   - {fileID: 4896306263825385891, guid: cc3614a27abe4ca44afa934ec273a7ec, type: 3}
   - {fileID: 7169208002471941264, guid: d45954436935e4f4aa21d81e4fca983e, type: 3}
+  - {fileID: 8674904286268228194, guid: 21b1b44a24f91a64f89bc8553c012c61, type: 3}
   decelerateRate: 0.5
   decelerateTime: 10
   damageE: 1
+  damageE1: 5
   intervalE: 0.1
   bulletSpeedE: 20
+  bulletSpeedE1: 10
   rangeE: 15
   moveSpeedE: 3
   moveSpeedE1: 1
   preheatTimes: 5
   scatterAngle: 22.5
+  rockTimes: 50
   bulletsE:
   - {fileID: 7155690323364293923, guid: 33387e5d792fa554ea58f3347cb39fc5, type: 3}
+  - {fileID: 8061944940312639690, guid: 527b057eb96fb6c40aa61c93bcb20760, type: 3}
   stunValue: 3
+  stunValue1: 25
   stunTime: 5
   damageL: 2
   damageL1: 4
@@ -559,6 +600,7 @@ MonoBehaviour:
   moveSpeed: 10
   moveSpeedUnit: 0.01
   healthBar: {fileID: 0}
+  statusUI: {fileID: 0}
   damageText: {fileID: 4318804278247988162, guid: d8ab669f8ef30064497cad64bd4f4f2f, type: 3}
   damageUIOffsetXMin: -0.5
   damageUIOffsetXMax: 0.5
@@ -589,6 +631,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrow: {fileID: 5297646316335393566}
   weaponUI: {fileID: 0}
+  statusUI: {fileID: 0}
   isHurting: 0
   canSuckBlood: 0
   suckBloodAmount: 5

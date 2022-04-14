@@ -28,6 +28,7 @@ public class Bullet : MonoBehaviour
     public float blinkTime;
     public Color blinkColor;
     public bool ifHurtStop = false;
+    public float lifetime;
     private Vector3 dir;
     private float speed;
     private float damage;
@@ -70,7 +71,15 @@ public class Bullet : MonoBehaviour
         damage = bulletDamage;
         critProbability = bulletCritProbability;
         critRate = bulletCritRate;
-        Destroy(gameObject, bulletLifetime);
+        lifetime = bulletLifetime;
+        Invoke(nameof(Disappear), lifetime);
+    }
+
+    private void Disappear()
+    {
+        if (bulletEffect)
+            Instantiate(bulletEffect, transform.position, transform.rotation);
+        Destroy(gameObject);
     }
 
     public void SetBurn(float damdge, float time, float interval)
@@ -140,8 +149,7 @@ public class Bullet : MonoBehaviour
             {
                 case BulletType.normal:
                     Hit(col.gameObject);
-                    Instantiate(bulletEffect, transform.position, transform.rotation);
-                    Destroy(gameObject);
+                    Disappear();
                     break;
                 case BulletType.penetrable:
                     Hit(col.gameObject);
@@ -150,8 +158,7 @@ public class Bullet : MonoBehaviour
         }
         if (type == BulletType.normal)
         {
-            Instantiate(bulletEffect, transform.position, transform.rotation);
-            Destroy(gameObject);
+            Disappear();
         }
     }
 
@@ -187,5 +194,10 @@ public class Bullet : MonoBehaviour
             }
             enemy.TakeDamage(damage * Random.Range(0.9f, 1.1f), color, blinkTime, blinkColor, ifHurtStop, property);
         }
+    }
+
+    public void ClearDic()
+    {
+        dic.Clear();
     }
 }

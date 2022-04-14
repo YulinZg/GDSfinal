@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class Status : MonoBehaviour
 {
-    [SerializeField] private int health;
+    [SerializeField] private int health = 10;
     [SerializeField] private float healthUnit;
-    [SerializeField] private int attack;
-    [SerializeField] private int critProbability;
+    [SerializeField] private int attack = 10;
+    [SerializeField] private int critProbability = 10;
     [SerializeField] private float critProbabilityUnit;
-    [SerializeField] private int critRate;
+    [SerializeField] private int critRate = 10;
     [SerializeField] private float critRateUnit;
-    [SerializeField] private int defense;
+    [SerializeField] private int defense = 10;
     [SerializeField] private float defenseUnit;
-    [SerializeField] private int moveSpeed;
+    [SerializeField] private int moveSpeed = 10;
     [SerializeField] private float moveSpeedUnit;
 
     [SerializeField] private HealthBar healthBar;
+    [SerializeField] private StatusUI statusUI;
     [SerializeField] private GameObject damageText;
     [SerializeField] private float damageUIOffsetXMin;
     [SerializeField] private float damageUIOffsetXMax;
@@ -48,13 +49,13 @@ public class Status : MonoBehaviour
         if (d < 0)
             d = 0;
         currentHp -= d;
-        healthBar.SetHealth(currentHp, maxHp);
         DamageUI damageUI = Instantiate(damageText, transform.position + new Vector3(Random.Range(damageUIOffsetXMin, damageUIOffsetXMax), Random.Range(damageUIOffsetYMin, damageUIOffsetYMax), 0), Quaternion.identity).GetComponent<DamageUI>();
         damageUI.ShowUIDamage(d, Color.red);
         Instantiate(bloodEffects[Random.Range(0, 10)], transform);
         player.Hurt(0.2f);
         if (currentHp < 0)
             currentHp = 0;
+        healthBar.SetHealth(currentHp, maxHp);
         if (currentHp == 0)
             player.Die();
     }
@@ -81,6 +82,7 @@ public class Status : MonoBehaviour
             currentHp = maxHp;
         healthBar.SetMaxHealth(health);
         healthBar.SetHealth(currentHp, maxHp);
+        statusUI.SetHealth(health);
     }
 
     public void AddAttack(int amount)
@@ -88,6 +90,7 @@ public class Status : MonoBehaviour
         attack += amount;
         if (attack > 100)
             attack = 100;
+        statusUI.SetAttack(attack);
     }
 
     public void AddCritProbability(int amount)
@@ -95,6 +98,7 @@ public class Status : MonoBehaviour
         critProbability += amount;
         if (critProbability > 100)
             critProbability = 100;
+        statusUI.SetCritProbability(critProbability);
     }
 
     public void AddCritRate(int amount)
@@ -102,6 +106,7 @@ public class Status : MonoBehaviour
         critRate += amount;
         if (critRate > 100)
             critRate = 100;
+        statusUI.SetCritRate(critRate);
     }
 
     public void AddDefense(int amount)
@@ -109,6 +114,7 @@ public class Status : MonoBehaviour
         defense += amount;
         if (defense > 100)
             defense = 100;
+        statusUI.SetDefense(defense);
     }
 
     public void AddMoveSpeed(int amount)
@@ -116,6 +122,7 @@ public class Status : MonoBehaviour
         moveSpeed += amount;
         if (moveSpeed > 100)
             moveSpeed = 100;
+        statusUI.SetMoveSpeed(moveSpeed);
     }
 
     public int GetAttack()

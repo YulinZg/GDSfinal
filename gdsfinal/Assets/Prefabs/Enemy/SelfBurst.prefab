@@ -136,7 +136,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 5
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -165,7 +165,7 @@ MonoBehaviour:
   fireResistance: 0
   waterResistance: 0
   earthResistance: 0
-  maxStunValue: 0
+  maxStunValue: 25
   lightningResistance: 0
   metalResistance: 0
   damageText: {fileID: 4318804278247988162, guid: d8ab669f8ef30064497cad64bd4f4f2f, type: 3}

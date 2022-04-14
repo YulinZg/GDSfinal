@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7155690323364293922}
   - component: {fileID: 1585190684726251395}
-  - component: {fileID: 6406266081994364140}
   - component: {fileID: -429896020178515438}
+  - component: {fileID: 6406266081994364140}
   m_Layer: 9
   m_Name: earthBullet
   m_TagString: Untagged
@@ -60,24 +60,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.6, y: 0.3}
   m_EdgeRadius: 0
---- !u!114 &6406266081994364140
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7155690323364293923}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5878c36e7162544ea7137159c8b045f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 0
-  property: 2
-  bulletEffect: {fileID: 8637999903729588454, guid: d3bc45fc83c6da047ac39e99a7d0e55c, type: 3}
-  blinkTime: 0.1
-  blinkColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
-  ifHurtStop: 0
 --- !u!50 &-429896020178515438
 Rigidbody2D:
   serializedVersion: 4
@@ -99,6 +81,25 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &6406266081994364140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7155690323364293923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5878c36e7162544ea7137159c8b045f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  property: 2
+  bulletEffect: {fileID: 8637999903729588454, guid: d3bc45fc83c6da047ac39e99a7d0e55c, type: 3}
+  blinkTime: 0.1
+  blinkColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
+  ifHurtStop: 0
+  lifetime: 0
 --- !u!1001 &7155690322848069044
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -106,6 +107,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7155690323364293922}
     m_Modifications:
+    - target: {fileID: 4053810047557147713, guid: 6cb085ef0f8e49040ac7ea2b5c218e14, type: 3}
+      propertyPath: m_Color.b
+      value: 0.7529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 4053810047557147713, guid: 6cb085ef0f8e49040ac7ea2b5c218e14, type: 3}
+      propertyPath: m_Color.g
+      value: 0.7529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 4053810047557147713, guid: 6cb085ef0f8e49040ac7ea2b5c218e14, type: 3}
+      propertyPath: m_Color.r
+      value: 0.7529412
+      objectReference: {fileID: 0}
     - target: {fileID: 4053810047557147713, guid: 6cb085ef0f8e49040ac7ea2b5c218e14, type: 3}
       propertyPath: m_SortingLayer
       value: 5

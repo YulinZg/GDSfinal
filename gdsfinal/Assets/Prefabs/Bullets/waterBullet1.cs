@@ -14,7 +14,7 @@ public class waterBullet1 : MonoBehaviour
     {
         yield return new WaitForSeconds(0.17f);
         GetComponent<BoxCollider2D>().enabled = true;
-        yield return new WaitForSeconds(0.55f);
+        yield return new WaitForSeconds(0.5f);
         GetComponentInChildren<Animator>().SetBool("finish", true);
         yield return new WaitForSeconds(0.2f);
         GetComponent<BoxCollider2D>().enabled = false;

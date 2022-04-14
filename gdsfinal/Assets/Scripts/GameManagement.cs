@@ -7,28 +7,23 @@ public class GameManagement : MonoBehaviour
 {
     public static GameManagement instance;
 
-    [Header("UI")]
-    public GameObject miniMap;
-    private bool mapOpened = false;
+    [SerializeField] private GameObject[] scrolls;
+    [SerializeField] private GameObject[] sundries;
 
     private void Awake()
     {
         instance = this;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public GameObject GetScroll()
     {
-
+        int i = Random.Range(0, scrolls.Length);
+        return scrolls[i];
     }
 
-    // Update is called once per frame
-    void Update()
+    public GameObject GetSundrie()
     {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            mapOpened = !mapOpened;
-            miniMap.SetActive(mapOpened);
-        }
+        int i = Random.Range(0, sundries.Length);
+        return sundries[i];
     }
 }

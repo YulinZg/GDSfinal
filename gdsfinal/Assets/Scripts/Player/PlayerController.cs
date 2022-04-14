@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private GameObject arrow;
     [SerializeField] private WeaponUI weaponUI;
+    [SerializeField] private StatusUI statusUI;
 
     private Camera cam;
     private Animator anim;
@@ -107,7 +108,7 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        rigid.velocity = speed * moveDir;
+        rigid.velocity = speed * status.GetSpeed() * moveDir;
         if (rigid.velocity.x > 0)
         {
             isFacingRight = true;
@@ -151,7 +152,7 @@ public class PlayerController : MonoBehaviour
 
     public void SetSpeed(float s)
     {
-        speed = s * status.GetSpeed();
+        speed = s;
     }
 
     public void Attack(Vector3 dir, float time, bool ifStop, float resetSpeed, bool canRotate)
@@ -262,17 +263,19 @@ public class PlayerController : MonoBehaviour
     {
         int i = Random.Range(0, weapons.Count);
         weapon1 = weapons[i];
-        weaponUI.SetWeapon1Icon(SpriteNo(weapon1));
+        weaponUI.SetWeapon1Icon(WeaponNo(weapon1));
+        statusUI.SetWeapon1(WeaponNo(weapon1));
         weapons.RemoveAt(i);
         i = Random.Range(0, weapons.Count);
         weapon2 = weapons[i];
-        weaponUI.SetWeapon2Icon(SpriteNo(weapon2));
+        weaponUI.SetWeapon2Icon(WeaponNo(weapon2));
+        statusUI.SetWeapon2(WeaponNo(weapon2));
         weapons.RemoveAt(i);
         currentWeapon = weapon1;
         weapon.GetWeapon(currentWeapon);
     }
 
-    private int SpriteNo(Weapon.Property property)
+    private int WeaponNo(Weapon.Property property)
     {
         int n = 0;
         switch (property)
@@ -313,12 +316,14 @@ public class PlayerController : MonoBehaviour
         if (currentWeapon == weapon1)
         {
             currentWeapon = weapon1 = weapons[i];
-            weaponUI.SetWeapon1Icon(SpriteNo(weapon1));
+            weaponUI.SetWeapon1Icon(WeaponNo(weapon1));
+            statusUI.SetWeapon1(WeaponNo(weapon1));
         }
         else
         {
             currentWeapon = weapon2 = weapons[i];
-            weaponUI.SetWeapon2Icon(SpriteNo(weapon2));
+            weaponUI.SetWeapon2Icon(WeaponNo(weapon2));
+            statusUI.SetWeapon2(WeaponNo(weapon2));
         }
         weapons.RemoveAt(i);
         weapons.Add(temp);

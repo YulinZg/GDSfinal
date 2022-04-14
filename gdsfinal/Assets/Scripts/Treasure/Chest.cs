@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class Chest : MonoBehaviour
 {
-    [SerializeField] private GameObject[] scrolls;
-    [SerializeField] private GameObject[] sundries;
     [SerializeField] private Sprite openedSprite;
     private GameObject scroll;
     private bool canOpen = false;
-    private int randomNum;
     private Transform chests;
 
     private ChestUI chestUI;
@@ -20,8 +17,7 @@ public class Chest : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        randomNum = Random.Range(0, scrolls.Length);
-        scroll = scrolls[randomNum];
+        scroll = GameManagement.instance.GetScroll();
         chests = transform.parent;
         chestUI = GameObject.FindGameObjectWithTag("Canvas").GetComponent<ChestUI>();
         color = scroll.GetComponent<SpriteRenderer>().color;
@@ -74,16 +70,15 @@ public class Chest : MonoBehaviour
             n = 10;
         else if (i < 10)
             n = 5;
-        else if (i < 40)
+        else if (i < 30)
             n = 4;
-        else if (i < 75)
+        else if (i < 60)
             n = 3;
         else
             n = 2;
         for (int a = 0; a < n; a++)
         {
-            i = Random.Range(0, sundries.Length);
-            Instantiate(sundries[i], transform.position, Quaternion.identity);
+            Instantiate(GameManagement.instance.GetSundrie(), transform.position, Quaternion.identity);
             yield return new WaitForSeconds(interval);
         }
         Instantiate(scroll, transform.position, Quaternion.identity);

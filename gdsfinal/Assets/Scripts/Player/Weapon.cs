@@ -16,7 +16,8 @@ public class Weapon : MonoBehaviour
 
     public Property property;
     [SerializeField] private float shootOffset;
-    [SerializeField] private GameObject bulletRotater;
+    [SerializeField] private Transform fireRotater;
+    [SerializeField] private Transform waterRotater;
     [SerializeField] private Transform bulletsInWorld;
     [SerializeField] private Transform lightningBalls;
     [SerializeField] private GameObject[] effects;
@@ -48,6 +49,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float damageW1;
     [SerializeField] private float damageW2;
     [SerializeField] private float damageW3;
+    [SerializeField] private float damageW4;
     [SerializeField] private float intervalW;
     [SerializeField] private float bulletSpeedW;
     [SerializeField] private float rangeW;
@@ -56,15 +58,18 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float rangeW3;
     [SerializeField] private float moveSpeedW;
     [SerializeField] private float moveSpeedW1;
-    [SerializeField] private float chargeTime;
     [SerializeField] private float standTimeW;
     [SerializeField] private float standTimeW1;
+    [SerializeField] private float chargeTime;
+    [SerializeField] private float sprayTime;
+    [SerializeField] private float sprayRotateSpeed;
     [SerializeField] private GameObject[] bulletsW;
     private float chargeTimer = 0;
     private bool isCharging = false;
     private bool charged1 = false;
     private bool charged2 = false;
     private bool isSpraying = false;
+    private bool isPassiveAttacking = false;
     private bool spawnedEffect1 = false;
     private bool spawnedEffect2 = false;
     private bool spawned2Effect2 = false;
@@ -75,19 +80,25 @@ public class Weapon : MonoBehaviour
 
     [Header("Earth")]
     [SerializeField] private float damageE;
+    [SerializeField] private float damageE1;
     [SerializeField] private float intervalE;
     [SerializeField] private float bulletSpeedE;
+    [SerializeField] private float bulletSpeedE1;
     [SerializeField] private float rangeE;
     [SerializeField] private float moveSpeedE;
     [SerializeField] private float moveSpeedE1;
     [SerializeField] private int preheatTimes;
     [SerializeField] private float scatterAngle;
+    [SerializeField] private int rockTimes;
     [SerializeField] private GameObject[] bulletsE;
     private int preheatBullet;
     private bool isShooting = false;
     private bool isAiming = false;
+    private int shotTimes = 0;
+    private int nextRockTimes;
 
     [SerializeField] private float stunValue;
+    [SerializeField] private float stunValue1;
     [SerializeField] private float stunTime;
 
     [Header("Lightning")]
@@ -180,12 +191,15 @@ public class Weapon : MonoBehaviour
                 charged1 = false;
                 charged2 = false;
                 isSpraying = false;
+                isPassiveAttacking = false;
                 break;
             case Property.earth:
                 player.SetSpeed(moveSpeedE);
                 preheatBullet = preheatTimes;
                 isShooting = false;
                 isAiming = false;
+                shotTimes = 0;
+                nextRockTimes = Random.Range(Mathf.FloorToInt(rockTimes * 0.5f), Mathf.FloorToInt(rockTimes * 1.5f));
                 break;
             case Property.lightning:
                 player.SetSpeed(moveSpeedL);
@@ -202,8 +216,11 @@ public class Weapon : MonoBehaviour
                 lastClick = 0;
                 break;
         }
-        if (bulletsInWorld.transform.childCount > 0)
-            foreach (Transform child in bulletsInWorld.transform)
+        if (bulletsInWorld.childCount > 0)
+            foreach (Transform child in bulletsInWorld)
+                Destroy(child.gameObject);
+        if (waterRotater.childCount > 0)
+            foreach (Transform child in waterRotater)
                 Destroy(child.gameObject);
         if (effectInstance)
             Destroy(effectInstance);
@@ -234,11 +251,6 @@ public class Weapon : MonoBehaviour
         return transform.position + MouseDir() * distance;
     }
 
-    private void RotateBullet(float speed)
-    {
-        bulletRotater.transform.Rotate(0, 0, speed * Time.deltaTime);
-    }
-
     private void SpawnEffect(int effectNo)
     {
         effectInstance1 = Instantiate(effects[effectNo], transform);
@@ -247,6 +259,11 @@ public class Weapon : MonoBehaviour
     private void SpawnEffectInstance(int effectNo)
     {
         effectInstance = Instantiate(effects[effectNo], transform);
+    }
+
+    private float GetDamage(float damage)
+    {
+        return damage * status.GetAttack();
     }
 
     //Fire/////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -269,17 +286,17 @@ public class Weapon : MonoBehaviour
 
     private void NormalAttackF(int bulletNum)
     {
-        if (bulletRotater.transform.childCount > 0)
-            foreach (Transform child in bulletRotater.transform)
+        if (fireRotater.childCount > 0)
+            foreach (Transform child in fireRotater)
                 Destroy(child.gameObject);
         GameObject bulletInstance;
         canLaunch = false;
         for (int i = 0; i < bulletNumber; i++)
         {
             bulletInstance = Instantiate(bulletsF[0], transform.position, Quaternion.identity);
-            bulletInstance.transform.parent = bulletRotater.transform;
+            bulletInstance.transform.parent = fireRotater;
             bulletInstance.GetComponent<Bullet>().Setup(
-                RotateVector(MouseDir(), (360f / bulletNum) * (i + 1)), bulletRotateRange / standTimeF, damageF * status.GetAttack(), status.GetCritProbability(), status.GetCritRate(), standTimeF + bulletLifeTimeBase * (i + 1), Bullet.BulletType.normal);
+                RotateVector(MouseDir(), (360f / bulletNum) * (i + 1)), bulletRotateRange / standTimeF, GetDamage(damageF), status.GetCritProbability(), status.GetCritRate(), standTimeF + bulletLifeTimeBase * (i + 1), Bullet.BulletType.normal);
             bulletInstance.GetComponent<Bullet>().SetFire(bulletRotateRange);
             SetBurn(bulletInstance.GetComponent<Bullet>());
         }
@@ -295,19 +312,24 @@ public class Weapon : MonoBehaviour
 
     private void NormalAttackF1()
     {
-        if (bulletRotater.transform.childCount > 0 && canLaunch)
+        if (fireRotater.childCount > 0 && canLaunch)
         {
             GameObject bulletInstance;
-            foreach (Transform child in bulletRotater.transform)
+            foreach (Transform child in fireRotater)
             {
                 bulletInstance = Instantiate(bulletsF[1], child.position, Quaternion.identity);
                 bulletInstance.GetComponent<Bullet>().Setup(
-                    Direction(Camera.main.ScreenToWorldPoint(Input.mousePosition), child.position), bulletSpeedF, damageF * status.GetAttack(), status.GetCritProbability(), status.GetCritRate(), rangeF / bulletSpeedF, Bullet.BulletType.normal);
+                    Direction(Camera.main.ScreenToWorldPoint(Input.mousePosition), child.position), bulletSpeedF, GetDamage(damageF), status.GetCritProbability(), status.GetCritRate(), rangeF / bulletSpeedF, Bullet.BulletType.normal);
                 SetBurn(bulletInstance.GetComponent<Bullet>());
                 Destroy(child.gameObject);
             }
             player.Attack(MouseDir(), 0.2f, false, moveSpeedF, false);
         }
+    }
+
+    private void RotateBullet(float speed)
+    {
+        fireRotater.Rotate(0, 0, speed * Time.deltaTime);
     }
 
     private void SetBurn(Bullet bullet)
@@ -385,7 +407,8 @@ public class Weapon : MonoBehaviour
         }
         else if (chargeTimer >= chargeTime * 3 && charged1 && charged2 && isCharging)
         {
-            NormalAttackW1(rangeW3, rangeW3 * 0.25f, damageW3);
+            //NormalAttackW1(rangeW3, rangeW3 * 0.25f, damageW3);
+            PassiveAttackW(rangeW3, rangeW3 * 0.25f, sprayTime);
             SpawnEffect(2);
         }
 
@@ -410,6 +433,12 @@ public class Weapon : MonoBehaviour
                 spawnedEffect1 = true;
             }
         }
+
+        if (isPassiveAttacking)
+        {
+            float angle = Vector3.SignedAngle(waterRotater.up, Camera.main.ScreenToWorldPoint(Input.mousePosition) - waterRotater.position, Vector3.forward);
+            waterRotater.Rotate(new Vector3(0, 0, Mathf.Sign(angle) * sprayRotateSpeed * Time.deltaTime));
+        }
     }
 
     private void NormalAttackW()
@@ -418,11 +447,9 @@ public class Weapon : MonoBehaviour
         charged1 = false;
         charged2 = false;
         chargeTimer = 0;
-        chargeTimer = 0;
-        GameObject bulletInstance;
-        bulletInstance = Instantiate(bulletsW[0], ShootPos(shootOffset), Quaternion.identity);
+        GameObject bulletInstance = Instantiate(bulletsW[0], ShootPos(shootOffset), Quaternion.identity);
         bulletInstance.GetComponent<Bullet>().Setup(
-            MouseDir(), bulletSpeedW, damageW * status.GetAttack(), status.GetCritProbability(), status.GetCritRate(), rangeW / bulletSpeedW, Bullet.BulletType.normal);
+            MouseDir(), bulletSpeedW, GetDamage(damageW), status.GetCritProbability(), status.GetCritRate(), rangeW / bulletSpeedW, Bullet.BulletType.normal);
         SetDecelerate(bulletInstance.GetComponent<Bullet>());
         player.Attack(MouseDir(), standTimeW, true, moveSpeedW, false);
         spawnedEffect1 = false;
@@ -439,11 +466,9 @@ public class Weapon : MonoBehaviour
         charged1 = false;
         charged2 = false;
         chargeTimer = 0;
-        chargeTimer = 0;
-        GameObject bulletInstance;
-        bulletInstance = Instantiate(bulletsW[1], ShootPos(rangeY * 0.5f + shootOffset), Quaternion.identity);
+        GameObject bulletInstance = Instantiate(bulletsW[1], ShootPos(rangeY * 0.5f + shootOffset), Quaternion.identity);
         bulletInstance.GetComponent<Bullet>().Setup(
-            MouseDir(), 0, damage * status.GetAttack(), status.GetCritProbability(), status.GetCritRate(), standTimeW1, Bullet.BulletType.penetrable);
+            MouseDir(), 0, GetDamage(damage), status.GetCritProbability(), status.GetCritRate(), standTimeW1, Bullet.BulletType.penetrable);
         SetDecelerate(bulletInstance.GetComponent<Bullet>());
         bulletInstance.transform.localScale = new Vector3(rangeY, rangeX, 1);
         bulletInstance.transform.parent = bulletsInWorld;
@@ -456,9 +481,35 @@ public class Weapon : MonoBehaviour
             Destroy(effectInstance);
     }
 
+    private void PassiveAttackW(float rangeY, float rangeX, float attackTime)
+    {
+        isSpraying = true;
+        isPassiveAttacking = true;
+        isCharging = false;
+        charged1 = false;
+        charged2 = false;
+        chargeTimer = 0; 
+        float angle = Mathf.Atan2(MouseDir().y, MouseDir().x) * Mathf.Rad2Deg;
+        waterRotater.rotation = Quaternion.Euler(0, 0, angle - 90);
+        GameObject bulletInstance = Instantiate(bulletsW[2], ShootPos(rangeY * 0.5f + shootOffset), Quaternion.identity);
+        bulletInstance.GetComponent<Bullet>().Setup(
+            MouseDir(), 0, GetDamage(damageW4), status.GetCritProbability(), status.GetCritRate(), attackTime, Bullet.BulletType.penetrable);
+        SetDecelerate(bulletInstance.GetComponent<Bullet>());
+        bulletInstance.transform.localScale = new Vector3(rangeY, rangeX, 1);
+        bulletInstance.transform.parent = waterRotater;
+        player.Attack(MouseDir(), attackTime, true, moveSpeedW, true);
+        spawnedEffect1 = false;
+        spawnedEffect2 = false;
+        spawned2Effect2 = false;
+        Invoke(nameof(SetNotSpraying), attackTime);
+        if (effectInstance)
+            Destroy(effectInstance);
+    }
+
     private void SetNotSpraying()
     {
         isSpraying = false;
+        isPassiveAttacking = false;
     }
 
     private void SetDecelerate(Bullet bullet)
@@ -523,13 +574,28 @@ public class Weapon : MonoBehaviour
     {
         GameObject bulletInstance = Instantiate(bulletsE[0], ShootPos(shootOffset), Quaternion.identity);
         bulletInstance.GetComponent<Bullet>().Setup(
-            dir, bulletSpeedE, damageE * status.GetAttack(), status.GetCritProbability(), status.GetCritRate(), rangeE / bulletSpeedE, Bullet.BulletType.normal);
-        SetStun(bulletInstance.GetComponent<Bullet>());
+            dir, bulletSpeedE, GetDamage(damageE), status.GetCritProbability(), status.GetCritRate(), rangeE / bulletSpeedE, Bullet.BulletType.normal);
+        SetStun(bulletInstance.GetComponent<Bullet>(), stunValue);
+        PassiveAttackE();
     }
 
-    private void SetStun(Bullet bullet)
+    private void PassiveAttackE()
     {
-        bullet.SetStun(stunValue, stunTime);
+        shotTimes++;
+        if (shotTimes >= nextRockTimes)
+        {
+            GameObject bulletInstance = Instantiate(bulletsE[1], transform.position + new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0).normalized, Quaternion.identity);
+            bulletInstance.GetComponent<Bullet>().Setup(
+                Direction(Camera.main.ScreenToWorldPoint(Input.mousePosition), bulletInstance.transform.position), bulletSpeedE1, GetDamage(damageE1), status.GetCritProbability(), status.GetCritRate(), rangeE / bulletSpeedE1, Bullet.BulletType.normal);
+            SetStun(bulletInstance.GetComponent<Bullet>(), stunValue1);
+            nextRockTimes = Random.Range(Mathf.FloorToInt(rockTimes * 0.5f), Mathf.FloorToInt(rockTimes * 1.5f));
+            shotTimes = 0;
+        }
+    }
+
+    private void SetStun(Bullet bullet, float value)
+    {
+        bullet.SetStun(value, stunTime);
     }
 
     //Earth////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -559,7 +625,7 @@ public class Weapon : MonoBehaviour
     {
         GameObject bulletInstance = Instantiate(bulletsL[0], ShootPos(shootOffset), Quaternion.identity);
         bulletInstance.GetComponent<Bullet>().Setup(
-            MouseDir(), 0, damageL * status.GetAttack(), status.GetCritProbability(), status.GetCritRate(), stayTime, Bullet.BulletType.penetrable);
+            MouseDir(), 0, GetDamage(damageL), status.GetCritProbability(), status.GetCritRate(), stayTime, Bullet.BulletType.penetrable);
         SetPalsy(bulletInstance.GetComponent<Bullet>());
         bulletInstance.transform.parent = lightningBalls;
         player.Attack(MouseDir(), 0.2f, false, moveSpeedL, false);
@@ -572,11 +638,11 @@ public class Weapon : MonoBehaviour
         {
                 GameObject bulletInstance = Instantiate(bulletsL[0], child.position, Quaternion.identity);
                 bulletInstance.GetComponent<Bullet>().Setup(
-                    Direction(transform.position, child.position), 0, damageL * status.GetAttack(), status.GetCritProbability(), status.GetCritRate(), standTimeL, Bullet.BulletType.penetrable);
+                    Direction(transform.position, child.position), 0, GetDamage(damageL), status.GetCritProbability(), status.GetCritRate(), standTimeL, Bullet.BulletType.penetrable);
                 SetPalsy(bulletInstance.GetComponent<Bullet>());
                 bulletInstance = Instantiate(bulletsL[1], 0.5f * Vector3.Distance(child.position, transform.position) * Direction(transform.position, child.position) + child.position, Quaternion.identity);
                 bulletInstance.GetComponent<Bullet>().Setup(
-                    Direction(transform.position, child.position), 0, damageL1 * status.GetAttack(), status.GetCritProbability(), status.GetCritRate(), standTimeL, Bullet.BulletType.penetrable);
+                    Direction(transform.position, child.position), 0, GetDamage(damageL1), status.GetCritProbability(), status.GetCritRate(), standTimeL, Bullet.BulletType.penetrable);
                 SetPalsy(bulletInstance.GetComponent<Bullet>());
                 bulletInstance.transform.localScale = new Vector3(Vector3.Distance(child.position, transform.position), 2, 1);
                 bulletInstance.transform.parent = bulletsInWorld;
@@ -753,7 +819,7 @@ public class Weapon : MonoBehaviour
         isCombating = true;
         GameObject bulletInstance = Instantiate(bulletsM[bulletNo], transform.position, Quaternion.identity);
         bulletInstance.GetComponent<Bullet>().Setup(
-            MouseDir(), 0, damage * status.GetAttack(), status.GetCritProbability(), status.GetCritRate(), time, Bullet.BulletType.penetrable);
+            MouseDir(), 0, GetDamage(damage), status.GetCritProbability(), status.GetCritRate(), time, Bullet.BulletType.penetrable);
         SetRepel(bulletInstance.GetComponent<Bullet>(), repelDistance);
         bulletInstance.transform.localScale = new Vector3(rangeM, rangeM, 1);
         bulletInstance.transform.parent = bulletsInWorld;
@@ -768,7 +834,7 @@ public class Weapon : MonoBehaviour
         player.Attack(dir, 0.5f, true, moveSpeedM, true);
         GameObject bulletInstance = Instantiate(bulletsM[3], ShootPos(shootOffset), Quaternion.identity);
         bulletInstance.GetComponent<Bullet>().Setup(
-            dir, 0, damageM3 * status.GetAttack(), status.GetCritProbability(), status.GetCritRate(), 0.5f, Bullet.BulletType.penetrable);
+            dir, 0, GetDamage(damageM3), status.GetCritProbability(), status.GetCritRate(), 0.5f, Bullet.BulletType.penetrable);
         SetRepel(bulletInstance.GetComponent<Bullet>(), repelDistance3);
         bulletInstance.transform.localScale = new Vector3(rangeM, rangeM, 1);
         bulletInstance.transform.parent = bulletsInWorld;
@@ -785,7 +851,7 @@ public class Weapon : MonoBehaviour
         player.Attack(dir, 0.5f, true, moveSpeedM, true);
         GameObject bulletInstance = Instantiate(bulletsM[4], ShootPos(shootOffset), Quaternion.identity);
         bulletInstance.GetComponent<Bullet>().Setup(
-            dir, 0, damageM4 * status.GetAttack(), status.GetCritProbability(), status.GetCritRate(), 0.5f, Bullet.BulletType.penetrable);
+            dir, 0, GetDamage(damageM4), status.GetCritProbability(), status.GetCritRate(), 0.5f, Bullet.BulletType.penetrable);
         SetRepel(bulletInstance.GetComponent<Bullet>(), repelDistance4);
         bulletInstance.transform.localScale = new Vector3(rangeM, rangeM, 1);
         bulletInstance.transform.parent = bulletsInWorld;
@@ -803,7 +869,7 @@ public class Weapon : MonoBehaviour
         player.Attack(dir, 1f, true, moveSpeedM, true);
         GameObject bulletInstance = Instantiate(bulletsM[5], ShootPos(shootOffset), Quaternion.identity);
         bulletInstance.GetComponent<Bullet>().Setup(
-            dir, 0, damageM5 * status.GetAttack(), status.GetCritProbability(), status.GetCritRate(), 1f, Bullet.BulletType.penetrable);
+            dir, 0, GetDamage(damageM5), status.GetCritProbability(), status.GetCritRate(), 1f, Bullet.BulletType.penetrable);
         SetRepel(bulletInstance.GetComponent<Bullet>(), repelDistance5);
         bulletInstance.transform.localScale = new Vector3(rangeM, rangeM, 1);
         bulletInstance.transform.parent = bulletsInWorld;
