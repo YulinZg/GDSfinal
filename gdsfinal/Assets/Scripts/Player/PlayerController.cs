@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController instance;
+
     [SerializeField] private GameObject arrow;
     [SerializeField] private WeaponUI weaponUI;
 
@@ -25,6 +26,9 @@ public class PlayerController : MonoBehaviour
     private float attackTimer;
     public bool isHurting = false;
     private float hurtTimer;
+
+    public bool canSuckBlood = false;
+    public float suckBloodAmount = 5;
 
     private List<Weapon.Property> weapons = new List<Weapon.Property>
     {
@@ -88,14 +92,10 @@ public class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canInput && !isAttacking)
+        if ((Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.LeftControl)) && canInput && !isAttacking)
             SwitchWeapon();
         if (Input.GetKeyDown(KeyCode.R) && canInput && !isAttacking)
-        {
-            weapons.Add(weapon1);
-            weapons.Add(weapon2);
-            GetWeapons();
-        }
+            ChangeWeapon();
     }
 
     private void FixedUpdate()
@@ -260,11 +260,11 @@ public class PlayerController : MonoBehaviour
 
     private void GetWeapons()
     {
-        int i = Random.Range(0, 5);
+        int i = Random.Range(0, weapons.Count);
         weapon1 = weapons[i];
         weaponUI.SetWeapon1Icon(SpriteNo(weapon1));
         weapons.RemoveAt(i);
-        i = Random.Range(0, 4);
+        i = Random.Range(0, weapons.Count);
         weapon2 = weapons[i];
         weaponUI.SetWeapon2Icon(SpriteNo(weapon2));
         weapons.RemoveAt(i);
@@ -272,20 +272,10 @@ public class PlayerController : MonoBehaviour
         weapon.GetWeapon(currentWeapon);
     }
 
-    private void SwitchWeapon()
-    {
-        if (currentWeapon == weapon1)
-            currentWeapon = weapon2;
-        else
-            currentWeapon = weapon1;
-        weapon.GetWeapon(currentWeapon);
-        weaponUI.SwitchWeapon();
-    }
-
     private int SpriteNo(Weapon.Property property)
     {
         int n = 0;
-        switch(property)
+        switch (property)
         {
             case Weapon.Property.fire:
                 n = 0;
@@ -304,5 +294,42 @@ public class PlayerController : MonoBehaviour
                 break;
         }
         return n;
+    }
+
+    private void SwitchWeapon()
+    {
+        if (currentWeapon == weapon1)
+            currentWeapon = weapon2;
+        else
+            currentWeapon = weapon1;
+        weapon.GetWeapon(currentWeapon);
+        weaponUI.SwitchWeapon();
+    }
+
+    public void ChangeWeapon()
+    {
+        int i = Random.Range(0, weapons.Count);
+        Weapon.Property temp = currentWeapon;
+        if (currentWeapon == weapon1)
+        {
+            currentWeapon = weapon1 = weapons[i];
+            weaponUI.SetWeapon1Icon(SpriteNo(weapon1));
+        }
+        else
+        {
+            currentWeapon = weapon2 = weapons[i];
+            weaponUI.SetWeapon2Icon(SpriteNo(weapon2));
+        }
+        weapons.RemoveAt(i);
+        weapons.Add(temp);
+        weapon.GetWeapon(currentWeapon);
+    }
+
+    public void SuckBlood()
+    {
+        if (canSuckBlood)
+        {
+            status.RestoreHp(suckBloodAmount);
+        }
     }
 }

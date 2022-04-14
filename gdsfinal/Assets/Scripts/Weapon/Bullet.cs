@@ -148,6 +148,11 @@ public class Bullet : MonoBehaviour
                     break;
             }
         }
+        if (type == BulletType.normal)
+        {
+            Instantiate(bulletEffect, transform.position, transform.rotation);
+            Destroy(gameObject);
+        }
     }
 
     private void Hit(GameObject e)

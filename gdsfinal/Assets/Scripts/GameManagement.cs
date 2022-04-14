@@ -9,18 +9,26 @@ public class GameManagement : MonoBehaviour
 
     [Header("UI")]
     public GameObject miniMap;
+    private bool mapOpened = false;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        instance = this;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Tab))
-            miniMap.SetActive(true);
-        else if (Input.GetKeyUp(KeyCode.Tab))
-            miniMap.SetActive(false);
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            mapOpened = !mapOpened;
+            miniMap.SetActive(mapOpened);
+        }
     }
 }

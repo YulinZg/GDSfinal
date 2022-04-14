@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5469972891838807140}
   - component: {fileID: 4729326463810351487}
   - component: {fileID: 2041509681746172815}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: waterBullet1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ MonoBehaviour:
   type: 0
   property: 1
   bulletEffect: {fileID: 0}
-  blinkTime: 0.5
+  blinkTime: 0.75
   blinkColor: {r: 0, g: 0, b: 1, a: 1}
   ifHurtStop: 1
 --- !u!1 &8423251387732492200
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 8701549213867502684}
   - component: {fileID: 2245118821329866462}
   - component: {fileID: 6315296371869430323}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Water Blast
   m_TagString: Untagged
   m_Icon: {fileID: 0}

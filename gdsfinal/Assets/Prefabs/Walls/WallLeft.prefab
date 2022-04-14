@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3921864395434351183}
   - component: {fileID: 7736152466629749499}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4067596587492114972}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: WallLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ Transform:
   m_GameObject: {fileID: 6935918552047598270}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.7, y: 1.9, z: 1}
+  m_LocalScale: {x: 1.85, y: 2.3, z: 1}
   m_Children: []
   m_Father: {fileID: 4067596587492114972}
   m_RootOrder: 0
@@ -243,7 +243,7 @@ GameObject:
   - component: {fileID: 2612905571650852875}
   - component: {fileID: 8360097400973836098}
   - component: {fileID: 6014988608410067233}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}

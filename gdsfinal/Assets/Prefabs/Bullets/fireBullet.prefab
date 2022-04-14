@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 6096084274419158094}
   - component: {fileID: 2740215179670580754}
   - component: {fileID: 1636804179104376346}
-  m_Layer: 0
+  - component: {fileID: 4577216503491846477}
+  m_Layer: 9
   m_Name: fireBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77,6 +78,27 @@ MonoBehaviour:
   blinkTime: 0.5
   blinkColor: {r: 1, g: 0, b: 0, a: 1}
   ifHurtStop: 0
+--- !u!50 &4577216503491846477
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6096084274419158081}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1001 &6096084273002236211
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -131,6 +153,10 @@ PrefabInstance:
     - target: {fileID: 2618640202374294202, guid: 6789a867acc7040fdb764cf10dbec422, type: 3}
       propertyPath: m_Name
       value: Fire_06
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618640202374294202, guid: 6789a867acc7040fdb764cf10dbec422, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 2618640202374294215, guid: 6789a867acc7040fdb764cf10dbec422, type: 3}
       propertyPath: m_SortingLayer

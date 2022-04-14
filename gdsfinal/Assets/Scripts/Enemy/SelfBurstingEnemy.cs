@@ -27,7 +27,6 @@ public class SelfBurstingEnemy : Enemy
     // Start is called before the first frame update
     void Start()
     {
-        chargeTime = 2f;
         isAlive = true;
         currentSpeed = speed = moveSpeed;
         invincible = 1 << LayerMask.NameToLayer("Invincible");

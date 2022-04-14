@@ -59,11 +59,26 @@ public class Status : MonoBehaviour
             player.Die();
     }
 
+    public void RestoreHp(float amount)
+    {
+        float h = Mathf.Floor(amount);
+        currentHp += h;
+        if (currentHp > maxHp)
+            currentHp = maxHp;
+        healthBar.SetHealth(currentHp, maxHp);
+        DamageUI damageUI = Instantiate(damageText, transform.position + new Vector3(Random.Range(damageUIOffsetXMin, damageUIOffsetXMax), Random.Range(damageUIOffsetYMin, damageUIOffsetYMax), 0), Quaternion.identity).GetComponent<DamageUI>();
+        damageUI.ShowUIDamage(h, Color.green);
+    }
+
     public void AddHealth(int amount)
     {
         health += amount;
+        if (health > 100)
+            health = 100;
         maxHp = health * healthUnit;
         currentHp += amount * healthUnit;
+        if (currentHp > maxHp)
+            currentHp = maxHp;
         healthBar.SetMaxHealth(health);
         healthBar.SetHealth(currentHp, maxHp);
     }
@@ -71,26 +86,36 @@ public class Status : MonoBehaviour
     public void AddAttack(int amount)
     {
         attack += amount;
+        if (attack > 100)
+            attack = 100;
     }
 
     public void AddCritProbability(int amount)
     {
         critProbability += amount;
+        if (critProbability > 100)
+            critProbability = 100;
     }
 
     public void AddCritRate(int amount)
     {
         critRate += amount;
+        if (critRate > 100)
+            critRate = 100;
     }
 
     public void AddDefense(int amount)
     {
         defense += amount;
+        if (defense > 100)
+            defense = 100;
     }
 
     public void AddMoveSpeed(int amount)
     {
         moveSpeed += amount;
+        if (moveSpeed > 100)
+            moveSpeed = 100;
     }
 
     public int GetAttack()
@@ -105,11 +130,11 @@ public class Status : MonoBehaviour
 
     public float GetCritRate()
     {
-        return 1f + critRate * critRateUnit;
+        return 1.2f + (critRate - 10) * critRateUnit;
     }
 
     public float GetSpeed()
     {
-        return moveSpeed * moveSpeedUnit;
+        return 1 + (moveSpeed - 10) * moveSpeedUnit;
     }
 }

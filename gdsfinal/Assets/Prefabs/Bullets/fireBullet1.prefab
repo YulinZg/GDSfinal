@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 5707396638559966060}
   - component: {fileID: 6630256201785931864}
   - component: {fileID: 5767776357694253992}
-  m_Layer: 0
+  - component: {fileID: 1623122221515336014}
+  m_Layer: 9
   m_Name: fireBullet1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77,6 +78,27 @@ MonoBehaviour:
   blinkTime: 0.5
   blinkColor: {r: 1, g: 0, b: 0, a: 1}
   ifHurtStop: 0
+--- !u!50 &1623122221515336014
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5707396638559966051}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1001 &9189260230429199563
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -87,6 +109,10 @@ PrefabInstance:
     - target: {fileID: 7281500039208301752, guid: 8d7be18d33a6940678badbea3e14a8d1, type: 3}
       propertyPath: m_Name
       value: Fire_07
+      objectReference: {fileID: 0}
+    - target: {fileID: 7281500039208301752, guid: 8d7be18d33a6940678badbea3e14a8d1, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7281500039208301753, guid: 8d7be18d33a6940678badbea3e14a8d1, type: 3}
       propertyPath: m_RootOrder
@@ -167,6 +193,10 @@ PrefabInstance:
     - target: {fileID: 7281500039276598018, guid: 8d7be18d33a6940678badbea3e14a8d1, type: 3}
       propertyPath: m_SortingLayerID
       value: 20592127
+      objectReference: {fileID: 0}
+    - target: {fileID: 7281500039276598031, guid: 8d7be18d33a6940678badbea3e14a8d1, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d7be18d33a6940678badbea3e14a8d1, type: 3}
