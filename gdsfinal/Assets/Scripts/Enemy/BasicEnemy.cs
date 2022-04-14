@@ -77,7 +77,7 @@ public class BasicEnemy : Enemy
                     currentState = EnemyState.Attack;
                     isAttacking = true;
                     anim.SetBool("isAttacking", true);
-                    speed = 0;
+                    
                 }
                 break;
             case EnemyState.Attack:
@@ -85,18 +85,18 @@ public class BasicEnemy : Enemy
                 {
                     Attack();
                 }
-                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) > 0.9f && !isStun)
+                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) > 0.9f && !isStun && !isHurt)
                 {
                     chasingRange = Random.Range(0.9f, 2f);
                     currentState = EnemyState.Chase;
                     desTraget = (Vector2)player.position;
                     StopAttack();
                 }
-                if (isStun)
-                {
-                    isAttacking = false;
-                    anim.SetBool("isAttacking", false);
-                }
+                //if (isStun)
+                //{
+                //    isAttacking = false;
+                //    anim.SetBool("isAttacking", false);
+                //}
                 //Debug.LogError("Attack");
                 break;
             default:
@@ -123,7 +123,7 @@ public class BasicEnemy : Enemy
 
     private void Attack()
     {
-
+        speed = 0;
         moveDir = ((Vector2)player.position - (Vector2)transform.position).normalized;
         //需要让怪物面向玩家
     }

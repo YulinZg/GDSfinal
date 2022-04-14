@@ -42,6 +42,7 @@ public abstract class Enemy : MonoBehaviour
     protected bool isAttacking = false;
     protected bool beAttacked = false;
     public bool canBeAttacked = true;
+    //public bool isPalsying = true;
     //public float disarmingTime;
 
     protected float currentSpeed;
