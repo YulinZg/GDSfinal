@@ -144,7 +144,7 @@ public abstract class Enemy : MonoBehaviour
     }
     public void Burn(float damage, float time, float interval)
     {
-        int i = Random.Range(0, 100);
+        int i = Random.Range(1, 101);
         if (i < 100 * (1 - debuffResistance))
         {
             burnTimer = 0;
@@ -189,7 +189,7 @@ public abstract class Enemy : MonoBehaviour
 
     public void Decelerate(float rate, float time)
     {
-        int i = Random.Range(0, 100);
+        int i = Random.Range(1, 101);
         if (i <= 100 * (1 - debuffResistance))
         {
             decelerateTimer = 0;
@@ -260,7 +260,7 @@ public abstract class Enemy : MonoBehaviour
 
     IEnumerator Palsying(float damage, float time, float interval)
     {
-        int i = Random.Range(0, 100);
+        int i = Random.Range(1, 101);
         if (i <= 100 * (1 - debuffResistance))
         {
             float timer = 0;

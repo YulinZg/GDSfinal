@@ -76,8 +76,7 @@ public class BasicEnemy : Enemy
                 {
                     currentState = EnemyState.Attack;
                     isAttacking = true;
-                    anim.SetBool("isAttacking", true);
-                    
+                    anim.SetBool("isAttacking", true);  
                 }
                 break;
             case EnemyState.Attack:

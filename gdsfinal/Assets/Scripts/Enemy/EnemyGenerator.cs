@@ -8,8 +8,10 @@ public class EnemyGenerator : MonoBehaviour
     //public int currentEnemyNum;
     [SerializeField] private GameObject enemyBasic;
     [SerializeField] private GameObject enemySelfBursting;
+    [SerializeField] private GameObject enemyTouchFish;
     [SerializeField] private int enemyBasicNum;
     [SerializeField] private int enemySelfBurstingNum;
+    [SerializeField] private int enemyTouchFishNum;
     private int[,] map = new int[26, 14];
     //private List<GameObject> enemyArray = new List<GameObject>();
 
@@ -29,7 +31,12 @@ public class EnemyGenerator : MonoBehaviour
             Instantiate(enemySelfBursting, transform.position + new Vector3(Random.Range(3, 9), Random.Range(3, 12), 0), Quaternion.identity);
         }
 
-
+        for (int i = 0; i < enemyTouchFishNum; i++)
+        {
+            //currentEnemyNumt++;
+            enemyCount++;
+            Instantiate(enemyTouchFish, transform.position + new Vector3(Random.Range(3, 9), Random.Range(3, 12), 0), Quaternion.identity);
+        }
     }
 
     //private void Update()

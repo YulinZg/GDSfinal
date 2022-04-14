@@ -76,7 +76,7 @@ MonoBehaviour:
   bulletEffect: {fileID: 0}
   blinkTime: 0.5
   blinkColor: {r: 1, g: 1, b: 0, a: 1}
-  ifHurtStop: 1
+  ifHurtStop: 0
 --- !u!1001 &5866497588083949564
 PrefabInstance:
   m_ObjectHideFlags: 0
