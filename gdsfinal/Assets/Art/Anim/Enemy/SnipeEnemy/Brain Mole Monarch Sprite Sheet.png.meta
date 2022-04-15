@@ -154,12 +154,12 @@ TextureImporter:
       name: Brain Mole Monarch Sprite Sheet_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 97
-        width: 24
-        height: 24
+        x: 0
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -175,12 +175,12 @@ TextureImporter:
       name: Brain Mole Monarch Sprite Sheet_1
       rect:
         serializedVersion: 2
-        x: 36
-        y: 97
-        width: 24
-        height: 25
+        x: 32
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -196,12 +196,12 @@ TextureImporter:
       name: Brain Mole Monarch Sprite Sheet_2
       rect:
         serializedVersion: 2
-        x: 68
-        y: 99
-        width: 24
-        height: 23
+        x: 64
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -217,12 +217,12 @@ TextureImporter:
       name: Brain Mole Monarch Sprite Sheet_3
       rect:
         serializedVersion: 2
-        x: 99
-        y: 99
-        width: 25
-        height: 22
+        x: 96
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -238,12 +238,12 @@ TextureImporter:
       name: Brain Mole Monarch Sprite Sheet_4
       rect:
         serializedVersion: 2
-        x: 4
-        y: 65
-        width: 24
-        height: 24
+        x: 0
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -259,12 +259,12 @@ TextureImporter:
       name: Brain Mole Monarch Sprite Sheet_5
       rect:
         serializedVersion: 2
-        x: 36
-        y: 65
-        width: 24
-        height: 31
+        x: 32
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -280,12 +280,12 @@ TextureImporter:
       name: Brain Mole Monarch Sprite Sheet_6
       rect:
         serializedVersion: 2
-        x: 68
-        y: 67
-        width: 25
-        height: 21
+        x: 64
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -301,12 +301,12 @@ TextureImporter:
       name: Brain Mole Monarch Sprite Sheet_7
       rect:
         serializedVersion: 2
-        x: 99
-        y: 67
-        width: 25
-        height: 21
+        x: 96
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -322,12 +322,12 @@ TextureImporter:
       name: Brain Mole Monarch Sprite Sheet_8
       rect:
         serializedVersion: 2
-        x: 4
-        y: 33
-        width: 24
-        height: 24
+        x: 0
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -343,12 +343,12 @@ TextureImporter:
       name: Brain Mole Monarch Sprite Sheet_9
       rect:
         serializedVersion: 2
-        x: 36
-        y: 33
-        width: 24
-        height: 25
+        x: 32
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -364,12 +364,12 @@ TextureImporter:
       name: Brain Mole Monarch Sprite Sheet_10
       rect:
         serializedVersion: 2
-        x: 66
-        y: 35
-        width: 24
-        height: 23
+        x: 64
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -385,12 +385,12 @@ TextureImporter:
       name: Brain Mole Monarch Sprite Sheet_11
       rect:
         serializedVersion: 2
-        x: 98
-        y: 35
-        width: 25
-        height: 22
+        x: 96
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -406,12 +406,12 @@ TextureImporter:
       name: Brain Mole Monarch Sprite Sheet_12
       rect:
         serializedVersion: 2
-        x: 4
-        y: 1
-        width: 24
-        height: 24
+        x: 0
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -427,12 +427,12 @@ TextureImporter:
       name: Brain Mole Monarch Sprite Sheet_13
       rect:
         serializedVersion: 2
-        x: 36
-        y: 1
-        width: 24
-        height: 25
+        x: 32
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -448,12 +448,12 @@ TextureImporter:
       name: Brain Mole Monarch Sprite Sheet_14
       rect:
         serializedVersion: 2
-        x: 67
-        y: 1
-        width: 27
-        height: 26
+        x: 64
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -469,12 +469,12 @@ TextureImporter:
       name: Brain Mole Monarch Sprite Sheet_15
       rect:
         serializedVersion: 2
-        x: 98
-        y: 6
-        width: 27
-        height: 25
+        x: 96
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -490,12 +490,12 @@ TextureImporter:
       name: Brain Mole Monarch Sprite Sheet_16
       rect:
         serializedVersion: 2
-        x: 132
-        y: 5
-        width: 25
-        height: 27
+        x: 128
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -511,12 +511,12 @@ TextureImporter:
       name: Brain Mole Monarch Sprite Sheet_17
       rect:
         serializedVersion: 2
-        x: 163
-        y: 4
-        width: 19
-        height: 25
+        x: 160
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -529,22 +529,22 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Brain Mole Monarch Sprite Sheet_19
+      name: Brain Mole Monarch Sprite Sheet_18
       rect:
         serializedVersion: 2
-        x: 195
-        y: 7
-        width: 8
-        height: 10
+        x: 192
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2cb7ca40630f48810800000000000000
-      internalID: 1766801068633390018
+      spriteID: c64657876d7c54830800000000000000
+      internalID: 4054866763474887788
       vertices: []
       indices: 
       edges: []
