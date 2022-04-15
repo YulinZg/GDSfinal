@@ -26,7 +26,7 @@ public class Pickup : MonoBehaviour
         if (randomRotate)
             transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360f));
         rigid.AddForce(Random.Range(4f, 6f) * RotateVector(Vector3.up, Random.Range(15f, 30f) * (Random.Range(2, 4) % 3 - 1)), ForceMode2D.Impulse);
-        Invoke(nameof(StopFalling), Random.Range(0.5f, 1f));
+        Invoke(nameof(StopFalling), Random.Range(0.4f, 1.1f));
     }
 
     // Update is called once per frame
@@ -35,12 +35,12 @@ public class Pickup : MonoBehaviour
         if (canFlow)
         {
             timer += Time.deltaTime;
-            if (timer >= 0.5f)
+            if (timer >= 1f)
             {
                 dir *= -1;
                 timer = 0;
             }
-            transform.position += 0.5f * dir * Time.deltaTime * Vector3.up;
+            transform.position += 0.25f * dir * Time.deltaTime * Vector3.up;
         }
     }
 

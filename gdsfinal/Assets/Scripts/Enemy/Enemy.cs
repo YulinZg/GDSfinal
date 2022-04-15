@@ -144,7 +144,7 @@ public abstract class Enemy : MonoBehaviour
     }
     public void Burn(float damage, float time, float interval)
     {
-        int i = Random.Range(1, 101);
+        int i = Random.Range(0, 100);
         if (i < 100 * (1 - debuffResistance))
         {
             burnTimer = 0;
@@ -189,7 +189,7 @@ public abstract class Enemy : MonoBehaviour
 
     public void Decelerate(float rate, float time)
     {
-        int i = Random.Range(1, 101);
+        int i = Random.Range(0, 100);
         if (i <= 100 * (1 - debuffResistance))
         {
             decelerateTimer = 0;
@@ -260,7 +260,7 @@ public abstract class Enemy : MonoBehaviour
 
     IEnumerator Palsying(float damage, float time, float interval)
     {
-        int i = Random.Range(1, 101);
+        int i = Random.Range(0, 100);
         if (i <= 100 * (1 - debuffResistance))
         {
             float timer = 0;
@@ -281,7 +281,7 @@ public abstract class Enemy : MonoBehaviour
                     float d = damage;
                     if (isDecelerate)
                         d *= 2;
-                    TakeDamage(d, Color.gray, 0.5f, Color.yellow, true, DamageProperty.lightning);
+                    TakeDamage(d, Color.gray, 0.25f, Color.yellow, true, DamageProperty.lightning);
                     timer = 0;
                 }
                 yield return null;
@@ -351,7 +351,7 @@ public abstract class Enemy : MonoBehaviour
     public void DestroySelf()
     {
         Destroy(gameObject);
-        PlayerController.instance.SuckBlood();
+        PlayerController.instance.AssassinBreath();
     }
 
     public Collider2D IsPlayerInSense()

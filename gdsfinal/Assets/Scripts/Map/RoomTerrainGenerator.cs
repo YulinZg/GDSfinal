@@ -27,7 +27,7 @@ public class RoomTerrainGenerator : MonoBehaviour
     {
         foreach (GameObject point in points)
         {
-           point.SetActive(false);
+            Destroy(point);
         }
         points.Clear();
     }

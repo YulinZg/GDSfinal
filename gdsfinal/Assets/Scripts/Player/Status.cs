@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class Status : MonoBehaviour
 {
-    [SerializeField] private int health;
+    [SerializeField] private int health = 10;
     [SerializeField] private float healthUnit;
-    [SerializeField] private int attack;
-    [SerializeField] private int critProbability;
+    [SerializeField] private int attack = 10;
+    [SerializeField] private int critProbability = 10;
     [SerializeField] private float critProbabilityUnit;
-    [SerializeField] private int critRate;
+    [SerializeField] private int critRate = 10;
     [SerializeField] private float critRateUnit;
-    [SerializeField] private int defense;
+    [SerializeField] private int defense = 10;
     [SerializeField] private float defenseUnit;
-    [SerializeField] private int moveSpeed;
+    [SerializeField] private int moveSpeed = 10;
     [SerializeField] private float moveSpeedUnit;
 
     [SerializeField] private HealthBar healthBar;
+    [SerializeField] private StatusUI statusUI;
     [SerializeField] private GameObject damageText;
     [SerializeField] private float damageUIOffsetXMin;
     [SerializeField] private float damageUIOffsetXMax;
@@ -28,6 +29,31 @@ public class Status : MonoBehaviour
     private float maxHp;
     private float currentHp;
     private PlayerController player;
+
+    [Header("Scroll")]
+    private bool assassinScroll = false;
+    [SerializeField] private float breathAmount;
+    [SerializeField] private float breathAddition;
+
+    private bool perfectScroll = false;
+    [SerializeField] private float perfectStrengthen;
+    [SerializeField] private float perfectStrengthenAddition;
+
+    private bool violentScroll = false;
+    [SerializeField] private float violentBloodLine;
+    [SerializeField] private float violentBloodLineAddition;
+    [SerializeField] private float violentStrengthen;
+    [SerializeField] private float violentStrengthenAddition;
+
+    private bool gutsScroll = false;
+    [SerializeField] private float gutsBloodLine;
+    [SerializeField] private float gutsBloodLineAddition;
+
+    private bool quickHandsScroll = false;
+    [SerializeField] private float quickTime;
+    [SerializeField] private float quickTimeLineAddition;
+    private bool isQuick = false;
+    private float quickTimer = 0;
 
     private void Awake()
     {
@@ -43,18 +69,24 @@ public class Status : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        float hp = currentHp;
         damage -= defense * defenseUnit;
         float d = Mathf.Floor(damage);
         if (d < 0)
             d = 0;
         currentHp -= d;
-        healthBar.SetHealth(currentHp, maxHp);
         DamageUI damageUI = Instantiate(damageText, transform.position + new Vector3(Random.Range(damageUIOffsetXMin, damageUIOffsetXMax), Random.Range(damageUIOffsetYMin, damageUIOffsetYMax), 0), Quaternion.identity).GetComponent<DamageUI>();
         damageUI.ShowUIDamage(d, Color.red);
         Instantiate(bloodEffects[Random.Range(0, 10)], transform);
         player.Hurt(0.2f);
-        if (currentHp < 0)
-            currentHp = 0;
+        if (currentHp <= 0)
+        {
+            if (gutsScroll && hp / maxHp > gutsBloodLine)
+                currentHp = 1;
+            else
+                currentHp = 0;
+        }
+        healthBar.SetHealth(currentHp, maxHp);
         if (currentHp == 0)
             player.Die();
     }
@@ -81,6 +113,7 @@ public class Status : MonoBehaviour
             currentHp = maxHp;
         healthBar.SetMaxHealth(health);
         healthBar.SetHealth(currentHp, maxHp);
+        statusUI.SetHealth(health);
     }
 
     public void AddAttack(int amount)
@@ -88,6 +121,7 @@ public class Status : MonoBehaviour
         attack += amount;
         if (attack > 100)
             attack = 100;
+        statusUI.SetAttack(attack);
     }
 
     public void AddCritProbability(int amount)
@@ -95,6 +129,7 @@ public class Status : MonoBehaviour
         critProbability += amount;
         if (critProbability > 100)
             critProbability = 100;
+        statusUI.SetCritProbability(critProbability);
     }
 
     public void AddCritRate(int amount)
@@ -102,6 +137,7 @@ public class Status : MonoBehaviour
         critRate += amount;
         if (critRate > 100)
             critRate = 100;
+        statusUI.SetCritRate(critRate);
     }
 
     public void AddDefense(int amount)
@@ -109,6 +145,7 @@ public class Status : MonoBehaviour
         defense += amount;
         if (defense > 100)
             defense = 100;
+        statusUI.SetDefense(defense);
     }
 
     public void AddMoveSpeed(int amount)
@@ -116,6 +153,7 @@ public class Status : MonoBehaviour
         moveSpeed += amount;
         if (moveSpeed > 100)
             moveSpeed = 100;
+        statusUI.SetMoveSpeed(moveSpeed);
     }
 
     public int GetAttack()
@@ -125,16 +163,126 @@ public class Status : MonoBehaviour
 
     public float GetCritProbability()
     {
-        return critProbability * critProbabilityUnit;
+        float cp = critProbability * critProbabilityUnit;
+        if (perfectScroll && currentHp == maxHp)
+        {
+            cp += perfectStrengthen;
+            if (cp > 1)
+                cp = 1;
+        }
+        return cp;
     }
 
     public float GetCritRate()
     {
-        return 1.2f + (critRate - 10) * critRateUnit;
+        float cr = 1.2f + (critRate - 10) * critRateUnit;
+        if (violentScroll && currentHp / maxHp < violentBloodLine)
+        {
+            cr += violentStrengthen;
+        }
+        return cr;
     }
 
     public float GetSpeed()
     {
-        return 1 + (moveSpeed - 10) * moveSpeedUnit;
+        float s = 1 + (moveSpeed - 10) * moveSpeedUnit;
+        if (isQuick)
+            s += 0.5f;
+        return s;
+    }
+
+    public void AssassinScroll()
+    {
+        if (assassinScroll)
+        {
+            breathAmount += breathAddition;
+        }
+        else
+            assassinScroll = true;
+    }
+
+    public void AssassinBreath()
+    {
+        if (assassinScroll)
+        {
+            RestoreHp(breathAmount);
+        }
+    }
+
+    public void PerfectScroll()
+    {
+        if (perfectScroll)
+        {
+            perfectStrengthen += perfectStrengthenAddition;
+        }
+        else
+            perfectScroll = true;
+    }
+
+    public void ViolentScroll()
+    {
+        if (violentScroll)
+        {
+            violentBloodLine += violentBloodLineAddition;
+            if (violentBloodLine > 0.5f)
+                violentBloodLine = 0.5f;
+            violentStrengthen += violentStrengthenAddition;
+        }
+        else
+            violentScroll = true;
+    }
+
+    public void BerserkerScroll()
+    {
+        AddAttack(Mathf.FloorToInt(attack * 0.5f));
+        health -= Mathf.FloorToInt(health * 0.5f);
+        maxHp = health * healthUnit;
+        currentHp -= Mathf.Floor(currentHp * 0.5f);
+        healthBar.SetMaxHealth(health);
+        healthBar.SetHealth(currentHp, maxHp);
+        statusUI.SetHealth(health);
+    }
+
+    public void GutsScroll()
+    {
+        if (gutsScroll)
+        {
+            gutsBloodLine -= gutsBloodLineAddition;
+            if (gutsBloodLine < 0.05f)
+                gutsBloodLine = 0.05f;
+        }
+        else
+            gutsScroll = true;
+    }
+
+    public void QuickHandsScroll()
+    {
+        if (quickHandsScroll)
+        {
+            quickTime += quickTimeLineAddition;
+        }
+        else
+            quickHandsScroll = true;
+    }
+
+    public void QuickSwitch()
+    {
+        if (quickHandsScroll)
+        {
+            quickTimer = 0;
+            if (!isQuick)
+                StartCoroutine(Quicking());
+        }
+    }
+
+    IEnumerator Quicking()
+    {
+        isQuick = true;
+        while (quickTimer < quickTime)
+        {
+            quickTimer += Time.deltaTime;
+            yield return null; 
+        }
+        isQuick = false;
     }
 }

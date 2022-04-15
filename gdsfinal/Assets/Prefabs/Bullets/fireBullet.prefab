@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6096084274419158094}
   - component: {fileID: 2740215179670580754}
-  - component: {fileID: 1636804179104376346}
   - component: {fileID: 4577216503491846477}
+  - component: {fileID: 1636804179104376346}
   m_Layer: 9
   m_Name: fireBullet
   m_TagString: Untagged
@@ -60,24 +60,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1636804179104376346
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6096084274419158081}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5878c36e7162544ea7137159c8b045f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 0
-  property: 0
-  bulletEffect: {fileID: 1670998811191621510, guid: fff4269c3285143459baf89965dea0b4, type: 3}
-  blinkTime: 0.5
-  blinkColor: {r: 1, g: 0, b: 0, a: 1}
-  ifHurtStop: 0
 --- !u!50 &4577216503491846477
 Rigidbody2D:
   serializedVersion: 4
@@ -99,6 +81,25 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1636804179104376346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6096084274419158081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5878c36e7162544ea7137159c8b045f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  property: 0
+  bulletEffect: {fileID: 1670998811191621510, guid: fff4269c3285143459baf89965dea0b4, type: 3}
+  blinkTime: 0.5
+  blinkColor: {r: 1, g: 0, b: 0, a: 1}
+  ifHurtStop: 0
+  lifetime: 0
 --- !u!1001 &6096084273002236211
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6574388021621534584}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.41, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5889637304745647960}
@@ -162,18 +162,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 6574388021621534584}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 361abef2d517f5249ac604beb5cb6f8b, type: 3}
+  m_Script: {fileID: 11500000, guid: 4b621a550d13a1a43b36624a4021fe52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isAlive: 1
-  health: 100
+  health: 1000
   attack: 0
-  moveSpeed: 1.5
+  moveSpeed: 2
   debuffResistance: 0
   fireResistance: 0
   waterResistance: 0
   earthResistance: 0
-  maxStunValue: 0
+  maxStunValue: 2
   lightningResistance: 0
   metalResistance: 0
   damageText: {fileID: 4318804278247988162, guid: d8ab669f8ef30064497cad64bd4f4f2f, type: 3}

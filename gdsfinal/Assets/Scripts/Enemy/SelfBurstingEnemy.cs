@@ -50,7 +50,7 @@ public class SelfBurstingEnemy : Enemy
     public override void Move()
     {
         rigid.velocity = speed * moveDir;
-        Filp("normal");
+        Filp("");
     }
     private void Chasing()
     {

@@ -197,27 +197,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 1924205829743773431}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7a02af653a11454695bdf764f3768e5, type: 3}
+  m_Script: {fileID: 11500000, guid: 54ceed18576feec4a829b1087ddfeab0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isAlive: 1
-  health: 20
+  health: 50
   attack: 0
   moveSpeed: 4
   debuffResistance: 1
   fireResistance: 0
   waterResistance: 0
   earthResistance: 0
-  maxStunValue: 100000
+  maxStunValue: 10000
   lightningResistance: 0
-  metalResistance: 0.5
+  metalResistance: 0
   damageText: {fileID: 4318804278247988162, guid: d8ab669f8ef30064497cad64bd4f4f2f, type: 3}
   effectSize: 0
   effectOffsetY: 0
-  damageUIOffsetXMin: 0
-  damageUIOffsetXMax: 0
-  damageUIOffsetYMin: 0
-  damageUIOffsetYMax: 0
+  damageUIOffsetXMin: -0.5
+  damageUIOffsetXMax: 0.5
+  damageUIOffsetYMin: -0.5
+  damageUIOffsetYMax: 0.5
   burnEffect: {fileID: 0}
   decelerateEffect: {fileID: 0}
   stunEffect: {fileID: 0}
