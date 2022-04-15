@@ -57,8 +57,9 @@ public class Chest : MonoBehaviour
         GetComponent<BoxCollider2D>().enabled = false;
         chestUI.panel.SetActive(false);
         transform.parent = null;
-        foreach (Transform child in chests)
-            Destroy(child.gameObject);
+        if (chests.childCount  > 0)
+            foreach (Transform child in chests)
+                Destroy(child.gameObject);
         StartCoroutine(SpawnTreasure(0.2f));
     }
 

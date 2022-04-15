@@ -1194,6 +1194,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scrolls:
   - {fileID: 5266362378348981095, guid: d77c2f7e6c67e31499ea26b0ff31f40d, type: 3}
+  - {fileID: 5418527549481451346, guid: 83ea588b1d2d48f4ab900351fce6a0ca, type: 3}
+  - {fileID: 7931067536328914578, guid: 1fe90651dc53c5e48adfecba2ff42fa7, type: 3}
+  - {fileID: 46589575938698216, guid: 67fbde192a217184eb07ee06e14d0228, type: 3}
+  - {fileID: 6599332401073975904, guid: bd80afd96e0ea964e8385e9c4ce7c23b, type: 3}
+  - {fileID: 3198070048456630103, guid: 9a8f756e9c8450f4a825cdf125ced731, type: 3}
   sundries:
   - {fileID: 3846612648607274792, guid: 280e0c2a7dc2d6347bafe6b41e24da90, type: 3}
   - {fileID: 9176723722062149276, guid: 96b01f572b2521249b718ca08dc3c20b, type: 3}
@@ -6834,7 +6839,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.93725497, g: 0.058823533, b: 0.11764707, a: 1}
+  m_Color: {r: 0.93725497, g: 0.058823533, b: 0.11764707, a: 0.7529412}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

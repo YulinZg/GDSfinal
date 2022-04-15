@@ -281,7 +281,7 @@ public abstract class Enemy : MonoBehaviour
                     float d = damage;
                     if (isDecelerate)
                         d *= 2;
-                    TakeDamage(d, Color.gray, 0.5f, Color.yellow, true, DamageProperty.lightning);
+                    TakeDamage(d, Color.gray, 0.25f, Color.yellow, true, DamageProperty.lightning);
                     timer = 0;
                 }
                 yield return null;
@@ -351,7 +351,7 @@ public abstract class Enemy : MonoBehaviour
     public void DestroySelf()
     {
         Destroy(gameObject);
-        PlayerController.instance.SuckBlood();
+        PlayerController.instance.AssassinBreath();
     }
 
     public Collider2D IsPlayerInSense()

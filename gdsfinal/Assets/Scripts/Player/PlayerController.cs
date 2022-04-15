@@ -28,9 +28,6 @@ public class PlayerController : MonoBehaviour
     public bool isHurting = false;
     private float hurtTimer;
 
-    public bool canSuckBlood = false;
-    public float suckBloodAmount = 5;
-
     private List<Weapon.Property> weapons = new List<Weapon.Property>
     {
         Weapon.Property.fire,
@@ -307,6 +304,7 @@ public class PlayerController : MonoBehaviour
             currentWeapon = weapon1;
         weapon.GetWeapon(currentWeapon);
         weaponUI.SwitchWeapon();
+        status.QuickSwitch();
     }
 
     public void ChangeWeapon()
@@ -330,11 +328,8 @@ public class PlayerController : MonoBehaviour
         weapon.GetWeapon(currentWeapon);
     }
 
-    public void SuckBlood()
+    public void AssassinBreath()
     {
-        if (canSuckBlood)
-        {
-            status.RestoreHp(suckBloodAmount);
-        }
+        status.AssassinBreath();
     }
 }

@@ -504,7 +504,7 @@ MonoBehaviour:
   damageW1: 6
   damageW2: 10
   damageW3: 16
-  damageW4: 5
+  damageW4: 3
   intervalW: 1
   bulletSpeedW: 15
   rangeW: 10
@@ -544,7 +544,7 @@ MonoBehaviour:
   damageL: 2
   damageL1: 4
   intervalL: 0.25
-  moveSpeedL: 5
+  moveSpeedL: 4
   standTimeL: 1
   maxBulletNum: 5
   stayTime: 5
@@ -562,7 +562,7 @@ MonoBehaviour:
   damageM5: 12
   intervalM: 0.25
   rangeM: 1
-  moveSpeedM: 5
+  moveSpeedM: 4
   bulletsM:
   - {fileID: 8863458536095413964, guid: aff20e241ec0e3b459d0c283c4cc667f, type: 3}
   - {fileID: 1448791491170086823, guid: 1732463cb0ef83545bb633bd1a7b50e4, type: 3}
@@ -617,6 +617,18 @@ MonoBehaviour:
   - {fileID: 5734430898581893748, guid: f3cc3d9e9fbb4a64aae1da21d472b57a, type: 3}
   - {fileID: 6904164871745819824, guid: a729ff4586a3e1e47a220dd0f70917ae, type: 3}
   - {fileID: 3630192060672997483, guid: 5457c36b6398ede4a8009f19f3fc4cb8, type: 3}
+  breathAmount: 10
+  breathAddition: 10
+  perfectStrengthen: 0.5
+  perfectStrengthenAddition: 0.1
+  violentBloodLine: 0.2
+  violentBloodLineAddition: 0.05
+  violentStrengthen: 1
+  violentStrengthenAddition: 0.2
+  gutsBloodLine: 0.2
+  gutsBloodLineAddition: 0.02
+  quickTime: 5
+  quickTimeLineAddition: 1
 --- !u!114 &2741019207210238514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -633,5 +645,3 @@ MonoBehaviour:
   weaponUI: {fileID: 0}
   statusUI: {fileID: 0}
   isHurting: 0
-  canSuckBlood: 0
-  suckBloodAmount: 5

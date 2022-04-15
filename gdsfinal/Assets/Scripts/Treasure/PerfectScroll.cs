@@ -2,16 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Pickups/HealthReinforcer")]
-public class HealthReinforcer : PickupEffect
+[CreateAssetMenu(menuName = "Pickups/PerfectScroll")]
+public class PerfectScroll : PickupEffect
 {
     [SerializeField] private GameObject strengthenText;
 
     public override void OnPickup(GameObject player)
     {
-        int i = Random.Range(1, 5);
-        player.GetComponent<Status>().AddHealth(i);
+        player.GetComponent<Status>().PerfectScroll();
         DamageUI damageUI = Instantiate(strengthenText, PlayerController.instance.transform.position + new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), 0), Quaternion.identity).GetComponent<DamageUI>();
-        damageUI.ShowStrengthen("Health +" + i, Color.green);
+        damageUI.ShowStrengthen("Perfect Scroll", Color.white);
     }
 }
