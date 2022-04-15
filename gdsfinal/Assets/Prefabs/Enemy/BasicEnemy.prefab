@@ -251,7 +251,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isAlive: 0
   health: 500
-  attack: 20
+  attack: 30
   moveSpeed: 2
   debuffResistance: 0
   fireResistance: 0

@@ -173,12 +173,12 @@ MonoBehaviour:
   fireResistance: 0
   waterResistance: 0
   earthResistance: 0
-  maxStunValue: 2
+  maxStunValue: 150
   lightningResistance: 0
   metalResistance: 0
   damageText: {fileID: 4318804278247988162, guid: d8ab669f8ef30064497cad64bd4f4f2f, type: 3}
-  effectSize: 1
-  effectOffsetY: 0.2
+  effectSize: 1.1
+  effectOffsetY: 0.1
   damageUIOffsetXMin: -0.5
   damageUIOffsetXMax: 0.5
   damageUIOffsetYMin: -0.5
