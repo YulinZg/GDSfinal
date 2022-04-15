@@ -297,15 +297,21 @@ public abstract class Enemy : MonoBehaviour
         StartCoroutine(Repeling(dir, distance * (1 - metalResistance), 0.2f));
     }
 
-    IEnumerator Repeling(Vector3 dir, float distance, float time)
+    IEnumerator Repeling(Vector3 dir, float distance, float duration)
     {
         isRepel = true;
         float timer = 0;
+        //float startTime = Time.time;
         speed = 0;
         Vector3 start = transform.position;
-        while (timer < time - Time.fixedDeltaTime)
+        while (timer < duration - Time.fixedDeltaTime)
         {
-            rigid.MovePosition(Vector3.Lerp(transform.position, start + dir * distance, timer / time));
+            //rigid.MovePosition(Vector3.Lerp(transform.position, start + dir * distance, timer / duration));
+            //timer += Time.fixedDeltaTime;
+            float timeFraction = timer / duration;
+            //timeFraction = timeFraction * timeFraction * timeFraction + 1;
+            timeFraction = -timeFraction * (timeFraction - 2);
+            rigid.MovePosition(Vector3.Lerp(start, start + dir * distance, timeFraction));
             timer += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
