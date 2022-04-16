@@ -8,8 +8,8 @@ public class SnipeEnemy : Enemy
     [Header("Own")]
     public GameObject child;
     public int numberOfChildren;
-    private float chasingRange;
-    private float changeStateTimer;
+    private float attackTimer;
+    private float attackInterval;
     private enum ChasingTarget
     {
         none,
@@ -34,6 +34,7 @@ public class SnipeEnemy : Enemy
     
     private void Awake()
     {
+        isAlive = true;
         player = PlayerController.instance.transform;
         sprite = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
@@ -59,6 +60,7 @@ public class SnipeEnemy : Enemy
     // Start is called before the first frame update
     void Start()
     {
+        attackInterval = GetLengthByName("attack");
         chasingTarget = (ChasingTarget)Random.Range(0, 5);
         switch (chasingTarget)
         {
@@ -80,52 +82,60 @@ public class SnipeEnemy : Enemy
             default:
                 break;
         }
-        isAlive = true;
+        
         currentSpeed = speed = moveSpeed;
-        chasingRange = Random.Range(0.9f, 2f);
+        //chasingRange = Random.Range(0.9f, 2f);
         pathPoints = GameObject.FindGameObjectsWithTag("Point");
     }
 
     public override void UpdateState()
     {
+        attackTimer += Time.deltaTime;
         switch (currentState)
         {
             case EnemyState.Chase:
-                Chasing();
                 if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) <= 0.9f)
                 {
-                    currentState = EnemyState.Attack;
-                    isAttacking = true;
-                    anim.SetBool("isAttacking", true);
-
+                    speed = 0;
+                    //anim.SetBool("isIdle", true);
+                    if (attackTimer >= attackInterval)
+                    {
+                        currentState = EnemyState.Attack;
+                        attackTimer = 0;
+                        //anim.SetBool("isIdle", false);
+                    }
                 }
+                else
+                    Chasing();
                 break;
             case EnemyState.Attack:
-                Attack();
-                changeStateTimer += Time.deltaTime;
-                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) > 0.9f && changeStateTimer >= 1f)
+                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) > 0.9f)
                 {
-                    chasingRange = Random.Range(0.9f, 2f);
+                    //chasingRange = Random.Range(0.9f, 2f);
                     currentState = EnemyState.Chase;
                     desTraget = (Vector2)player.position;
-                    changeStateTimer = 0f;
+                    //changeStateTimer = 0f;
                     StopAttack();
                 }
+                else
+                    Attack();
                 break;
             default:
                 break;
         }
-        //throw new System.NotImplementedException();
     }
 
     private void Attack()
     {
         speed = 0;
+        isAttacking = true;
+        anim.SetBool("isAttacking", true);
         moveDir = ((Vector2)player.position - (Vector2)transform.position).normalized;
         //需要让怪物面向玩家
     }
     private void Chasing()
     {
+        speed = currentSpeed;
         moveDir = ((Vector2)player.position + chasingOffset - (Vector2)transform.position).normalized;
     }
     public void SpawnChildren()

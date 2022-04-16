@@ -5955,8 +5955,8 @@ MonoBehaviour:
   enemySelfBursting: {fileID: 2923880042827918057, guid: fded80e77a19f064cacc1a8bea91133d, type: 3}
   enemyTouchFish: {fileID: 1924205829743773431, guid: af3a10029dbea8442bacf9f50efef685, type: 3}
   enemySnipe: {fileID: 6574388021621534584, guid: e1feb6ae3b3ca7843bbe69f6fa8495ba, type: 3}
-  enemyBasicNum: 1
+  enemyBasicNum: 0
   enemySelfBurstingNum: 0
   enemyTouchFishNum: 0
   enemySnipeNum: 1
-  numberOfChildren: 6
+  numberOfChildren: 2

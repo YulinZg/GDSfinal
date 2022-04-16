@@ -377,7 +377,22 @@ public abstract class Enemy : MonoBehaviour
     //    else
     //        return false;
     //}
-    void OnDrawGizmos()
+    public float GetLengthByName(string name)
+    {
+        float length = 0;
+        AnimationClip[] clips = anim.runtimeAnimatorController.animationClips;
+        foreach (AnimationClip clip in clips)
+        {
+            if (clip.name.Equals(name))
+            {
+                length = clip.length;
+                break;
+            }
+        }
+        Debug.Log(length);
+        return length;
+    }
+        void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere((Vector2)transform.position + senseOffset, senseRadius);

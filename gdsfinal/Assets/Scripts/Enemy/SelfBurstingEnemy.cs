@@ -27,6 +27,7 @@ public class SelfBurstingEnemy : Enemy
     private EnemyState currentState;
     private void Awake()
     {
+        isAlive = true;
         player = PlayerController.instance.transform;
         sprite = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
@@ -58,7 +59,6 @@ public class SelfBurstingEnemy : Enemy
                 break;
         }
         //Debug.Log(chasingTarget);
-        isAlive = true;
         currentSpeed = speed = moveSpeed;
         invincible = 1 << LayerMask.NameToLayer("Invincible");
         //chasingRange = Random.Range(0.9f, 2f);
