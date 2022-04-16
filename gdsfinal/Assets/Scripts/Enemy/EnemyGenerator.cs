@@ -46,9 +46,9 @@ public class EnemyGenerator : MonoBehaviour
             //currentEnemyNumt++;
             enemyCount++;
             GameObject temp = Instantiate(enemySnipe, transform.position + new Vector3(Random.Range(3, 9), Random.Range(3, 12), 0), Quaternion.identity);
-            if (temp.GetComponent<SnipeEnemy>())
+            if (temp.GetComponent<HatchEnemy>())
             {
-                temp.GetComponent<SnipeEnemy>().numberOfChildren = numberOfChildren;
+                temp.GetComponent<HatchEnemy>().setChild(numberOfChildren);
                 enemyCount += numberOfChildren;
             }
             

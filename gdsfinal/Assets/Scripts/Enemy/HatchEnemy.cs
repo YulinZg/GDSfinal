@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SnipeEnemy : Enemy
+public class HatchEnemy : Enemy
 {
-    
     [Header("Own")]
     public GameObject child;
-    public int numberOfChildren;
+    private int numberOfChildren;
     private float attackTimer;
     private float attackInterval;
     private enum ChasingTarget
@@ -97,12 +96,10 @@ public class SnipeEnemy : Enemy
                 if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) <= 0.9f)
                 {
                     speed = 0;
-                    //anim.SetBool("isIdle", true);
                     if (attackTimer >= attackInterval)
                     {
                         currentState = EnemyState.Attack;
                         attackTimer = 0;
-                        //anim.SetBool("isIdle", false);
                     }
                 }
                 else
@@ -111,10 +108,8 @@ public class SnipeEnemy : Enemy
             case EnemyState.Attack:
                 if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) > 0.9f)
                 {
-                    //chasingRange = Random.Range(0.9f, 2f);
                     currentState = EnemyState.Chase;
                     desTraget = (Vector2)player.position;
-                    //changeStateTimer = 0f;
                     StopAttack();
                 }
                 else
@@ -124,7 +119,15 @@ public class SnipeEnemy : Enemy
                 break;
         }
     }
+    public void setChild(int value)
+    {
+        numberOfChildren = value;
+    }
 
+    public int getChild()
+    {
+        return numberOfChildren;
+    }
     private void Attack()
     {
         speed = 0;
