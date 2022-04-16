@@ -205,6 +205,8 @@ MonoBehaviour:
     m_Bits: 8
   senseOffset: {x: 0, y: 0}
   idleInterval: 2
+  disappearCoolDown: 10
+  shadow: {fileID: 1975638847091674336}
 --- !u!61 &1975638847083170488
 BoxCollider2D:
   m_ObjectHideFlags: 0
