@@ -9,12 +9,14 @@ public class EnemyGenerator : MonoBehaviour
     [SerializeField] private GameObject enemyBasic;
     [SerializeField] private GameObject enemySelfBursting;
     [SerializeField] private GameObject enemyTouchFish;
+    [SerializeField] private GameObject enemyHatch;
     [SerializeField] private GameObject enemySnipe;
     [SerializeField] private int enemyBasicNum;
     [SerializeField] private int enemySelfBurstingNum;
     [SerializeField] private int enemyTouchFishNum;
-    [SerializeField] private int enemySnipeNum;
+    [SerializeField] private int enemyHatchNum;
     [SerializeField] private int numberOfChildren;
+    [SerializeField] private int enemySnipeNum;
     private int[,] map = new int[26, 14];
     //private List<GameObject> enemyArray = new List<GameObject>();
 
@@ -41,11 +43,11 @@ public class EnemyGenerator : MonoBehaviour
             Instantiate(enemyTouchFish, transform.position + new Vector3(Random.Range(3, 9), Random.Range(3, 12), 0), Quaternion.identity);
         }
 
-        for (int i = 0; i < enemySnipeNum; i++)
+        for (int i = 0; i < enemyHatchNum; i++)
         {
             //currentEnemyNumt++;
             enemyCount++;
-            GameObject temp = Instantiate(enemySnipe, transform.position + new Vector3(Random.Range(3, 9), Random.Range(3, 12), 0), Quaternion.identity);
+            GameObject temp = Instantiate(enemyHatch, transform.position + new Vector3(Random.Range(3, 9), Random.Range(3, 12), 0), Quaternion.identity);
             if (temp.GetComponent<HatchEnemy>())
             {
                 temp.GetComponent<HatchEnemy>().setChild(numberOfChildren);
@@ -53,6 +55,12 @@ public class EnemyGenerator : MonoBehaviour
             }
             
 
+        }
+        for (int i = 0; i < enemySnipeNum; i++)
+        {
+            //currentEnemyNumt++;
+            enemyCount++;
+            Instantiate(enemySnipe, transform.position + new Vector3(Random.Range(3, 9), Random.Range(3, 12), 0), Quaternion.identity);
         }
         Debug.LogWarning(enemyCount);
     }

@@ -2,26 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicEnemy : Enemy
+public class SnipeEnemy : Enemy
 {
-    private float chasingRange;
+    //private float chasingRange;
     //private float changeStateTimer;
     private float attackTimer;
     private float attackInterval;
+
+    private float idleTimer;
+    public float idleInterval;
+
+    private bool isSensePlayer;
     private enum EnemyState
     {
+        idle,
         Wander,
-        Chase,
         Attack,
+        back
     };
 
+    private EnemyState currentState;
     public override void Move()
     {
         rigid.velocity = speed * moveDir;
         Filp("normal");
     }
-
-    private EnemyState currentState;
     private void Awake()
     {
         isAlive = true;
@@ -34,18 +39,21 @@ public class BasicEnemy : Enemy
     // Start is called before the first frame update
     void Start()
     {
-        
+        attackInterval = GetLengthByName("attack");
+        //Debug.Log(desTraget);
+        anim.SetBool("isIdle", true);
+        currentState = EnemyState.idle;
         attackInterval = GetLengthByName("attack");
         currentSpeed = speed = moveSpeed;
-        chasingRange = Random.Range(0.9f, 2f);
+        //chasingRange = Random.Range(0.9f, 2f);
         pathPoints = GameObject.FindGameObjectsWithTag("Point");
         GetNewTargetPoint();
     }
+    // Start is called before the first frame update
 
     // Update is called once per frame
     void Update()
     {
-
         if (!isStun && !isHurt)
         {
             UpdateState();
@@ -65,64 +73,79 @@ public class BasicEnemy : Enemy
         attackTimer += Time.deltaTime;
         switch (currentState)
         {
-            case EnemyState.Wander:
-                if (IsPlayerInSense() || beAttacked)
+            case EnemyState.idle:
+                if (IsPlayerInSense())
                 {
-                    chasingRange = Random.Range(0.9f, 2f);
-                    desTraget = (Vector2)player.position + new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
-                    currentState = EnemyState.Chase;
-                }
-                else
-                    Wander();
-                break;
-            case EnemyState.Chase:
-                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) <= 0.9f )
-                {
-                    speed = 0;
                     anim.SetBool("isIdle", true);
+                    //isSensePlayer = true;
+                    speed = 0;
                     if (attackTimer >= attackInterval)
                     {
                         currentState = EnemyState.Attack;
                         attackTimer = 0;
-                        anim.SetBool("isIdle", false);
                     }
                 }
+                else if (idleTimer >= idleInterval)
+                {
+                    speed = currentSpeed;
+                    anim.SetBool("isIdle", false);
+                    currentState = EnemyState.Wander;
+                    idleTimer = 0;
+                }
                 else
-                    Chasing();
+                    Idle();
+                break;
+            case EnemyState.Wander:
+                if (Vector2.Distance(desTraget, transform.position) < 0.3f)
+                {
+                    currentState = EnemyState.idle;
+                    anim.SetBool("isIdle", true);
+                    GetNewTargetPoint();
+                }
+                else if(IsPlayerInSense())
+                {
+                    anim.SetBool("isIdle", true);
+                    //isSensePlayer = true;
+                    speed = 0;
+                    if (attackTimer >= attackInterval)
+                    {
+                        currentState = EnemyState.Attack;
+                        attackTimer = 0;
+                    }
+                }else
+                    Wander();
                 break;
             case EnemyState.Attack:
-                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) > 0.9f)
+                if (!IsPlayerInSense())
                 {
-                    chasingRange = Random.Range(0.9f, 2f);
-                    currentState = EnemyState.Chase;
-                    desTraget = (Vector2)player.position;
                     StopAttack();
+                    GetNewTargetPoint();
+                    anim.SetBool("isIdle", false);
+                    currentState = EnemyState.Wander;
                 }
                 else
                     Attack();
+                Debug.Log("attack");
+                break;
+            case EnemyState.back:
                 break;
             default:
                 break;
         }
     }
 
-    private void Chasing()
+    private void Idle()
     {
-        anim.SetBool("isIdle", false);
-        speed = currentSpeed;
-        if (Vector2.Distance(desTraget, transform.position) < chasingRange)
-        {
-            desTraget = (Vector2)player.position + new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
-        }
-        moveDir = ((Vector2)desTraget - (Vector2)transform.position).normalized;
+        idleTimer += Time.deltaTime;
+        speed = 0;
+        
     }
+
     private void Wander()
     {
-        if ( Vector2.Distance(desTraget, transform.position) < chasingRange)
-        {
-            GetNewTargetPoint();
-        }
+        
         moveDir = ((Vector2)desTraget - (Vector2)transform.position).normalized;
+        //Debug.Log(moveDir);
     }
 
     private void Attack()
