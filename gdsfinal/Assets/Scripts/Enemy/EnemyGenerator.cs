@@ -14,6 +14,7 @@ public class EnemyGenerator : MonoBehaviour
     [SerializeField] private int enemySelfBurstingNum;
     [SerializeField] private int enemyTouchFishNum;
     [SerializeField] private int enemySnipeNum;
+    [SerializeField] private int numberOfChildren;
     private int[,] map = new int[26, 14];
     //private List<GameObject> enemyArray = new List<GameObject>();
 
@@ -44,10 +45,18 @@ public class EnemyGenerator : MonoBehaviour
         {
             //currentEnemyNumt++;
             enemyCount++;
-            Instantiate(enemySnipe, transform.position + new Vector3(Random.Range(3, 9), Random.Range(3, 12), 0), Quaternion.identity);
-        }
-    }
+            GameObject temp = Instantiate(enemySnipe, transform.position + new Vector3(Random.Range(3, 9), Random.Range(3, 12), 0), Quaternion.identity);
+            if (temp.GetComponent<SnipeEnemy>())
+            {
+                temp.GetComponent<SnipeEnemy>().numberOfChildren = numberOfChildren;
+                enemyCount += numberOfChildren;
+            }
+            
 
+        }
+        Debug.LogWarning(enemyCount);
+    }
+    
     //private void Update()
     //{
     //    if (enemyArray.Count == 0)

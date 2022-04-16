@@ -5,6 +5,7 @@ using UnityEngine;
 public class BasicEnemy : Enemy
 {
     private float chasingRange;
+    private float changeStateTimer;
     private enum EnemyState
     {
         Wander,
@@ -39,7 +40,11 @@ public class BasicEnemy : Enemy
     // Update is called once per frame
     void Update()
     {
-        UpdateState();
+
+        if (!isStun && !isHurt)
+        {
+            UpdateState();
+        }
     }
 
     private void FixedUpdate()
@@ -77,19 +82,18 @@ public class BasicEnemy : Enemy
                     currentState = EnemyState.Attack;
                     isAttacking = true;
                     anim.SetBool("isAttacking", true);
-                    
+
                 }
                 break;
             case EnemyState.Attack:
-                if (!isStun)
-                {
-                    Attack();
-                }
-                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) > 0.9f && !isStun && !isHurt)
+                Attack();
+                changeStateTimer += Time.deltaTime;
+                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) > 0.9f  && changeStateTimer >= 0.5f)
                 {
                     chasingRange = Random.Range(0.9f, 2f);
                     currentState = EnemyState.Chase;
                     desTraget = (Vector2)player.position;
+                    changeStateTimer = 0f;
                     StopAttack();
                 }
                 //if (isStun)

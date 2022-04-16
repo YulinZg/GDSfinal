@@ -5959,3 +5959,4 @@ MonoBehaviour:
   enemySelfBurstingNum: 0
   enemyTouchFishNum: 0
   enemySnipeNum: 1
+  numberOfChildren: 6

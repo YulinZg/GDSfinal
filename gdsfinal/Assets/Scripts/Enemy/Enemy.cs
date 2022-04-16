@@ -125,7 +125,7 @@ public abstract class Enemy : MonoBehaviour
                     StartCoroutine(StopMove(blinkTime));
                 }
             }
-            if (health <= 0)
+            if (health <= 0 && isAlive)
             {
                 Die();
             }

@@ -65,6 +65,5 @@ public class TouchFish : Enemy
         {
             Debug.Log("µôÂäÂß¼­ÔÚÕâÀï");
         }
-        
     }
 }

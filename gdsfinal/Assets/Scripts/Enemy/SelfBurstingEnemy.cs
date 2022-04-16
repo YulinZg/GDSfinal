@@ -7,8 +7,17 @@ public class SelfBurstingEnemy : Enemy
     //private float chasingRange;
     public float chargeTime;
     private float timer = 0f;
-
+    private enum ChasingTarget
+    {
+        none,
+        up,
+        down,
+        right,
+        left
+    }
+    private ChasingTarget chasingTarget;
     private LayerMask invincible;
+    private Vector2 chasingOffset;
     private enum EnemyState
     {
         Chase,
@@ -27,6 +36,28 @@ public class SelfBurstingEnemy : Enemy
     // Start is called before the first frame update
     void Start()
     {
+        chasingTarget = (ChasingTarget)Random.Range(0, 5);
+        switch (chasingTarget)
+        {
+            case ChasingTarget.none:
+                chasingOffset = Vector2.zero;
+                break;
+            case ChasingTarget.up:
+                chasingOffset = Vector2.up;
+                break;
+            case ChasingTarget.down:
+                chasingOffset = Vector2.down;
+                break;
+            case ChasingTarget.right:
+                chasingOffset = Vector2.right;
+                break;
+            case ChasingTarget.left:
+                chasingOffset = Vector2.left;
+                break;
+            default:
+                break;
+        }
+        //Debug.Log(chasingTarget);
         isAlive = true;
         currentSpeed = speed = moveSpeed;
         invincible = 1 << LayerMask.NameToLayer("Invincible");
@@ -50,7 +81,7 @@ public class SelfBurstingEnemy : Enemy
     public override void Move()
     {
         rigid.velocity = speed * moveDir;
-        Filp("");
+        Filp("normal");
     }
     private void Chasing()
     {
@@ -58,7 +89,7 @@ public class SelfBurstingEnemy : Enemy
         //{
         //    desTraget = (Vector2)player.position + new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
         //}
-        moveDir = ((Vector2)player.position - (Vector2)transform.position).normalized;
+        moveDir = ((Vector2)player.position + chasingOffset - (Vector2)transform.position).normalized;
     }
     public override void UpdateState()
     {
