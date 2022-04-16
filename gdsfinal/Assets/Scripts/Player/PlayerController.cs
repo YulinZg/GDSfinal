@@ -251,7 +251,7 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
         isHurting = false;
-        weapon.FinishHurt();
+        weapon.GetWeapon(currentWeapon);
         canRotate = true;
         canInput = true;
         isAttacking = false;

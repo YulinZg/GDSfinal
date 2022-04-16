@@ -40,16 +40,17 @@ public class Weapon : MonoBehaviour
     [SerializeField] private GameObject[] bulletsF;
     private bool canLaunch = true;
 
+    [SerializeField] private float burnDamage;
+    [SerializeField] private float burnTime;
+    [SerializeField] private float burnInterval;
+
     [SerializeField] private float skillDamageF;
+    [SerializeField] private float skillRangeF;
     [SerializeField] private float cooldownTimeF;
     [SerializeField] private float markTime;
     [SerializeField] private float explosionDamage;
     [SerializeField] private GameObject skillF;
     private float skillTimerF = 0;
-
-    [SerializeField] private float burnDamage;
-    [SerializeField] private float burnTime;
-    [SerializeField] private float burnInterval;
 
     [Header("Water")]
     [SerializeField] private float damageW;
@@ -106,7 +107,19 @@ public class Weapon : MonoBehaviour
 
     [SerializeField] private float stunValue;
     [SerializeField] private float stunValue1;
+    [SerializeField] private float stunValueSkill;
     [SerializeField] private float stunTime;
+
+    [SerializeField] private float skillDamageE;
+    [SerializeField] private float skillTimeE;
+    [SerializeField] private float skillRangeEMin;
+    [SerializeField] private float skillRangeEMax;
+    [SerializeField] private float cooldownTimeE;
+    [SerializeField] private float dropInterval;
+    [SerializeField] private GameObject[] skillE;
+    private float skillTimerE = 0;
+    private float dropTimer = 0;
+    private bool isDroping = false;
 
     [Header("Lightning")]
     [SerializeField] private float damageL;
@@ -185,6 +198,14 @@ public class Weapon : MonoBehaviour
             if (skillTimerF < 0)
                 skillTimerF = 0;
         }
+        if (skillTimerE != 0)
+        {
+            skillTimerE -= Time.deltaTime;
+            if (skillTimerE < 0)
+                skillTimerE = 0;
+        }
+        if (isDroping)
+            Drop();
     }
 
     public void GetWeapon(Property type)
@@ -243,7 +264,7 @@ public class Weapon : MonoBehaviour
 
     private Vector3 MouseDir()
     {
-        return ((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - (Vector2)transform.position).normalized;
+        return Direction(Camera.main.ScreenToWorldPoint(Input.mousePosition), transform.position);
     }
 
     private Vector3 Direction(Vector2 endPos, Vector2 startPos)
@@ -298,6 +319,7 @@ public class Weapon : MonoBehaviour
                 NormalAttackF1();
             }
         }
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (!player.isAttacking && skillTimerF == 0)
@@ -367,6 +389,7 @@ public class Weapon : MonoBehaviour
         bullet.Setup(Vector2.right, 0, GetDamage(skillDamageF), status.GetCritProbability(), status.GetCritRate(), 1f, Bullet.BulletType.penetrable);
         bullet.SetFireSkill(markTime, GetDamage(explosionDamage));
         SetBurn(bullet);
+        bullet.transform.parent.localScale = new Vector3(skillRangeF, skillRangeF, 1);
         player.Attack(MouseDir(), 1f, true, moveSpeedF, true, true);
     }
 
@@ -561,7 +584,7 @@ public class Weapon : MonoBehaviour
             player.SetSpeed(moveSpeedE1);
             SpawnEffectInstance(3);
         }
-        if (Input.GetMouseButtonUp(1))
+        else if (Input.GetMouseButtonUp(1))
         {
             isAiming = false;
             player.SetSpeed(moveSpeedE);
@@ -570,6 +593,7 @@ public class Weapon : MonoBehaviour
             if (effectInstance)
                 Destroy(effectInstance);
         }
+
         if (Input.GetMouseButton(0))
         {
             isShooting = true;
@@ -581,6 +605,7 @@ public class Weapon : MonoBehaviour
             if (!isAiming)
                 preheatBullet = preheatTimes;
         }
+
         if (isShooting || isAiming)
         {
             if (shootTimer >= intervalE * (preheatBullet + 1))
@@ -600,6 +625,12 @@ public class Weapon : MonoBehaviour
                 }
                 shootTimer = 0;
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (!player.isAttacking && skillTimerE == 0 && !isDroping)
+                SkillE();
         }
     }
 
@@ -629,6 +660,38 @@ public class Weapon : MonoBehaviour
     private void SetStun(Bullet bullet, float value)
     {
         bullet.SetStun(value, stunTime);
+    }
+
+    private void SkillE()
+    {
+        GetWeapon(property);
+        Instantiate(skillE[0], transform);
+        player.Attack(Vector2.right, 1f, true, moveSpeedE, true, true);
+        Invoke(nameof(StartDrop), 1f);
+    }
+
+    private void StartDrop()
+    {
+        isDroping = true;
+        dropTimer = 0;
+        Invoke(nameof(StopDrop), skillTimeE);
+    }
+
+    private void StopDrop()
+    {
+        isDroping = false;
+        skillTimerE = cooldownTimeE;
+    }
+
+    private void Drop()
+    {
+        if (dropTimer <= 0)
+        {
+            earthSkill earthSkill = Instantiate(skillE[1], transform.position + RotateVector(Vector3.right, Random.Range(0, 360f)) * Random.Range(skillRangeEMin, skillRangeEMax) + new Vector3(0, 16F + skillRangeEMax, 0), Quaternion.identity).GetComponent<earthSkill>();
+            earthSkill.Setup(GetDamage(skillDamageE), status.GetCritProbability(), status.GetCritRate(), stunValueSkill, stunTime, 16f + skillRangeEMax);
+            dropTimer = dropInterval;
+        }
+        dropTimer -= Time.deltaTime;
     }
 
     //Earth////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -922,11 +985,6 @@ public class Weapon : MonoBehaviour
     public void StartHurt()
     {
         StopAllCoroutines();
-        GetWeapon(property);
-    }
-
-    public void FinishHurt()
-    {
         GetWeapon(property);
     }
 }
