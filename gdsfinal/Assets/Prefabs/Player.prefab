@@ -497,6 +497,11 @@ MonoBehaviour:
   bulletsF:
   - {fileID: 6096084274419158081, guid: 8653544e5d1a4684abef28fe85c1d69a, type: 3}
   - {fileID: 5707396638559966051, guid: c2f4de82a4546e34f961a96fb6daa441, type: 3}
+  skillDamageF: 10
+  cooldownTimeF: 15
+  markTime: 5
+  explosionDamage: 5
+  skillF: {fileID: 6194500801451384584, guid: e4cc07f0b764f2848981a4db1de1a6ee, type: 3}
   burnDamage: 8
   burnTime: 5
   burnInterval: 1
@@ -640,4 +645,5 @@ MonoBehaviour:
   weaponUI: {fileID: 0}
   statusUI: {fileID: 0}
   isAttacking: 0
+  isSkilling: 0
   isHurting: 0

@@ -13,7 +13,7 @@ public class metalBullet : MonoBehaviour
         if (!dic.ContainsKey(t.GetInstanceID()))
         {
             dic.Add(t.GetInstanceID(), t);
-            p.HitEnemy(collision);
+            p.Hit(collision);
         }
     }
 }

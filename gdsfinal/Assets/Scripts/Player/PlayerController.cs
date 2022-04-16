@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     private bool canRotate = true;
     private bool isFacingRight = true;
     public bool isAttacking = false;
+    public bool isSkilling = false;
     private float attackTimer;
     public bool isHurting = false;
     private float hurtTimer;
@@ -152,16 +153,17 @@ public class PlayerController : MonoBehaviour
         speed = s;
     }
 
-    public void Attack(Vector3 dir, float time, bool ifStop, float resetSpeed, bool canRotate)
+    public void Attack(Vector3 dir, float time, bool ifStop, float resetSpeed, bool canRotate, bool isSkill)
     {
         attackTimer = 0;
         if (!isAttacking)
-            StartCoroutine(Attacking(dir, time, ifStop, resetSpeed, canRotate));
+            StartCoroutine(Attacking(dir, time, ifStop, resetSpeed, canRotate, isSkill));
     }
 
-    IEnumerator Attacking(Vector3 dir, float time, bool ifStop, float resetSpeed, bool canRotate)
+    IEnumerator Attacking(Vector3 dir, float time, bool ifStop, float resetSpeed, bool canRotate, bool isSkill)
     {
         isAttacking = true;
+        isSkilling = isSkill;
         yield return null;
         canInput = false;
         this.canRotate = canRotate;
@@ -200,6 +202,7 @@ public class PlayerController : MonoBehaviour
         this.canRotate = true;
         canInput = true;
         isAttacking = false;
+        isSkilling = false;
         anim.SetBool("isRightAttacking", false);
         anim.SetBool("isLeftAttacking", false);
     }
@@ -223,6 +226,7 @@ public class PlayerController : MonoBehaviour
 
     public void Hurt(float time)
     {
+        if (isSkilling) return;
         hurtTimer = 0;
         anim.SetBool("isHurt", true);
         if (isFacingRight)

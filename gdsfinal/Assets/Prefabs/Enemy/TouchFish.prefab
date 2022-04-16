@@ -212,13 +212,15 @@ MonoBehaviour:
   lightningResistance: 0
   metalResistance: 0
   damageText: {fileID: 4318804278247988162, guid: d8ab669f8ef30064497cad64bd4f4f2f, type: 3}
-  effectSize: 0
-  effectOffsetY: 0
+  effectSize: 0.5
+  effectOffsetY: -0.4
   damageUIOffsetXMin: -0.25
   damageUIOffsetXMax: 0.25
   damageUIOffsetYMin: -0.25
   damageUIOffsetYMax: 0.25
   burnEffect: {fileID: 0}
+  fireMark: {fileID: 1691139846990456132, guid: 5703bbeb84909b744a570f849a056e3e, type: 3}
+  explosion: {fileID: 4970449726698586475, guid: f283098c012e47d439ba19e6a77aefb2, type: 3}
   decelerateEffect: {fileID: 0}
   stunEffect: {fileID: 0}
   palsyEffect: {fileID: 0}

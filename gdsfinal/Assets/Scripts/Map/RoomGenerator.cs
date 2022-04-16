@@ -38,15 +38,6 @@ public class RoomGenerator : MonoBehaviour
         generateBossRoom();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
-    }
-
     public void generateNormalRoom()
     {
         rooms.Add(Instantiate(roomPerfab, generatoPoint.position, Quaternion.identity).GetComponent<Room>());

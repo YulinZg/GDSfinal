@@ -181,9 +181,11 @@ MonoBehaviour:
   effectOffsetY: 0.1
   damageUIOffsetXMin: -0.5
   damageUIOffsetXMax: 0.5
-  damageUIOffsetYMin: -0.5
+  damageUIOffsetYMin: 0
   damageUIOffsetYMax: 1
   burnEffect: {fileID: 5038591547534441582, guid: 4e726f7935d9eca4faf212ca8a9b0a31, type: 3}
+  fireMark: {fileID: 1691139846990456132, guid: 5703bbeb84909b744a570f849a056e3e, type: 3}
+  explosion: {fileID: 4970449726698586475, guid: f283098c012e47d439ba19e6a77aefb2, type: 3}
   decelerateEffect: {fileID: 737469681386818583, guid: 8b4d96607cfc9114783b5df93d76d647, type: 3}
   stunEffect: {fileID: 8964234654960140829, guid: 9312f7be5492cfe4a89e6c6660e8dc90, type: 3}
   palsyEffect: {fileID: 2398475190484583915, guid: a94ce03ea23267e4d9cbcf348a444add, type: 3}
