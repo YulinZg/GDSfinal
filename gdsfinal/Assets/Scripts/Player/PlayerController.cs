@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     private bool canInput = true;
     private bool canRotate = true;
     private bool isFacingRight = true;
-    private bool isAttacking = false;
+    public bool isAttacking = false;
     private float attackTimer;
     public bool isHurting = false;
     private float hurtTimer;

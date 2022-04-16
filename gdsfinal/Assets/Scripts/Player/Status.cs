@@ -31,27 +31,27 @@ public class Status : MonoBehaviour
     private PlayerController player;
 
     [Header("Scroll")]
-    private bool assassinScroll = false;
     [SerializeField] private float breathAmount;
     [SerializeField] private float breathAddition;
+    private bool assassinScroll = false;
 
-    private bool perfectScroll = false;
     [SerializeField] private float perfectStrengthen;
     [SerializeField] private float perfectStrengthenAddition;
+    private bool perfectScroll = false;
 
-    private bool violentScroll = false;
     [SerializeField] private float violentBloodLine;
     [SerializeField] private float violentBloodLineAddition;
     [SerializeField] private float violentStrengthen;
     [SerializeField] private float violentStrengthenAddition;
+    private bool violentScroll = false;
 
-    private bool gutsScroll = false;
     [SerializeField] private float gutsBloodLine;
     [SerializeField] private float gutsBloodLineAddition;
+    private bool gutsScroll = false;
 
-    private bool quickHandsScroll = false;
     [SerializeField] private float quickTime;
     [SerializeField] private float quickTimeLineAddition;
+    private bool quickHandsScroll = false;
     private bool isQuick = false;
     private float quickTimer = 0;
 
@@ -77,7 +77,7 @@ public class Status : MonoBehaviour
         currentHp -= d;
         DamageUI damageUI = Instantiate(damageText, transform.position + new Vector3(Random.Range(damageUIOffsetXMin, damageUIOffsetXMax), Random.Range(damageUIOffsetYMin, damageUIOffsetYMax), 0), Quaternion.identity).GetComponent<DamageUI>();
         damageUI.ShowUIDamage(d, Color.red);
-        Instantiate(bloodEffects[Random.Range(0, 10)], transform);
+        Instantiate(bloodEffects[Random.Range(0, bloodEffects.Length)], transform);
         player.Hurt(0.2f);
         if (currentHp <= 0)
         {

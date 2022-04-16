@@ -119,18 +119,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.023453236, y: 0.12899303}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.5, y: 1.5}
+    oldSize: {x: 2, y: 2}
     newSize: {x: 0.75, y: 0.75}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5853224, y: 0.5149622}
+  m_Size: {x: 0.6, y: 0.7}
   m_EdgeRadius: 0
 --- !u!50 &5531202817999167725
 Rigidbody2D:
@@ -173,15 +173,15 @@ MonoBehaviour:
   fireResistance: 0
   waterResistance: 0
   earthResistance: 0
-  maxStunValue: 2
+  maxStunValue: 150
   lightningResistance: 0
   metalResistance: 0
   damageText: {fileID: 4318804278247988162, guid: d8ab669f8ef30064497cad64bd4f4f2f, type: 3}
-  effectSize: 1
-  effectOffsetY: 0.2
-  damageUIOffsetXMin: -1
-  damageUIOffsetXMax: 1
-  damageUIOffsetYMin: -1
+  effectSize: 1.1
+  effectOffsetY: 0.1
+  damageUIOffsetXMin: -0.5
+  damageUIOffsetXMax: 0.5
+  damageUIOffsetYMin: -0.5
   damageUIOffsetYMax: 1
   burnEffect: {fileID: 5038591547534441582, guid: 4e726f7935d9eca4faf212ca8a9b0a31, type: 3}
   decelerateEffect: {fileID: 737469681386818583, guid: 8b4d96607cfc9114783b5df93d76d647, type: 3}
@@ -218,8 +218,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6910118791199982108}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.06, y: -1.05, z: 0}
-  m_LocalScale: {x: 1.2884969, y: 0.5661, z: 1}
+  m_LocalPosition: {x: -0.05, y: -1, z: 0}
+  m_LocalScale: {x: 1, y: 0.4, z: 1}
   m_Children: []
   m_Father: {fileID: 6574388021621534589}
   m_RootOrder: 0
