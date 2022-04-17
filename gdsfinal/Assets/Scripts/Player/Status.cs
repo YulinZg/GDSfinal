@@ -67,7 +67,7 @@ public class Status : MonoBehaviour
         healthBar.SetMaxHealth(health);
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, float stopTime)
     {
         float hp = currentHp;
         damage -= defense * defenseUnit;
@@ -78,7 +78,8 @@ public class Status : MonoBehaviour
         DamageUI damageUI = Instantiate(damageText, transform.position + new Vector3(Random.Range(damageUIOffsetXMin, damageUIOffsetXMax), Random.Range(damageUIOffsetYMin, damageUIOffsetYMax), 0), Quaternion.identity).GetComponent<DamageUI>();
         damageUI.ShowUIDamage(d, Color.red);
         Instantiate(bloodEffects[Random.Range(0, bloodEffects.Length)], transform);
-        player.Hurt(0.2f);
+        if (stopTime > 0)
+            player.Hurt(stopTime);
         if (currentHp <= 0)
         {
             if (gutsScroll && hp / maxHp > gutsBloodLine)
