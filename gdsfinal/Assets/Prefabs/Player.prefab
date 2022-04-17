@@ -523,13 +523,18 @@ MonoBehaviour:
   standTimeW1: 1
   chargeTime: 1
   sprayTime: 2
-  sprayRotateSpeed: 15
+  sprayRotateSpeed: 30
   bulletsW:
   - {fileID: 4896306263825385891, guid: cc3614a27abe4ca44afa934ec273a7ec, type: 3}
   - {fileID: 7169208002471941264, guid: d45954436935e4f4aa21d81e4fca983e, type: 3}
   - {fileID: 8674904286268228194, guid: 21b1b44a24f91a64f89bc8553c012c61, type: 3}
   decelerateRate: 0.5
   decelerateTime: 10
+  skillDamageW: 2
+  skillTimeW: 5
+  skillRangeW: 4
+  cooldownTimeW: 10
+  skillW: {fileID: 5564890643772854602, guid: c8e3df3096f17964ebd5e7edae4e1024, type: 3}
   damageE: 1
   damageE1: 5
   intervalE: 0.1

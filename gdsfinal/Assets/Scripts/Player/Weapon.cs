@@ -85,6 +85,12 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float decelerateRate;
     [SerializeField] private float decelerateTime;
 
+    [SerializeField] private float skillDamageW;
+    [SerializeField] private float skillTimeW;
+    [SerializeField] private float skillRangeW;
+    [SerializeField] private float cooldownTimeW;
+    [SerializeField] private GameObject skillW;
+    private float cooldownTimerW = 0;
 
     [Header("Earth")]
     [SerializeField] private float damageE;
@@ -208,6 +214,12 @@ public class Weapon : MonoBehaviour
             if (cooldownTimerF < 0)
                 cooldownTimerF = 0;
         }
+        if (cooldownTimerW != 0)
+        {
+            cooldownTimerW -= Time.deltaTime;
+            if (cooldownTimerW < 0)
+                cooldownTimerW = 0;
+        }
         if (cooldownTimerE != 0)
         {
             cooldownTimerE -= Time.deltaTime;
@@ -252,6 +264,9 @@ public class Weapon : MonoBehaviour
                 charged2 = false;
                 isSpraying = false;
                 isPassiveAttacking = false;
+                spawnedEffect1 = false;
+                spawnedEffect2 = false;
+                spawned2Effect2 = false;
                 break;
             case Property.earth:
                 player.SetSpeed(moveSpeedE);
@@ -419,7 +434,7 @@ public class Weapon : MonoBehaviour
 
     private void Water()
     {
-        if (Input.GetMouseButtonDown(0) && !isSpraying)
+        if (Input.GetMouseButtonDown(0) && !isSpraying && !player.isSkilling)
         {
             if (shootTimer >= intervalW && !isCharging)
             {
@@ -516,6 +531,15 @@ public class Weapon : MonoBehaviour
             float angle = Vector3.SignedAngle(waterRotater.up, Camera.main.ScreenToWorldPoint(Input.mousePosition) - waterRotater.position, Vector3.forward);
             waterRotater.Rotate(new Vector3(0, 0, Mathf.Sign(angle) * sprayRotateSpeed * Time.deltaTime));
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (!player.isAttacking && cooldownTimerW == 0)
+            {
+                SkillW();
+                cooldownTimerW = cooldownTimeW;
+            }
+        }
     }
 
     private void NormalAttackW()
@@ -589,6 +613,16 @@ public class Weapon : MonoBehaviour
     private void SetDecelerate(Bullet bullet)
     {
         bullet.SetDecelerate(decelerateRate, decelerateTime);
+    }
+
+    private void SkillW()
+    {
+        GetWeapon(property);
+        Bullet bulletInstance = Instantiate(skillW, (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition), Quaternion.identity).GetComponentInChildren<Bullet>();
+        bulletInstance.Setup(Vector2.right, 0, GetDamage(skillDamageW), status.GetCritProbability(), status.GetCritRate(), skillTimeW, Bullet.BulletType.penetrable);
+        SetDecelerate(bulletInstance);
+        bulletInstance.transform.parent.localScale = new Vector3(skillRangeW, skillRangeW, 1);
+        player.Attack(MouseDir(), 0.5f, true, moveSpeedW, false, true);
     }
 
     //Water////////////////////////////////////////////////////////////////////////////////////////////////////////////

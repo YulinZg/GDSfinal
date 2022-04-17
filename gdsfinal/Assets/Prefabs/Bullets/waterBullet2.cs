@@ -18,18 +18,7 @@ public class waterBullet2 : MonoBehaviour
     {
         yield return new WaitForSeconds(0.17f);
         GetComponent<Animator>().enabled = true;
-        float t = 0;
-        float timer = 0;
-        while (t < bullet.lifetime - 0.5f)
-        {
-            t += Time.deltaTime;
-            timer += Time.deltaTime;
-            if (timer > 0.21f)
-            {
-                bullet.ClearDic();
-            }
-            yield return null;
-        }
+        yield return new WaitForSeconds(bullet.lifetime - 0.5f);
         anim.SetBool("finish", true);
         yield return new WaitForSeconds(0.2f);
         GetComponent<Animator>().enabled = false;
