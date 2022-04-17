@@ -50,7 +50,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float markTime;
     [SerializeField] private float explosionDamage;
     [SerializeField] private GameObject skillF;
-    private float skillTimerF = 0;
+    private float cooldownTimerF = 0;
 
     [Header("Water")]
     [SerializeField] private float damageW;
@@ -117,7 +117,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float cooldownTimeE;
     [SerializeField] private float dropInterval;
     [SerializeField] private GameObject[] skillE;
-    private float skillTimerE = 0;
+    private float cooldownTimerE = 0;
     private float dropTimer = 0;
     private bool isDroping = false;
 
@@ -135,6 +135,16 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float palsyDamage;
     [SerializeField] private float palsyTime;
     [SerializeField] private float palsyInterval;
+
+    [SerializeField] private float skillDamageL;
+    [SerializeField] private float skillTimeL;
+    [SerializeField] private float skillRangeL;
+    [SerializeField] private float cooldownTimeL;
+    [SerializeField] private GameObject[] skillL;
+    private float cooldownTimerL = 0;
+    private float skillTimerL = 0;
+    private bool hasMoved = false;
+    private Transform backPos;
 
     [Header("Metal")]
     [SerializeField] private float damageM0;
@@ -192,20 +202,36 @@ public class Weapon : MonoBehaviour
                     break;
             }
         RotateBullet(bulletSpeedF * 10);
-        if (skillTimerF != 0)
+        if (cooldownTimerF != 0)
         {
-            skillTimerF -= Time.deltaTime;
-            if (skillTimerF < 0)
-                skillTimerF = 0;
+            cooldownTimerF -= Time.deltaTime;
+            if (cooldownTimerF < 0)
+                cooldownTimerF = 0;
         }
-        if (skillTimerE != 0)
+        if (cooldownTimerE != 0)
         {
-            skillTimerE -= Time.deltaTime;
-            if (skillTimerE < 0)
-                skillTimerE = 0;
+            cooldownTimerE -= Time.deltaTime;
+            if (cooldownTimerE < 0)
+                cooldownTimerE = 0;
         }
         if (isDroping)
             Drop();
+        if (cooldownTimerL != 0)
+        {
+            cooldownTimerL -= Time.deltaTime;
+            if (cooldownTimerL < 0)
+                cooldownTimerL = 0;
+        }
+        if (hasMoved)
+        {
+            skillTimerL -= Time.deltaTime;
+            if (skillTimerL <= 0)
+            {
+                hasMoved = false;
+                Destroy(backPos.gameObject);
+                cooldownTimerL = cooldownTimeL;
+            }
+        }
     }
 
     public void GetWeapon(Property type)
@@ -304,28 +330,25 @@ public class Weapon : MonoBehaviour
 
     private void Fire()
     {
-        if (!player.isSkilling)
+        if (Input.GetMouseButtonDown(0) && !player.isSkilling)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (shootTimer >= intervalF)
             {
-                if (shootTimer >= intervalF)
-                {
-                    NormalAttackF(bulletNumber);
-                    shootTimer = 0;
-                }
+                NormalAttackF(bulletNumber);
+                shootTimer = 0;
             }
-            if (Input.GetMouseButtonDown(1))
-            {
-                NormalAttackF1();
-            }
+        }
+        if (Input.GetMouseButtonDown(1) && !player.isSkilling)
+        {
+            NormalAttackF1();
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (!player.isAttacking && skillTimerF == 0)
+            if (!player.isAttacking && cooldownTimerF == 0)
             {
                 SkillF();
-                skillTimerF = cooldownTimeF;
+                cooldownTimerF = cooldownTimeF;
             }
         }
     }
@@ -335,16 +358,15 @@ public class Weapon : MonoBehaviour
         if (fireRotater.childCount > 0)
             foreach (Transform child in fireRotater)
                 Destroy(child.gameObject);
-        GameObject bulletInstance;
+        Bullet bulletInstance;
         canLaunch = false;
         for (int i = 0; i < bulletNumber; i++)
         {
-            bulletInstance = Instantiate(bulletsF[0], transform.position, Quaternion.identity);
+            bulletInstance = Instantiate(bulletsF[0], transform.position, Quaternion.identity).GetComponent<Bullet>();
             bulletInstance.transform.parent = fireRotater;
-            bulletInstance.GetComponent<Bullet>().Setup(
-                RotateVector(MouseDir(), (360f / bulletNum) * (i + 1)), bulletRotateRange / standTimeF, GetDamage(damageF), status.GetCritProbability(), status.GetCritRate(), standTimeF + bulletLifeTimeBase * (i + 1), Bullet.BulletType.normal);
-            bulletInstance.GetComponent<Bullet>().SetFire(bulletRotateRange);
-            SetBurn(bulletInstance.GetComponent<Bullet>());
+            bulletInstance.Setup(RotateVector(MouseDir(), (360f / bulletNum) * (i + 1)), bulletRotateRange / standTimeF, GetDamage(damageF), status.GetCritProbability(), status.GetCritRate(), standTimeF + bulletLifeTimeBase * (i + 1), Bullet.BulletType.normal);
+            bulletInstance.SetFire(bulletRotateRange);
+            SetBurn(bulletInstance);
         }
         Invoke(nameof(SetCanLaunch), standTimeF);
         player.Attack(MouseDir(), standTimeF, true, moveSpeedF, true, false);
@@ -360,13 +382,12 @@ public class Weapon : MonoBehaviour
     {
         if (fireRotater.childCount > 0 && canLaunch)
         {
-            GameObject bulletInstance;
+            Bullet bulletInstance;
             foreach (Transform child in fireRotater)
             {
-                bulletInstance = Instantiate(bulletsF[1], child.position, Quaternion.identity);
-                bulletInstance.GetComponent<Bullet>().Setup(
-                    Direction(Camera.main.ScreenToWorldPoint(Input.mousePosition), child.position), bulletSpeedF, GetDamage(damageF), status.GetCritProbability(), status.GetCritRate(), rangeF / bulletSpeedF, Bullet.BulletType.normal);
-                SetBurn(bulletInstance.GetComponent<Bullet>());
+                bulletInstance = Instantiate(bulletsF[1], child.position, Quaternion.identity).GetComponent<Bullet>();
+                bulletInstance.Setup(Direction(Camera.main.ScreenToWorldPoint(Input.mousePosition), child.position), bulletSpeedF, GetDamage(damageF), status.GetCritProbability(), status.GetCritRate(), rangeF / bulletSpeedF, Bullet.BulletType.normal);
+                SetBurn(bulletInstance);
                 Destroy(child.gameObject);
             }
             player.Attack(MouseDir(), 0.2f, false, moveSpeedF, false, false);
@@ -385,11 +406,11 @@ public class Weapon : MonoBehaviour
 
     private void SkillF()
     {
-        Bullet bullet = Instantiate(skillF, transform).GetComponentInChildren<Bullet>();
-        bullet.Setup(Vector2.right, 0, GetDamage(skillDamageF), status.GetCritProbability(), status.GetCritRate(), 1f, Bullet.BulletType.penetrable);
-        bullet.SetFireSkill(markTime, GetDamage(explosionDamage));
-        SetBurn(bullet);
-        bullet.transform.parent.localScale = new Vector3(skillRangeF, skillRangeF, 1);
+        Bullet bulletInstance = Instantiate(skillF, transform).GetComponentInChildren<Bullet>();
+        bulletInstance.Setup(Vector2.right, 0, GetDamage(skillDamageF), status.GetCritProbability(), status.GetCritRate(), 1f, Bullet.BulletType.penetrable);
+        bulletInstance.SetFireSkill(markTime, GetDamage(explosionDamage));
+        SetBurn(bulletInstance);
+        bulletInstance.transform.parent.localScale = new Vector3(skillRangeF, skillRangeF, 1);
         player.Attack(MouseDir(), 1f, true, moveSpeedF, true, true);
     }
 
@@ -503,10 +524,9 @@ public class Weapon : MonoBehaviour
         charged1 = false;
         charged2 = false;
         chargeTimer = 0;
-        GameObject bulletInstance = Instantiate(bulletsW[0], ShootPos(shootOffset), Quaternion.identity);
-        bulletInstance.GetComponent<Bullet>().Setup(
-            MouseDir(), bulletSpeedW, GetDamage(damageW), status.GetCritProbability(), status.GetCritRate(), rangeW / bulletSpeedW, Bullet.BulletType.normal);
-        SetDecelerate(bulletInstance.GetComponent<Bullet>());
+        Bullet bulletInstance = Instantiate(bulletsW[0], ShootPos(shootOffset), Quaternion.identity).GetComponent<Bullet>();
+        bulletInstance.Setup(MouseDir(), bulletSpeedW, GetDamage(damageW), status.GetCritProbability(), status.GetCritRate(), rangeW / bulletSpeedW, Bullet.BulletType.normal);
+        SetDecelerate(bulletInstance);
         player.Attack(MouseDir(), standTimeW, true, moveSpeedW, false, false);
         spawnedEffect1 = false;
         spawnedEffect2 = false;
@@ -522,10 +542,9 @@ public class Weapon : MonoBehaviour
         charged1 = false;
         charged2 = false;
         chargeTimer = 0;
-        GameObject bulletInstance = Instantiate(bulletsW[1], ShootPos(rangeY * 0.5f + shootOffset), Quaternion.identity);
-        bulletInstance.GetComponent<Bullet>().Setup(
-            MouseDir(), 0, GetDamage(damage), status.GetCritProbability(), status.GetCritRate(), standTimeW1, Bullet.BulletType.penetrable);
-        SetDecelerate(bulletInstance.GetComponent<Bullet>());
+        Bullet bulletInstance = Instantiate(bulletsW[1], ShootPos(rangeY * 0.5f + shootOffset), Quaternion.identity).GetComponent<Bullet>();
+        bulletInstance.Setup(MouseDir(), 0, GetDamage(damage), status.GetCritProbability(), status.GetCritRate(), standTimeW1, Bullet.BulletType.penetrable);
+        SetDecelerate(bulletInstance);
         bulletInstance.transform.localScale = new Vector3(rangeY, rangeX, 1);
         bulletInstance.transform.parent = bulletsInWorld;
         player.Attack(MouseDir(), standTimeW1, true, moveSpeedW, false, false);
@@ -547,10 +566,9 @@ public class Weapon : MonoBehaviour
         chargeTimer = 0; 
         float angle = Mathf.Atan2(MouseDir().y, MouseDir().x) * Mathf.Rad2Deg;
         waterRotater.rotation = Quaternion.Euler(0, 0, angle - 90);
-        GameObject bulletInstance = Instantiate(bulletsW[2], ShootPos(rangeY * 0.5f + shootOffset), Quaternion.identity);
-        bulletInstance.GetComponent<Bullet>().Setup(
-            MouseDir(), 0, GetDamage(damageW4), status.GetCritProbability(), status.GetCritRate(), attackTime, Bullet.BulletType.penetrable);
-        SetDecelerate(bulletInstance.GetComponent<Bullet>());
+        Bullet bulletInstance = Instantiate(bulletsW[2], ShootPos(rangeY * 0.5f + shootOffset), Quaternion.identity).GetComponent<Bullet>();
+        bulletInstance.Setup(MouseDir(), 0, GetDamage(damageW4), status.GetCritProbability(), status.GetCritRate(), attackTime, Bullet.BulletType.penetrable);
+        SetDecelerate(bulletInstance);
         bulletInstance.transform.localScale = new Vector3(rangeY, rangeX, 1);
         bulletInstance.transform.parent = waterRotater;
         player.Attack(MouseDir(), attackTime, true, moveSpeedW, true, false);
@@ -629,17 +647,16 @@ public class Weapon : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (!player.isAttacking && skillTimerE == 0 && !isDroping)
+            if (!player.isAttacking && cooldownTimerE == 0 && !isDroping)
                 SkillE();
         }
     }
 
     private void NormalAttackE(Vector3 dir)
     {
-        GameObject bulletInstance = Instantiate(bulletsE[0], ShootPos(shootOffset), Quaternion.identity);
-        bulletInstance.GetComponent<Bullet>().Setup(
-            dir, bulletSpeedE, GetDamage(damageE), status.GetCritProbability(), status.GetCritRate(), rangeE / bulletSpeedE, Bullet.BulletType.normal);
-        SetStun(bulletInstance.GetComponent<Bullet>(), stunValue);
+        Bullet bulletInstance = Instantiate(bulletsE[0], ShootPos(shootOffset), Quaternion.identity).GetComponent<Bullet>();
+        bulletInstance.Setup(dir, bulletSpeedE, GetDamage(damageE), status.GetCritProbability(), status.GetCritRate(), rangeE / bulletSpeedE, Bullet.BulletType.normal);
+        SetStun(bulletInstance, stunValue);
         PassiveAttackE();
     }
 
@@ -648,10 +665,9 @@ public class Weapon : MonoBehaviour
         shotTimes++;
         if (shotTimes >= nextRockTimes)
         {
-            GameObject bulletInstance = Instantiate(bulletsE[1], transform.position + new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0).normalized, Quaternion.identity);
-            bulletInstance.GetComponent<Bullet>().Setup(
-                Direction(Camera.main.ScreenToWorldPoint(Input.mousePosition), bulletInstance.transform.position), bulletSpeedE1, GetDamage(damageE1), status.GetCritProbability(), status.GetCritRate(), rangeE / bulletSpeedE1, Bullet.BulletType.normal);
-            SetStun(bulletInstance.GetComponent<Bullet>(), stunValue1);
+            Bullet bulletInstance = Instantiate(bulletsE[1], transform.position + new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0).normalized, Quaternion.identity).GetComponent<Bullet>();
+            bulletInstance.Setup(Direction(Camera.main.ScreenToWorldPoint(Input.mousePosition), bulletInstance.transform.position), bulletSpeedE1, GetDamage(damageE1), status.GetCritProbability(), status.GetCritRate(), rangeE / bulletSpeedE1, Bullet.BulletType.normal);
+            SetStun(bulletInstance, stunValue1);
             nextRockTimes = Random.Range(Mathf.FloorToInt(rockTimes * 0.5f), Mathf.FloorToInt(rockTimes * 1.5f));
             shotTimes = 0;
         }
@@ -680,7 +696,7 @@ public class Weapon : MonoBehaviour
     private void StopDrop()
     {
         isDroping = false;
-        skillTimerE = cooldownTimeE;
+        cooldownTimerE = cooldownTimeE;
     }
 
     private void Drop()
@@ -699,7 +715,7 @@ public class Weapon : MonoBehaviour
 
     private void Lightning()
     {
-        if (Input.GetMouseButtonDown(0) && !isLinking)
+        if (Input.GetMouseButtonDown(0) && !isLinking && !player.isSkilling)
         {
             if (shootTimer >= intervalL && lightningBalls.childCount < maxBulletNum)
             {
@@ -707,7 +723,7 @@ public class Weapon : MonoBehaviour
                 shootTimer = 0;
             }
         }
-        if (Input.GetMouseButtonDown(1) && !isLinking)
+        if (Input.GetMouseButtonDown(1) && !isLinking && !player.isSkilling)
         {
             if (shootTimer >= intervalL && lightningBalls.childCount > 0)
             {
@@ -715,14 +731,18 @@ public class Weapon : MonoBehaviour
                 shootTimer = 0;
             }
         }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (!player.isAttacking && cooldownTimerL == 0)
+                SkillL();
+        }
     }
 
     private void NormalAttackL()
     {
-        GameObject bulletInstance = Instantiate(bulletsL[0], ShootPos(shootOffset), Quaternion.identity);
-        bulletInstance.GetComponent<Bullet>().Setup(
-            MouseDir(), 0, GetDamage(damageL), status.GetCritProbability(), status.GetCritRate(), stayTime, Bullet.BulletType.penetrable);
-        SetPalsy(bulletInstance.GetComponent<Bullet>());
+        Bullet bulletInstance = Instantiate(bulletsL[0], ShootPos(shootOffset), Quaternion.identity).GetComponent<Bullet>();
+        bulletInstance.Setup(MouseDir(), 0, GetDamage(damageL), status.GetCritProbability(), status.GetCritRate(), stayTime, Bullet.BulletType.penetrable);
+        SetPalsy(bulletInstance);
         bulletInstance.transform.parent = lightningBalls;
         player.Attack(MouseDir(), 0.2f, false, moveSpeedL, false, false);
     }
@@ -732,14 +752,12 @@ public class Weapon : MonoBehaviour
         isLinking = true;
         foreach (Transform child in lightningBalls)
         {
-                GameObject bulletInstance = Instantiate(bulletsL[0], child.position, Quaternion.identity);
-                bulletInstance.GetComponent<Bullet>().Setup(
-                    Direction(transform.position, child.position), 0, GetDamage(damageL), status.GetCritProbability(), status.GetCritRate(), standTimeL, Bullet.BulletType.penetrable);
-                SetPalsy(bulletInstance.GetComponent<Bullet>());
-                bulletInstance = Instantiate(bulletsL[1], 0.5f * Vector3.Distance(child.position, transform.position) * Direction(transform.position, child.position) + child.position, Quaternion.identity);
-                bulletInstance.GetComponent<Bullet>().Setup(
-                    Direction(transform.position, child.position), 0, GetDamage(damageL1), status.GetCritProbability(), status.GetCritRate(), standTimeL, Bullet.BulletType.penetrable);
-                SetPalsy(bulletInstance.GetComponent<Bullet>());
+                Bullet bulletInstance = Instantiate(bulletsL[0], child.position, Quaternion.identity).GetComponent<Bullet>();
+                bulletInstance.Setup(Direction(transform.position, child.position), 0, GetDamage(damageL), status.GetCritProbability(), status.GetCritRate(), standTimeL, Bullet.BulletType.penetrable);
+                SetPalsy(bulletInstance);
+                bulletInstance = Instantiate(bulletsL[1], 0.5f * Vector3.Distance(child.position, transform.position) * Direction(transform.position, child.position) + child.position, Quaternion.identity).GetComponent<Bullet>();
+                bulletInstance.Setup(Direction(transform.position, child.position), 0, GetDamage(damageL1), status.GetCritProbability(), status.GetCritRate(), standTimeL, Bullet.BulletType.penetrable);
+                SetPalsy(bulletInstance);
                 bulletInstance.transform.localScale = new Vector3(Vector3.Distance(child.position, transform.position), 2, 1);
                 bulletInstance.transform.parent = bulletsInWorld;
                 Destroy(child.gameObject);
@@ -757,6 +775,49 @@ public class Weapon : MonoBehaviour
     private void SetPalsy(Bullet bullet)
     {
         bullet.SetPalsy(palsyDamage, palsyTime, palsyInterval);
+    }
+
+    private void SkillL()
+    {
+        if (!hasMoved)
+        {
+            backPos = Instantiate(skillL[0], transform.position, Quaternion.identity).transform;
+            Dash(MouseDir(), skillRangeL);
+            skillTimerL = skillTimeL;
+            hasMoved = true;
+        }
+        else
+        {
+            NormalAttackL();
+            Dash(Direction(backPos.position, transform.position), Vector3.Distance(backPos.position, transform.position));
+            hasMoved = false;
+            Destroy(backPos.gameObject);
+            cooldownTimerL = cooldownTimeL;
+        }
+    }
+
+    private void Dash(Vector3 dir, float distance)
+    {
+        player.Attack(dir, 0.1f, true, moveSpeedL, false, true);
+        player.Dash(dir, distance, 0.1f);
+        Bullet bulletInstance = Instantiate(skillL[1], transform).GetComponent<Bullet>();
+        bulletInstance.Setup(dir, 0, GetDamage(skillDamageL), status.GetCritProbability(), status.GetCritRate(), 0.25f, Bullet.BulletType.penetrable);
+        SetPalsy(bulletInstance);
+        gameObject.layer = 8;
+        foreach (Transform child in transform)
+            if (child.name == "collider")
+                child.gameObject.layer = 8;
+        GetComponent<SpriteRenderer>().color = Color.clear;
+        Invoke(nameof(EndDash), 0.1f);
+    }
+
+    private void EndDash()
+    {
+        gameObject.layer = 3;
+        foreach (Transform child in transform)
+            if (child.name == "collider")
+                child.gameObject.layer = 3;
+        GetComponent<SpriteRenderer>().color = Color.white;
     }
 
     //Lightning////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -913,10 +974,9 @@ public class Weapon : MonoBehaviour
     {
         player.Attack(MouseDir(), time, true, moveSpeedM, true, false);
         isCombating = true;
-        GameObject bulletInstance = Instantiate(bulletsM[bulletNo], transform.position, Quaternion.identity);
-        bulletInstance.GetComponent<Bullet>().Setup(
-            MouseDir(), 0, GetDamage(damage), status.GetCritProbability(), status.GetCritRate(), time, Bullet.BulletType.penetrable);
-        SetRepel(bulletInstance.GetComponent<Bullet>(), repelDistance);
+        Bullet bulletInstance = Instantiate(bulletsM[bulletNo], transform.position, Quaternion.identity).GetComponent<Bullet>();
+        bulletInstance.Setup(MouseDir(), 0, GetDamage(damage), status.GetCritProbability(), status.GetCritRate(), time, Bullet.BulletType.penetrable);
+        SetRepel(bulletInstance, repelDistance);
         bulletInstance.transform.localScale = new Vector3(rangeM, rangeM, 1);
         bulletInstance.transform.parent = bulletsInWorld;
         yield return new WaitForSeconds(time);
@@ -928,10 +988,10 @@ public class Weapon : MonoBehaviour
         isCombating = true;
         Vector3 dir = MouseDir();
         player.Attack(dir, 0.5f, true, moveSpeedM, true, false);
-        GameObject bulletInstance = Instantiate(bulletsM[3], ShootPos(shootOffset), Quaternion.identity);
-        bulletInstance.GetComponent<Bullet>().Setup(
+        Bullet bulletInstance = Instantiate(bulletsM[3], ShootPos(shootOffset), Quaternion.identity).GetComponent<Bullet>();
+        bulletInstance.Setup(
             dir, 0, GetDamage(damageM3), status.GetCritProbability(), status.GetCritRate(), 0.5f, Bullet.BulletType.penetrable);
-        SetRepel(bulletInstance.GetComponent<Bullet>(), repelDistance3);
+        SetRepel(bulletInstance, repelDistance3);
         bulletInstance.transform.localScale = new Vector3(rangeM, rangeM, 1);
         bulletInstance.transform.parent = bulletsInWorld;
         yield return new WaitForSeconds(0.25f);
@@ -945,10 +1005,10 @@ public class Weapon : MonoBehaviour
         isCombating = true;
         Vector3 dir = MouseDir();
         player.Attack(dir, 0.5f, true, moveSpeedM, true, false);
-        GameObject bulletInstance = Instantiate(bulletsM[4], ShootPos(shootOffset), Quaternion.identity);
-        bulletInstance.GetComponent<Bullet>().Setup(
+        Bullet bulletInstance = Instantiate(bulletsM[4], ShootPos(shootOffset), Quaternion.identity).GetComponent<Bullet>();
+        bulletInstance.Setup(
             dir, 0, GetDamage(damageM4), status.GetCritProbability(), status.GetCritRate(), 0.5f, Bullet.BulletType.penetrable);
-        SetRepel(bulletInstance.GetComponent<Bullet>(), repelDistance4);
+        SetRepel(bulletInstance, repelDistance4);
         bulletInstance.transform.localScale = new Vector3(rangeM, rangeM, 1);
         bulletInstance.transform.parent = bulletsInWorld;
         player.Dash(dir, 1.0f * rangeM, 0.17f);
@@ -963,10 +1023,10 @@ public class Weapon : MonoBehaviour
         isCombating = true;
         Vector3 dir = MouseDir();
         player.Attack(dir, 1f, true, moveSpeedM, true, false);
-        GameObject bulletInstance = Instantiate(bulletsM[5], ShootPos(shootOffset), Quaternion.identity);
-        bulletInstance.GetComponent<Bullet>().Setup(
+        Bullet bulletInstance = Instantiate(bulletsM[5], ShootPos(shootOffset), Quaternion.identity).GetComponent<Bullet>();
+        bulletInstance.Setup(
             dir, 0, GetDamage(damageM5), status.GetCritProbability(), status.GetCritRate(), 1f, Bullet.BulletType.penetrable);
-        SetRepel(bulletInstance.GetComponent<Bullet>(), repelDistance5);
+        SetRepel(bulletInstance, repelDistance5);
         bulletInstance.transform.localScale = new Vector3(rangeM, rangeM, 1);
         bulletInstance.transform.parent = bulletsInWorld;
         yield return new WaitForSeconds(0.62f);

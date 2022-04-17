@@ -216,7 +216,7 @@ public class PlayerController : MonoBehaviour
     {
         float timer = 0;
         Vector3 start = transform.position;
-        while (timer < time - Time.fixedDeltaTime)
+        while (timer < time)
         {
             rigid.MovePosition(Vector3.Lerp(start, start + dir * distance, timer/ time));
             timer += Time.fixedDeltaTime;

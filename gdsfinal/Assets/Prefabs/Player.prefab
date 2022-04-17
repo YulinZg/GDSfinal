@@ -502,7 +502,7 @@ MonoBehaviour:
   burnInterval: 1
   skillDamageF: 10
   skillRangeF: 2
-  cooldownTimeF: 15
+  cooldownTimeF: 10
   markTime: 5
   explosionDamage: 5
   skillF: {fileID: 6194500801451384584, guid: e4cc07f0b764f2848981a4db1de1a6ee, type: 3}
@@ -570,6 +570,13 @@ MonoBehaviour:
   palsyDamage: 5
   palsyTime: 15
   palsyInterval: 3
+  skillDamageL: 10
+  skillTimeL: 5
+  skillRangeL: 7
+  cooldownTimeL: 5
+  skillL:
+  - {fileID: 2623331876852604324, guid: 4b692d02d2f7a2642b3b98cdfaf56c13, type: 3}
+  - {fileID: 4701847348782030362, guid: 99b4d4bcb1d214e4aaf941b414878be7, type: 3}
   damageM0: 4
   damageM1: 5
   damageM2: 5
