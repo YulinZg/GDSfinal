@@ -93,9 +93,9 @@ GameObject:
   - component: {fileID: 207990868200254026}
   - component: {fileID: 207990868200254027}
   - component: {fileID: 207990868200254068}
+  - component: {fileID: -7151914493289304812}
   - component: {fileID: 8983591604089493673}
   - component: {fileID: 3856977711559570637}
-  - component: {fileID: -7151914493289304812}
   m_Layer: 7
   m_Name: BasicEnemy
   m_TagString: Enemy
@@ -190,6 +190,49 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-7151914493289304812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 207990868200254069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c171ac3cb233ce4abed38db9a59383b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAlive: 0
+  health: 500
+  attack: 30
+  playerStopTime: 0
+  moveSpeed: 2
+  debuffResistance: 0
+  fireResistance: 0
+  waterResistance: 0
+  earthResistance: 0
+  maxStunValue: 100
+  lightningResistance: 0
+  metalResistance: 0
+  damageText: {fileID: 4318804278247988162, guid: d8ab669f8ef30064497cad64bd4f4f2f, type: 3}
+  effectSize: 1
+  effectOffsetY: -0.1
+  damageUIOffsetXMin: -0.5
+  damageUIOffsetXMax: 0.5
+  damageUIOffsetYMin: -0.5
+  damageUIOffsetYMax: 0.5
+  burnEffect: {fileID: 5038591547534441582, guid: 4e726f7935d9eca4faf212ca8a9b0a31, type: 3}
+  fireMark: {fileID: 1691139846990456132, guid: 5703bbeb84909b744a570f849a056e3e, type: 3}
+  explosion: {fileID: 4970449726698586475, guid: f283098c012e47d439ba19e6a77aefb2, type: 3}
+  decelerateEffect: {fileID: 737469681386818583, guid: 8b4d96607cfc9114783b5df93d76d647, type: 3}
+  stunEffect: {fileID: 8964234654960140829, guid: 9312f7be5492cfe4a89e6c6660e8dc90, type: 3}
+  palsyEffect: {fileID: 2398475190484583915, guid: a94ce03ea23267e4d9cbcf348a444add, type: 3}
+  canBeAttacked: 1
+  senseRadius: 5
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  senseOffset: {x: 0, y: 0}
 --- !u!61 &8983591604089493673
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -237,49 +280,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &-7151914493289304812
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 207990868200254069}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c171ac3cb233ce4abed38db9a59383b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isAlive: 0
-  health: 5000
-  attack: 30
-  playerStopTime: 0
-  moveSpeed: 2
-  debuffResistance: 0
-  fireResistance: 0
-  waterResistance: 0
-  earthResistance: 0
-  maxStunValue: 100
-  lightningResistance: 0
-  metalResistance: 0
-  damageText: {fileID: 4318804278247988162, guid: d8ab669f8ef30064497cad64bd4f4f2f, type: 3}
-  effectSize: 1
-  effectOffsetY: -0.1
-  damageUIOffsetXMin: -0.5
-  damageUIOffsetXMax: 0.5
-  damageUIOffsetYMin: -0.5
-  damageUIOffsetYMax: 0.5
-  burnEffect: {fileID: 5038591547534441582, guid: 4e726f7935d9eca4faf212ca8a9b0a31, type: 3}
-  fireMark: {fileID: 1691139846990456132, guid: 5703bbeb84909b744a570f849a056e3e, type: 3}
-  explosion: {fileID: 4970449726698586475, guid: f283098c012e47d439ba19e6a77aefb2, type: 3}
-  decelerateEffect: {fileID: 737469681386818583, guid: 8b4d96607cfc9114783b5df93d76d647, type: 3}
-  stunEffect: {fileID: 8964234654960140829, guid: 9312f7be5492cfe4a89e6c6660e8dc90, type: 3}
-  palsyEffect: {fileID: 2398475190484583915, guid: a94ce03ea23267e4d9cbcf348a444add, type: 3}
-  canBeAttacked: 1
-  senseRadius: 5
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  senseOffset: {x: 0, y: 0}
 --- !u!1 &1528988917447627548
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,7 +395,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.55}
+  m_Offset: {x: -0.05, y: -0.55}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -406,5 +406,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.8, y: 0.4}
+  m_Size: {x: 0.6, y: 0.4}
   m_EdgeRadius: 0
