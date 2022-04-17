@@ -29,11 +29,14 @@ public abstract class Enemy : MonoBehaviour
     public float damageUIOffsetYMin;
     public float damageUIOffsetYMax;
     public GameObject burnEffect;
+    public GameObject fireMark;
+    public GameObject explosion;
     public GameObject decelerateEffect;
     public GameObject stunEffect;
     public GameObject palsyEffect;
 
     protected bool isBurn = false;
+    protected bool isFireMarked = false;
     protected bool isDecelerate = false;
     protected bool isStun = false;
     protected bool isPalsy = false;
@@ -42,7 +45,6 @@ public abstract class Enemy : MonoBehaviour
     protected bool isAttacking = false;
     protected bool beAttacked = false;
     public bool canBeAttacked = true;
-    //public bool isPalsying = true;
     //public float disarmingTime;
 
     protected float currentSpeed;
@@ -50,12 +52,21 @@ public abstract class Enemy : MonoBehaviour
     protected Vector3 moveDir;
 
     private float burnTimer = 0;
-    private float currentStunValue = 0;
+    private float fireMarkTimer = 0;
     private float decelerateTimer = 0;
+    private float currentStunValue = 0;
     private float palsyTimer = 0;
     private float stopTimer = 0;
     private Coroutine burnCoroutine;
+    private Coroutine fireMarkCoroutine;
     private Coroutine decelerateCoroutine;
+    private bool isFireHit = false;
+    private float explosionDamage;
+    private float explosionCritProbability;
+    private float explosionCritRate;
+    private float burnDamage;
+    private float burnTime;
+    private float burnInterval;
 
     [Header("AI")]
     //public float attackInterval;
@@ -86,7 +97,7 @@ public abstract class Enemy : MonoBehaviour
         desTraget = pathPoints[Random.Range(0, pathPoints.Length)].transform.position;
     }
 
-    public void TakeDamage(float damage, Color damageColor, float blinkTime, Color blinkColor, bool hurtStop, DamageProperty property)
+    public void TakeDamage(float damage, Color damageColor, float blinkTime, Color blinkColor, bool hurtStop, DamageProperty property, bool isBullet)
     {
         if (canBeAttacked)
         {
@@ -95,6 +106,8 @@ public abstract class Enemy : MonoBehaviour
             {
                 case DamageProperty.fire:
                     damage *= 1 - fireResistance;
+                    if (isFireMarked && isBullet)
+                        isFireHit = true;
                     break;
                 case DamageProperty.water:
                     damage *= 1 - waterResistance;
@@ -116,7 +129,7 @@ public abstract class Enemy : MonoBehaviour
 
             if (blinkTime != 0)
                 StartCoroutine(DoBlinks(blinkColor, (int)(blinkTime / 0.05f), 0.05f));
-            if (hurtStop)
+            if (hurtStop && !isStun)
             {
                 stopTimer = 0;
                 if (!isHurt)
@@ -136,12 +149,12 @@ public abstract class Enemy : MonoBehaviour
     {
         //gameObject.GetComponent<Collider2D>().enabled = false;
         health = 0;
-
         rigid.simulated = false;
         anim.Play("die");
         speed = 0;
         isAlive = false;
     }
+
     public void Burn(float damage, float time, float interval)
     {
         int i = Random.Range(0, 100);
@@ -178,12 +191,48 @@ public abstract class Enemy : MonoBehaviour
             timer += Time.deltaTime;
             if (timer >= interval)
             {
-                TakeDamage(damage, Color.gray, 0.5f, Color.red, false, DamageProperty.fire);
+                TakeDamage(damage, Color.gray, 0.5f, Color.red, false, DamageProperty.fire, false);
                 timer = 0;
             }
             yield return null;
         }
         isBurn = false;
+        Destroy(effectInstance);
+    }
+
+    public void FireMark(float time, float damage, float critProbability, float critRate, float burnDamage, float burnTime, float burnInterval)
+    {
+        fireMarkTimer = 0;
+        explosionDamage = damage;
+        explosionCritProbability = critProbability;
+        explosionCritRate = critRate;
+        this.burnDamage = burnDamage;
+        this.burnTime = burnTime;
+        this.burnInterval = burnInterval;
+        if (!isFireMarked)
+            fireMarkCoroutine =  StartCoroutine(FireMarking(time));
+    }
+
+    IEnumerator FireMarking(float time)
+    {
+        isFireMarked = true;
+        GameObject effectInstance = Instantiate(fireMark, transform);
+        effectInstance.transform.localPosition += Vector3.up * effectOffsetY;
+        effectInstance.transform.localScale = new Vector3(effectSize, effectSize, 1);
+        while (fireMarkTimer <= time && !isFireHit)
+        {
+            fireMarkTimer += Time.deltaTime;
+            yield return null;
+        }
+        isFireMarked = false;
+        if (isFireHit)
+        {
+            Bullet bullet = Instantiate(explosion, transform).GetComponentInChildren<Bullet>();
+            bullet.Setup(Vector2.right, 0, explosionDamage, explosionCritProbability, explosionCritRate, 0.67f, Bullet.BulletType.penetrable);
+            bullet.SetBurn(burnDamage, burnTime, burnInterval);
+            bullet.transform.parent.localPosition += Vector3.up * effectOffsetY;
+            isFireHit = false;
+        }
         Destroy(effectInstance);
     }
 
@@ -281,7 +330,7 @@ public abstract class Enemy : MonoBehaviour
                     float d = damage;
                     if (isDecelerate)
                         d *= 2;
-                    TakeDamage(d, Color.gray, 0.25f, Color.yellow, true, DamageProperty.lightning);
+                    TakeDamage(d, Color.gray, 0.25f, Color.yellow, true, DamageProperty.lightning, false);
                     timer = 0;
                 }
                 yield return null;

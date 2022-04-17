@@ -500,6 +500,12 @@ MonoBehaviour:
   burnDamage: 8
   burnTime: 5
   burnInterval: 1
+  skillDamageF: 10
+  skillRangeF: 2
+  cooldownTimeF: 15
+  markTime: 5
+  explosionDamage: 5
+  skillF: {fileID: 6194500801451384584, guid: e4cc07f0b764f2848981a4db1de1a6ee, type: 3}
   damageW: 4
   damageW1: 6
   damageW2: 10
@@ -540,7 +546,17 @@ MonoBehaviour:
   - {fileID: 8061944940312639690, guid: 527b057eb96fb6c40aa61c93bcb20760, type: 3}
   stunValue: 3
   stunValue1: 25
+  stunValueSkill: 30
   stunTime: 5
+  skillDamageE: 8
+  skillTimeE: 10
+  skillRangeEMin: 2
+  skillRangeEMax: 4
+  cooldownTimeE: 15
+  dropInterval: 0.1
+  skillE:
+  - {fileID: 932404508066485890, guid: 63d73eda171f8234e836c1d4a9fef9b4, type: 3}
+  - {fileID: 5796760234372886280, guid: 38d2224ab4924e6498d1b0fbd79a893e, type: 3}
   damageL: 2
   damageL1: 4
   intervalL: 0.25
@@ -640,4 +656,5 @@ MonoBehaviour:
   weaponUI: {fileID: 0}
   statusUI: {fileID: 0}
   isAttacking: 0
+  isSkilling: 0
   isHurting: 0

@@ -39,6 +39,9 @@ public class Bullet : MonoBehaviour
     private float burnDamage;
     private float burnTime;
     private float burnInterval;
+    private bool fireSkill = false;
+    private float fireMarkTime;
+    private float explosionDamage;
 
     //Water
     private float decelerateRate;
@@ -137,24 +140,15 @@ public class Bullet : MonoBehaviour
         if (!dic.ContainsKey(t.GetInstanceID()))
         {
             dic.Add(t.GetInstanceID(), t);
-            HitEnemy(collision);
+            Hit(collision);
         }
     }
 
-    public void HitEnemy(Collider2D col)
+    public void Hit(Collider2D col)
     {
         if (col.CompareTag("Enemy"))
         {
-            switch (type)
-            {
-                case BulletType.normal:
-                    Hit(col.gameObject);
-                    Disappear();
-                    break;
-                case BulletType.penetrable:
-                    Hit(col.gameObject);
-                    break;
-            }
+            HitEnemy(col.gameObject);
         }
         if (type == BulletType.normal)
         {
@@ -162,7 +156,7 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    private void Hit(GameObject e)
+    private void HitEnemy(GameObject e)
     {
         Enemy enemy = e.GetComponent<Enemy>();
         if (enemy.canBeAttacked)
@@ -174,10 +168,13 @@ public class Bullet : MonoBehaviour
                 damage *= critRate;
                 color = Color.yellow;
             }
+            enemy.TakeDamage(damage * Random.Range(0.9f, 1.1f), color, blinkTime, blinkColor, ifHurtStop, property, true);
             switch (property)
             {
                 case DamageProperty.fire:
                     enemy.Burn(burnDamage, burnTime, burnInterval);
+                    if (fireSkill)
+                        enemy.FireMark(fireMarkTime, explosionDamage, critProbability, critRate, burnDamage, burnTime, burnInterval);
                     break;
                 case DamageProperty.water:
                     enemy.Decelerate(decelerateRate, decelerateTime);
@@ -192,12 +189,18 @@ public class Bullet : MonoBehaviour
                     enemy.Repel(repelDistance);
                     break;
             }
-            enemy.TakeDamage(damage * Random.Range(0.9f, 1.1f), color, blinkTime, blinkColor, ifHurtStop, property);
         }
     }
 
     public void ClearDic()
     {
         dic.Clear();
+    }
+
+    public void SetFireSkill(float markTime, float explosionDamage)
+    {
+        fireSkill = true;
+        fireMarkTime = markTime;
+        this.explosionDamage = explosionDamage;
     }
 }

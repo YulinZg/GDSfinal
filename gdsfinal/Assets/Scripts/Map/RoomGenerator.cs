@@ -38,8 +38,6 @@ public class RoomGenerator : MonoBehaviour
         generateBossRoom();
     }
 
-    // Update is called once per frame
-
     public void generateNormalRoom()
     {
         rooms.Add(Instantiate(roomPerfab, generatoPoint.position, Quaternion.identity).GetComponent<Room>());
