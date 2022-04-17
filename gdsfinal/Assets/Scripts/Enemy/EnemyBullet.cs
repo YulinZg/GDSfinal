@@ -18,6 +18,7 @@ public class EnemyBullet : MonoBehaviour
     {
         count++;
         parent.isShooting = true;
+        //transform.parent = null;
         if (count >= 4)
         {
             StartCoroutine(shotFirstType(18, 1f, 0f, 360f, 2));
@@ -79,6 +80,7 @@ public class EnemyBullet : MonoBehaviour
             }
         }
         parent.isShooting = false;
+        
         //parent.setSpeed(parent.getCurrentSpeed());
     }
 

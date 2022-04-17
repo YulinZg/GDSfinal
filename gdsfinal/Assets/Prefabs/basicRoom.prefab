@@ -142,7 +142,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 25, y: 13}
+  m_Size: {x: 25.5, y: 14}
   m_EdgeRadius: 0
 --- !u!1 &2144352631147707443
 GameObject:
@@ -5956,9 +5956,11 @@ MonoBehaviour:
   enemyTouchFish: {fileID: 1924205829743773431, guid: af3a10029dbea8442bacf9f50efef685, type: 3}
   enemyHatch: {fileID: 6574388021621534584, guid: e1feb6ae3b3ca7843bbe69f6fa8495ba, type: 3}
   enemyScatter: {fileID: 1975638847083170482, guid: 5fb44a5cf31be1e49ad812dba87e9d65, type: 3}
-  enemyBasicNum: 1
+  enemySnipe: {fileID: 2567320152254174609, guid: 9cebe1973ddb69446b3bc3f5fd848fac, type: 3}
+  enemyBasicNum: 0
   enemySelfBurstingNum: 0
   enemyTouchFishNum: 0
-  enemyHatchNum: 1
-  numberOfChildren: 5
+  enemyHatchNum: 0
+  numberOfChildren: 0
   enemyScatterNum: 1
+  enemySnipeNum: 0
