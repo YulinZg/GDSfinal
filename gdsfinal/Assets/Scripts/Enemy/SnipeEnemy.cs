@@ -17,6 +17,7 @@ public class SnipeEnemy : Enemy
     public float disappearCoolDown;
     //private GameObject[] someFartherPoints;
 
+    public bool isShooting;
     public SpriteRenderer shadow;
     private enum EnemyState
     {
@@ -60,7 +61,7 @@ public class SnipeEnemy : Enemy
     // Update is called once per frame
     void Update()
     {
-        if (!isStun && !isHurt)
+        if (!isStun && !isHurt && !isShooting)
         {
             UpdateState();
         }
@@ -68,7 +69,7 @@ public class SnipeEnemy : Enemy
 
     private void FixedUpdate()
     {
-        if (!isRepel)
+        if (!isRepel && !isShooting)
         {
             Move();
         }

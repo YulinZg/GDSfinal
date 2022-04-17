@@ -392,10 +392,25 @@ public abstract class Enemy : MonoBehaviour
         Debug.Log(length);
         return length;
     }
-        void OnDrawGizmos()
+    void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere((Vector2)transform.position + senseOffset, senseRadius);
         //Gizmos.DrawLine((Vector2)transform.position, (Vector2)transform.position + (new Vector2(moveDir.x, 0) + new Vector2(0, -1)) * senseRadius);
+    }
+
+    public Vector3 getMoveDir()
+    {
+        return moveDir;
+    }
+
+    public void setSpeed(float value)
+    {
+        speed = value;
+    }
+
+    public float getCurrentSpeed()
+    {
+        return currentSpeed;
     }
 }
