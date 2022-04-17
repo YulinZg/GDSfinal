@@ -7,6 +7,7 @@ public abstract class Enemy : MonoBehaviour
     public bool isAlive = true;
     public float health;
     public float attack;
+    public float playerStopTime;
     public float moveSpeed;
     public float debuffResistance;
     public float fireResistance;

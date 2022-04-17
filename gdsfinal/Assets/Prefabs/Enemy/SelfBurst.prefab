@@ -160,6 +160,7 @@ MonoBehaviour:
   isAlive: 0
   health: 50
   attack: 80
+  playerStopTime: 0.5
   moveSpeed: 3
   debuffResistance: 0
   fireResistance: 0

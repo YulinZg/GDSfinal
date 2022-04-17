@@ -224,7 +224,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isAlive: 1
   health: 100
-  attack: 0
+  attack: 15
+  playerStopTime: 0
   moveSpeed: 3
   debuffResistance: 0
   fireResistance: 0
@@ -234,7 +235,7 @@ MonoBehaviour:
   lightningResistance: 0
   metalResistance: 0
   damageText: {fileID: 4318804278247988162, guid: d8ab669f8ef30064497cad64bd4f4f2f, type: 3}
-  effectSize: 1
+  effectSize: 1.2
   effectOffsetY: 0.3
   damageUIOffsetXMin: -0.5
   damageUIOffsetXMax: 0.5
