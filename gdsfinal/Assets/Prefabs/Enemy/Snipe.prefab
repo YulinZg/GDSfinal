@@ -245,13 +245,14 @@ MonoBehaviour:
   stunEffect: {fileID: 8964234654960140829, guid: 9312f7be5492cfe4a89e6c6660e8dc90, type: 3}
   palsyEffect: {fileID: 2398475190484583915, guid: a94ce03ea23267e4d9cbcf348a444add, type: 3}
   canBeAttacked: 1
-  senseRadius: 10
+  senseRadius: 12
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
   senseOffset: {x: 0, y: 0}
   idleInterval: 2
   disappearCoolDown: 10
+  isShooting: 0
   shadow: {fileID: 1975638847091674336}
 --- !u!61 &1975638847083170488
 BoxCollider2D:

@@ -7,6 +7,12 @@ public class EnemyBullet : MonoBehaviour
     private int count = 0;
     public GameObject bullet;
     public SnipeEnemy parent;
+
+    //public int bulletNum;
+    //public float duration;
+    //public float startAngle;
+    //public float rotateAngle;
+    //public int numOfWave;
     // Start is called before the first frame update
     private void OnEnable()
     {
@@ -14,14 +20,14 @@ public class EnemyBullet : MonoBehaviour
         parent.isShooting = true;
         if (count >= 4)
         {
-            StartCoroutine(shotFirstType(36, 1f, 0f, 360f, 2));
+            StartCoroutine(shotFirstType(18, 1f, 0f, 360f, 2));
             Debug.Log("big attack");
             count = 0;
         }
         else
         {
             
-            StartCoroutine(shotFirstType(12, 1f, 225f, 90f, 2));
+            StartCoroutine(shotFirstType(6, 1f, 225f, 90f, 1));
             Debug.Log("normal");
         }
     }
