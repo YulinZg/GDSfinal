@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SnipeEnemy : Enemy
+public class ScatterEnemy : Enemy
 {
     //private float chasingRange;
     //private float changeStateTimer;

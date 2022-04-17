@@ -10,13 +10,13 @@ public class EnemyGenerator : MonoBehaviour
     [SerializeField] private GameObject enemySelfBursting;
     [SerializeField] private GameObject enemyTouchFish;
     [SerializeField] private GameObject enemyHatch;
-    [SerializeField] private GameObject enemySnipe;
+    [SerializeField] private GameObject enemyScatter;
     [SerializeField] private int enemyBasicNum;
     [SerializeField] private int enemySelfBurstingNum;
     [SerializeField] private int enemyTouchFishNum;
     [SerializeField] private int enemyHatchNum;
     [SerializeField] private int numberOfChildren;
-    [SerializeField] private int enemySnipeNum;
+    [SerializeField] private int enemyScatterNum;
     private int[,] map = new int[26, 14];
     //private List<GameObject> enemyArray = new List<GameObject>();
 
@@ -56,11 +56,11 @@ public class EnemyGenerator : MonoBehaviour
             
 
         }
-        for (int i = 0; i < enemySnipeNum; i++)
+        for (int i = 0; i < enemyScatterNum; i++)
         {
             //currentEnemyNumt++;
             enemyCount++;
-            Instantiate(enemySnipe, transform.position + new Vector3(Random.Range(3, 9), Random.Range(3, 12), 0), Quaternion.identity);
+            Instantiate(enemyScatter, transform.position + new Vector3(Random.Range(3, 9), Random.Range(3, 12), 0), Quaternion.identity);
         }
         Debug.LogWarning(enemyCount);
     }
