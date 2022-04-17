@@ -299,6 +299,7 @@ public abstract class Enemy : MonoBehaviour
     {
         isStun = false;
         speed = currentSpeed;
+        anim.SetBool("isHurt", false);
     }
 
     public void Palsy(float damage, float time, float interval)
@@ -382,10 +383,13 @@ public abstract class Enemy : MonoBehaviour
             yield return null;
         }
         isHurt = false;
-        anim.SetBool("isHurt", false);
+        if (!isStun)
+        {
+            anim.SetBool("isHurt", false);
+        }
         if (!isStun && canBeAttacked && !isAttacking)
         {
-            speed = currentSpeed;
+            speed = currentSpeed; 
         }
     }
 

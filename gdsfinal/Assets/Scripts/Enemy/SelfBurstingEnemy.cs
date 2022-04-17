@@ -44,16 +44,16 @@ public class SelfBurstingEnemy : Enemy
                 chasingOffset = Vector2.zero;
                 break;
             case ChasingTarget.up:
-                chasingOffset = Vector2.up;
+                chasingOffset = Vector2.up * 0.3f;
                 break;
             case ChasingTarget.down:
-                chasingOffset = Vector2.down;
+                chasingOffset = Vector2.down * 0.3f;
                 break;
             case ChasingTarget.right:
-                chasingOffset = Vector2.right;
+                chasingOffset = Vector2.right * 0.3f;
                 break;
             case ChasingTarget.left:
-                chasingOffset = Vector2.left;
+                chasingOffset = Vector2.left * 0.3f;
                 break;
             default:
                 break;
@@ -105,7 +105,7 @@ public class SelfBurstingEnemy : Enemy
                     gameObject.layer = 8;
                     speed = 0;
                 }
-                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) <= 1.2f  && !isStun)
+                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) <= 0.5f  && !isStun)
                 {
                     //Die();
                     currentState = EnemyState.Charge;

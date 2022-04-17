@@ -2,23 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScatterEnemy : Enemy
+public class SnipeEnemy : Enemy
 {
-    //private float chasingRange;
-    //private float changeStateTimer;
     private float attackTimer;
     private float attackInterval;
 
     private float idleTimer;
     public float idleInterval;
 
+    public bool isShooting = false;
+    public SpriteRenderer shadow;
+
     private bool isDisappearing;
     private float disappearCoolDownTimer;
     public float disappearCoolDown;
-    //private GameObject[] someFartherPoints;
-
-    public bool isShooting;
-    public SpriteRenderer shadow;
+    //public EnemyRotate rotateObject;
     private enum EnemyState
     {
         idle,
@@ -45,7 +43,7 @@ public class ScatterEnemy : Enemy
     // Start is called before the first frame update
     void Start()
     {
-        disappearCoolDownTimer = disappearCoolDown;
+        //disappearCoolDownTimer = disappearCoolDown;
         attackInterval = GetLengthByName("attack");
         //Debug.Log(desTraget);
         anim.SetBool("isIdle", true);
@@ -74,7 +72,6 @@ public class ScatterEnemy : Enemy
             Move();
         }
     }
-
     public override void UpdateState()
     {
         attackTimer += Time.deltaTime;
@@ -115,7 +112,7 @@ public class ScatterEnemy : Enemy
                     anim.SetBool("isIdle", true);
                     GetNewTargetPoint();
                 }
-                else if(IsPlayerInSense())
+                else if (IsPlayerInSense())
                 {
                     anim.SetBool("isIdle", true);
                     //isSensePlayer = true;
@@ -147,7 +144,7 @@ public class ScatterEnemy : Enemy
                     if (disappearCoolDownTimer >= disappearCoolDown)
                     {
                         currentState = EnemyState.back;
-                        StartCoroutine(Disappear(1f));
+                        StartCoroutine(Disappear(1.5f));
                         anim.SetBool("isIdle", true);
                         StopAttack();
                         speed = 0;
@@ -156,7 +153,7 @@ public class ScatterEnemy : Enemy
                     //goToTheFarthestPoint();
                 }
                 else
-                    Attack(); 
+                    Attack();
                 break;
             case EnemyState.back:
                 if (IsPlayerInSense() && !isDisappearing)
@@ -175,16 +172,9 @@ public class ScatterEnemy : Enemy
                 break;
         }
     }
-
-    private void Idle()
-    {
-        idleTimer += Time.deltaTime;
-        speed = 0;  
-    }
-
     private void goToTheFarthestPoint()
     {
-        List<GameObject> temp = getSomeFartherPoints(); 
+        List<GameObject> temp = getSomeFartherPoints();
         transform.position = temp[Random.Range(0, temp.Count)].transform.position;
         temp.Clear();
     }
@@ -195,7 +185,7 @@ public class ScatterEnemy : Enemy
         rigid.simulated = false;
         for (int i = 254; i >= 0; i--)
         {
-            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, (float)i/255f);
+            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, (float)i / 255f);
             //Debug.LogError(sprite.color);
             //if (i <= 60)
             //{
@@ -257,5 +247,23 @@ public class ScatterEnemy : Enemy
         speed = currentSpeed;
         isAttacking = false;
         anim.SetBool("isAttacking", false);
+    }
+    private void Idle()
+    {
+        idleTimer += Time.deltaTime;
+        speed = 0;
+    }
+    public void StartDisappear(float duration)
+    {
+        StartCoroutine(DieDisappear(duration));
+    }
+    IEnumerator DieDisappear(float duration)
+    {
+        for (int i = 254; i >= 0; i--)
+        {
+            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, (float)i / 255f);
+            shadow.color = new Color(shadow.color.r, shadow.color.g, shadow.color.b, (float)i * 0.235f / 255f);
+            yield return new WaitForSeconds(duration / 255f);
+        }
     }
 }
