@@ -5955,10 +5955,10 @@ MonoBehaviour:
   enemySelfBursting: {fileID: 2923880042827918057, guid: fded80e77a19f064cacc1a8bea91133d, type: 3}
   enemyTouchFish: {fileID: 1924205829743773431, guid: af3a10029dbea8442bacf9f50efef685, type: 3}
   enemyHatch: {fileID: 6574388021621534584, guid: e1feb6ae3b3ca7843bbe69f6fa8495ba, type: 3}
-  enemySnipe: {fileID: 1975638847083170482, guid: 5fb44a5cf31be1e49ad812dba87e9d65, type: 3}
-  enemyBasicNum: 0
+  enemyScatter: {fileID: 1975638847083170482, guid: 5fb44a5cf31be1e49ad812dba87e9d65, type: 3}
+  enemyBasicNum: 1
   enemySelfBurstingNum: 0
   enemyTouchFishNum: 0
   enemyHatchNum: 1
   numberOfChildren: 5
-  enemySnipeNum: 1
+  enemyScatterNum: 1

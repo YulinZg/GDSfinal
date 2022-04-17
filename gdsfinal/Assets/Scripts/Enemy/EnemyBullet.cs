@@ -6,7 +6,7 @@ public class EnemyBullet : MonoBehaviour
 {
     private int count = 0;
     public GameObject bullet;
-    public SnipeEnemy parent;
+    public ScatterEnemy parent;
 
     //public int bulletNum;
     //public float duration;
