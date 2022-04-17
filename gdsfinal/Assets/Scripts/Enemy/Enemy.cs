@@ -138,7 +138,7 @@ public abstract class Enemy : MonoBehaviour
                     StartCoroutine(StopMove(blinkTime));
                 }
             }
-            if (health <= 0)
+            if (health <= 0 && isAlive)
             {
                 Die();
             }
@@ -426,10 +426,40 @@ public abstract class Enemy : MonoBehaviour
     //    else
     //        return false;
     //}
+    public float GetLengthByName(string name)
+    {
+        float length = 0;
+        AnimationClip[] clips = anim.runtimeAnimatorController.animationClips;
+        foreach (AnimationClip clip in clips)
+        {
+            if (clip.name.Equals(name))
+            {
+                length = clip.length;
+                break;
+            }
+        }
+        Debug.Log(length);
+        return length;
+    }
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere((Vector2)transform.position + senseOffset, senseRadius);
         //Gizmos.DrawLine((Vector2)transform.position, (Vector2)transform.position + (new Vector2(moveDir.x, 0) + new Vector2(0, -1)) * senseRadius);
+    }
+
+    public Vector3 getMoveDir()
+    {
+        return moveDir;
+    }
+
+    public void setSpeed(float value)
+    {
+        speed = value;
+    }
+
+    public float getCurrentSpeed()
+    {
+        return currentSpeed;
     }
 }

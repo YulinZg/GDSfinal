@@ -8,6 +8,7 @@ public class TouchFish : Enemy
     private bool canGiveAward = true;
     private void Awake()
     {
+        isAlive = true;
         sprite = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
@@ -18,7 +19,6 @@ public class TouchFish : Enemy
     void Start()
     {
         Invoke("selfDisappear", 20f);
-        isAlive = true;
         currentSpeed = speed = moveSpeed;
         chasingRange = Random.Range(0.9f, 2f);
         pathPoints = GameObject.FindGameObjectsWithTag("Point");
@@ -65,6 +65,5 @@ public class TouchFish : Enemy
         {
             Debug.Log("µÙ¬‰¬ﬂº≠‘⁄’‚¿Ô");
         }
-        
     }
 }

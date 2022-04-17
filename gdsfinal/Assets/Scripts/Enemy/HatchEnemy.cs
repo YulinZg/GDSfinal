@@ -2,26 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicEnemy : Enemy
+public class HatchEnemy : Enemy
 {
-    private float chasingRange;
-    //private float changeStateTimer;
+    [Header("Own")]
+    public GameObject child;
+    private int numberOfChildren;
     private float attackTimer;
     private float attackInterval;
+    private enum ChasingTarget
+    {
+        none,
+        up,
+        down,
+        right,
+        left
+    }
+    private ChasingTarget chasingTarget;
+    private Vector2 chasingOffset;
     private enum EnemyState
     {
-        Wander,
         Chase,
         Attack,
     };
-
+    private EnemyState currentState;
     public override void Move()
     {
         rigid.velocity = speed * moveDir;
         Filp("normal");
     }
-
-    private EnemyState currentState;
+    
     private void Awake()
     {
         isAlive = true;
@@ -31,25 +40,13 @@ public class BasicEnemy : Enemy
         anim = GetComponent<Animator>();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-        attackInterval = GetLengthByName("attack");
-        currentSpeed = speed = moveSpeed;
-        chasingRange = Random.Range(0.9f, 2f);
-        pathPoints = GameObject.FindGameObjectsWithTag("Point");
-        GetNewTargetPoint();
-    }
-
-    // Update is called once per frame
     void Update()
     {
-
         if (!isStun && !isHurt)
         {
             UpdateState();
         }
+        
     }
 
     private void FixedUpdate()
@@ -59,32 +56,50 @@ public class BasicEnemy : Enemy
             Move();
         }
     }
+    // Start is called before the first frame update
+    void Start()
+    {
+        attackInterval = GetLengthByName("attack");
+        chasingTarget = (ChasingTarget)Random.Range(0, 5);
+        switch (chasingTarget)
+        {
+            case ChasingTarget.none:
+                chasingOffset = Vector2.zero;
+                break;
+            case ChasingTarget.up:
+                chasingOffset = Vector2.up * 0.5f;
+                break;
+            case ChasingTarget.down:
+                chasingOffset = Vector2.down * 0.5f;
+                break;
+            case ChasingTarget.right:
+                chasingOffset = Vector2.right * 0.5f;
+                break;
+            case ChasingTarget.left:
+                chasingOffset = Vector2.left * 0.5f;
+                break;
+            default:
+                break;
+        }
+        
+        currentSpeed = speed = moveSpeed;
+        //chasingRange = Random.Range(0.9f, 2f);
+        pathPoints = GameObject.FindGameObjectsWithTag("Point");
+    }
 
     public override void UpdateState()
     {
         attackTimer += Time.deltaTime;
         switch (currentState)
         {
-            case EnemyState.Wander:
-                if (IsPlayerInSense() || beAttacked)
-                {
-                    chasingRange = Random.Range(0.9f, 2f);
-                    desTraget = (Vector2)player.position + new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
-                    currentState = EnemyState.Chase;
-                }
-                else
-                    Wander();
-                break;
             case EnemyState.Chase:
-                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) <= 0.9f )
+                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) <= 0.9f)
                 {
                     speed = 0;
-                    anim.SetBool("isIdle", true);
                     if (attackTimer >= attackInterval)
                     {
                         currentState = EnemyState.Attack;
                         attackTimer = 0;
-                        anim.SetBool("isIdle", false);
                     }
                 }
                 else
@@ -93,7 +108,6 @@ public class BasicEnemy : Enemy
             case EnemyState.Attack:
                 if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) > 0.9f)
                 {
-                    chasingRange = Random.Range(0.9f, 2f);
                     currentState = EnemyState.Chase;
                     desTraget = (Vector2)player.position;
                     StopAttack();
@@ -105,26 +119,15 @@ public class BasicEnemy : Enemy
                 break;
         }
     }
-
-    private void Chasing()
+    public void setChild(int value)
     {
-        anim.SetBool("isIdle", false);
-        speed = currentSpeed;
-        if (Vector2.Distance(desTraget, transform.position) < chasingRange)
-        {
-            desTraget = (Vector2)player.position + new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
-        }
-        moveDir = ((Vector2)desTraget - (Vector2)transform.position).normalized;
-    }
-    private void Wander()
-    {
-        if ( Vector2.Distance(desTraget, transform.position) < chasingRange)
-        {
-            GetNewTargetPoint();
-        }
-        moveDir = ((Vector2)desTraget - (Vector2)transform.position).normalized;
+        numberOfChildren = value;
     }
 
+    public int getChild()
+    {
+        return numberOfChildren;
+    }
     private void Attack()
     {
         speed = 0;
@@ -133,7 +136,18 @@ public class BasicEnemy : Enemy
         moveDir = ((Vector2)player.position - (Vector2)transform.position).normalized;
         //需要让怪物面向玩家
     }
-
+    private void Chasing()
+    {
+        speed = currentSpeed;
+        moveDir = ((Vector2)player.position + chasingOffset - (Vector2)transform.position).normalized;
+    }
+    public void SpawnChildren()
+    {
+        for (int i = 0; i < numberOfChildren; i++)
+        {
+            Instantiate(child, transform.position + new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0), Quaternion.identity);
+        }
+    }
     private void StopAttack()
     {
         speed = currentSpeed;
