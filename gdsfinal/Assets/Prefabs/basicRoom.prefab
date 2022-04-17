@@ -5959,6 +5959,6 @@ MonoBehaviour:
   enemyBasicNum: 0
   enemySelfBurstingNum: 0
   enemyTouchFishNum: 0
-  enemyHatchNum: 0
-  numberOfChildren: 0
+  enemyHatchNum: 1
+  numberOfChildren: 5
   enemySnipeNum: 1
