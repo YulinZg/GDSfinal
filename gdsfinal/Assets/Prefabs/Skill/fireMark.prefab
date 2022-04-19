@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2242991043561659742}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: fireMark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 5142509329352897445}
   - component: {fileID: 5564131223721043033}
   - component: {fileID: 1774115479726739212}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 08 0
   m_TagString: Untagged
   m_Icon: {fileID: 0}

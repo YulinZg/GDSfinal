@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7609865873429555963}
   - component: {fileID: 5268855376364838281}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: earthSkill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 8863331421223801700}
   - component: {fileID: 8863331421223801703}
   - component: {fileID: 8863331421223801702}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 04 0
   m_TagString: Untagged
   m_Icon: {fileID: 0}

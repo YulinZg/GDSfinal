@@ -195,7 +195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  property: 1
+  property: 2
   bulletEffect: {fileID: 0}
   blinkTime: 0.15
   blinkColor: {r: 0, g: 0, b: 1, a: 1}

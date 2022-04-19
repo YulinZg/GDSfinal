@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  property: 0
+  property: 1
   bulletEffect: {fileID: 0}
   blinkTime: 0.25
   blinkColor: {r: 1, g: 0, b: 0, a: 1}

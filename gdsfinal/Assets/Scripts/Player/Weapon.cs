@@ -178,10 +178,17 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float repelDistance4;
     [SerializeField] private float repelDistance5;
 
+    [SerializeField] private float skillDamageM;
+    [SerializeField] private float skillRangeM;
+    [SerializeField] private float cooldownTimeM;
+    private float cooldownTimerM = 0;
+    private GrappleHook grappleHook;
+
     private void Awake()
     {
         player = GetComponent<PlayerController>();
         status = GetComponent<Status>();
+        grappleHook = GetComponent<GrappleHook>();
     }
 
     // Update is called once per frame
@@ -243,6 +250,12 @@ public class Weapon : MonoBehaviour
                 Destroy(backPos.gameObject);
                 cooldownTimerL = cooldownTimeL;
             }
+        }
+        if (cooldownTimerM != 0)
+        {
+            cooldownTimerM -= Time.deltaTime;
+            if (cooldownTimerM < 0)
+                cooldownTimerM = 0;
         }
     }
 
@@ -859,43 +872,55 @@ public class Weapon : MonoBehaviour
 
     private void Metal()
     {
-        if (canCombo)
+        if (!player.isSkilling)
         {
-            comboTimer += Time.deltaTime;
-            if (comboTimer > intervalM * 2)
+            if (canCombo)
             {
-                canCombo = false;
-                comboTimer = 0;
-                comboCount = 0;
+                comboTimer += Time.deltaTime;
+                if (comboTimer > intervalM * 2)
+                {
+                    canCombo = false;
+                    comboTimer = 0;
+                    comboCount = 0;
+                }
+                if (Input.GetMouseButtonDown(0))
+                {
+                    leftDown = true;
+                    rightDown = false;
+                    canCombo = false;
+                    comboTimer = 0;
+                }
+                else if (Input.GetMouseButtonDown(1))
+                {
+                    leftDown = false;
+                    rightDown = true;
+                    canCombo = false;
+                    comboTimer = 0;
+                }
             }
-            if (Input.GetMouseButtonDown(0))
+            else if (!leftDown && !rightDown)
             {
-                leftDown = true;
-                rightDown = false;
-                canCombo = false;
-                comboTimer = 0;
+                if (Input.GetMouseButtonDown(0))
+                {
+                    NormalAttackM00();
+                }
+                else if (Input.GetMouseButtonDown(1))
+                {
+                    NormalAttackM10();
+                }
             }
-            else if (Input.GetMouseButtonDown(1))
+            if (!isCombating && (leftDown || rightDown))
+                Combo();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (!player.isAttacking && cooldownTimerM == 0)
             {
-                leftDown = false;
-                rightDown = true;
-                canCombo = false;
-                comboTimer = 0;
+                SkillM();
+                cooldownTimerM = cooldownTimeM;
             }
         }
-        else if (!leftDown && !rightDown)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                NormalAttackM00();
-            }
-            else if (Input.GetMouseButtonDown(1))
-            {
-                NormalAttackM10();
-            }
-        }
-        if (!isCombating && (leftDown || rightDown))
-            Combo();
     }
 
     private void NormalAttackM00()
@@ -1072,6 +1097,11 @@ public class Weapon : MonoBehaviour
     private void SetRepel(Bullet bullet, float distance)
     {
         bullet.SetRepel(distance);
+    }
+
+    private void SkillM()
+    {
+        grappleHook.Grapple(MouseDir(), skillRangeM, moveSpeedM, GetDamage(skillDamageM));
     }
 
     //Metal////////////////////////////////////////////////////////////////////////////////////////////////////////////

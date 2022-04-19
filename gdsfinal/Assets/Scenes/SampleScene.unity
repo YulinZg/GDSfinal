@@ -679,7 +679,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Shot water ball - left click
+  m_Text: 'Shoot water ball - left click
 
 
     First charge state attack - hold left
@@ -3669,7 +3669,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Burst shot - hold left mouse
+  m_Text: 'Burst shoot - hold left mouse
 
 
     Preheat & gather bullets - hold right
@@ -4574,7 +4574,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Burst shot - hold left mouse
+  m_Text: 'Burst shoot - hold left mouse
 
 
     Preheat & gather bullets - hold right
@@ -5934,7 +5934,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Shot water ball - left click
+  m_Text: 'Shoot water ball - left click
 
 
     First charge state attack - hold left

@@ -251,11 +251,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  property: 4
+  property: 5
   bulletEffect: {fileID: 0}
   blinkTime: 0
   blinkColor: {r: 0, g: 0, b: 0, a: 0}
   ifHurtStop: 0
+  lifetime: 0
 --- !u!1001 &4652189082768827336
 PrefabInstance:
   m_ObjectHideFlags: 0
