@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAlive: 1
-  health: 300
+  health: 600
   attack: 20
   playerStopTime: 0
   moveSpeed: 3
@@ -231,7 +231,7 @@ MonoBehaviour:
   fireResistance: 0
   waterResistance: 0
   earthResistance: 0
-  maxStunValue: 75
+  maxStunValue: 100
   lightningResistance: 0
   metalResistance: 0
   damageText: {fileID: 4318804278247988162, guid: d8ab669f8ef30064497cad64bd4f4f2f, type: 3}

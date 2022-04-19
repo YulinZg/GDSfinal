@@ -476,6 +476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   property: 0
+  skillUI: {fileID: 0}
   shootOffset: 0.5
   fireRotater: {fileID: 1470505764301515668}
   waterRotater: {fileID: 5490512919895986329}
@@ -487,7 +488,7 @@ MonoBehaviour:
   - {fileID: 4513186292420534017, guid: eee4c1febdca851409069e4811dda038, type: 3}
   - {fileID: 8293550579373383261, guid: ce5cddaf9d1908245a70cd6fae5a21d4, type: 3}
   - {fileID: 7090674513177284307, guid: 13584b280151bae49ab3fa823dbc5d4b, type: 3}
-  damageF: 1.5
+  damageF: 2
   intervalF: 1
   bulletSpeedF: 10
   rangeF: 10
@@ -502,11 +503,11 @@ MonoBehaviour:
   burnDamage: 8
   burnTime: 5
   burnInterval: 1
-  skillDamageF: 10
-  skillRangeF: 2
+  skillDamageF: 20
+  skillRangeF: 3
   cooldownTimeF: 10
   markTime: 5
-  explosionDamage: 5
+  explosionDamage: 10
   skillF: {fileID: 6194500801451384584, guid: e4cc07f0b764f2848981a4db1de1a6ee, type: 3}
   damageW: 4
   damageW1: 6
@@ -584,15 +585,15 @@ MonoBehaviour:
   skillL:
   - {fileID: 2623331876852604324, guid: 4b692d02d2f7a2642b3b98cdfaf56c13, type: 3}
   - {fileID: 4701847348782030362, guid: 99b4d4bcb1d214e4aaf941b414878be7, type: 3}
-  damageM0: 4
-  damageM1: 5
-  damageM2: 5
-  damageM3: 5
-  damageM4: 3
-  damageM5: 12
+  damageM0: 15
+  damageM1: 20
+  damageM2: 15
+  damageM3: 20
+  damageM4: 10
+  damageM5: 30
   intervalM: 0.25
   rangeM: 1
-  moveSpeedM: 4
+  moveSpeedM: 5
   bulletsM:
   - {fileID: 8863458536095413964, guid: aff20e241ec0e3b459d0c283c4cc667f, type: 3}
   - {fileID: 1448791491170086823, guid: 1732463cb0ef83545bb633bd1a7b50e4, type: 3}
@@ -607,7 +608,7 @@ MonoBehaviour:
   repelDistance4: 1
   repelDistance5: 2.5
   skillDamageM: 5
-  skillRangeM: 10
+  skillRangeM: 15
   cooldownTimeM: 3
 --- !u!114 &936681498720812073
 MonoBehaviour:
@@ -737,7 +738,7 @@ LineRenderer:
     colorGradient:
       serializedVersion: 2
       key0: {r: 1, g: 0.7529412, b: 0, a: 1}
-      key1: {r: 1, g: 0.7529412, b: 0, a: 1}
+      key1: {r: 0, g: 0, b: 0, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -760,7 +761,7 @@ LineRenderer:
       atime5: 0
       atime6: 0
       atime7: 0
-      m_Mode: 1
+      m_Mode: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0

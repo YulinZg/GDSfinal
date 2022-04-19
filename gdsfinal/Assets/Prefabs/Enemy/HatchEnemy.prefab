@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAlive: 1
-  health: 200
+  health: 800
   attack: 40
   playerStopTime: 0.2
   moveSpeed: 1.5
