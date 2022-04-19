@@ -212,7 +212,7 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(Dashing(dir, distance, time));
     }
 
-    IEnumerator Dashing(Vector3 dir, float distance, float time)
+    public IEnumerator Dashing(Vector3 dir, float distance, float time)
     {
         float timer = 0;
         Vector3 start = transform.position;

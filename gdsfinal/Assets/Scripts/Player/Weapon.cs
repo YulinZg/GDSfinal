@@ -13,8 +13,9 @@ public class Weapon : MonoBehaviour
         lightning,
         metal
     }
-
     public Property property;
+
+    [SerializeField] private SkillUI skillUI;
     [SerializeField] private float shootOffset;
     [SerializeField] private Transform fireRotater;
     [SerializeField] private Transform waterRotater;
@@ -124,6 +125,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float dropInterval;
     [SerializeField] private GameObject[] skillE;
     private float cooldownTimerE = 0;
+    private float skillTimerE = 0;
     private float dropTimer = 0;
     private bool isDroping = false;
 
@@ -178,36 +180,23 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float repelDistance4;
     [SerializeField] private float repelDistance5;
 
+    [SerializeField] private float skillDamageM;
+    [SerializeField] private float skillRangeM;
+    [SerializeField] private float cooldownTimeM;
+    private float cooldownTimerM = 0;
+    private GrappleHook grappleHook;
+
     private void Awake()
     {
         player = GetComponent<PlayerController>();
         status = GetComponent<Status>();
+        grappleHook = GetComponent<GrappleHook>();
     }
 
     // Update is called once per frame
     void Update()
     {
         shootTimer += Time.deltaTime;
-        if (!player.isHurting)
-            switch (property)
-            {
-                case Property.fire:
-                    Fire();
-                    break;
-                case Property.water:
-                    Water();
-                    break;
-                case Property.earth:
-                    Earth();
-                    break;
-                case Property.lightning:
-                    Lightning();
-                    break;
-                case Property.metal:
-                    Metal();
-                    break;
-            }
-        RotateBullet(bulletSpeedF * 10);
         if (cooldownTimerF != 0)
         {
             cooldownTimerF -= Time.deltaTime;
@@ -227,7 +216,16 @@ public class Weapon : MonoBehaviour
                 cooldownTimerE = 0;
         }
         if (isDroping)
+        {
+            skillTimerE -= Time.deltaTime;
             Drop();
+            if (skillTimerE <= 0)
+            {
+                skillTimerE = 0;
+                isDroping = false;
+                cooldownTimerE = cooldownTimeE;
+            }
+        }
         if (cooldownTimerL != 0)
         {
             cooldownTimerL -= Time.deltaTime;
@@ -239,11 +237,55 @@ public class Weapon : MonoBehaviour
             skillTimerL -= Time.deltaTime;
             if (skillTimerL <= 0)
             {
+                skillTimerL = 0;
                 hasMoved = false;
                 Destroy(backPos.gameObject);
                 cooldownTimerL = cooldownTimeL;
             }
         }
+        if (cooldownTimerM != 0)
+        {
+            cooldownTimerM -= Time.deltaTime;
+            if (cooldownTimerM < 0)
+                cooldownTimerM = 0;
+        }
+        switch (property)
+        {
+            case Property.fire:
+                if (!player.isHurting)
+                    Fire();
+                skillUI.SetCooldownFill(cooldownTimerF / cooldownTimeF);
+                break;
+            case Property.water:
+                if (!player.isHurting)
+                    Water();
+                skillUI.SetCooldownFill(cooldownTimerW / cooldownTimeW);
+                break;
+            case Property.earth:
+                if (!player.isHurting)
+                    Earth();
+                if (!isDroping)
+                    skillUI.SetCooldownFill(cooldownTimerE / cooldownTimeE);
+                else
+                    skillUI.SetCooldownFill(1);
+                skillUI.SetSkillingFill(skillTimerE / skillTimeE);
+                break;
+            case Property.lightning:
+                if (!player.isHurting)
+                    Lightning();
+                if (!hasMoved)
+                    skillUI.SetCooldownFill(cooldownTimerL / cooldownTimeL);
+                else
+                    skillUI.SetCooldownFill(1);
+                skillUI.SetSkillingFill(skillTimerL / skillTimeL);
+                break;
+            case Property.metal:
+                if (!player.isHurting)
+                    Metal();
+                skillUI.SetCooldownFill(cooldownTimerM / cooldownTimeM);
+                break;
+        }
+        RotateBullet(bulletSpeedF * 10);
     }
 
     public void GetWeapon(Property type)
@@ -255,6 +297,7 @@ public class Weapon : MonoBehaviour
             case Property.fire:
                 player.SetSpeed(moveSpeedF);
                 canLaunch = true;
+                skillUI.SetSkillingFill(0);
                 break;
             case Property.water:
                 player.SetSpeed(moveSpeedW);
@@ -267,6 +310,7 @@ public class Weapon : MonoBehaviour
                 spawnedEffect1 = false;
                 spawnedEffect2 = false;
                 spawned2Effect2 = false;
+                skillUI.SetSkillingFill(0);
                 break;
             case Property.earth:
                 player.SetSpeed(moveSpeedE);
@@ -289,6 +333,7 @@ public class Weapon : MonoBehaviour
                 leftDown = false;
                 rightDown = false;
                 lastClick = 0;
+                skillUI.SetSkillingFill(0);
                 break;
         }
         if (bulletsInWorld.childCount > 0)
@@ -724,13 +769,7 @@ public class Weapon : MonoBehaviour
     {
         isDroping = true;
         dropTimer = 0;
-        Invoke(nameof(StopDrop), skillTimeE);
-    }
-
-    private void StopDrop()
-    {
-        isDroping = false;
-        cooldownTimerE = cooldownTimeE;
+        skillTimerE = skillTimeE;
     }
 
     private void Drop()
@@ -827,6 +866,7 @@ public class Weapon : MonoBehaviour
             hasMoved = false;
             Destroy(backPos.gameObject);
             cooldownTimerL = cooldownTimeL;
+            skillTimerL = 0;
         }
     }
 
@@ -859,43 +899,55 @@ public class Weapon : MonoBehaviour
 
     private void Metal()
     {
-        if (canCombo)
+        if (!player.isSkilling)
         {
-            comboTimer += Time.deltaTime;
-            if (comboTimer > intervalM * 2)
+            if (canCombo)
             {
-                canCombo = false;
-                comboTimer = 0;
-                comboCount = 0;
+                comboTimer += Time.deltaTime;
+                if (comboTimer > intervalM * 2)
+                {
+                    canCombo = false;
+                    comboTimer = 0;
+                    comboCount = 0;
+                }
+                if (Input.GetMouseButtonDown(0))
+                {
+                    leftDown = true;
+                    rightDown = false;
+                    canCombo = false;
+                    comboTimer = 0;
+                }
+                else if (Input.GetMouseButtonDown(1))
+                {
+                    leftDown = false;
+                    rightDown = true;
+                    canCombo = false;
+                    comboTimer = 0;
+                }
             }
-            if (Input.GetMouseButtonDown(0))
+            else if (!leftDown && !rightDown)
             {
-                leftDown = true;
-                rightDown = false;
-                canCombo = false;
-                comboTimer = 0;
+                if (Input.GetMouseButtonDown(0))
+                {
+                    NormalAttackM00();
+                }
+                else if (Input.GetMouseButtonDown(1))
+                {
+                    NormalAttackM10();
+                }
             }
-            else if (Input.GetMouseButtonDown(1))
+            if (!isCombating && (leftDown || rightDown))
+                Combo();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (!player.isAttacking && cooldownTimerM == 0)
             {
-                leftDown = false;
-                rightDown = true;
-                canCombo = false;
-                comboTimer = 0;
+                SkillM();
+                cooldownTimerM = cooldownTimeM;
             }
         }
-        else if (!leftDown && !rightDown)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                NormalAttackM00();
-            }
-            else if (Input.GetMouseButtonDown(1))
-            {
-                NormalAttackM10();
-            }
-        }
-        if (!isCombating && (leftDown || rightDown))
-            Combo();
     }
 
     private void NormalAttackM00()
@@ -1072,6 +1124,11 @@ public class Weapon : MonoBehaviour
     private void SetRepel(Bullet bullet, float distance)
     {
         bullet.SetRepel(distance);
+    }
+
+    private void SkillM()
+    {
+        grappleHook.Grapple(MouseDir(), skillRangeM, moveSpeedM, GetDamage(skillDamageM));
     }
 
     //Metal////////////////////////////////////////////////////////////////////////////////////////////////////////////

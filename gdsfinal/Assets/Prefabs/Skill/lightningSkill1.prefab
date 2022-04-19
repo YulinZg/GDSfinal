@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6580470817282908367}
   - component: {fileID: 3274510559215144635}
   - component: {fileID: 1271811034448981106}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: lightningSkill1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  property: 3
+  property: 4
   bulletEffect: {fileID: 0}
   blinkTime: 0.25
   blinkColor: {r: 1, g: 1, b: 0, a: 1}
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 7484931144270739054}
   - component: {fileID: 1301889703277806109}
   - component: {fileID: 960277889418928357}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 01 0
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  property: 0
+  property: 1
   bulletEffect: {fileID: 0}
   blinkTime: 0.25
   blinkColor: {r: 1, g: 0, b: 0, a: 1}
@@ -166,7 +166,7 @@ Transform:
   m_GameObject: {fileID: 4970449726698586475}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 461446863417746781}
   m_Father: {fileID: 0}

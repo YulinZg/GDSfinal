@@ -21,19 +21,19 @@ public class EnemyBullet : MonoBehaviour
         //transform.parent = null;
         if (count >= 4)
         {
-            StartCoroutine(shotFirstType(18, 1f, 0f, 360f, 2));
+            StartCoroutine(ShotFirstType(18, 1f, 0f, 360f, 2));
             Debug.Log("big attack");
             count = 0;
         }
         else
         {
             
-            StartCoroutine(shotFirstType(6, 1f, 225f, 90f, 1));
+            StartCoroutine(ShotFirstType(6, 1f, 225f, 90f, 1));
             Debug.Log("normal");
         }
     }
 
-    IEnumerator shotFirstType(int bulletNum, float duration, float startAngle, float rotateAngle, int numOfWave)
+    IEnumerator ShotFirstType(int bulletNum, float duration, float startAngle, float rotateAngle, int numOfWave)
     {
         float rotarionAngle;
         if (parent.getMoveDir().x > 0)

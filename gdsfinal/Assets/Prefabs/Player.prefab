@@ -318,6 +318,8 @@ GameObject:
   - component: {fileID: 8554495002776236972}
   - component: {fileID: 936681498720812073}
   - component: {fileID: 2741019207210238514}
+  - component: {fileID: 7771505069829453882}
+  - component: {fileID: 936156748081453381}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -474,6 +476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   property: 0
+  skillUI: {fileID: 0}
   shootOffset: 0.5
   fireRotater: {fileID: 1470505764301515668}
   waterRotater: {fileID: 5490512919895986329}
@@ -485,7 +488,7 @@ MonoBehaviour:
   - {fileID: 4513186292420534017, guid: eee4c1febdca851409069e4811dda038, type: 3}
   - {fileID: 8293550579373383261, guid: ce5cddaf9d1908245a70cd6fae5a21d4, type: 3}
   - {fileID: 7090674513177284307, guid: 13584b280151bae49ab3fa823dbc5d4b, type: 3}
-  damageF: 1.5
+  damageF: 2
   intervalF: 1
   bulletSpeedF: 10
   rangeF: 10
@@ -500,11 +503,11 @@ MonoBehaviour:
   burnDamage: 8
   burnTime: 5
   burnInterval: 1
-  skillDamageF: 10
-  skillRangeF: 2
+  skillDamageF: 20
+  skillRangeF: 3
   cooldownTimeF: 10
   markTime: 5
-  explosionDamage: 5
+  explosionDamage: 10
   skillF: {fileID: 6194500801451384584, guid: e4cc07f0b764f2848981a4db1de1a6ee, type: 3}
   damageW: 4
   damageW1: 6
@@ -530,7 +533,7 @@ MonoBehaviour:
   - {fileID: 8674904286268228194, guid: 21b1b44a24f91a64f89bc8553c012c61, type: 3}
   decelerateRate: 0.5
   decelerateTime: 10
-  skillDamageW: 2
+  skillDamageW: 1
   skillTimeW: 5
   skillRangeW: 4
   cooldownTimeW: 10
@@ -582,15 +585,15 @@ MonoBehaviour:
   skillL:
   - {fileID: 2623331876852604324, guid: 4b692d02d2f7a2642b3b98cdfaf56c13, type: 3}
   - {fileID: 4701847348782030362, guid: 99b4d4bcb1d214e4aaf941b414878be7, type: 3}
-  damageM0: 4
-  damageM1: 5
-  damageM2: 5
-  damageM3: 5
-  damageM4: 3
-  damageM5: 12
+  damageM0: 15
+  damageM1: 20
+  damageM2: 15
+  damageM3: 20
+  damageM4: 10
+  damageM5: 30
   intervalM: 0.25
   rangeM: 1
-  moveSpeedM: 4
+  moveSpeedM: 5
   bulletsM:
   - {fileID: 8863458536095413964, guid: aff20e241ec0e3b459d0c283c4cc667f, type: 3}
   - {fileID: 1448791491170086823, guid: 1732463cb0ef83545bb633bd1a7b50e4, type: 3}
@@ -604,6 +607,9 @@ MonoBehaviour:
   repelDistance3: 1.5
   repelDistance4: 1
   repelDistance5: 2.5
+  skillDamageM: 5
+  skillRangeM: 15
+  cooldownTimeM: 3
 --- !u!114 &936681498720812073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -670,3 +676,117 @@ MonoBehaviour:
   isAttacking: 0
   isSkilling: 0
   isHurting: 0
+--- !u!120 &7771505069829453882
+LineRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8995325589162135081}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 1972021319
+  m_SortingLayer: 3
+  m_SortingOrder: 0
+  m_Positions: []
+  m_Parameters:
+    serializedVersion: 3
+    widthMultiplier: 0.1
+    widthCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    colorGradient:
+      serializedVersion: 2
+      key0: {r: 1, g: 0.7529412, b: 0, a: 1}
+      key1: {r: 0, g: 0, b: 0, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    numCornerVertices: 0
+    numCapVertices: 10
+    alignment: 0
+    textureMode: 0
+    shadowBias: 0.5
+    generateLightingData: 0
+  m_UseWorldSpace: 1
+  m_Loop: 0
+--- !u!114 &936156748081453381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8995325589162135081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a541ad41971dc54baf1cb0f15ff30e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layer:
+    serializedVersion: 2
+    m_Bits: 1152
+  hook: {fileID: 8837005074448039765, guid: 12db63d32e14c724b95639ca66964bb9, type: 3}
+  shootSpeed: 60
+  grappleSpeed: 20

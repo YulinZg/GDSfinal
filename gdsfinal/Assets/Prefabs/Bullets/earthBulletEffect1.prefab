@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6072778848756057742}
   - component: {fileID: 301645346245352079}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: earthBulletEffect1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 8771541641375774204}
   - component: {fileID: 3888817361753706811}
   - component: {fileID: 5481975986823030902}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Irregular rock Spritesheet_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
