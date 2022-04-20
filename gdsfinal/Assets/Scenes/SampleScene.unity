@@ -452,7 +452,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: Cast a ring of fire, damage and mark enemies. Attack marked enemies with
+    fire again will cause a secondary explosion.
 --- !u!222 &44541661
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1972,7 +1973,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: Charge up and release meteorites around, inflict continuous damage to enemies.
 --- !u!222 &485209908
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2180,7 +2181,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: Leave a mark in place and teleport in the direction of your mouse, damage
+    enemies in the path. Use the skill again in a certain time will set a lightning
+    ball in place and teleport back to the mark, damage enemies in the path.
 --- !u!222 &517415684
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3115,7 +3118,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: Throw out a grapple hook damage and grab the enemy if it hits an enemy.
+    Pull yourself towards the wall if it hits a wall.
 --- !u!222 &671268447
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4534,7 +4538,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: Cast a ring of fire, damage and mark enemies. Attack marked enemies with
+    fire again will cause a secondary explosion.
 --- !u!222 &944913682
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4968,7 +4973,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: Charge up and release meteorites around, inflict continuous damage to enemies.
 --- !u!222 &1055298487
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6874,7 +6879,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: Throw out a grapple hook damage and grab the enemy if it hits an enemy.
+    Pull yourself towards the wall if it hits a wall.
 --- !u!222 &1559315330
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7230,7 +7236,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: Leave a mark in place and teleport in the direction of your mouse, damage
+    enemies in the path. Use the skill again in a certain time will set a lightning
+    ball in place and teleport back to the mark, damage enemies in the path.
 --- !u!222 &1658060381
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8832,7 +8840,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: Emerge a vortex, damage and gather enemies.
 --- !u!222 &2115343383
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8927,7 +8935,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: Emerge a vortex, damage and gather enemies.
 --- !u!222 &2121884550
 CanvasRenderer:
   m_ObjectHideFlags: 0
