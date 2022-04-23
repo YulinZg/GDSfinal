@@ -16,6 +16,10 @@ public class Room : MonoBehaviour
     public RoomTerrainGenerator roomTerrainGenerator;
     public EnemyGenerator enemyGenerator;
 
+    public GameObject chestsParent;
+    public GameObject chestsParentInstance;
+    public GameObject chests;
+
     private bool isPlayerEnter = false;
     public void UpdateRoom(float xOffset, float yOffset, bool isUpDataDoorNumber)
     {
@@ -48,6 +52,7 @@ public class Room : MonoBehaviour
         
         if (collision.CompareTag("Player") && !isPlayerEnter)
         {
+            chestsParentInstance = Instantiate(chestsParent, transform.position, Quaternion.identity);
             doorDown.GetComponent<BoxCollider2D>().isTrigger = false;
             doorLeft.GetComponent<BoxCollider2D>().isTrigger = false;
             doorUp.GetComponent<BoxCollider2D>().isTrigger = false;
@@ -58,6 +63,7 @@ public class Room : MonoBehaviour
             roomTerrainGenerator.GenerateTerrain();
             roomTerrainGenerator.GeneratePathPoint();
             enemyGenerator.GenerateEnemy();
+            
             //Debug.Log(1);
         }
     }
@@ -83,6 +89,10 @@ private void OnTriggerExit2D(Collider2D collision)
             Debug.Log(enemyGenerator.enemyCount);
             if (enemyGenerator.enemyCount == 0)
             {
+                Instantiate(chests, chestsParent.transform.position + Vector3.right * 2, Quaternion.identity).transform.parent = chestsParentInstance.transform;
+                Instantiate(chests, chestsParent.transform.position + Vector3.up * 2, Quaternion.identity).transform.parent = chestsParentInstance.transform;
+                Instantiate(chests, chestsParent.transform.position + Vector3.left * 2, Quaternion.identity).transform.parent = chestsParentInstance.transform;
+                chestsParent.transform.parent = null;
                 isCleanAllEnemy = true;
                 roomTerrainGenerator.DestroyAllPoints();
                 switch (doorNumber)

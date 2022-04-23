@@ -21,13 +21,16 @@ public class TouchFish : Enemy
         Invoke("selfDisappear", 20f);
         currentSpeed = speed = moveSpeed;
         chasingRange = Random.Range(0.9f, 2f);
-        pathPoints = GameObject.FindGameObjectsWithTag("Point");
+        foreach (GameObject point in GameObject.FindGameObjectsWithTag("Point"))
+        {
+            pathPointsPos.Add(point.transform.position);
+        }
+        GetNewTargetPoint();
     }
 
     private void selfDisappear()
     {
-        anim.Play("die");
-        speed = 0;
+        Die();
         canGiveAward = false;
     }
     public override void Move()

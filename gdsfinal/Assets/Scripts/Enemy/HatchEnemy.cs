@@ -84,7 +84,11 @@ public class HatchEnemy : Enemy
         
         currentSpeed = speed = moveSpeed;
         //chasingRange = Random.Range(0.9f, 2f);
-        pathPoints = GameObject.FindGameObjectsWithTag("Point");
+        foreach (GameObject point in GameObject.FindGameObjectsWithTag("Point"))
+        {
+            pathPointsPos.Add(point.transform.position);
+        }
+        GetNewTargetPoint();
     }
 
     public override void UpdateState()

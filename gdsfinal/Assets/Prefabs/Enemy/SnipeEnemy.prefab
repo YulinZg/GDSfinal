@@ -153,7 +153,7 @@ MonoBehaviour:
   idleInterval: 3
   isShooting: 0
   shadow: {fileID: 4071260581701501379}
-  disappearCoolDown: 6
+  disappearCoolDown: 20
 --- !u!50 &8360125922977546341
 Rigidbody2D:
   serializedVersion: 4

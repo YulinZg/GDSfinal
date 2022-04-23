@@ -75,7 +75,8 @@ public abstract class Enemy : MonoBehaviour
     //public float enemySeneseRadius;
     //public LayerMask enemyLayer;
     public LayerMask playerLayer;
-    protected GameObject[] pathPoints;
+    //protected GameObject[] pathPoints;
+    protected List<Vector3> pathPointsPos = new List<Vector3>();
     protected Vector2 desTraget;
     public Vector2 senseOffset;
     //public float rayDis;
@@ -95,7 +96,7 @@ public abstract class Enemy : MonoBehaviour
 
     public void GetNewTargetPoint()
     {
-        desTraget = pathPoints[Random.Range(0, pathPoints.Length)].transform.position;
+        desTraget = pathPointsPos[Random.Range(0, pathPointsPos.Count)];
     }
 
     public void TakeDamage(float damage, Color damageColor, float blinkTime, Color blinkColor, bool hurtStop, DamageProperty property, bool isBullet)
@@ -149,11 +150,13 @@ public abstract class Enemy : MonoBehaviour
     public void Die()
     {
         //gameObject.GetComponent<Collider2D>().enabled = false;
+
         health = 0;
         rigid.simulated = false;
         anim.Play("die");
         speed = 0;
         isAlive = false;
+        pathPointsPos.Clear();
     }
 
     public void Burn(float damage, float time, float interval)

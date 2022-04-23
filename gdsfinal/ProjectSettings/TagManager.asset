@@ -8,6 +8,7 @@ TagManager:
   - Point
   - TerrainGenerator
   - Canvas
+  - chests
   layers:
   - Default
   - TransparentFX

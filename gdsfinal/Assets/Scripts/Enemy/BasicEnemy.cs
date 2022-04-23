@@ -38,7 +38,10 @@ public class BasicEnemy : Enemy
         attackInterval = GetLengthByName("attack");
         currentSpeed = speed = moveSpeed;
         chasingRange = Random.Range(0.9f, 2f);
-        pathPoints = GameObject.FindGameObjectsWithTag("Point");
+        foreach (GameObject point in GameObject.FindGameObjectsWithTag("Point"))
+        {
+            pathPointsPos.Add(point.transform.position);
+        }
         GetNewTargetPoint();
     }
 

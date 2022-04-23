@@ -50,10 +50,13 @@ public class ScatterEnemy : Enemy
         //Debug.Log(desTraget);
         anim.SetBool("isIdle", true);
         currentState = EnemyState.idle;
-        attackInterval = GetLengthByName("attack");
+        //attackInterval = GetLengthByName("attack");
         currentSpeed = speed = moveSpeed;
         //chasingRange = Random.Range(0.9f, 2f);
-        pathPoints = GameObject.FindGameObjectsWithTag("Point");
+        foreach (GameObject point in GameObject.FindGameObjectsWithTag("Point"))
+        {
+            pathPointsPos.Add(point.transform.position);
+        }
         GetNewTargetPoint();
     }
     // Start is called before the first frame update
@@ -184,8 +187,8 @@ public class ScatterEnemy : Enemy
 
     private void goToTheFarthestPoint()
     {
-        List<GameObject> temp = getSomeFartherPoints(); 
-        transform.position = temp[Random.Range(0, temp.Count)].transform.position;
+        List<Vector3> temp = getSomeFartherPoints();
+        transform.position = temp[Random.Range(0, temp.Count)];
         temp.Clear();
     }
 
@@ -223,14 +226,14 @@ public class ScatterEnemy : Enemy
         isDisappearing = false;
         rigid.simulated = true;
     }
-    private List<GameObject> getSomeFartherPoints()
+    private List<Vector3> getSomeFartherPoints()
     {
-        List<GameObject> temp = new List<GameObject>();
-        foreach (GameObject point in pathPoints)
+        List<Vector3> temp = new List<Vector3>();
+        foreach (Vector3 pos in pathPointsPos)
         {
-            if (Vector2.Distance(player.position, point.transform.position) >= 5f && Vector2.Distance(player.position, point.transform.position) <= 10f)
+            if (Vector2.Distance(player.position, pos) >= 5f && Vector2.Distance(player.position, pos) <= 10f)
             {
-                temp.Add(point);
+                temp.Add(pos);
             }
         }
         return temp;

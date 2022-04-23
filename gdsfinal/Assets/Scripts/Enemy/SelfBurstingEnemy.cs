@@ -62,7 +62,11 @@ public class SelfBurstingEnemy : Enemy
         currentSpeed = speed = moveSpeed;
         invincible = 1 << LayerMask.NameToLayer("Invincible");
         //chasingRange = Random.Range(0.9f, 2f);
-        pathPoints = GameObject.FindGameObjectsWithTag("Point");
+        foreach (GameObject point in GameObject.FindGameObjectsWithTag("Point"))
+        {
+            pathPointsPos.Add(point.transform.position);
+        }
+        GetNewTargetPoint();
     }
 
     // Update is called once per frame
