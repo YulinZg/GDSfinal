@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
+    public float attackTimer;
     public bool isAlive = true;
     public float health;
     public float attack;
@@ -142,6 +143,7 @@ public abstract class Enemy : MonoBehaviour
             }
             if (health <= 0 && isAlive)
             {
+                
                 Die();
             }
         }
@@ -149,8 +151,8 @@ public abstract class Enemy : MonoBehaviour
 
     public void Die()
     {
+        
         //gameObject.GetComponent<Collider2D>().enabled = false;
-
         health = 0;
         rigid.simulated = false;
         anim.Play("die");
@@ -375,9 +377,10 @@ public abstract class Enemy : MonoBehaviour
 
     IEnumerator StopMove(float time)
     {
-        anim.SetBool("isHurt", true);
+        
+        //anim.SetBool("isHurt", true);
         speed = 0;
-        //Debug.Log(speed);
+        attackTimer = 0;
         while (stopTimer <= time)
         {
             stopTimer += Time.deltaTime;
@@ -388,12 +391,14 @@ public abstract class Enemy : MonoBehaviour
         isHurt = false;
         if (!isStun)
         {
-            anim.SetBool("isHurt", false);
+            
+            anim.SetBool("isHurt", false);   
         }
         if (!isStun && canBeAttacked && !isAttacking)
         {
             speed = currentSpeed; 
         }
+        
     }
 
     IEnumerator DoBlinks(Color color, int blinkNum, float interval)

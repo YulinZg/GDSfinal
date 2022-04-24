@@ -7,7 +7,7 @@ public class HatchEnemy : Enemy
     [Header("Own")]
     public GameObject child;
     private int numberOfChildren;
-    private float attackTimer;
+    //private float attackTimer;
     private float attackInterval;
     private enum ChasingTarget
     {
@@ -90,7 +90,10 @@ public class HatchEnemy : Enemy
         }
         GetNewTargetPoint();
     }
-
+    private void OnDestroy()
+    {
+        GameManagement.instance.enemyCount--;
+    }
     public override void UpdateState()
     {
         attackTimer += Time.deltaTime;
@@ -103,21 +106,25 @@ public class HatchEnemy : Enemy
                     if (attackTimer >= attackInterval)
                     {
                         currentState = EnemyState.Attack;
-                        attackTimer = 0;
+                       // attackTimer = 0;
                     }
                 }
                 else
                     Chasing();
                 break;
             case EnemyState.Attack:
-                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) > 0.9f)
+                moveDir = ((Vector2)player.position - (Vector2)transform.position).normalized;
+                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) > 0.9f && attackTimer >= attackInterval - 0.1f)
                 {
                     currentState = EnemyState.Chase;
                     desTraget = (Vector2)player.position;
                     StopAttack();
                 }
-                else
+                else if (attackTimer >= attackInterval)
+                {
                     Attack();
+                    attackTimer = 0;
+                }
                 break;
             default:
                 break;

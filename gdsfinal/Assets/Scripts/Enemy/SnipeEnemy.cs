@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SnipeEnemy : Enemy
 {
-    private float attackTimer;
+    //private float attackTimer;
     private float attackInterval;
 
     private float idleTimer;
@@ -75,6 +75,11 @@ public class SnipeEnemy : Enemy
             Move();
         }
     }
+
+    private void OnDestroy()
+    {
+        GameManagement.instance.enemyCount--;
+    }
     public override void UpdateState()
     {
         attackTimer += Time.deltaTime;
@@ -90,7 +95,7 @@ public class SnipeEnemy : Enemy
                     if (attackTimer >= attackInterval)
                     {
                         currentState = EnemyState.Attack;
-                        attackTimer = 0;
+                        //attackTimer = 0;
                     }
                 }
                 else if (idleTimer >= idleInterval)
@@ -123,7 +128,7 @@ public class SnipeEnemy : Enemy
                     if (attackTimer >= attackInterval)
                     {
                         currentState = EnemyState.Attack;
-                        attackTimer = 0;
+                        //attackTimer = 0;
                     }
                 }
                 //else if (Vector2.Distance(player.position, transform.position) < 3f)
@@ -135,6 +140,7 @@ public class SnipeEnemy : Enemy
                     Wander();
                 break;
             case EnemyState.Attack:
+                moveDir = ((Vector2)player.position - (Vector2)transform.position).normalized;
                 if (!IsPlayerInSense())
                 {
                     StopAttack();
@@ -151,8 +157,12 @@ public class SnipeEnemy : Enemy
                     speed = 0;
                     disappearCoolDownTimer = 0;
                 }
-                else
+                else if (attackTimer >= attackInterval)
+                {
                     Attack();
+                    attackTimer = 0;
+                }
+                
                 break;
             case EnemyState.back:
                 if (IsPlayerInSense() && !isDisappearing)
@@ -163,7 +173,7 @@ public class SnipeEnemy : Enemy
                     if (attackTimer >= attackInterval)
                     {
                         currentState = EnemyState.Attack;
-                        attackTimer = 0;
+                        //attackTimer = 0;
                     }
                 }
                 break;
@@ -234,10 +244,12 @@ public class SnipeEnemy : Enemy
 
     private void Attack()
     {
-        moveDir = ((Vector2)player.position - (Vector2)transform.position).normalized;
+       
         speed = 0;
         isAttacking = true;
         anim.SetBool("isAttacking", true);
+        //attackTimer = 0;
+
 
         //需要让怪物面向玩家
     }

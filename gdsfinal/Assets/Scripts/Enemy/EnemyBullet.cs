@@ -21,19 +21,19 @@ public class EnemyBullet : MonoBehaviour
         //transform.parent = null;
         if (count >= 4)
         {
-            StartCoroutine(ShotFirstType(18, 1f, 360f, 2));
+            StartCoroutine(ShotFirstType(18, 1f, 360f, 1, true));
             Debug.Log("big attack");
             count = 0;
         }
         else
         {
             
-            StartCoroutine(ShotFirstType(6, 1f, 90f, 1));
+            StartCoroutine(ShotFirstType(6, 1f, 90f, 1, false));
             Debug.Log("normal");
         }
     }
 
-    IEnumerator ShotFirstType(int bulletNum, float duration, float rotateAngle, int numOfWave)
+    IEnumerator ShotFirstType(int bulletNum, float duration, float rotateAngle, int numOfWave, bool isWait)
     {
         float rotarionAngle;
         //if (parent.getMoveDir().x > 0)
@@ -94,6 +94,10 @@ public class EnemyBullet : MonoBehaviour
                     rotarionAngle += 360;
                 }
                 CreateBullet(rotarionAngle);
+                if (isWait)
+                {
+                    yield return new WaitForSeconds(0.05f);
+                }
             }
             yield return new WaitForSeconds(duration / numOfWave);
         }

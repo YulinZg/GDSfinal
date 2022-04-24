@@ -95,6 +95,10 @@ public class SelfBurstingEnemy : Enemy
         //}
         moveDir = ((Vector2)player.position + chasingOffset - (Vector2)transform.position).normalized;
     }
+    private void OnDestroy()
+    {
+        GameManagement.instance.enemyCount--;
+    }
     public override void UpdateState()
     {
         switch (currentState)
