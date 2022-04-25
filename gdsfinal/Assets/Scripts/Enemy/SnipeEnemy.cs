@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SnipeEnemy : Enemy
 {
-    private float attackTimer;
+    //private float attackTimer;
     private float attackInterval;
 
     private float idleTimer;
@@ -43,7 +43,7 @@ public class SnipeEnemy : Enemy
     // Start is called before the first frame update
     void Start()
     {
-        //disappearCoolDownTimer = disappearCoolDown;
+        disappearCoolDownTimer = disappearCoolDown;
         attackInterval = GetLengthByName("attack");
         //Debug.Log(desTraget);
         anim.SetBool("isIdle", true);
@@ -51,7 +51,10 @@ public class SnipeEnemy : Enemy
         attackInterval = GetLengthByName("attack");
         currentSpeed = speed = moveSpeed;
         //chasingRange = Random.Range(0.9f, 2f);
-        pathPoints = GameObject.FindGameObjectsWithTag("Point");
+        foreach (GameObject point in GameObject.FindGameObjectsWithTag("Point"))
+        {
+            pathPointsPos.Add(point.transform.position);
+        }
         GetNewTargetPoint();
     }
     // Start is called before the first frame update
@@ -72,6 +75,11 @@ public class SnipeEnemy : Enemy
             Move();
         }
     }
+
+    private void OnDestroy()
+    {
+        GameManagement.instance.enemyCount--;
+    }
     public override void UpdateState()
     {
         attackTimer += Time.deltaTime;
@@ -87,7 +95,7 @@ public class SnipeEnemy : Enemy
                     if (attackTimer >= attackInterval)
                     {
                         currentState = EnemyState.Attack;
-                        attackTimer = 0;
+                        //attackTimer = 0;
                     }
                 }
                 else if (idleTimer >= idleInterval)
@@ -120,7 +128,7 @@ public class SnipeEnemy : Enemy
                     if (attackTimer >= attackInterval)
                     {
                         currentState = EnemyState.Attack;
-                        attackTimer = 0;
+                        //attackTimer = 0;
                     }
                 }
                 //else if (Vector2.Distance(player.position, transform.position) < 3f)
@@ -132,6 +140,7 @@ public class SnipeEnemy : Enemy
                     Wander();
                 break;
             case EnemyState.Attack:
+                moveDir = ((Vector2)player.position - (Vector2)transform.position).normalized;
                 if (!IsPlayerInSense())
                 {
                     StopAttack();
@@ -139,21 +148,21 @@ public class SnipeEnemy : Enemy
                     anim.SetBool("isIdle", false);
                     currentState = EnemyState.Wander;
                 }
-                else if (Vector2.Distance(player.position, transform.position) < 3f)
+                else if (Vector2.Distance(player.position, transform.position) < 3f && disappearCoolDownTimer >= disappearCoolDown)
                 {
-                    if (disappearCoolDownTimer >= disappearCoolDown)
-                    {
-                        currentState = EnemyState.back;
-                        StartCoroutine(Disappear(1.5f));
-                        anim.SetBool("isIdle", true);
-                        StopAttack();
-                        speed = 0;
-                        disappearCoolDownTimer = 0;
-                    }
-                    //goToTheFarthestPoint();
+                    currentState = EnemyState.back;
+                    StartCoroutine(Disappear(1.5f));
+                    anim.SetBool("isIdle", true);
+                    StopAttack();
+                    speed = 0;
+                    disappearCoolDownTimer = 0;
                 }
-                else
+                else if (attackTimer >= attackInterval)
+                {
                     Attack();
+                    attackTimer = 0;
+                }
+                
                 break;
             case EnemyState.back:
                 if (IsPlayerInSense() && !isDisappearing)
@@ -164,7 +173,7 @@ public class SnipeEnemy : Enemy
                     if (attackTimer >= attackInterval)
                     {
                         currentState = EnemyState.Attack;
-                        attackTimer = 0;
+                        //attackTimer = 0;
                     }
                 }
                 break;
@@ -174,8 +183,8 @@ public class SnipeEnemy : Enemy
     }
     private void goToTheFarthestPoint()
     {
-        List<GameObject> temp = getSomeFartherPoints();
-        transform.position = temp[Random.Range(0, temp.Count)].transform.position;
+        List<Vector3> temp = getSomeFartherPoints();
+        transform.position = temp[Random.Range(0, temp.Count)];
         temp.Clear();
     }
 
@@ -213,14 +222,14 @@ public class SnipeEnemy : Enemy
         isDisappearing = false;
         rigid.simulated = true;
     }
-    private List<GameObject> getSomeFartherPoints()
+    private List<Vector3> getSomeFartherPoints()
     {
-        List<GameObject> temp = new List<GameObject>();
-        foreach (GameObject point in pathPoints)
+        List<Vector3> temp = new List<Vector3>();
+        foreach (Vector3 pos in pathPointsPos)
         {
-            if (Vector2.Distance(player.position, point.transform.position) >= 5f && Vector2.Distance(player.position, point.transform.position) <= 10f)
+            if (Vector2.Distance(player.position, pos) >= 5f && Vector2.Distance(player.position, pos) <= 10f)
             {
-                temp.Add(point);
+                temp.Add(pos);
             }
         }
         return temp;
@@ -235,10 +244,13 @@ public class SnipeEnemy : Enemy
 
     private void Attack()
     {
+       
         speed = 0;
         isAttacking = true;
         anim.SetBool("isAttacking", true);
-        moveDir = ((Vector2)player.position - (Vector2)transform.position).normalized;
+        //attackTimer = 0;
+
+
         //需要让怪物面向玩家
     }
 

@@ -62,7 +62,11 @@ public class SelfBurstingEnemy : Enemy
         currentSpeed = speed = moveSpeed;
         invincible = 1 << LayerMask.NameToLayer("Invincible");
         //chasingRange = Random.Range(0.9f, 2f);
-        pathPoints = GameObject.FindGameObjectsWithTag("Point");
+        foreach (GameObject point in GameObject.FindGameObjectsWithTag("Point"))
+        {
+            pathPointsPos.Add(point.transform.position);
+        }
+        GetNewTargetPoint();
     }
 
     // Update is called once per frame
@@ -90,6 +94,10 @@ public class SelfBurstingEnemy : Enemy
         //    desTraget = (Vector2)player.position + new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
         //}
         moveDir = ((Vector2)player.position + chasingOffset - (Vector2)transform.position).normalized;
+    }
+    private void OnDestroy()
+    {
+        GameManagement.instance.enemyCount--;
     }
     public override void UpdateState()
     {

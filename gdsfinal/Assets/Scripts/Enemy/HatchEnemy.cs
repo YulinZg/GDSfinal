@@ -7,7 +7,7 @@ public class HatchEnemy : Enemy
     [Header("Own")]
     public GameObject child;
     private int numberOfChildren;
-    private float attackTimer;
+    //private float attackTimer;
     private float attackInterval;
     private enum ChasingTarget
     {
@@ -84,9 +84,16 @@ public class HatchEnemy : Enemy
         
         currentSpeed = speed = moveSpeed;
         //chasingRange = Random.Range(0.9f, 2f);
-        pathPoints = GameObject.FindGameObjectsWithTag("Point");
+        foreach (GameObject point in GameObject.FindGameObjectsWithTag("Point"))
+        {
+            pathPointsPos.Add(point.transform.position);
+        }
+        GetNewTargetPoint();
     }
-
+    private void OnDestroy()
+    {
+        GameManagement.instance.enemyCount--;
+    }
     public override void UpdateState()
     {
         attackTimer += Time.deltaTime;
@@ -99,21 +106,25 @@ public class HatchEnemy : Enemy
                     if (attackTimer >= attackInterval)
                     {
                         currentState = EnemyState.Attack;
-                        attackTimer = 0;
+                       // attackTimer = 0;
                     }
                 }
                 else
                     Chasing();
                 break;
             case EnemyState.Attack:
-                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) > 0.9f)
+                moveDir = ((Vector2)player.position - (Vector2)transform.position).normalized;
+                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) > 0.9f && attackTimer >= attackInterval - 0.1f)
                 {
                     currentState = EnemyState.Chase;
                     desTraget = (Vector2)player.position;
                     StopAttack();
                 }
-                else
+                else if (attackTimer >= attackInterval)
+                {
                     Attack();
+                    attackTimer = 0;
+                }
                 break;
             default:
                 break;

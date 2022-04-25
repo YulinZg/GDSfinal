@@ -21,63 +21,85 @@ public class EnemyBullet : MonoBehaviour
         //transform.parent = null;
         if (count >= 4)
         {
-            StartCoroutine(ShotFirstType(18, 1f, 0f, 360f, 2));
+            StartCoroutine(ShotFirstType(18, 1f, 360f, 1, true));
             Debug.Log("big attack");
             count = 0;
         }
         else
         {
             
-            StartCoroutine(ShotFirstType(6, 1f, 225f, 90f, 1));
+            StartCoroutine(ShotFirstType(6, 1f, 90f, 1, false));
             Debug.Log("normal");
         }
     }
 
-    IEnumerator ShotFirstType(int bulletNum, float duration, float startAngle, float rotateAngle, int numOfWave)
+    IEnumerator ShotFirstType(int bulletNum, float duration, float rotateAngle, int numOfWave, bool isWait)
     {
         float rotarionAngle;
-        if (parent.getMoveDir().x > 0)
+        //if (parent.getMoveDir().x > 0)
+        //{
+        //    for (int i = 0; i < numOfWave; i++)
+        //    {
+        //        rotarionAngle = startAngle - rotateAngle / bulletNum;
+        //        for (int j = 0; j < bulletNum; j++)
+        //        {
+        //            rotarionAngle += rotateAngle / bulletNum;
+        //            if (rotarionAngle > 360)
+        //            {
+        //                rotarionAngle = rotarionAngle % 360;
+        //            }
+        //            else if (rotarionAngle < 0)
+        //            {
+        //                rotarionAngle += 360;
+        //            }
+        //            CreateBullet(rotarionAngle);
+        //        }
+        //        yield return new WaitForSeconds(duration / numOfWave);
+        //    }
+        //}
+        //else
+        //{
+        //    for (int i = 0; i < numOfWave; i++)
+        //    {
+        //        rotarionAngle = -startAngle + rotateAngle / bulletNum;
+        //        for (int j = 0; j < bulletNum; j++)
+        //        {
+        //            rotarionAngle -= rotateAngle / bulletNum;
+        //            if (rotarionAngle > 360)
+        //            {
+        //                rotarionAngle = rotarionAngle % 360;
+        //            }
+        //            else if (rotarionAngle < 0)
+        //            {
+        //                rotarionAngle += 360;
+        //            }
+        //            CreateBullet(rotarionAngle);
+        //            //yield return new WaitForSeconds(duration / bulletNum);
+        //        }
+        //        yield return new WaitForSeconds(duration / numOfWave);
+        //    }
+        //}
+        for (int i = 0; i < numOfWave; i++)
         {
-            for (int i = 0; i < numOfWave; i++)
+            rotarionAngle = Mathf.Atan2(parent.getMoveDir().y, parent.getMoveDir().x) * Mathf.Rad2Deg - 135 - rotateAngle / bulletNum;
+            for (int j = 0; j < bulletNum; j++)
             {
-                rotarionAngle = startAngle - rotateAngle / bulletNum;
-                for (int j = 0; j < bulletNum; j++)
+                rotarionAngle += rotateAngle / bulletNum;
+                if (rotarionAngle > 360)
                 {
-                    rotarionAngle += rotateAngle / bulletNum;
-                    if (rotarionAngle > 360)
-                    {
-                        rotarionAngle = rotarionAngle % 360;
-                    }
-                    else if (rotarionAngle < 0)
-                    {
-                        rotarionAngle += 360;
-                    }
-                    CreateBullet(rotarionAngle);
+                    rotarionAngle = rotarionAngle % 360;
                 }
-                yield return new WaitForSeconds(duration / numOfWave);
-            }
-        }
-        else
-        {
-            for (int i = 0; i < numOfWave; i++)
-            {
-                rotarionAngle = -startAngle + rotateAngle / bulletNum;
-                for (int j = 0; j < bulletNum; j++)
+                else if (rotarionAngle < 0)
                 {
-                    rotarionAngle -= rotateAngle / bulletNum;
-                    if (rotarionAngle > 360)
-                    {
-                        rotarionAngle = rotarionAngle % 360;
-                    }
-                    else if (rotarionAngle < 0)
-                    {
-                        rotarionAngle += 360;
-                    }
-                    CreateBullet(rotarionAngle);
-                    //yield return new WaitForSeconds(duration / bulletNum);
+                    rotarionAngle += 360;
                 }
-                yield return new WaitForSeconds(duration / numOfWave);
+                CreateBullet(rotarionAngle);
+                if (isWait)
+                {
+                    yield return new WaitForSeconds(0.05f);
+                }
             }
+            yield return new WaitForSeconds(duration / numOfWave);
         }
         parent.isShooting = false;
         

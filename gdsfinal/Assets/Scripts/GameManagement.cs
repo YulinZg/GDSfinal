@@ -10,8 +10,11 @@ public class GameManagement : MonoBehaviour
     [SerializeField] private GameObject[] scrolls;
     [SerializeField] private GameObject[] sundries;
 
+    public int enemyCount;
+
     private void Awake()
     {
+        enemyCount = 0;
         instance = this;
     }
 
@@ -26,4 +29,5 @@ public class GameManagement : MonoBehaviour
         int i = Random.Range(0, sundries.Length);
         return sundries[i];
     }
+
 }

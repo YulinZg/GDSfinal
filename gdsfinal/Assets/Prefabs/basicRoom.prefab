@@ -66,6 +66,9 @@ MonoBehaviour:
   doorNumber: 0
   roomTerrainGenerator: {fileID: 3231157448882060418}
   enemyGenerator: {fileID: 6488910984884397606}
+  chestsParent: {fileID: 115161178641780889, guid: 278142a46a5171d49b69e59dc605228d, type: 3}
+  chestsParentInstance: {fileID: 0}
+  chests: {fileID: 9161512756679264895, guid: 2a6b769c225b1fb4c8a03a83fc64becf, type: 3}
 --- !u!61 &6519128629888106651
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5588,7 +5591,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5385719680761229817}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12, y: -6, z: 0}
+  m_LocalPosition: {x: -11.5, y: -5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1358346349217189652}
@@ -5907,8 +5910,8 @@ MonoBehaviour:
   enemySnipe: {fileID: 2567320152254174609, guid: 9cebe1973ddb69446b3bc3f5fd848fac, type: 3}
   enemyBasicNum: 1
   enemySelfBurstingNum: 1
-  enemyTouchFishNum: 0
+  enemyTouchFishNum: 1
   enemyHatchNum: 1
-  numberOfChildren: 1
-  enemyScatterNum: 1
-  enemySnipeNum: 1
+  numberOfChildren: 3
+  enemyScatterNum: 0
+  enemySnipeNum: 0

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
+    public float attackTimer;
     public bool isAlive = true;
     public float health;
     public float attack;
@@ -75,7 +76,8 @@ public abstract class Enemy : MonoBehaviour
     //public float enemySeneseRadius;
     //public LayerMask enemyLayer;
     public LayerMask playerLayer;
-    protected GameObject[] pathPoints;
+    //protected GameObject[] pathPoints;
+    protected List<Vector3> pathPointsPos = new List<Vector3>();
     protected Vector2 desTraget;
     public Vector2 senseOffset;
     //public float rayDis;
@@ -95,7 +97,7 @@ public abstract class Enemy : MonoBehaviour
 
     public void GetNewTargetPoint()
     {
-        desTraget = pathPoints[Random.Range(0, pathPoints.Length)].transform.position;
+        desTraget = pathPointsPos[Random.Range(0, pathPointsPos.Count)];
     }
 
     public void TakeDamage(float damage, Color damageColor, float blinkTime, Color blinkColor, bool hurtStop, DamageProperty property, bool isBullet)
@@ -141,6 +143,7 @@ public abstract class Enemy : MonoBehaviour
             }
             if (health <= 0 && isAlive)
             {
+                
                 Die();
             }
         }
@@ -148,12 +151,14 @@ public abstract class Enemy : MonoBehaviour
 
     public void Die()
     {
+        
         //gameObject.GetComponent<Collider2D>().enabled = false;
         health = 0;
         rigid.simulated = false;
         anim.Play("die");
         speed = 0;
         isAlive = false;
+        pathPointsPos.Clear();
     }
 
     public void Burn(float damage, float time, float interval)
@@ -372,9 +377,10 @@ public abstract class Enemy : MonoBehaviour
 
     IEnumerator StopMove(float time)
     {
-        anim.SetBool("isHurt", true);
+        
+        //anim.SetBool("isHurt", true);
         speed = 0;
-        //Debug.Log(speed);
+        attackTimer = 0;
         while (stopTimer <= time)
         {
             stopTimer += Time.deltaTime;
@@ -385,12 +391,14 @@ public abstract class Enemy : MonoBehaviour
         isHurt = false;
         if (!isStun)
         {
-            anim.SetBool("isHurt", false);
+            
+            anim.SetBool("isHurt", false);   
         }
         if (!isStun && canBeAttacked && !isAttacking)
         {
             speed = currentSpeed; 
         }
+        
     }
 
     IEnumerator DoBlinks(Color color, int blinkNum, float interval)

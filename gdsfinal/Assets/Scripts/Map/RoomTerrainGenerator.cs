@@ -5,7 +5,7 @@ using UnityEngine;
 public class RoomTerrainGenerator : MonoBehaviour
 {
     // Start is called before the first frame update
-    private int[,] map = new int[25, 13];
+    private int[,] map = new int[24, 11];
 
     public GameObject floor;
     public List<GameObject> points = new List<GameObject>();

@@ -6,7 +6,7 @@ public class ScatterEnemy : Enemy
 {
     //private float chasingRange;
     //private float changeStateTimer;
-    private float attackTimer;
+    
     private float attackInterval;
 
     private float idleTimer;
@@ -50,10 +50,13 @@ public class ScatterEnemy : Enemy
         //Debug.Log(desTraget);
         anim.SetBool("isIdle", true);
         currentState = EnemyState.idle;
-        attackInterval = GetLengthByName("attack");
+        //attackInterval = GetLengthByName("attack");
         currentSpeed = speed = moveSpeed;
         //chasingRange = Random.Range(0.9f, 2f);
-        pathPoints = GameObject.FindGameObjectsWithTag("Point");
+        foreach (GameObject point in GameObject.FindGameObjectsWithTag("Point"))
+        {
+            pathPointsPos.Add(point.transform.position);
+        }
         GetNewTargetPoint();
     }
     // Start is called before the first frame update
@@ -90,7 +93,7 @@ public class ScatterEnemy : Enemy
                     if (attackTimer >= attackInterval)
                     {
                         currentState = EnemyState.Attack;
-                        attackTimer = 0;
+                        //attackTimer = 0;
                     }
                 }
                 else if (idleTimer >= idleInterval)
@@ -115,7 +118,7 @@ public class ScatterEnemy : Enemy
                     anim.SetBool("isIdle", true);
                     GetNewTargetPoint();
                 }
-                else if(IsPlayerInSense())
+                else if (IsPlayerInSense())
                 {
                     anim.SetBool("isIdle", true);
                     //isSensePlayer = true;
@@ -123,7 +126,7 @@ public class ScatterEnemy : Enemy
                     if (attackTimer >= attackInterval)
                     {
                         currentState = EnemyState.Attack;
-                        attackTimer = 0;
+                        //attackTimer = 0;
                     }
                 }
                 //else if (Vector2.Distance(player.position, transform.position) < 3f)
@@ -135,28 +138,28 @@ public class ScatterEnemy : Enemy
                     Wander();
                 break;
             case EnemyState.Attack:
-                if (!IsPlayerInSense())
+                moveDir = ((Vector2)player.position - (Vector2)transform.position).normalized;
+                if (!IsPlayerInSense() && attackTimer >= attackInterval)
                 {
                     StopAttack();
                     GetNewTargetPoint();
                     anim.SetBool("isIdle", false);
                     currentState = EnemyState.Wander;
                 }
-                else if (Vector2.Distance(player.position, transform.position) < 3f)
+                else if (Vector2.Distance(player.position, transform.position) < 3f && disappearCoolDownTimer >= disappearCoolDown)
                 {
-                    if (disappearCoolDownTimer >= disappearCoolDown)
-                    {
-                        currentState = EnemyState.back;
-                        StartCoroutine(Disappear(1f));
-                        anim.SetBool("isIdle", true);
-                        StopAttack();
-                        speed = 0;
-                        disappearCoolDownTimer = 0;
-                    }
-                    //goToTheFarthestPoint();
+                    currentState = EnemyState.back;
+                    StartCoroutine(Disappear(1f));
+                    anim.SetBool("isIdle", true);
+                    StopAttack();
+                    speed = 0;
+                    disappearCoolDownTimer = 0;
                 }
-                else
-                    Attack(); 
+                else if (attackTimer >= attackInterval)
+                {
+                    Attack();
+                    attackTimer = 0;
+                }
                 break;
             case EnemyState.back:
                 if (IsPlayerInSense() && !isDisappearing)
@@ -167,7 +170,7 @@ public class ScatterEnemy : Enemy
                     if (attackTimer >= attackInterval)
                     {
                         currentState = EnemyState.Attack;
-                        attackTimer = 0;
+                        //attackTimer = 0;
                     }
                 }
                 break;
@@ -179,13 +182,13 @@ public class ScatterEnemy : Enemy
     private void Idle()
     {
         idleTimer += Time.deltaTime;
-        speed = 0;  
+        speed = 0;
     }
 
     private void goToTheFarthestPoint()
     {
-        List<GameObject> temp = getSomeFartherPoints(); 
-        transform.position = temp[Random.Range(0, temp.Count)].transform.position;
+        List<Vector3> temp = getSomeFartherPoints();
+        transform.position = temp[Random.Range(0, temp.Count)];
         temp.Clear();
     }
 
@@ -195,7 +198,7 @@ public class ScatterEnemy : Enemy
         rigid.simulated = false;
         for (int i = 254; i >= 0; i--)
         {
-            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, (float)i/255f);
+            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, (float)i / 255f);
             //Debug.LogError(sprite.color);
             //if (i <= 60)
             //{
@@ -223,14 +226,14 @@ public class ScatterEnemy : Enemy
         isDisappearing = false;
         rigid.simulated = true;
     }
-    private List<GameObject> getSomeFartherPoints()
+    private List<Vector3> getSomeFartherPoints()
     {
-        List<GameObject> temp = new List<GameObject>();
-        foreach (GameObject point in pathPoints)
+        List<Vector3> temp = new List<Vector3>();
+        foreach (Vector3 pos in pathPointsPos)
         {
-            if (Vector2.Distance(player.position, point.transform.position) >= 5f && Vector2.Distance(player.position, point.transform.position) <= 10f)
+            if (Vector2.Distance(player.position, pos) >= 5f && Vector2.Distance(player.position, pos) <= 10f)
             {
-                temp.Add(point);
+                temp.Add(pos);
             }
         }
         return temp;
@@ -248,7 +251,7 @@ public class ScatterEnemy : Enemy
         speed = 0;
         isAttacking = true;
         anim.SetBool("isAttacking", true);
-        moveDir = ((Vector2)player.position - (Vector2)transform.position).normalized;
+       
         //需要让怪物面向玩家
     }
 
@@ -257,5 +260,10 @@ public class ScatterEnemy : Enemy
         speed = currentSpeed;
         isAttacking = false;
         anim.SetBool("isAttacking", false);
+    }
+
+    private void OnDestroy()
+    {
+        GameManagement.instance.enemyCount--;
     }
 }

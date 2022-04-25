@@ -32,6 +32,7 @@ public class SnipeBulletSpawner : MonoBehaviour
             Debug.Log("normal");
         }
     }
+    
     IEnumerator PrepareShoot(float prepareDuration, int bulletNum, float attackDuration)
     {
         rotarionAngle = Mathf.Atan2(parent.getMoveDir().y, parent.getMoveDir().x) * Mathf.Rad2Deg - 90f;
@@ -59,5 +60,10 @@ public class SnipeBulletSpawner : MonoBehaviour
     private void CreateLaser(float angle)
     {
         Destroy(Instantiate(laser, transform.position, Quaternion.AngleAxis(angle, Vector3.forward)), 0.5f);
+    }
+
+    private void OnDestroy()
+    {
+        GameManagement.instance.enemyCount--;
     }
 }

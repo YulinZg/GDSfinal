@@ -6,7 +6,7 @@ public class BasicEnemy : Enemy
 {
     private float chasingRange;
     //private float changeStateTimer;
-    private float attackTimer;
+    //private float attackTimer;
     private float attackInterval;
     private enum EnemyState
     {
@@ -31,14 +31,21 @@ public class BasicEnemy : Enemy
         anim = GetComponent<Animator>();
     }
 
+    private void OnDestroy()
+    {
+        GameManagement.instance.enemyCount--;
+    }
     // Start is called before the first frame update
     void Start()
     {
         
         attackInterval = GetLengthByName("attack");
         currentSpeed = speed = moveSpeed;
-        chasingRange = Random.Range(0.9f, 2f);
-        pathPoints = GameObject.FindGameObjectsWithTag("Point");
+        chasingRange = Random.Range(0.8f, 1.5f);
+        foreach (GameObject point in GameObject.FindGameObjectsWithTag("Point"))
+        {
+            pathPointsPos.Add(point.transform.position);
+        }
         GetNewTargetPoint();
     }
 
@@ -83,7 +90,7 @@ public class BasicEnemy : Enemy
                     if (attackTimer >= attackInterval)
                     {
                         currentState = EnemyState.Attack;
-                        attackTimer = 0;
+                        //attackTimer = 0;
                         anim.SetBool("isIdle", false);
                     }
                 }
@@ -91,15 +98,19 @@ public class BasicEnemy : Enemy
                     Chasing();
                 break;
             case EnemyState.Attack:
-                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) > 0.9f)
+                moveDir = ((Vector2)player.position - (Vector2)transform.position).normalized;
+                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) > 0.9f && attackTimer >= attackInterval)
                 {
                     chasingRange = Random.Range(0.9f, 2f);
                     currentState = EnemyState.Chase;
                     desTraget = (Vector2)player.position;
                     StopAttack();
                 }
-                else
+                else if (attackTimer >= attackInterval)
+                {
                     Attack();
+                    attackTimer = 0;
+                }
                 break;
             default:
                 break;
@@ -130,7 +141,7 @@ public class BasicEnemy : Enemy
         speed = 0;
         isAttacking = true;
         anim.SetBool("isAttacking", true);
-        moveDir = ((Vector2)player.position - (Vector2)transform.position).normalized;
+        
         //需要让怪物面向玩家
     }
 
