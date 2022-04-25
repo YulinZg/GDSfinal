@@ -56,11 +56,13 @@ public class Chest : MonoBehaviour
         GetComponent<SpriteRenderer>().sprite = openedSprite;
         GetComponent<BoxCollider2D>().enabled = false;
         chestUI.panel.SetActive(false);
+        transform.parent.parent.GetComponent<Room>().OpenDoor();
         transform.parent = null;
         if (chests.childCount  > 0)
             foreach (Transform child in chests)
                 Destroy(child.gameObject);
         StartCoroutine(SpawnTreasure(0.2f));
+        
     }
 
     IEnumerator SpawnTreasure(float interval)

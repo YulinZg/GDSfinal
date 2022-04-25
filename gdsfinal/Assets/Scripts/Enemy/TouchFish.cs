@@ -65,6 +65,7 @@ public class TouchFish : Enemy
     private void OnDestroy()
     {
         GameManagement.instance.enemyCount--;
+        Debug.LogError(GameManagement.instance.enemyCount);
         if (canGiveAward)
         {
             Debug.Log("µôÂäÂß¼­ÔÚÕâÀï");

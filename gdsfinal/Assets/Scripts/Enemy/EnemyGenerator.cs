@@ -12,17 +12,17 @@ public class EnemyGenerator : MonoBehaviour
     [SerializeField] private GameObject enemyHatch;
     [SerializeField] private GameObject enemyScatter;
     [SerializeField] private GameObject enemySnipe;
-    [SerializeField] private int enemyBasicNum;
-    [SerializeField] private int enemySelfBurstingNum;
-    [SerializeField] private int enemyTouchFishNum;
-    [SerializeField] private int enemyHatchNum;
-    [SerializeField] private int numberOfChildren;
-    [SerializeField] private int enemyScatterNum;
-    [SerializeField] private int enemySnipeNum;
+    //public int enemyBasicNum;
+    //public int enemySelfBurstingNum;
+    //public int enemyTouchFishNum;
+    //public int enemyHatchNum;
+    //public int numberOfChildren;
+    //public int enemyScatterNum;
+    //public int enemySnipeNum;
     private int[,] map = new int[26, 14];
     //private List<GameObject> enemyArray = new List<GameObject>();
 
-    public void GenerateEnemy()
+    public void GenerateEnemy(int enemyBasicNum, int enemySelfBurstingNum, int enemyTouchFishNum, int enemyHatchNum, int numberOfChildren, int enemyScatterNum, int enemySnipeNum)
     {
         for (int i = 0; i < enemyBasicNum; i++)
         {
