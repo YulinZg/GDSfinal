@@ -120,7 +120,7 @@ public class Room : MonoBehaviour
         if (collision.CompareTag("Enemy") && !collision.GetComponent<Enemy>().isAlive)
         {
             //enemyGenerator.enemyCount--;
-            Invoke("ZeroEnemy", 0.5f);
+            Invoke(nameof(ZeroEnemy), 0.5f);
 
             //Debug.Log(enemyGenerator.numOfEnemy);
         }
@@ -131,12 +131,13 @@ public class Room : MonoBehaviour
         Debug.Log(GameManagement.instance.enemyCount);
         if (GameManagement.instance.enemyCount == 0)
         {
-            Instantiate(chests, chestsParentInstance.transform.position + Vector3.right * 2, Quaternion.identity).transform.parent = chestsParentInstance.transform;
-            Instantiate(chests, chestsParentInstance.transform.position + Vector3.up * 2, Quaternion.identity).transform.parent = chestsParentInstance.transform;
-            Instantiate(chests, chestsParentInstance.transform.position + Vector3.left * 2, Quaternion.identity).transform.parent = chestsParentInstance.transform;
+            Instantiate(chests, chestsParentInstance.transform.position + Vector3.right * 3, Quaternion.identity).transform.parent = chestsParentInstance.transform;
+            Instantiate(chests, chestsParentInstance.transform.position + Vector3.up * 3, Quaternion.identity).transform.parent = chestsParentInstance.transform;
+            Instantiate(chests, chestsParentInstance.transform.position + Vector3.left * 3, Quaternion.identity).transform.parent = chestsParentInstance.transform;
             chestsParent.transform.parent = null;
             isCleanAllEnemy = true;
             roomTerrainGenerator.DestroyAllPoints();
+            UIManager.instance.roomClearPanel.SetActive(true);
         }
     }
 

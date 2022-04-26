@@ -1253,6 +1253,7 @@ MonoBehaviour:
   - {fileID: 1870935099029424337, guid: be926184a0304c748b785eec0e502c1f, type: 3}
   - {fileID: 8236219528873415335, guid: 733cf84e116a5b94792a2f8a803e6482, type: 3}
   enemyCount: 0
+  roomCounter: 0
 --- !u!4 &322388166
 Transform:
   m_ObjectHideFlags: 0
@@ -6028,6 +6029,7 @@ MonoBehaviour:
   UIPanel: {fileID: 1366764356}
   miniMap: {fileID: 605334532}
   statusUI: {fileID: 1909639562}
+  roomClearPanel: {fileID: 612077836}
 --- !u!1 &1306493217
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,12 +4,20 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager instance;
+
     public GameObject UIPanel;
     private bool isUIShowed = true;
     public GameObject miniMap;
     private bool mapOpened = false;
     public GameObject statusUI;
     private bool statusOpened = false;
+    public GameObject roomClearPanel;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     // Update is called once per frame
     void Update()

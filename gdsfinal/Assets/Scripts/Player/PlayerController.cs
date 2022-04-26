@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if ((Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.LeftControl)) && canInput && !isAttacking)
+        if ((Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Q)) && canInput && !isAttacking)
             SwitchWeapon();
         if (Input.GetKeyDown(KeyCode.R) && canInput && !isAttacking)
             ChangeWeapon();
