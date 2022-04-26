@@ -11,9 +11,11 @@ public class GameManagement : MonoBehaviour
     [SerializeField] private GameObject[] sundries;
 
     public int enemyCount;
+    public int roomCounter;
 
     private void Awake()
     {
+        roomCounter = 0;
         enemyCount = 0;
         instance = this;
     }

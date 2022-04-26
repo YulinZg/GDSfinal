@@ -9,7 +9,7 @@ public class Room : MonoBehaviour
     public bool roomLeft, roomRight, roomUp, roomDown;
 
     public int roomNumberToStart;
-    public Text step;
+    //public Text step;
 
     public bool isCleanAllEnemy;
     public int doorNumber;
@@ -17,12 +17,28 @@ public class Room : MonoBehaviour
     public EnemyGenerator enemyGenerator;
 
     public GameObject chestsParent;
-    public GameObject chestsParentInstance;
+    private GameObject chestsParentInstance;
     public GameObject chests;
 
-    private bool isPlayerEnter = false;
+    public bool isPlayerEnter = false;
+
+    public int probability1;
+    public int probability2;
+    public int probability3;
+    public int probability4;
+    public int probability5;
+    public int probability6;
+
+    public int num1;
+    public int num2;
+    public int num3;
+    public int num4;
+    public int num5;
+    public int num6;
+
     public void UpdateRoom(float xOffset, float yOffset, bool isUpDataDoorNumber)
     {
+        //Debug.Log(transform.position);
         doorDown.SetActive(roomDown);
         doorLeft.SetActive(roomLeft);
         doorRight.SetActive(roomRight);
@@ -44,15 +60,18 @@ public class Room : MonoBehaviour
             // Boss前的一个房间会重复update两次，所以需要这个判断来修正门的数量。
             doorNumber++;
         }
-        step.text = roomNumberToStart.ToString();
+        //step.text = roomNumberToStart.ToString();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+
         if (collision.CompareTag("Player") && !isPlayerEnter)
         {
+            GameManagement.instance.roomCounter++;
             chestsParentInstance = Instantiate(chestsParent, transform.position, Quaternion.identity);
+            chestsParentInstance.transform.parent = transform;
+            //chestsParentInstance.transform.position = transform.position;
             doorDown.GetComponent<BoxCollider2D>().isTrigger = false;
             doorLeft.GetComponent<BoxCollider2D>().isTrigger = false;
             doorUp.GetComponent<BoxCollider2D>().isTrigger = false;
@@ -62,32 +81,47 @@ public class Room : MonoBehaviour
             roomTerrainGenerator.gameObject.SetActive(true);
             roomTerrainGenerator.GenerateTerrain();
             roomTerrainGenerator.GeneratePathPoint();
-            enemyGenerator.GenerateEnemy();
-            
+            if (GameManagement.instance.roomCounter < 3)
+            {
+                enemyGenerator.GenerateEnemy(Random.Range(1,4), Random.Range(1, 4), 1,0,0,0,0, 100, 100, 5, 0,0,0);
+            }
+            else if (GameManagement.instance.roomCounter < 6)
+            {
+                enemyGenerator.GenerateEnemy(Random.Range(2, 5), Random.Range(2, 5), 1, Random.Range(1, 3), Random.Range(2, 4), 0, 0, 100, 100, 5, 70, 0, 0);
+            }
+            else if (GameManagement.instance.roomCounter < 10)
+            {
+                enemyGenerator.GenerateEnemy(Random.Range(3, 6), Random.Range(3, 7), 1, Random.Range(2, 4), Random.Range(3, 5), 0, Random.Range(1, 3), 100, 100, 5, 70, 0, 60);
+            }
+            else
+            {
+                enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
+            }
             //Debug.Log(1);
         }
     }
 
     //private void OnTriggerStay2D(Collider2D collision)
     //{
-        //if (collision.CompareTag("Player"))
-        //{
-            //Debug.LogError("no enemy");
-        //}
+    //if (collision.CompareTag("Player"))
+    //{
+    //Debug.LogError("no enemy");
+    //}
     //}
 
-private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
             enemyGenerator.gameObject.SetActive(false);
             roomTerrainGenerator.gameObject.SetActive(false);
+            Destroy(chestsParentInstance);
         }
         if (collision.CompareTag("Enemy") && !collision.GetComponent<Enemy>().isAlive)
         {
             //enemyGenerator.enemyCount--;
-            Invoke("ZeroEnemy", 0.2f);
-            
+            Invoke("ZeroEnemy", 0.5f);
+
             //Debug.Log(enemyGenerator.numOfEnemy);
         }
     }
@@ -97,95 +131,98 @@ private void OnTriggerExit2D(Collider2D collision)
         Debug.Log(GameManagement.instance.enemyCount);
         if (GameManagement.instance.enemyCount == 0)
         {
-            Instantiate(chests, chestsParent.transform.position + Vector3.right * 2, Quaternion.identity).transform.parent = chestsParentInstance.transform;
-            Instantiate(chests, chestsParent.transform.position + Vector3.up * 2, Quaternion.identity).transform.parent = chestsParentInstance.transform;
-            Instantiate(chests, chestsParent.transform.position + Vector3.left * 2, Quaternion.identity).transform.parent = chestsParentInstance.transform;
+            Instantiate(chests, chestsParentInstance.transform.position + Vector3.right * 2, Quaternion.identity).transform.parent = chestsParentInstance.transform;
+            Instantiate(chests, chestsParentInstance.transform.position + Vector3.up * 2, Quaternion.identity).transform.parent = chestsParentInstance.transform;
+            Instantiate(chests, chestsParentInstance.transform.position + Vector3.left * 2, Quaternion.identity).transform.parent = chestsParentInstance.transform;
             chestsParent.transform.parent = null;
             isCleanAllEnemy = true;
             roomTerrainGenerator.DestroyAllPoints();
-            switch (doorNumber)
-            {
-                case 1:
-                    if (roomUp)
-                        doorUp.SetActive(false);
-                    else if (roomDown)
-                        doorDown.SetActive(false);
-                    else if (roomLeft)
-                        doorLeft.SetActive(false);
-                    else if (roomRight)
-                        doorRight.SetActive(false);
-                    break;
-                case 2:
-                    if (roomUp && roomDown)
-                    {
-                        doorUp.SetActive(false);
-                        doorDown.SetActive(false);
-                    }
-                    else if (roomDown && roomLeft)
-                    {
-                        doorLeft.SetActive(false);
-                        doorDown.SetActive(false);
-                    }
-                    else if (roomLeft && roomRight)
-                    {
-                        doorLeft.SetActive(false);
-                        doorRight.SetActive(false);
-                    }
-                    else if (roomRight && roomDown)
-                    {
-                        doorRight.SetActive(false);
-                        doorDown.SetActive(false);
-                    }
-                    else if (roomRight && roomUp)
-                    {
-                        doorRight.SetActive(false);
-                        doorUp.SetActive(false);
-                    }
-                    else if (roomUp && roomLeft)
-                    {
-                        doorUp.SetActive(false);
-                        doorLeft.SetActive(false);
-                    }
-                    break;
-                case 3:
-                    if (roomUp && roomLeft && roomRight)
-                    {
-                        doorUp.SetActive(false);
-                        doorLeft.SetActive(false);
-                        doorRight.SetActive(false);
-                    }
-                    else if (roomDown && roomUp && roomLeft)
-                    {
-                        doorUp.SetActive(false);
-                        doorLeft.SetActive(false);
-                        doorDown.SetActive(false);
-                    }
-                    else if (roomUp && roomRight && roomDown)
-                    {
-                        doorUp.SetActive(false);
-                        doorRight.SetActive(false);
-                        doorDown.SetActive(false);
-                    }
-                    else if (roomRight && roomDown && roomLeft)
-                    {
-                        doorRight.SetActive(false);
-                        doorDown.SetActive(false);
-                        doorLeft.SetActive(false);
-                    }
-                    break;
-                case 4:
-                    if (roomUp && roomLeft && roomRight && roomDown)
-                    {
-                        doorUp.SetActive(false);
-                        doorRight.SetActive(false);
-                        doorDown.SetActive(false);
-                        doorLeft.SetActive(false);
-                    }
-                    break;
-                default:
-                    break;
-            }
+        }
+    }
 
+    public void OpenDoor()
+    {
+        switch (doorNumber)
+        {
+            case 1:
+                if (roomUp)
+                    doorUp.SetActive(false);
+                else if (roomDown)
+                    doorDown.SetActive(false);
+                else if (roomLeft)
+                    doorLeft.SetActive(false);
+                else if (roomRight)
+                    doorRight.SetActive(false);
+                break;
+            case 2:
+                if (roomUp && roomDown)
+                {
+                    doorUp.SetActive(false);
+                    doorDown.SetActive(false);
+                }
+                else if (roomDown && roomLeft)
+                {
+                    doorLeft.SetActive(false);
+                    doorDown.SetActive(false);
+                }
+                else if (roomLeft && roomRight)
+                {
+                    doorLeft.SetActive(false);
+                    doorRight.SetActive(false);
+                }
+                else if (roomRight && roomDown)
+                {
+                    doorRight.SetActive(false);
+                    doorDown.SetActive(false);
+                }
+                else if (roomRight && roomUp)
+                {
+                    doorRight.SetActive(false);
+                    doorUp.SetActive(false);
+                }
+                else if (roomUp && roomLeft)
+                {
+                    doorUp.SetActive(false);
+                    doorLeft.SetActive(false);
+                }
+                break;
+            case 3:
+                if (roomUp && roomLeft && roomRight)
+                {
+                    doorUp.SetActive(false);
+                    doorLeft.SetActive(false);
+                    doorRight.SetActive(false);
+                }
+                else if (roomDown && roomUp && roomLeft)
+                {
+                    doorUp.SetActive(false);
+                    doorLeft.SetActive(false);
+                    doorDown.SetActive(false);
+                }
+                else if (roomUp && roomRight && roomDown)
+                {
+                    doorUp.SetActive(false);
+                    doorRight.SetActive(false);
+                    doorDown.SetActive(false);
+                }
+                else if (roomRight && roomDown && roomLeft)
+                {
+                    doorRight.SetActive(false);
+                    doorDown.SetActive(false);
+                    doorLeft.SetActive(false);
+                }
+                break;
+            case 4:
+                if (roomUp && roomLeft && roomRight && roomDown)
+                {
+                    doorUp.SetActive(false);
+                    doorRight.SetActive(false);
+                    doorDown.SetActive(false);
+                    doorLeft.SetActive(false);
+                }
+                break;
+            default:
+                break;
         }
     }
 }

@@ -113,9 +113,9 @@ public class RoomGenerator : MonoBehaviour
         }
 
         rooms[0].name = "Start";
-        rooms[0].step.text = "Start";
-        temp.GetComponent<Room>().step.text = "next is boss";
-        endRoom.GetComponent<Room>().step.text = "Boss";
+        //rooms[0].step.text = "Start";
+        //temp.GetComponent<Room>().step.text = "next is boss";
+        //endRoom.GetComponent<Room>().step.text = "Boss";
         endRoom.name = "Boss";
     }
     public void ChangePointPos()

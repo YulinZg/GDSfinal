@@ -377,8 +377,11 @@ public abstract class Enemy : MonoBehaviour
 
     IEnumerator StopMove(float time)
     {
+        if (isStun)
+        {
+            anim.SetBool("isHurt", true);
+        }
         
-        //anim.SetBool("isHurt", true);
         speed = 0;
         attackTimer = 0;
         while (stopTimer <= time)
@@ -390,8 +393,7 @@ public abstract class Enemy : MonoBehaviour
         }
         isHurt = false;
         if (!isStun)
-        {
-            
+        {    
             anim.SetBool("isHurt", false);   
         }
         if (!isStun && canBeAttacked && !isAttacking)
