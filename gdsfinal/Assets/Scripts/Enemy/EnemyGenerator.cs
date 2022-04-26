@@ -19,61 +19,85 @@ public class EnemyGenerator : MonoBehaviour
     //public int numberOfChildren;
     //public int enemyScatterNum;
     //public int enemySnipeNum;
-    private int[,] map = new int[26, 14];
+    [SerializeField] private RoomTerrainGenerator roomTerrainGenerator;
     //private List<GameObject> enemyArray = new List<GameObject>();
 
-    public void GenerateEnemy(int enemyBasicNum, int enemySelfBurstingNum, int enemyTouchFishNum, int enemyHatchNum, int numberOfChildren, int enemyScatterNum, int enemySnipeNum)
+    public void GenerateEnemy(int enemyBasicNum, int enemySelfBurstingNum, int enemyTouchFishNum, int enemyHatchNum, int numberOfChildren, int enemyScatterNum, int enemySnipeNum,
+                              int probability1, int probability2, int probability3, int probability4, int probability5, int probability6)
     {
         for (int i = 0; i < enemyBasicNum; i++)
         {
             //currentEnemyNumt++;
             //enemyCount++;
-            GameManagement.instance.enemyCount++;
-            Instantiate(enemyBasic, transform.position + new Vector3(Random.Range(3, 9), Random.Range(3, 12), 0), Quaternion.identity);
+            if (probability1 > Random.Range(0, 100))
+            {
+                GameManagement.instance.enemyCount++;
+                Instantiate(enemyBasic, roomTerrainGenerator.points[Random.Range(0, roomTerrainGenerator.points.Count)].transform.position, Quaternion.identity);
+            }     
         }
 
         for(int i = 0; i < enemySelfBurstingNum; i++)
         {
             //currentEnemyNumt++;
             //enemyCount++;
-            GameManagement.instance.enemyCount++;
-            Instantiate(enemySelfBursting, transform.position + new Vector3(Random.Range(3, 9), Random.Range(3, 12), 0), Quaternion.identity);
+            if (probability2 > Random.Range(0, 100))
+            {
+                GameManagement.instance.enemyCount++;
+                Instantiate(enemySelfBursting, roomTerrainGenerator.points[Random.Range(0, roomTerrainGenerator.points.Count)].transform.position, Quaternion.identity);
+            }
+                
         }
 
         for (int i = 0; i < enemyTouchFishNum; i++)
         {
             //currentEnemyNumt++;
             //enemyCount++;
-            GameManagement.instance.enemyCount++;
-            Instantiate(enemyTouchFish, transform.position + new Vector3(Random.Range(3, 9), Random.Range(3, 12), 0), Quaternion.identity);
+            if (probability3 > Random.Range(0, 100))
+            {
+                GameManagement.instance.enemyCount++;
+                Instantiate(enemyTouchFish, roomTerrainGenerator.points[Random.Range(0, roomTerrainGenerator.points.Count)].transform.position, Quaternion.identity);
+            }
+               
         }
 
         for (int i = 0; i < enemyHatchNum; i++)
         {
             //currentEnemyNumt++;
             //enemyCount++;
-            GameManagement.instance.enemyCount++;
-            GameObject temp = Instantiate(enemyHatch, transform.position + new Vector3(Random.Range(3, 9), Random.Range(3, 12), 0), Quaternion.identity);
-            if (temp.GetComponent<HatchEnemy>())
+            if (probability4 > Random.Range(0, 100))
             {
-                temp.GetComponent<HatchEnemy>().setChild(numberOfChildren);
-                GameManagement.instance.enemyCount += numberOfChildren;
+                GameManagement.instance.enemyCount++;
+                GameObject temp = Instantiate(enemyHatch, roomTerrainGenerator.points[Random.Range(0, roomTerrainGenerator.points.Count)].transform.position, Quaternion.identity);
+                if (temp.GetComponent<HatchEnemy>())
+                {
+                    temp.GetComponent<HatchEnemy>().setChild(numberOfChildren);
+                    GameManagement.instance.enemyCount += numberOfChildren;
+                }
             }
+               
             
 
         }
         for (int i = 0; i < enemyScatterNum; i++)
         {
-            //currentEnemyNumt++;
-            GameManagement.instance.enemyCount++;
-            Instantiate(enemyScatter, transform.position + new Vector3(Random.Range(3, 9), Random.Range(3, 12), 0), Quaternion.identity);
+            if (probability5 > Random.Range(0, 100))
+            {
+                GameManagement.instance.enemyCount++;
+                Instantiate(enemyScatter, roomTerrainGenerator.points[Random.Range(0, roomTerrainGenerator.points.Count)].transform.position, Quaternion.identity);
+            }
+                //currentEnemyNumt++;
+                
         }
         for (int i = 0; i < enemySnipeNum; i++)
         {
             //currentEnemyNumt++;
             //enemyCount++;
-            GameManagement.instance.enemyCount++;
-            Instantiate(enemySnipe, transform.position + new Vector3(Random.Range(3, 9), Random.Range(3, 12), 0), Quaternion.identity);
+            if (probability6 > Random.Range(0, 100))
+            {
+                GameManagement.instance.enemyCount++;
+                Instantiate(enemySnipe, roomTerrainGenerator.points[Random.Range(0, roomTerrainGenerator.points.Count)].transform.position, Quaternion.identity);
+            }
+                
         }
         Debug.LogWarning(GameManagement.instance.enemyCount);
     }
