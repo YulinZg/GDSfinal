@@ -62,7 +62,7 @@ public class Chest : MonoBehaviour
             foreach (Transform child in chests)
                 Destroy(child.gameObject);
         StartCoroutine(SpawnTreasure(0.2f));
-        
+        UIManager.instance.roomClearPanel.SetActive(false);
     }
 
     IEnumerator SpawnTreasure(float interval)

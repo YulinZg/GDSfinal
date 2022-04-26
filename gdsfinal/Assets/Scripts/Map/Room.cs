@@ -59,7 +59,7 @@ public class Room : MonoBehaviour
         }
         else
         {
-            // BossÇ°µÄÒ»¸ö·¿¼ä»áÖØ¸´updateÁ½´Î£¬ËùÒÔĞèÒªÕâ¸öÅĞ¶ÏÀ´ĞŞÕıÃÅµÄÊıÁ¿¡£
+            // Bosså‰çš„ä¸€ä¸ªæˆ¿é—´ä¼šé‡å¤updateä¸¤æ¬¡ï¼Œæ‰€ä»¥éœ€è¦è¿™ä¸ªåˆ¤æ–­æ¥ä¿®æ­£é—¨çš„æ•°é‡ã€‚
             doorNumber++;
         }
         //step.text = roomNumberToStart.ToString();
