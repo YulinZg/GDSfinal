@@ -861,7 +861,10 @@ public class Weapon : MonoBehaviour
         }
         else
         {
-            NormalAttackL();
+            Bullet bulletInstance = Instantiate(bulletsL[0], ShootPos(shootOffset), Quaternion.identity).GetComponent<Bullet>();
+            bulletInstance.Setup(MouseDir(), 0, GetDamage(damageL), status.GetCritProbability(), status.GetCritRate(), stayTime, Bullet.BulletType.penetrable);
+            SetPalsy(bulletInstance);
+            bulletInstance.transform.parent = lightningBalls;
             Dash(Direction(backPos.position, transform.position), Vector3.Distance(backPos.position, transform.position));
             hasMoved = false;
             Destroy(backPos.gameObject);
