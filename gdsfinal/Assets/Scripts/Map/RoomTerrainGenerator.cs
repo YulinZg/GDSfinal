@@ -35,7 +35,7 @@ public class RoomTerrainGenerator : MonoBehaviour
     {
         //Instantiate(floor, transform.position + new Vector3(13, 7, 0), Quaternion.identity).GetComponent<Room>();
         //gameObject.SetActive(false);
-        Debug.Log("generate terrain");
+        //Debug.Log("generate terrain");
 
     }
 }

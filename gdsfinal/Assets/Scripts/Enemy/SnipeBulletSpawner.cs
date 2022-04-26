@@ -62,8 +62,4 @@ public class SnipeBulletSpawner : MonoBehaviour
         Destroy(Instantiate(laser, transform.position, Quaternion.AngleAxis(angle, Vector3.forward)), 0.5f);
     }
 
-    private void OnDestroy()
-    {
-        GameManagement.instance.enemyCount--;
-    }
 }
