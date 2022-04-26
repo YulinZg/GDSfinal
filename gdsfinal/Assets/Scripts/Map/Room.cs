@@ -134,13 +134,14 @@ public class Room : MonoBehaviour
         {
             if (GameManagement.instance.enemyCount == 0)
             {
-                Instantiate(chests, chestsParentInstance.transform.position + Vector3.right * 2, Quaternion.identity).transform.parent = chestsParentInstance.transform;
-                Instantiate(chests, chestsParentInstance.transform.position + Vector3.up * 2, Quaternion.identity).transform.parent = chestsParentInstance.transform;
-                Instantiate(chests, chestsParentInstance.transform.position + Vector3.left * 2, Quaternion.identity).transform.parent = chestsParentInstance.transform;
+                Instantiate(chests, chestsParentInstance.transform.position + Vector3.right * 3, Quaternion.identity).transform.parent = chestsParentInstance.transform;
+                Instantiate(chests, chestsParentInstance.transform.position + Vector3.up * 3, Quaternion.identity).transform.parent = chestsParentInstance.transform;
+                Instantiate(chests, chestsParentInstance.transform.position + Vector3.left * 3, Quaternion.identity).transform.parent = chestsParentInstance.transform;
                 chestsParent.transform.parent = null;
                 isCleanAllEnemy = true;
                 isAppearChests = true;
                 roomTerrainGenerator.DestroyAllPoints();
+                UIManager.instance.roomClearPanel.SetActive(true);
             }
         }
         
