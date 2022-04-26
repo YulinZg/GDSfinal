@@ -8,6 +8,9 @@ public class BasicEnemy : Enemy
     //private float changeStateTimer;
     //private float attackTimer;
     private float attackInterval;
+    private float stuckWallTimer;
+    private float stuckWallInterval;
+    private Vector2 temp;
     private enum EnemyState
     {
         Wander,
@@ -24,6 +27,7 @@ public class BasicEnemy : Enemy
     private EnemyState currentState;
     private void Awake()
     {
+        stuckWallInterval = 3f;
         isAlive = true;
         player = PlayerController.instance.transform;
         sprite = GetComponent<SpriteRenderer>();
@@ -121,9 +125,22 @@ public class BasicEnemy : Enemy
     {
         anim.SetBool("isIdle", false);
         speed = currentSpeed;
+        stuckWallTimer += Time.deltaTime;
         if (Vector2.Distance(desTraget, transform.position) < chasingRange)
         {
-            desTraget = (Vector2)player.position + new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
+            temp = new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
+            desTraget = (Vector2)player.position + temp;
+        }
+        else if (stuckWallTimer > stuckWallInterval)
+        {
+            stuckWallTimer = 0;
+            temp = new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
+            desTraget = (Vector2)player.position + temp;
+        }
+        else if (Vector2.Distance(desTraget, transform.position) > Vector2.Distance((Vector2)player.position + temp, transform.position))
+        {
+            temp = new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
+            desTraget = (Vector2)player.position + temp;
         }
         moveDir = ((Vector2)desTraget - (Vector2)transform.position).normalized;
     }
