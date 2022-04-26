@@ -453,7 +453,7 @@ public abstract class Enemy : MonoBehaviour
                 break;
             }
         }
-        Debug.Log(length);
+        //Debug.Log(length);
         return length;
     }
     void OnDrawGizmos()

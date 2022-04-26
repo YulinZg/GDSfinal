@@ -20,6 +20,8 @@ public class Room : MonoBehaviour
     private GameObject chestsParentInstance;
     public GameObject chests;
 
+    public bool isAppearChests;
+
     public bool isPlayerEnter = false;
 
     public int probability1;
@@ -83,7 +85,8 @@ public class Room : MonoBehaviour
             roomTerrainGenerator.GeneratePathPoint();
             if (GameManagement.instance.roomCounter < 3)
             {
-                enemyGenerator.GenerateEnemy(Random.Range(1,4), Random.Range(1, 4), 1,0,0,0,0, 100, 100, 5, 0,0,0);
+                enemyGenerator.GenerateEnemy(Random.Range(1, 4), Random.Range(1, 4), 1, 0, 0, 0, 0, 100, 100, 5, 0, 0, 0);
+                //enemyGenerator.GenerateEnemy(0, 0, 0, 0, 0, 0, 1, 100, 100, 5, 0, 0, 100);
             }
             else if (GameManagement.instance.roomCounter < 6)
             {
@@ -121,23 +124,26 @@ public class Room : MonoBehaviour
         {
             //enemyGenerator.enemyCount--;
             Invoke("ZeroEnemy", 0.5f);
-
-            //Debug.Log(enemyGenerator.numOfEnemy);
         }
     }
 
     private void ZeroEnemy()
     {
         Debug.Log(GameManagement.instance.enemyCount);
-        if (GameManagement.instance.enemyCount == 0)
+        if (!isAppearChests)
         {
-            Instantiate(chests, chestsParentInstance.transform.position + Vector3.right * 2, Quaternion.identity).transform.parent = chestsParentInstance.transform;
-            Instantiate(chests, chestsParentInstance.transform.position + Vector3.up * 2, Quaternion.identity).transform.parent = chestsParentInstance.transform;
-            Instantiate(chests, chestsParentInstance.transform.position + Vector3.left * 2, Quaternion.identity).transform.parent = chestsParentInstance.transform;
-            chestsParent.transform.parent = null;
-            isCleanAllEnemy = true;
-            roomTerrainGenerator.DestroyAllPoints();
+            if (GameManagement.instance.enemyCount == 0)
+            {
+                Instantiate(chests, chestsParentInstance.transform.position + Vector3.right * 2, Quaternion.identity).transform.parent = chestsParentInstance.transform;
+                Instantiate(chests, chestsParentInstance.transform.position + Vector3.up * 2, Quaternion.identity).transform.parent = chestsParentInstance.transform;
+                Instantiate(chests, chestsParentInstance.transform.position + Vector3.left * 2, Quaternion.identity).transform.parent = chestsParentInstance.transform;
+                chestsParent.transform.parent = null;
+                isCleanAllEnemy = true;
+                isAppearChests = true;
+                roomTerrainGenerator.DestroyAllPoints();
+            }
         }
+        
     }
 
     public void OpenDoor()
