@@ -23,6 +23,7 @@ public class Room : MonoBehaviour
     public bool isAppearChests;
 
     public bool isPlayerEnter = false;
+    public bool isOpenDoor = false;
 
     public int probability1;
     public int probability2;
@@ -94,11 +95,11 @@ public class Room : MonoBehaviour
             }
             else if (GameManagement.instance.roomCounter < 10)
             {
-                enemyGenerator.GenerateEnemy(Random.Range(3, 6), Random.Range(3, 7), 1, Random.Range(2, 4), Random.Range(3, 5), 0, Random.Range(1, 3), 100, 100, 5, 70, 0, 60);
+                enemyGenerator.GenerateEnemy(Random.Range(3, 6), Random.Range(3, 7), 1, Random.Range(2, 4), Random.Range(3, 5), 0, Random.Range(1, 3), 100, 100, 5, 70, 0, 80);
             }
             else
             {
-                enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
+                enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 70, 80);
             }
             //Debug.Log(1);
         }
@@ -118,7 +119,8 @@ public class Room : MonoBehaviour
         {
             enemyGenerator.gameObject.SetActive(false);
             roomTerrainGenerator.gameObject.SetActive(false);
-            Destroy(chestsParentInstance);
+            if(isOpenDoor)
+                Destroy(chestsParentInstance);
         }
         if (collision.CompareTag("Enemy") && !collision.GetComponent<Enemy>().isAlive)
         {
@@ -149,6 +151,7 @@ public class Room : MonoBehaviour
 
     public void OpenDoor()
     {
+        isOpenDoor = true;
         switch (doorNumber)
         {
             case 1:
