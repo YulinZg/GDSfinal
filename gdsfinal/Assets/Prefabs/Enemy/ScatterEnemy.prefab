@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8854489f21d954e43a777f917524f4ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 250703117510715500, guid: 471c54cdf2446ac449805ca66dcb63b7, type: 3}
+  bullet: {fileID: 3821664958983624388, guid: 4b13f598a80a95948a23495a07e5c012, type: 3}
   parent: {fileID: 1975638847083170494}
 --- !u!1 &1975638846219935594
 GameObject:
@@ -222,6 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 485452955a34ee5489e9012f7556dd1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackTimer: 0
   isAlive: 1
   health: 600
   attack: 20

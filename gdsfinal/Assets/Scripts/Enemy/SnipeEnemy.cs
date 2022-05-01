@@ -151,7 +151,7 @@ public class SnipeEnemy : Enemy
                 else if (Vector2.Distance(player.position, transform.position) < 3f && disappearCoolDownTimer >= disappearCoolDown)
                 {
                     currentState = EnemyState.back;
-                    StartCoroutine(Disappear(1.5f));
+                    StartCoroutine(Disappear(1.0f));
                     anim.SetBool("isIdle", true);
                     StopAttack();
                     speed = 0;
