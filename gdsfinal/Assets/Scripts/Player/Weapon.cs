@@ -675,13 +675,13 @@ public class Weapon : MonoBehaviour
 
     private void Earth()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && !player.isSkilling)
         {
             isAiming = true;
             player.SetSpeed(moveSpeedE1);
             SpawnEffectInstance(3);
         }
-        else if (Input.GetMouseButtonUp(1))
+        else if (Input.GetMouseButtonUp(1) && !player.isSkilling)
         {
             isAiming = false;
             player.SetSpeed(moveSpeedE);
@@ -788,7 +788,7 @@ public class Weapon : MonoBehaviour
 
     private void Lightning()
     {
-        if (Input.GetMouseButtonDown(0) && !isLinking && !player.isSkilling)
+        if (Input.GetMouseButtonDown(0) && !isLinking && !player.isAttacking)
         {
             if (shootTimer >= intervalL && lightningBalls.childCount < maxBulletNum)
             {
@@ -796,7 +796,7 @@ public class Weapon : MonoBehaviour
                 shootTimer = 0;
             }
         }
-        if (Input.GetMouseButtonDown(1) && !isLinking && !player.isSkilling)
+        if (Input.GetMouseButtonDown(1) && !isLinking && !player.isAttacking)
         {
             if (shootTimer >= intervalL && lightningBalls.childCount > 0)
             {

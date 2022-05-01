@@ -118,7 +118,7 @@ public class Room : MonoBehaviour
         {
             enemyGenerator.gameObject.SetActive(false);
             roomTerrainGenerator.gameObject.SetActive(false);
-            Destroy(chestsParentInstance);
+            //Destroy(chestsParentInstance);
         }
         if (collision.CompareTag("Enemy") && !collision.GetComponent<Enemy>().isAlive)
         {
