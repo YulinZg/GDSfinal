@@ -84,7 +84,15 @@ public class Room : MonoBehaviour
             roomTerrainGenerator.gameObject.SetActive(true);
             roomTerrainGenerator.GenerateTerrain();
             roomTerrainGenerator.GeneratePathPoint();
-            if (GameManagement.instance.roomCounter < 3)
+            if (GameManagement.instance.roomCounter == 1)
+            {
+                isCleanAllEnemy = true;
+                isAppearChests = true;
+                roomTerrainGenerator.DestroyAllPoints();
+                //enemyGenerator.GenerateEnemy(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                OpenDoor();
+            }
+            else if (GameManagement.instance.roomCounter < 3)
             {
                 enemyGenerator.GenerateEnemy(Random.Range(1, 4), Random.Range(1, 4), 1, 0, 0, 0, 0, 100, 100, 5, 0, 0, 0);
                 //enemyGenerator.GenerateEnemy(0, 0, 0, 0, 0, 0, 1, 100, 100, 5, 0, 0, 100);
