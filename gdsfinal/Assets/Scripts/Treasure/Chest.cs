@@ -53,6 +53,7 @@ public class Chest : MonoBehaviour
 
     private void Open()
     {
+        canOpen = false;
         GetComponent<SpriteRenderer>().sprite = openedSprite;
         GetComponent<BoxCollider2D>().enabled = false;
         chestUI.panel.SetActive(false);

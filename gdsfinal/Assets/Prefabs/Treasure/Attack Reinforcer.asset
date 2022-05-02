@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: Attack Reinforcer
   m_EditorClassIdentifier: 
   strengthenText: {fileID: 4318804278247988162, guid: d8ab669f8ef30064497cad64bd4f4f2f, type: 3}
+  min: 5
+  max: 10

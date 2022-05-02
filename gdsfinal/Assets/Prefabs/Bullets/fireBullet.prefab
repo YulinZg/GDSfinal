@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2740215179670580754}
   - component: {fileID: 4577216503491846477}
   - component: {fileID: 1636804179104376346}
+  - component: {fileID: 3254176344714685451}
   m_Layer: 9
   m_Name: fireBullet
   m_TagString: Untagged
@@ -41,7 +42,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6096084274419158081}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -100,6 +101,18 @@ MonoBehaviour:
   blinkColor: {r: 1, g: 0, b: 0, a: 1}
   ifHurtStop: 0
   lifetime: 0
+--- !u!114 &3254176344714685451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6096084274419158081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14cf4d9c69d0ca14f9b97cf0db6c3a88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6096084273002236211
 PrefabInstance:
   m_ObjectHideFlags: 0
