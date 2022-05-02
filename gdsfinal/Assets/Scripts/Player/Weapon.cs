@@ -390,7 +390,7 @@ public class Weapon : MonoBehaviour
 
     private void Fire()
     {
-        if (Input.GetMouseButtonDown(0) && !player.isSkilling)
+        if (Input.GetMouseButtonDown(0) && !player.isAttacking)
         {
             if (shootTimer >= intervalF)
             {
@@ -398,7 +398,7 @@ public class Weapon : MonoBehaviour
                 shootTimer = 0;
             }
         }
-        if (Input.GetMouseButtonDown(1) && !player.isSkilling)
+        if (Input.GetMouseButtonDown(1) && !player.isAttacking)
         {
             NormalAttackF1();
         }

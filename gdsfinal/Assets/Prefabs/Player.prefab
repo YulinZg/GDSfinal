@@ -489,7 +489,7 @@ MonoBehaviour:
   - {fileID: 8293550579373383261, guid: ce5cddaf9d1908245a70cd6fae5a21d4, type: 3}
   - {fileID: 7090674513177284307, guid: 13584b280151bae49ab3fa823dbc5d4b, type: 3}
   damageF: 3
-  intervalF: 1
+  intervalF: 0.75
   bulletSpeedF: 10
   rangeF: 10
   moveSpeedF: 3

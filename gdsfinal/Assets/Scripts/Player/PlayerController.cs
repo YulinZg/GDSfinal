@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     public float avoidSpeed;
     public bool isHurting = false;
     private float hurtTimer;
+    private Coroutine avoidCoroutine;
 
     private List<Weapon.Property> weapons = new List<Weapon.Property>
     {
@@ -96,7 +97,7 @@ public class PlayerController : MonoBehaviour
             lastDir = moveDir;
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
 
-        if (Input.GetKeyDown(KeyCode.Space) && !isAvoiding && canAvoid)
+        if (Input.GetKeyDown(KeyCode.Space) && !isAvoiding && canAvoid && !isHurting)
         {
             Avoid();
         }
@@ -244,7 +245,7 @@ public class PlayerController : MonoBehaviour
     {
         isAvoiding = true;
         weapon.ResetWeapon();
-        StartCoroutine(Avoiding(lastDir, avoidSpeed * status.GetSpeed(), 0.5f));
+        avoidCoroutine = StartCoroutine(Avoiding(lastDir, avoidSpeed * status.GetSpeed(), 0.5f));
     }
 
     private IEnumerator Avoiding(Vector3 dir, float sp, float time)
@@ -257,9 +258,9 @@ public class PlayerController : MonoBehaviour
         layerBack = false;
         while (timer < time)
         {
-            sp -= sp * 5 * Time.fixedDeltaTime;
+            sp -= sp * 5f * Time.fixedDeltaTime;
             rigid.velocity = dir * sp;
-            if (timer >= time * 0.5f && !layerBack)
+            if (sp < 3f && !layerBack)
             {
                 gameObject.layer = 3;
                 foreach (Transform child in transform)
@@ -276,6 +277,15 @@ public class PlayerController : MonoBehaviour
     public void Hurt(float time)
     {
         if (isSkilling) return;
+        if (isAvoiding)
+        {
+            StopCoroutine(avoidCoroutine);
+            gameObject.layer = 3;
+            foreach (Transform child in transform)
+                if (child.name == "collider")
+                    child.gameObject.layer = 3;
+            isAvoiding = false;
+        }
         hurtTimer = 0;
         anim.SetBool("isHurt", true);
         if (isFacingRight)
