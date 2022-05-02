@@ -82,7 +82,7 @@ public class Status : MonoBehaviour
             player.Hurt(stopTime);
         if (currentHp <= 0)
         {
-            if (gutsScroll && hp / maxHp > gutsBloodLine)
+            if (gutsScroll && hp / maxHp > gutsBloodLine && hp != 1)
                 currentHp = 1;
             else
                 currentHp = 0;
@@ -225,8 +225,8 @@ public class Status : MonoBehaviour
         if (violentScroll)
         {
             violentBloodLine += violentBloodLineAddition;
-            if (violentBloodLine > 0.5f)
-                violentBloodLine = 0.5f;
+            if (violentBloodLine > 0.8f)
+                violentBloodLine = 0.8f;
             violentStrengthen += violentStrengthenAddition;
         }
         else

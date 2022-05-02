@@ -19,8 +19,9 @@ public class PlayerController : MonoBehaviour
     private Weapon weapon;
     private Status status;
 
+    public bool canInput;
     private float speed;
-    private bool canInput = true;
+    private bool canChangeWeapon = true;
     private bool canRotate = true;
     private bool isFacingRight = true;
     public bool isAttacking = false;
@@ -91,9 +92,9 @@ public class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if ((Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Q)) && canInput && !isAttacking)
+        if ((Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Q)) && canChangeWeapon && !isAttacking)
             SwitchWeapon();
-        if (Input.GetKeyDown(KeyCode.R) && canInput && !isAttacking)
+        if (Input.GetKeyDown(KeyCode.R) && canChangeWeapon && !isAttacking)
             ChangeWeapon();
     }
 
@@ -136,7 +137,7 @@ public class PlayerController : MonoBehaviour
 
     private void RotateArrow()
     {
-        if (canRotate)
+        if (canRotate && canInput)
         {
             float angle = Mathf.Atan2(mouseDir.y, mouseDir.x) * Mathf.Rad2Deg;
             arrow.transform.rotation = Quaternion.Euler(0, 0, angle);
@@ -165,7 +166,7 @@ public class PlayerController : MonoBehaviour
         isAttacking = true;
         isSkilling = isSkill;
         yield return null;
-        canInput = false;
+        canChangeWeapon = false;
         this.canRotate = canRotate;
         if (ifStop)
             SetSpeed(0);
@@ -200,7 +201,7 @@ public class PlayerController : MonoBehaviour
         if (ifStop)
             SetSpeed(resetSpeed);
         this.canRotate = true;
-        canInput = true;
+        canChangeWeapon = true;
         isAttacking = false;
         isSkilling = false;
         anim.SetBool("isRightAttacking", false);
@@ -243,8 +244,11 @@ public class PlayerController : MonoBehaviour
     IEnumerator Hurting(float time)
     {
         isHurting = true;
-        weapon.StartHurt();
+        weapon.ResetWeapon();
         speed = 0;
+        canRotate = false;
+        canChangeWeapon = false;
+        isAttacking = false;
         while (hurtTimer < time)
         {
             hurtTimer += Time.deltaTime;
@@ -253,8 +257,7 @@ public class PlayerController : MonoBehaviour
         isHurting = false;
         weapon.GetWeapon(currentWeapon);
         canRotate = true;
-        canInput = true;
-        isAttacking = false;
+        canChangeWeapon = true;
         anim.SetBool("isRightAttacking", false);
         anim.SetBool("isLeftAttacking", false);
         anim.SetBool("isHurt", false);
@@ -335,5 +338,16 @@ public class PlayerController : MonoBehaviour
     public void AssassinBreath()
     {
         status.AssassinBreath();
+    }
+
+    public void SetCannotInput()
+    {
+        canInput = false;
+        weapon.ResetWeapon();
+        speed = 0;
+        anim.SetBool("isMovingRight", false);
+        anim.SetBool("isMovingLeft", false);
+        anim.SetBool("isRightAttacking", false);
+        anim.SetBool("isLeftAttacking", false);
     }
 }

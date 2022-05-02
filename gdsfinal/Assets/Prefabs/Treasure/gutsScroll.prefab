@@ -183,9 +183,9 @@ MonoBehaviour:
   pickupEffect: {fileID: 11400000, guid: d5dc2b00d2ef8e5449f8c1329010c220, type: 2}
   randomRotate: 0
   title: Guts Scroll
-  description: Be able to take lethal damage without dying when your current HP is
-    higher than a certain amount. Reduce the trigger line if you already have this
-    scroll.
+  description: Be able to take lethal damage without dying (left 1 HP) when your
+    current HP is higher than a certain amount. Reduce the trigger line if you already
+    have this scroll.
 --- !u!61 &6599332401073975918
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -252,17 +252,17 @@ public class Weapon : MonoBehaviour
         switch (property)
         {
             case Property.fire:
-                if (!player.isHurting)
+                if (!player.isHurting && player.canInput)
                     Fire();
                 skillUI.SetCooldownFill(cooldownTimerF / cooldownTimeF);
                 break;
             case Property.water:
-                if (!player.isHurting)
+                if (!player.isHurting && player.canInput)
                     Water();
                 skillUI.SetCooldownFill(cooldownTimerW / cooldownTimeW);
                 break;
             case Property.earth:
-                if (!player.isHurting)
+                if (!player.isHurting && player.canInput)
                     Earth();
                 if (!isDroping)
                     skillUI.SetCooldownFill(cooldownTimerE / cooldownTimeE);
@@ -271,7 +271,7 @@ public class Weapon : MonoBehaviour
                 skillUI.SetSkillingFill(skillTimerE / skillTimeE);
                 break;
             case Property.lightning:
-                if (!player.isHurting)
+                if (!player.isHurting && player.canInput)
                     Lightning();
                 if (!hasMoved)
                     skillUI.SetCooldownFill(cooldownTimerL / cooldownTimeL);
@@ -280,7 +280,7 @@ public class Weapon : MonoBehaviour
                 skillUI.SetSkillingFill(skillTimerL / skillTimeL);
                 break;
             case Property.metal:
-                if (!player.isHurting)
+                if (!player.isHurting && player.canInput)
                     Metal();
                 skillUI.SetCooldownFill(cooldownTimerM / cooldownTimeM);
                 break;
@@ -461,7 +461,7 @@ public class Weapon : MonoBehaviour
 
     private void SetBurn(Bullet bullet)
     {
-        bullet.SetBurn(burnDamage, burnTime, burnInterval);
+        bullet.SetBurn(GetDamage(burnDamage), burnTime, burnInterval);
     }
 
     private void SkillF()
@@ -847,7 +847,7 @@ public class Weapon : MonoBehaviour
 
     private void SetPalsy(Bullet bullet)
     {
-        bullet.SetPalsy(palsyDamage, palsyTime, palsyInterval);
+        bullet.SetPalsy(GetDamage(palsyDamage), palsyTime, palsyInterval);
     }
 
     private void SkillL()
@@ -1136,7 +1136,7 @@ public class Weapon : MonoBehaviour
 
     //Metal////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void StartHurt()
+    public void ResetWeapon()
     {
         StopAllCoroutines();
         GetWeapon(property);
