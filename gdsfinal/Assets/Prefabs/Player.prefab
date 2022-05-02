@@ -514,7 +514,7 @@ MonoBehaviour:
   damageW2: 10
   damageW3: 16
   damageW4: 3
-  intervalW: 1
+  intervalW: 0.75
   bulletSpeedW: 15
   rangeW: 10
   rangeW1: 10
@@ -676,6 +676,9 @@ MonoBehaviour:
   canInput: 1
   isAttacking: 0
   isSkilling: 0
+  canAvoid: 1
+  isAvoiding: 0
+  avoidSpeed: 15
   isHurting: 0
 --- !u!120 &7771505069829453882
 LineRenderer:

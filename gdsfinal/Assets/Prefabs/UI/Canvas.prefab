@@ -79,7 +79,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Skill (Space)
+  m_Text: "Skill \n(F)"
 --- !u!114 &2624774698512841725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -490,7 +490,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Skill (Space)
+  m_Text: "Skill \n(F)"
 --- !u!114 &2624774698595765270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -810,7 +810,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Skill (Space)
+  m_Text: "Skill \n(F)"
 --- !u!114 &2624774698659374670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2085,7 +2085,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Skill (Space)
+  m_Text: "Skill \n(F)"
 --- !u!114 &2624774698970016381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2580,7 +2580,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Skill (Space)
+  m_Text: "Skill \n(F)"
 --- !u!114 &2624774699038538616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4582,7 +4582,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Skill (Space)
+  m_Text: "Skill \n(F)"
 --- !u!114 &2624774699468465901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4962,7 +4962,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Skill (Space)
+  m_Text: "Skill \n(F)"
 --- !u!114 &2624774699668925653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5314,7 +5314,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Skill (Space)
+  m_Text: "Skill \n(F)"
 --- !u!114 &2624774699799117215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6878,7 +6878,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Skill (Space)
+  m_Text: "Skill \n(F)"
 --- !u!114 &2624774700131858454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7313,7 +7313,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Skill (Space)
+  m_Text: "Skill \n(F)"
 --- !u!114 &2624774700199766716
 MonoBehaviour:
   m_ObjectHideFlags: 0
