@@ -84,30 +84,37 @@ public class Room : MonoBehaviour
             roomTerrainGenerator.gameObject.SetActive(true);
             roomTerrainGenerator.GenerateTerrain();
             roomTerrainGenerator.GeneratePathPoint();
-            if (GameManagement.instance.roomCounter == 1)
+            if (gameObject.name != "Boss")
             {
-                isCleanAllEnemy = true;
-                isAppearChests = true;
-                roomTerrainGenerator.DestroyAllPoints();
-                //enemyGenerator.GenerateEnemy(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-                OpenDoor();
-            }
-            else if (GameManagement.instance.roomCounter < 3)
-            {
-                enemyGenerator.GenerateEnemy(Random.Range(1, 4), Random.Range(1, 4), 1, 0, 0, 0, 0, 100, 100, 5, 0, 0, 0);
-                //enemyGenerator.GenerateEnemy(0, 0, 0, 0, 0, 0, 1, 100, 100, 5, 0, 0, 100);
-            }
-            else if (GameManagement.instance.roomCounter < 6)
-            {
-                enemyGenerator.GenerateEnemy(Random.Range(2, 5), Random.Range(2, 5), 1, Random.Range(1, 3), Random.Range(2, 4), 0, 0, 100, 100, 5, 70, 0, 0);
-            }
-            else if (GameManagement.instance.roomCounter < 10)
-            {
-                enemyGenerator.GenerateEnemy(Random.Range(3, 6), Random.Range(3, 7), 1, Random.Range(2, 4), Random.Range(3, 5), 0, Random.Range(1, 3), 100, 100, 5, 70, 0, 80);
+                if (GameManagement.instance.roomCounter == 1)
+                {
+                    isCleanAllEnemy = true;
+                    isAppearChests = true;
+                    roomTerrainGenerator.DestroyAllPoints();
+                    //enemyGenerator.GenerateEnemy(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                    OpenDoor();
+                }
+                else if (GameManagement.instance.roomCounter < 3)
+                {
+                    enemyGenerator.GenerateEnemy(Random.Range(1, 4), Random.Range(1, 4), 1, 0, 0, 0, 0, 100, 100, 7, 0, 0, 0);
+                    //enemyGenerator.GenerateEnemy(0, 0, 0, 0, 0, 0, 1, 100, 100, 5, 0, 0, 100);
+                }
+                else if (GameManagement.instance.roomCounter < 6)
+                {
+                    enemyGenerator.GenerateEnemy(Random.Range(2, 5), Random.Range(2, 5), 1, Random.Range(1, 3), Random.Range(2, 4), 0, 0, 100, 100, 7, 70, 0, 0);
+                }
+                else if (GameManagement.instance.roomCounter < 10)
+                {
+                    enemyGenerator.GenerateEnemy(Random.Range(3, 6), Random.Range(3, 7), 1, Random.Range(2, 4), Random.Range(3, 5), 0, Random.Range(1, 3), 100, 100, 7, 70, 0, 80);
+                }
+                else
+                {
+                    enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 7, 70, 70, 80);
+                }
             }
             else
             {
-                enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 70, 80);
+                Debug.LogError("Boss Room");
             }
             //Debug.Log(1);
         }

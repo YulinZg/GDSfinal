@@ -7,6 +7,11 @@ public class SelfBurstingEnemy : Enemy
     //private float chasingRange;
     public float chargeTime;
     private float timer = 0f;
+    private int chasingPro;
+
+    private bool hasJudge;
+
+    
     private enum ChasingTarget
     {
         none,
@@ -27,6 +32,7 @@ public class SelfBurstingEnemy : Enemy
     private EnemyState currentState;
     private void Awake()
     {
+        chasingPro = 50;
         isAlive = true;
         player = PlayerController.instance.transform;
         sprite = GetComponent<SpriteRenderer>();
@@ -72,7 +78,7 @@ public class SelfBurstingEnemy : Enemy
     // Update is called once per frame
     void Update()
     {
-        UpdateState();  
+        UpdateState();
     }
     private void FixedUpdate()
     {
@@ -113,9 +119,10 @@ public class SelfBurstingEnemy : Enemy
                     gameObject.layer = 8;
                     speed = 0;
                 }
-                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) <= 0.5f  && !isStun)
+                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) <= 0.5f && !isStun)
                 {
                     //Die();
+
                     currentState = EnemyState.Charge;
                     canBeAttacked = false;
                     gameObject.layer = 8;
@@ -125,10 +132,28 @@ public class SelfBurstingEnemy : Enemy
                 break;
             case EnemyState.Charge:
                 timer += Time.deltaTime;
-                if (timer >= chargeTime )
+                if (timer >= chargeTime)
                 {
                     currentState = EnemyState.Burst;
-                }   
+                }
+                else if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) >= 1.3f && health > 0 && !hasJudge)
+                {
+                    int iRandom = Random.Range(0, 100);
+                    hasJudge = true;
+                    Debug.LogWarning(iRandom);
+                    Debug.LogWarning(chasingPro);
+
+                    if (iRandom < chasingPro)
+                    {
+                        currentState = EnemyState.Chase;
+                        canBeAttacked = true;
+                        gameObject.layer = 7;
+                        anim.Play("Walk");
+                        speed = currentSpeed;
+                        timer = 0;
+                        hasJudge = false;
+                    }
+                }
                 break;
             case EnemyState.Burst:
                 CanBurst();
@@ -138,7 +163,11 @@ public class SelfBurstingEnemy : Enemy
                 break;
         }
     }
-
+    public void DestroySelfBursting()
+    {
+        Destroy(gameObject);
+        //PlayerController.instance.AssassinBreath();
+    }
     private void CanBurst()
     {
         speed = 0;

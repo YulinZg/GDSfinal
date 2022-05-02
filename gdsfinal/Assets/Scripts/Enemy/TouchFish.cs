@@ -68,7 +68,10 @@ public class TouchFish : Enemy
         Debug.LogError(GameManagement.instance.enemyCount);
         if (canGiveAward)
         {
-            Debug.Log("µôÂäÂß¼­ÔÚÕâÀï");
+            for (int i = 0; i < Random.Range(5,11); i++)
+            {
+                Instantiate(GameManagement.instance.GetSundrie(), transform.position, Quaternion.identity);
+            }  
         }
     }
 }
