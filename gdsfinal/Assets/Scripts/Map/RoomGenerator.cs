@@ -28,7 +28,7 @@ public class RoomGenerator : MonoBehaviour
 
     void Start()
     {
-        for (int i = 0; i < roomNumber; i++)
+        for (int i = 0; i < PlayerPrefs.GetInt("roomNumber"); i++)
         {
             generateNormalRoom();
         }
