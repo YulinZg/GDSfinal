@@ -87,7 +87,7 @@ public class BasicEnemy : Enemy
                     Wander();
                 break;
             case EnemyState.Chase:
-                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) <= 0.9f )
+                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) <= 0.8f )
                 {
                     speed = 0;
                     anim.SetBool("isIdle", true);

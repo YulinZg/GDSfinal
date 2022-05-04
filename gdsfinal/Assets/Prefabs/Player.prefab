@@ -552,9 +552,9 @@ MonoBehaviour:
   bulletsE:
   - {fileID: 7155690323364293923, guid: 33387e5d792fa554ea58f3347cb39fc5, type: 3}
   - {fileID: 8061944940312639690, guid: 527b057eb96fb6c40aa61c93bcb20760, type: 3}
-  stunValue: 3
-  stunValue1: 25
-  stunValueSkill: 30
+  stunValue: 1
+  stunValue1: 15
+  stunValueSkill: 20
   stunTime: 5
   skillDamageE: 8
   skillTimeE: 10

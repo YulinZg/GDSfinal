@@ -89,7 +89,16 @@ public class Status : MonoBehaviour
         }
         healthBar.SetHealth(currentHp, maxHp);
         if (currentHp == 0)
+        {
+            DieEffect();
             player.Die();
+        }
+    }
+
+    private void DieEffect()
+    {
+        for (int i = 0; i < bloodEffects.Length; i++)
+            Instantiate(bloodEffects[i], transform);
     }
 
     public void RestoreHp(float amount)
