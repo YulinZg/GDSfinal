@@ -10,9 +10,10 @@ public class UIManager : MonoBehaviour
     private bool isUIShowed = true;
     public GameObject miniMap;
     private bool mapOpened = false;
-    public GameObject statusUI;
+    public GameObject statusPanel;
     private bool statusOpened = false;
     public GameObject roomClearPanel;
+    public GameObject gameOverPanel;
 
     private void Awake()
     {
@@ -27,18 +28,26 @@ public class UIManager : MonoBehaviour
             mapOpened = !mapOpened;
             miniMap.SetActive(mapOpened);
             statusOpened = false;
-            statusUI.SetActive(statusOpened);
+            statusPanel.SetActive(statusOpened);
             isUIShowed = !mapOpened;
             UIPanel.SetActive(isUIShowed);
         }
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             statusOpened = !statusOpened;
-            statusUI.SetActive(statusOpened);
+            statusPanel.SetActive(statusOpened);
             mapOpened = false;
             miniMap.SetActive(mapOpened);
             isUIShowed = !statusOpened;
             UIPanel.SetActive(isUIShowed);
         }
+    }
+
+    public void ShowGameOver()
+    {
+        UIPanel.SetActive(false);
+        miniMap.SetActive(false);
+        statusPanel.SetActive(false);
+        gameOverPanel.SetActive(true);
     }
 }

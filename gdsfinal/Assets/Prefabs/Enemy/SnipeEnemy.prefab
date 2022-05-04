@@ -119,6 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8278c8d401e372419faa4e651fa55ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackTimer: 0
   isAlive: 1
   health: 200
   attack: 30
@@ -128,7 +129,7 @@ MonoBehaviour:
   fireResistance: 0
   waterResistance: 0
   earthResistance: 0
-  maxStunValue: 50
+  maxStunValue: 10
   lightningResistance: 0
   metalResistance: 0
   damageText: {fileID: 4318804278247988162, guid: d8ab669f8ef30064497cad64bd4f4f2f, type: 3}

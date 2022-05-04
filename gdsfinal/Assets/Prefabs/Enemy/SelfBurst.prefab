@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65f7504ed5b86894da58a9c502171ba3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackTimer: 0
   isAlive: 0
   health: 200
   attack: 100
@@ -129,7 +130,7 @@ MonoBehaviour:
   fireResistance: 0
   waterResistance: 0
   earthResistance: 0
-  maxStunValue: 50
+  maxStunValue: 10
   lightningResistance: 0
   metalResistance: 0
   damageText: {fileID: 4318804278247988162, guid: d8ab669f8ef30064497cad64bd4f4f2f, type: 3}
@@ -283,7 +284,7 @@ GameObject:
   - component: {fileID: 6942326033442153048}
   - component: {fileID: 2998014732451060597}
   m_Layer: 11
-  m_Name: AttackCollider
+  m_Name: attack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -343,7 +344,7 @@ GameObject:
   - component: {fileID: 2159852384628377439}
   - component: {fileID: 4590802640785535603}
   m_Layer: 7
-  m_Name: Circle
+  m_Name: shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

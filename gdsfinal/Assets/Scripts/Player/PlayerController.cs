@@ -68,54 +68,65 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float moveX = 0;
-        float moveY = 0;
-        if (Input.GetKey(KeyCode.W))
+        if (canInput)
         {
-            moveY = 1f;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
+            float moveX = 0;
+            float moveY = 0;
             if (Input.GetKey(KeyCode.W))
-                moveY = 0;
-            else
-                moveY = -1f;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            moveX = 1f;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
+            {
+                moveY = 1f;
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                if (Input.GetKey(KeyCode.W))
+                    moveY = 0;
+                else
+                    moveY = -1f;
+            }
             if (Input.GetKey(KeyCode.D))
-                moveX = 0;
-            else
-                moveX = -1f;
-        }
-        moveDir = new Vector3(moveX, moveY).normalized;
-        if (moveX != 0 || moveY != 0)
-            lastDir = moveDir;
-        mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+            {
+                moveX = 1f;
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                if (Input.GetKey(KeyCode.D))
+                    moveX = 0;
+                else
+                    moveX = -1f;
+            }
+            moveDir = new Vector3(moveX, moveY).normalized;
+            if (moveX != 0 || moveY != 0)
+                lastDir = moveDir;
+            mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
 
-        if (Input.GetKeyDown(KeyCode.Space) && !isAvoiding && canAvoid && !isHurting)
-        {
-            Avoid();
+            if (Input.GetKeyDown(KeyCode.Space) && !isAvoiding && canAvoid && !isHurting)
+            {
+                Avoid();
+            }
         }
     }
 
     private void LateUpdate()
     {
-        if ((Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Q)) && canChangeWeapon && !isAttacking)
-            SwitchWeapon();
-        if (Input.GetKeyDown(KeyCode.R) && canChangeWeapon && !isAttacking)
-            ChangeWeapon();
+        if (canInput)
+        {
+            if ((Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Q)) && canChangeWeapon && !isAttacking)
+                SwitchWeapon();
+            if (Input.GetKeyDown(KeyCode.R) && canChangeWeapon && !isAttacking)
+                ChangeWeapon();
+        }
     }
 
     private void FixedUpdate()
     {
-        mouseDir = ((Vector2)mousePos - (Vector2)transform.position).normalized;
-        Move();
-        RotateArrow();
+        if (canInput)
+        {
+            mouseDir = ((Vector2)mousePos - (Vector2)transform.position).normalized;
+            Move();
+            RotateArrow();
+        }
+        else
+            rigid.velocity = Vector2.zero;
     }
 
     private void Move()
@@ -151,7 +162,7 @@ public class PlayerController : MonoBehaviour
 
     private void RotateArrow()
     {
-        if (canRotate && canInput)
+        if (canRotate)
         {
             float angle = Mathf.Atan2(mouseDir.y, mouseDir.x) * Mathf.Rad2Deg;
             arrow.transform.rotation = Quaternion.Euler(0, 0, angle);
@@ -160,7 +171,25 @@ public class PlayerController : MonoBehaviour
 
     public void Die()
     {
-        //Debug.LogError("Die");
+        StopAllCoroutines();
+        SetCannotInput();
+        if (isFacingRight)
+            anim.Play("die_right");
+        else
+            anim.Play("die_left");
+        arrow.SetActive(false);
+        GetComponent<BoxCollider2D>().enabled = false;
+        GetComponent<LineRenderer>().enabled = false;
+        rigid.bodyType = RigidbodyType2D.Static;
+        weapon.enabled = false;
+        status.enabled = false;
+        enabled = false;
+        Invoke(nameof(GameOver), 0.5f);
+    }
+
+    private void GameOver()
+    {
+        UIManager.instance.ShowGameOver();
     }
 
     public void SetSpeed(float s)
@@ -402,7 +431,6 @@ public class PlayerController : MonoBehaviour
     {
         canInput = false;
         weapon.ResetWeapon();
-        speed = 0;
         anim.SetBool("isMovingRight", false);
         anim.SetBool("isMovingLeft", false);
         anim.SetBool("isRightAttacking", false);
@@ -412,6 +440,5 @@ public class PlayerController : MonoBehaviour
     public void SetCanInput()
     {
         canInput = true;
-        weapon.ResetWeapon();
     }
 }

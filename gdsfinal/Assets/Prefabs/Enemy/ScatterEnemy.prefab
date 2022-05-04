@@ -232,7 +232,7 @@ MonoBehaviour:
   fireResistance: 0
   waterResistance: 0
   earthResistance: 0
-  maxStunValue: 100
+  maxStunValue: 30
   lightningResistance: 0
   metalResistance: 0
   damageText: {fileID: 4318804278247988162, guid: d8ab669f8ef30064497cad64bd4f4f2f, type: 3}
@@ -316,7 +316,7 @@ GameObject:
   - component: {fileID: 1975638847091674337}
   - component: {fileID: 1975638847091674336}
   m_Layer: 7
-  m_Name: Circle
+  m_Name: shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
