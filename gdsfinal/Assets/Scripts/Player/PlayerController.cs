@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private Rigidbody2D rigid;
     private Vector3 moveDir;
+    private Vector3 lastDir = Vector3.down;
     private Vector3 mousePos;
     private Vector3 mouseDir;
     private Weapon weapon;
@@ -27,8 +28,13 @@ public class PlayerController : MonoBehaviour
     public bool isAttacking = false;
     public bool isSkilling = false;
     private float attackTimer;
+    public bool canAvoid = true;
+    public bool isAvoiding = false;
+    private bool layerBack = false;
+    public float avoidSpeed;
     public bool isHurting = false;
     private float hurtTimer;
+    private Coroutine avoidCoroutine;
 
     private List<Weapon.Property> weapons = new List<Weapon.Property>
     {
@@ -87,7 +93,14 @@ public class PlayerController : MonoBehaviour
                 moveX = -1f;
         }
         moveDir = new Vector3(moveX, moveY).normalized;
+        if (moveX != 0 || moveY != 0)
+            lastDir = moveDir;
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+
+        if (Input.GetKeyDown(KeyCode.Space) && !isAvoiding && canAvoid && !isHurting)
+        {
+            Avoid();
+        }
     }
 
     private void LateUpdate()
@@ -107,7 +120,8 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        rigid.velocity = speed * status.GetSpeed() * moveDir;
+        if (!isAvoiding)
+            rigid.velocity = speed * status.GetSpeed() * moveDir;
         if (rigid.velocity.x > 0)
         {
             isFacingRight = true;
@@ -165,6 +179,7 @@ public class PlayerController : MonoBehaviour
     {
         isAttacking = true;
         isSkilling = isSkill;
+        canAvoid = !ifStop;
         yield return null;
         canChangeWeapon = false;
         this.canRotate = canRotate;
@@ -204,6 +219,7 @@ public class PlayerController : MonoBehaviour
         canChangeWeapon = true;
         isAttacking = false;
         isSkilling = false;
+        canAvoid = true;
         anim.SetBool("isRightAttacking", false);
         anim.SetBool("isLeftAttacking", false);
     }
@@ -225,9 +241,51 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void Avoid()
+    {
+        isAvoiding = true;
+        weapon.ResetWeapon();
+        avoidCoroutine = StartCoroutine(Avoiding(lastDir, avoidSpeed * status.GetSpeed(), 0.5f));
+    }
+
+    private IEnumerator Avoiding(Vector3 dir, float sp, float time)
+    {
+        float timer = 0;
+        gameObject.layer = 8;
+        foreach (Transform child in transform)
+            if (child.name == "collider")
+                child.gameObject.layer = 8;
+        layerBack = false;
+        while (timer < time)
+        {
+            sp -= sp * 5f * Time.fixedDeltaTime;
+            rigid.velocity = dir * sp;
+            if (sp < 3f && !layerBack)
+            {
+                gameObject.layer = 3;
+                foreach (Transform child in transform)
+                    if (child.name == "collider")
+                        child.gameObject.layer = 3;
+                layerBack = true;
+            }
+            timer += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        isAvoiding = false;
+    }
+
     public void Hurt(float time)
     {
         if (isSkilling) return;
+        if (isAvoiding)
+        {
+            StopCoroutine(avoidCoroutine);
+            gameObject.layer = 3;
+            foreach (Transform child in transform)
+                if (child.name == "collider")
+                    child.gameObject.layer = 3;
+            isAvoiding = false;
+        }
         hurtTimer = 0;
         anim.SetBool("isHurt", true);
         if (isFacingRight)
@@ -349,5 +407,11 @@ public class PlayerController : MonoBehaviour
         anim.SetBool("isMovingLeft", false);
         anim.SetBool("isRightAttacking", false);
         anim.SetBool("isLeftAttacking", false);
+    }
+
+    public void SetCanInput()
+    {
+        canInput = true;
+        weapon.ResetWeapon();
     }
 }

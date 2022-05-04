@@ -252,17 +252,17 @@ public class Weapon : MonoBehaviour
         switch (property)
         {
             case Property.fire:
-                if (!player.isHurting && player.canInput)
+                if (!player.isHurting && player.canInput && !player.isAvoiding)
                     Fire();
                 skillUI.SetCooldownFill(cooldownTimerF / cooldownTimeF);
                 break;
             case Property.water:
-                if (!player.isHurting && player.canInput)
+                if (!player.isHurting && player.canInput && !player.isAvoiding)
                     Water();
                 skillUI.SetCooldownFill(cooldownTimerW / cooldownTimeW);
                 break;
             case Property.earth:
-                if (!player.isHurting && player.canInput)
+                if (!player.isHurting && player.canInput && !player.isAvoiding)
                     Earth();
                 if (!isDroping)
                     skillUI.SetCooldownFill(cooldownTimerE / cooldownTimeE);
@@ -271,7 +271,7 @@ public class Weapon : MonoBehaviour
                 skillUI.SetSkillingFill(skillTimerE / skillTimeE);
                 break;
             case Property.lightning:
-                if (!player.isHurting && player.canInput)
+                if (!player.isHurting && player.canInput && !player.isAvoiding)
                     Lightning();
                 if (!hasMoved)
                     skillUI.SetCooldownFill(cooldownTimerL / cooldownTimeL);
@@ -280,7 +280,7 @@ public class Weapon : MonoBehaviour
                 skillUI.SetSkillingFill(skillTimerL / skillTimeL);
                 break;
             case Property.metal:
-                if (!player.isHurting && player.canInput)
+                if (!player.isHurting && player.canInput && !player.isAvoiding)
                     Metal();
                 skillUI.SetCooldownFill(cooldownTimerM / cooldownTimeM);
                 break;
@@ -390,7 +390,7 @@ public class Weapon : MonoBehaviour
 
     private void Fire()
     {
-        if (Input.GetMouseButtonDown(0) && !player.isSkilling)
+        if (Input.GetMouseButtonDown(0) && !player.isAttacking)
         {
             if (shootTimer >= intervalF)
             {
@@ -398,12 +398,12 @@ public class Weapon : MonoBehaviour
                 shootTimer = 0;
             }
         }
-        if (Input.GetMouseButtonDown(1) && !player.isSkilling)
+        if (Input.GetMouseButtonDown(1) && !player.isAttacking)
         {
             NormalAttackF1();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             if (!player.isAttacking && cooldownTimerF == 0)
             {
@@ -577,7 +577,7 @@ public class Weapon : MonoBehaviour
             waterRotater.Rotate(new Vector3(0, 0, Mathf.Sign(angle) * sprayRotateSpeed * Time.deltaTime));
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             if (!player.isAttacking && cooldownTimerW == 0)
             {
@@ -691,17 +691,19 @@ public class Weapon : MonoBehaviour
                 Destroy(effectInstance);
         }
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
             isShooting = true;
-            player.Attack(MouseDir(), Time.deltaTime * 5, false, moveSpeedE, true, false);
         }
-        else
+        else if(Input.GetMouseButtonUp(0))
         {
             isShooting = false;
             if (!isAiming)
                 preheatBullet = preheatTimes;
         }
+
+        if (isShooting)
+            player.Attack(MouseDir(), Time.deltaTime * 5, false, moveSpeedE, true, false);
 
         if (isShooting || isAiming)
         {
@@ -724,7 +726,7 @@ public class Weapon : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             if (!player.isAttacking && cooldownTimerE == 0 && !isDroping)
                 SkillE();
@@ -804,7 +806,7 @@ public class Weapon : MonoBehaviour
                 shootTimer = 0;
             }
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             if (!player.isAttacking && cooldownTimerL == 0)
                 SkillL();
@@ -943,7 +945,7 @@ public class Weapon : MonoBehaviour
                 Combo();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             if (!player.isAttacking && cooldownTimerM == 0)
             {
