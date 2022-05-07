@@ -75,7 +75,7 @@ MonoBehaviour:
   type: 0
   property: 2
   bulletEffect: {fileID: 0}
-  blinkTime: 0.5
+  blinkTime: 0.75
   blinkColor: {r: 0, g: 0, b: 1, a: 1}
   ifHurtStop: 1
   lifetime: 0

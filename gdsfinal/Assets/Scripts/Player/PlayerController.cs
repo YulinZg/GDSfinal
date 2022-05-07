@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject arrow;
     [SerializeField] private WeaponUI weaponUI;
     [SerializeField] private StatusUI statusUI;
+    [SerializeField] private bool canTryWeapon = false;
 
     private Camera cam;
     private Animator anim;
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour
     public bool isHurting = false;
     private float hurtTimer;
     private Coroutine avoidCoroutine;
+    public GameObject col;
 
     private List<Weapon.Property> weapons = new List<Weapon.Property>
     {
@@ -112,7 +114,7 @@ public class PlayerController : MonoBehaviour
         {
             if ((Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Q)) && canChangeWeapon && !isAttacking)
                 SwitchWeapon();
-            if (Input.GetKeyDown(KeyCode.R) && canChangeWeapon && !isAttacking)
+            if (Input.GetKeyDown(KeyCode.R) && canChangeWeapon && !isAttacking && canTryWeapon)
                 ChangeWeapon();
         }
     }
@@ -281,9 +283,7 @@ public class PlayerController : MonoBehaviour
     {
         float timer = 0;
         gameObject.layer = 8;
-        foreach (Transform child in transform)
-            if (child.name == "collider")
-                child.gameObject.layer = 8;
+        col.layer = 8;
         layerBack = false;
         while (timer < time)
         {
@@ -292,9 +292,7 @@ public class PlayerController : MonoBehaviour
             if (sp < 3f && !layerBack)
             {
                 gameObject.layer = 3;
-                foreach (Transform child in transform)
-                    if (child.name == "collider")
-                        child.gameObject.layer = 3;
+                col.layer = 3;
                 layerBack = true;
             }
             timer += Time.fixedDeltaTime;
@@ -310,9 +308,7 @@ public class PlayerController : MonoBehaviour
         {
             StopCoroutine(avoidCoroutine);
             gameObject.layer = 3;
-            foreach (Transform child in transform)
-                if (child.name == "collider")
-                    child.gameObject.layer = 3;
+            col.layer = 3;
             isAvoiding = false;
         }
         hurtTimer = 0;
@@ -420,6 +416,7 @@ public class PlayerController : MonoBehaviour
         weapons.RemoveAt(i);
         weapons.Add(temp);
         weapon.GetWeapon(currentWeapon);
+        weapon.ResetWeapon();
     }
 
     public void AssassinBreath()

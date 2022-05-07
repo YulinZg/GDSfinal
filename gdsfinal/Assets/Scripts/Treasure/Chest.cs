@@ -22,7 +22,7 @@ public class Chest : MonoBehaviour
         chestUI = GameObject.FindGameObjectWithTag("Canvas").GetComponent<ChestUI>();
         color = scroll.GetComponent<SpriteRenderer>().color;
         title = scroll.GetComponent<Pickup>().title;
-        description = scroll.GetComponent<Pickup>().description;
+        description = scroll.GetComponent<Pickup>().GetDescription();
     }
 
     // Update is called once per frame
