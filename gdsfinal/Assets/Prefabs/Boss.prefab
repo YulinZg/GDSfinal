@@ -217,7 +217,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7081096497988777316}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -20.44, y: -0.83, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7081096498311792005}
@@ -332,8 +332,8 @@ MonoBehaviour:
   damageUIOffsetYMin: -1
   damageUIOffsetYMax: 1
   burnEffect: {fileID: 0}
-  fireMark: {fileID: 0}
-  explosion: {fileID: 0}
+  fireMark: {fileID: 1691139846990456132, guid: 5703bbeb84909b744a570f849a056e3e, type: 3}
+  explosion: {fileID: 4970449726698586475, guid: f283098c012e47d439ba19e6a77aefb2, type: 3}
   decelerateEffect: {fileID: 0}
   stunEffect: {fileID: 0}
   palsyEffect: {fileID: 0}
@@ -365,7 +365,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.01862526, y: -0.00931263}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -376,7 +376,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.4039879, y: 1.5716171}
+  m_Size: {x: 1.5, y: 1.5}
   m_EdgeRadius: 0
 --- !u!50 &2766441211627260608
 Rigidbody2D:
@@ -762,8 +762,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7714132511566021038}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.3, z: 0}
-  m_LocalScale: {x: 1.6858766, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -1.2, z: 0}
+  m_LocalScale: {x: 1.6, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7081096497988777337}
   m_RootOrder: 1
