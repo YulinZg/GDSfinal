@@ -16,6 +16,7 @@ public class GrappleHook : MonoBehaviour
     [SerializeField] private float shootSpeed;
     [SerializeField] private float grappleSpeed;
 
+    public bool isInvincible = false;
     private LineRenderer line;
     private Vector2 target;
     private GameObject enemy;
@@ -65,6 +66,11 @@ public class GrappleHook : MonoBehaviour
 
     IEnumerator Grappling(Vector2 dir, float distance, float resetSpeed, HitType hitType, float damage)
     {
+        if (isInvincible)
+        {
+            gameObject.layer = 8;
+            player.col.layer = 8;
+        }
         isShooting = true;
         line.enabled = true;
         line.positionCount = 2;
@@ -124,6 +130,11 @@ public class GrappleHook : MonoBehaviour
         Destroy(hookInstance);
         isShooting = false;
         isGrappling = false;
-        line.enabled = false;
+        line.enabled = false; 
+        if (isInvincible)
+        {
+            gameObject.layer = 3;
+            player.col.layer = 3;
+        }
     }
 }

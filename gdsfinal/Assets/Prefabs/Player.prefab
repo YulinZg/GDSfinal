@@ -525,7 +525,7 @@ MonoBehaviour:
   standTimeW: 0.5
   standTimeW1: 1
   chargeTime: 1
-  sprayTime: 2
+  sprayTime: 1.5
   sprayRotateSpeed: 30
   bulletsW:
   - {fileID: 4896306263825385891, guid: cc3614a27abe4ca44afa934ec273a7ec, type: 3}
@@ -680,6 +680,7 @@ MonoBehaviour:
   isAvoiding: 0
   avoidSpeed: 15
   isHurting: 0
+  col: {fileID: 7774187446528035657}
 --- !u!120 &7771505069829453882
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -794,3 +795,4 @@ MonoBehaviour:
   hook: {fileID: 8837005074448039765, guid: 12db63d32e14c724b95639ca66964bb9, type: 3}
   shootSpeed: 60
   grappleSpeed: 20
+  isInvincible: 0

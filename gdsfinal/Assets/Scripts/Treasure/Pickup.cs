@@ -4,10 +4,23 @@ using UnityEngine;
 
 public class Pickup : MonoBehaviour
 {
+    public enum ScrollType
+    {
+        normal,
+        fire,
+        water,
+        earth,
+        lightning,
+        metal
+    }
+    [SerializeField] private ScrollType scrollType;
+
     [SerializeField] private PickupEffect pickupEffect;
     [SerializeField] private bool randomRotate;
     public string title;
     public string description;
+    public string description1;
+    public string description2;
     private Rigidbody2D rigid;
     private BoxCollider2D col;
     private bool canFlow = false;
@@ -27,6 +40,25 @@ public class Pickup : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360f));
         rigid.AddForce(Random.Range(4f, 6f) * RotateVector(Vector3.up, Random.Range(15f, 30f) * (Random.Range(2, 4) % 3 - 1)), ForceMode2D.Impulse);
         Invoke(nameof(StopFalling), Random.Range(0.4f, 1.1f));
+        switch (scrollType)
+        {
+            case ScrollType.fire:
+                GameManagement.instance.fireCount++;
+                break;
+            case ScrollType.water:
+                GameManagement.instance.waterCount++;
+                break;
+            case ScrollType.earth:
+                GameManagement.instance.earthCount++;
+                break;
+            case ScrollType.lightning:
+                GameManagement.instance.lightningCount++;
+                break;
+            case ScrollType.metal:
+                GameManagement.instance.metalCount++;
+                break;
+        }
+        GameManagement.instance.RemoveScroll();
     }
 
     // Update is called once per frame
@@ -67,5 +99,28 @@ public class Pickup : MonoBehaviour
             pickupEffect.OnPickup(collision.gameObject);
             Destroy(gameObject);
         }
+    }
+
+    public string GetDescription()
+    {
+        string s = description;
+        switch (scrollType)
+        {
+            case ScrollType.water:
+                if (GameManagement.instance.waterCount >= 1)
+                    s = description1;
+                break;
+            case ScrollType.earth:
+                if (GameManagement.instance.earthCount >= 1)
+                    s = description1;
+                break;
+            case ScrollType.metal:
+                if (GameManagement.instance.waterCount >= 2)
+                    s = description2;
+                else if (GameManagement.instance.metalCount == 1)
+                    s = description1; 
+                break;
+        }
+        return s;
     }
 }

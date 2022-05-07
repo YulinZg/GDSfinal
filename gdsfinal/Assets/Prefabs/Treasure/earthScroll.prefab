@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6455415828529658827
+--- !u!1 &4432483269282875836
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6991616137385468520}
-  - component: {fileID: 1887649875474553057}
+  - component: {fileID: 3632403616947828298}
+  - component: {fileID: 5028903399147716620}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -17,27 +17,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!4 &6991616137385468520
+--- !u!4 &3632403616947828298
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6455415828529658827}
+  m_GameObject: {fileID: 4432483269282875836}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.464, z: 0}
   m_LocalScale: {x: 0.77, y: 0.21000001, z: 1}
   m_Children: []
-  m_Father: {fileID: 6599332401073975919}
+  m_Father: {fileID: 8934872432422210798}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &1887649875474553057
+--- !u!212 &5028903399147716620
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6455415828529658827}
+  m_GameObject: {fileID: 4432483269282875836}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &6599332401073975904
+--- !u!1 &8934872432422210785
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -90,40 +90,40 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6599332401073975919}
-  - component: {fileID: 6599332401073975916}
-  - component: {fileID: 6599332401073975917}
-  - component: {fileID: 6599332401073975918}
-  - component: {fileID: 6599332401073975906}
+  - component: {fileID: 8934872432422210798}
+  - component: {fileID: 8934872432422210797}
+  - component: {fileID: 8934872432422210796}
+  - component: {fileID: 8934872432422210799}
+  - component: {fileID: 8934872432422210787}
   m_Layer: 0
-  m_Name: gutsScroll
+  m_Name: earthScroll
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6599332401073975919
+--- !u!4 &8934872432422210798
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6599332401073975904}
+  m_GameObject: {fileID: 8934872432422210785}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
-  - {fileID: 6991616137385468520}
+  - {fileID: 3632403616947828298}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &6599332401073975916
+--- !u!212 &8934872432422210797
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6599332401073975904}
+  m_GameObject: {fileID: 8934872432422210785}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -158,7 +158,7 @@ SpriteRenderer:
   m_SortingLayer: 5
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 3806bce2c49dd144f933352ff94548bb, type: 3}
-  m_Color: {r: 0.7529412, g: 1, b: 0.5019608, a: 1}
+  m_Color: {r: 0.49411765, g: 0.2509804, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -168,34 +168,33 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6599332401073975917
+--- !u!114 &8934872432422210796
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6599332401073975904}
+  m_GameObject: {fileID: 8934872432422210785}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd2f86fcd94dedc4a874980da20ac9ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrollType: 0
-  pickupEffect: {fileID: 11400000, guid: d5dc2b00d2ef8e5449f8c1329010c220, type: 2}
+  scrollType: 3
+  pickupEffect: {fileID: 11400000, guid: dd04b660ead30984183d8b9500c98003, type: 2}
   randomRotate: 0
-  title: Guts Scroll
-  description: Be able to take lethal damage without dying (left 1 HP) when your
-    current HP is higher than a certain amount. Reduce the trigger line if you already
-    have this scroll.
-  description1: 
+  title: Earth Scroll
+  description: Chance to generate a big rock bumping in your mouse direction when
+    shooting.
+  description1: Increases the chance of rock generating.
   description2: 
---- !u!61 &6599332401073975918
+--- !u!61 &8934872432422210799
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6599332401073975904}
+  m_GameObject: {fileID: 8934872432422210785}
   m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
@@ -215,14 +214,14 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.6, y: 0.7}
   m_EdgeRadius: 0
---- !u!50 &6599332401073975906
+--- !u!50 &8934872432422210787
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6599332401073975904}
+  m_GameObject: {fileID: 8934872432422210785}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0

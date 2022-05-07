@@ -164,12 +164,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrolls:
+  - {fileID: 356767398894247493, guid: 16114da15393480448b09af596a26db4, type: 3}
+  - {fileID: 5229074574150132357, guid: 39de2cf63b00060468bc1393cafef071, type: 3}
+  - {fileID: 8934872432422210785, guid: e6151f6bf048c0e449e5ddfc49ea17b4, type: 3}
+  - {fileID: 3755196660573573314, guid: d6ee7bcabbfbdea43b3ba3e3611cf609, type: 3}
+  - {fileID: 4537482398741413406, guid: 97af0f4d0bf1d1140ba352b293621817, type: 3}
   - {fileID: 5266362378348981095, guid: d77c2f7e6c67e31499ea26b0ff31f40d, type: 3}
   - {fileID: 5418527549481451346, guid: 83ea588b1d2d48f4ab900351fce6a0ca, type: 3}
   - {fileID: 7931067536328914578, guid: 1fe90651dc53c5e48adfecba2ff42fa7, type: 3}
   - {fileID: 46589575938698216, guid: 67fbde192a217184eb07ee06e14d0228, type: 3}
   - {fileID: 6599332401073975904, guid: bd80afd96e0ea964e8385e9c4ce7c23b, type: 3}
   - {fileID: 3198070048456630103, guid: 9a8f756e9c8450f4a825cdf125ced731, type: 3}
+  - {fileID: 2217805367841458260, guid: 22be943c9519f7847bb7f1d167c2ad7f, type: 3}
   sundries:
   - {fileID: 3846612648607274792, guid: 280e0c2a7dc2d6347bafe6b41e24da90, type: 3}
   - {fileID: 9176723722062149276, guid: 96b01f572b2521249b718ca08dc3c20b, type: 3}
@@ -177,6 +183,11 @@ MonoBehaviour:
   - {fileID: 5580126734907854814, guid: c49f855efde77b842b987357ef651e00, type: 3}
   - {fileID: 1870935099029424337, guid: be926184a0304c748b785eec0e502c1f, type: 3}
   - {fileID: 8236219528873415335, guid: 733cf84e116a5b94792a2f8a803e6482, type: 3}
+  fireCount: 0
+  waterCount: 0
+  earthCount: 0
+  lightningCount: 0
+  metalCount: 0
   enemyCount: 0
   roomCounter: 0
 --- !u!4 &322388166
@@ -265,7 +276,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4031
+    m_Bits: 8127
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -967,6 +978,10 @@ PrefabInstance:
     - target: {fileID: 2624774700145363775, guid: 9afb55096c07ad540acdbd879e2294a6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3052141313141739121, guid: 9afb55096c07ad540acdbd879e2294a6, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9afb55096c07ad540acdbd879e2294a6, type: 3}

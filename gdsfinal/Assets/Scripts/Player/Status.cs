@@ -197,7 +197,7 @@ public class Status : MonoBehaviour
     {
         float s = 1 + (moveSpeed - 10) * moveSpeedUnit;
         if (isQuick)
-            s += 0.5f;
+            s += 1f;
         return s;
     }
 

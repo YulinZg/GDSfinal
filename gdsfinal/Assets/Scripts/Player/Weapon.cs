@@ -77,6 +77,7 @@ public class Weapon : MonoBehaviour
     private bool isCharging = false;
     private bool charged1 = false;
     private bool charged2 = false;
+    private bool canSpray = false;
     private bool isSpraying = false;
     private bool isPassiveAttacking = false;
     private bool spawnedEffect1 = false;
@@ -109,6 +110,7 @@ public class Weapon : MonoBehaviour
     private int preheatBullet;
     private bool isShooting = false;
     private bool isAiming = false;
+    private bool canRock = false;
     private int shotTimes = 0;
     private int nextRockTimes;
 
@@ -172,6 +174,7 @@ public class Weapon : MonoBehaviour
     private bool leftDown = false;
     private bool rightDown = false;
     private int lastClick = 0;
+    private int invincibleCount = 0;
 
     [SerializeField] private float repelDistance0;
     [SerializeField] private float repelDistance1;
@@ -420,7 +423,7 @@ public class Weapon : MonoBehaviour
                 Destroy(child.gameObject);
         Bullet bulletInstance;
         canLaunch = false;
-        for (int i = 0; i < bulletNumber; i++)
+        for (int i = 0; i < bulletNum; i++)
         {
             bulletInstance = Instantiate(bulletsF[0], transform.position, Quaternion.identity).GetComponent<Bullet>();
             bulletInstance.transform.parent = fireRotater;
@@ -472,6 +475,11 @@ public class Weapon : MonoBehaviour
         SetBurn(bulletInstance);
         bulletInstance.transform.parent.localScale = new Vector3(skillRangeF, skillRangeF, 1);
         player.Attack(MouseDir(), 1f, true, moveSpeedF, true, true);
+    }
+
+    public void ScrollF(int amount)
+    {
+        bulletNumber += amount;
     }
 
     //Fire/////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -544,8 +552,10 @@ public class Weapon : MonoBehaviour
         }
         else if (chargeTimer >= chargeTime * 3 && charged1 && charged2 && isCharging)
         {
-            //NormalAttackW1(rangeW3, rangeW3 * 0.25f, damageW3);
-            PassiveAttackW(rangeW3, rangeW3 * 0.25f, sprayTime);
+            if (!canSpray)
+                NormalAttackW1(rangeW3, rangeW3 * 0.25f, damageW3);
+            else
+                PassiveAttackW(rangeW3, rangeW3 * 0.25f, sprayTime);
             SpawnEffect(2);
         }
 
@@ -670,6 +680,14 @@ public class Weapon : MonoBehaviour
         player.Attack(MouseDir(), 0.5f, true, moveSpeedW, false, true);
     }
 
+    public void ScrollW(float time)
+    {
+        if (canSpray)
+            sprayTime += time;
+        else
+            canSpray = true;
+    }
+
     //Water////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Earth////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -738,7 +756,8 @@ public class Weapon : MonoBehaviour
         Bullet bulletInstance = Instantiate(bulletsE[0], ShootPos(shootOffset), Quaternion.identity).GetComponent<Bullet>();
         bulletInstance.Setup(dir, bulletSpeedE, GetDamage(damageE), status.GetCritProbability(), status.GetCritRate(), rangeE / bulletSpeedE, Bullet.BulletType.normal);
         SetStun(bulletInstance, stunValue);
-        PassiveAttackE();
+        if (canRock)
+            PassiveAttackE();
     }
 
     private void PassiveAttackE()
@@ -783,6 +802,14 @@ public class Weapon : MonoBehaviour
             dropTimer = dropInterval;
         }
         dropTimer -= Time.deltaTime;
+    }
+
+    public void ScrollE(int number)
+    {
+        if (canRock)
+            rockTimes -= number;
+        else
+            canRock = true;
     }
 
     //Earth////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -883,9 +910,7 @@ public class Weapon : MonoBehaviour
         bulletInstance.Setup(dir, 0, GetDamage(skillDamageL), status.GetCritProbability(), status.GetCritRate(), 0.25f, Bullet.BulletType.penetrable);
         SetPalsy(bulletInstance);
         gameObject.layer = 8;
-        foreach (Transform child in transform)
-            if (child.name == "collider")
-                child.gameObject.layer = 8;
+        player.col.layer = 8;
         GetComponent<SpriteRenderer>().color = Color.clear;
         Invoke(nameof(EndDash), 0.1f);
     }
@@ -893,10 +918,13 @@ public class Weapon : MonoBehaviour
     private void EndDash()
     {
         gameObject.layer = 3;
-        foreach (Transform child in transform)
-            if (child.name == "collider")
-                child.gameObject.layer = 3;
+        player.col.layer = 3;
         GetComponent<SpriteRenderer>().color = Color.white;
+    }
+
+    public void ScrollL(int amount)
+    {
+        maxBulletNum += amount;
     }
 
     //Lightning////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1063,6 +1091,11 @@ public class Weapon : MonoBehaviour
 
     IEnumerator NormalAttackM0(float time, int bulletNo, float damage, float repelDistance)
     {
+        if (bulletNo == 2 && invincibleCount >= 2)
+        {
+            gameObject.layer = 8;
+            player.col.layer = 8;
+        }
         player.Attack(MouseDir(), time, true, moveSpeedM, true, false);
         isCombating = true;
         Bullet bulletInstance = Instantiate(bulletsM[bulletNo], transform.position, Quaternion.identity).GetComponent<Bullet>();
@@ -1070,7 +1103,14 @@ public class Weapon : MonoBehaviour
         SetRepel(bulletInstance, repelDistance);
         bulletInstance.transform.localScale = new Vector3(rangeM, rangeM, 1);
         bulletInstance.transform.parent = bulletsInWorld;
+        if (invincibleCount >= 1)
+            SetLayer(bulletInstance.transform, 12);
         yield return new WaitForSeconds(time);
+        if (bulletNo == 2 && invincibleCount >= 2)
+        {
+            gameObject.layer = 3;
+            player.col.layer = 3;
+        }
         isCombating = false;
     }
 
@@ -1080,11 +1120,12 @@ public class Weapon : MonoBehaviour
         Vector3 dir = MouseDir();
         player.Attack(dir, 0.5f, true, moveSpeedM, true, false);
         Bullet bulletInstance = Instantiate(bulletsM[3], ShootPos(shootOffset), Quaternion.identity).GetComponent<Bullet>();
-        bulletInstance.Setup(
-            dir, 0, GetDamage(damageM3), status.GetCritProbability(), status.GetCritRate(), 0.5f, Bullet.BulletType.penetrable);
+        bulletInstance.Setup(dir, 0, GetDamage(damageM3), status.GetCritProbability(), status.GetCritRate(), 0.5f, Bullet.BulletType.penetrable);
         SetRepel(bulletInstance, repelDistance3);
         bulletInstance.transform.localScale = new Vector3(rangeM, rangeM, 1);
-        bulletInstance.transform.parent = bulletsInWorld;
+        bulletInstance.transform.parent = bulletsInWorld; 
+        if (invincibleCount >= 1)
+            SetLayer(bulletInstance.transform, 12);
         yield return new WaitForSeconds(0.25f);
         player.Dash(dir, 2.0f * rangeM, 0.25f);
         yield return new WaitForSeconds(0.25f);
@@ -1097,11 +1138,12 @@ public class Weapon : MonoBehaviour
         Vector3 dir = MouseDir();
         player.Attack(dir, 0.5f, true, moveSpeedM, true, false);
         Bullet bulletInstance = Instantiate(bulletsM[4], ShootPos(shootOffset), Quaternion.identity).GetComponent<Bullet>();
-        bulletInstance.Setup(
-            dir, 0, GetDamage(damageM4), status.GetCritProbability(), status.GetCritRate(), 0.5f, Bullet.BulletType.penetrable);
+        bulletInstance.Setup(dir, 0, GetDamage(damageM4), status.GetCritProbability(), status.GetCritRate(), 0.5f, Bullet.BulletType.penetrable);
         SetRepel(bulletInstance, repelDistance4);
         bulletInstance.transform.localScale = new Vector3(rangeM, rangeM, 1);
         bulletInstance.transform.parent = bulletsInWorld;
+        if (invincibleCount >= 1)
+            SetLayer(bulletInstance.transform, 12);
         player.Dash(dir, 1.0f * rangeM, 0.17f);
         yield return new WaitForSeconds(0.33f);
         player.Dash(dir, 1.0f * rangeM, 0.17f);
@@ -1111,18 +1153,29 @@ public class Weapon : MonoBehaviour
 
     IEnumerator NormalAttackM3()
     {
+        if (invincibleCount >= 2)
+        {
+            gameObject.layer = 8;
+            player.col.layer = 8;
+        }
         isCombating = true;
         Vector3 dir = MouseDir();
         player.Attack(dir, 1f, true, moveSpeedM, true, false);
         Bullet bulletInstance = Instantiate(bulletsM[5], ShootPos(shootOffset), Quaternion.identity).GetComponent<Bullet>();
-        bulletInstance.Setup(
-            dir, 0, GetDamage(damageM5), status.GetCritProbability(), status.GetCritRate(), 1f, Bullet.BulletType.penetrable);
+        bulletInstance.Setup(dir, 0, GetDamage(damageM5), status.GetCritProbability(), status.GetCritRate(), 1f, Bullet.BulletType.penetrable);
         SetRepel(bulletInstance, repelDistance5);
         bulletInstance.transform.localScale = new Vector3(rangeM, rangeM, 1);
         bulletInstance.transform.parent = bulletsInWorld;
+        if (invincibleCount >= 1)
+            SetLayer(bulletInstance.transform, 12);
         yield return new WaitForSeconds(0.62f);
         player.Dash(dir, 3.5f * rangeM, 0.23f);
         yield return new WaitForSeconds(0.38f);
+        if (invincibleCount >= 2)
+        {
+            gameObject.layer = 3;
+            player.col.layer = 3;
+        }
         isCombating = false;
     }
 
@@ -1134,6 +1187,20 @@ public class Weapon : MonoBehaviour
     private void SkillM()
     {
         grappleHook.Grapple(MouseDir(), skillRangeM, moveSpeedM, GetDamage(skillDamageM));
+        grappleHook.isInvincible = invincibleCount >= 3;
+    }
+
+    public void ScrollM()
+    {
+        invincibleCount++;
+    }
+
+    private void SetLayer(Transform trans, int layer)
+    {
+        trans.gameObject.layer = layer;
+        if (trans.childCount > 0)
+            foreach (Transform child in trans)
+                SetLayer(child, layer);
     }
 
     //Metal////////////////////////////////////////////////////////////////////////////////////////////////////////////
