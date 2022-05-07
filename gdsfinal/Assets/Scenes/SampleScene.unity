@@ -767,13 +767,21 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 13311691}
-    - target: {fileID: 936681498720812073, guid: 3d0d73c21a3bf6a4db908af2fef627be, type: 3}
-      propertyPath: m_Enabled
-      value: 1
+    - target: {fileID: 2207109581401535735, guid: 3d0d73c21a3bf6a4db908af2fef627be, type: 3}
+      propertyPath: m_Size.x
+      value: 0.5226593
       objectReference: {fileID: 0}
-    - target: {fileID: 2741019207210238514, guid: 3d0d73c21a3bf6a4db908af2fef627be, type: 3}
-      propertyPath: canInput
-      value: 0
+    - target: {fileID: 2207109581401535735, guid: 3d0d73c21a3bf6a4db908af2fef627be, type: 3}
+      propertyPath: m_Size.y
+      value: 0.692765
+      objectReference: {fileID: 0}
+    - target: {fileID: 2207109581401535735, guid: 3d0d73c21a3bf6a4db908af2fef627be, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.0064353943
+      objectReference: {fileID: 0}
+    - target: {fileID: 2207109581401535735, guid: 3d0d73c21a3bf6a4db908af2fef627be, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.173316
       objectReference: {fileID: 0}
     - target: {fileID: 2741019207210238514, guid: 3d0d73c21a3bf6a4db908af2fef627be, type: 3}
       propertyPath: statusUI
@@ -783,18 +791,10 @@ PrefabInstance:
       propertyPath: weaponUI
       value: 
       objectReference: {fileID: 1942736151}
-    - target: {fileID: 2741019207210238514, guid: 3d0d73c21a3bf6a4db908af2fef627be, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8554495002776236972, guid: 3d0d73c21a3bf6a4db908af2fef627be, type: 3}
       propertyPath: skillUI
       value: 
       objectReference: {fileID: 950639691}
-    - target: {fileID: 8554495002776236972, guid: 3d0d73c21a3bf6a4db908af2fef627be, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8554495002776236972, guid: 3d0d73c21a3bf6a4db908af2fef627be, type: 3}
       propertyPath: bulletsInWorld
       value: 
@@ -803,17 +803,9 @@ PrefabInstance:
       propertyPath: lightningBalls
       value: 
       objectReference: {fileID: 1405143524}
-    - target: {fileID: 8995325589162135080, guid: 3d0d73c21a3bf6a4db908af2fef627be, type: 3}
-      propertyPath: m_SortingLayer
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 8995325589162135081, guid: 3d0d73c21a3bf6a4db908af2fef627be, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8995325589162135081, guid: 3d0d73c21a3bf6a4db908af2fef627be, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8995325589162135095, guid: 3d0d73c21a3bf6a4db908af2fef627be, type: 3}
       propertyPath: m_RootOrder
@@ -894,6 +886,10 @@ PrefabInstance:
     - target: {fileID: 2624774700145363715, guid: 9afb55096c07ad540acdbd879e2294a6, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624774700145363715, guid: 9afb55096c07ad540acdbd879e2294a6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2624774700145363775, guid: 9afb55096c07ad540acdbd879e2294a6, type: 3}
       propertyPath: m_Pivot.x

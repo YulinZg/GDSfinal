@@ -56,7 +56,7 @@ public class BasicEnemy : Enemy
     // Update is called once per frame
     void Update()
     {
-
+        attackTimer += Time.deltaTime;
         if (!isStun && !isHurt)
         {
             UpdateState();
@@ -73,7 +73,7 @@ public class BasicEnemy : Enemy
 
     public override void UpdateState()
     {
-        attackTimer += Time.deltaTime;
+        
         switch (currentState)
         {
             case EnemyState.Wander:
@@ -103,11 +103,12 @@ public class BasicEnemy : Enemy
                 break;
             case EnemyState.Attack:
                 moveDir = ((Vector2)player.position - (Vector2)transform.position).normalized;
-                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) > 0.9f && attackTimer >= attackInterval)
+                if (Vector2.Distance((Vector2)player.position, (Vector2)transform.position) > 0.9f && attackTimer >= attackInterval - 0.75f)
                 {
                     chasingRange = Random.Range(0.9f, 2f);
                     currentState = EnemyState.Chase;
                     desTraget = (Vector2)player.position;
+                    attackTimer = 0;
                     StopAttack();
                 }
                 else if (attackTimer >= attackInterval)
