@@ -149,7 +149,7 @@ public class Room : MonoBehaviour
         Debug.Log(GameManagement.instance.enemyCount);
         if (!isAppearChests)
         {
-            if (GameManagement.instance.enemyCount == 0)
+            if (GameManagement.instance.enemyCount <= 0)
             {
                 Instantiate(chests, chestsParentInstance.transform.position + Vector3.right * 3, Quaternion.identity).transform.parent = chestsParentInstance.transform;
                 Instantiate(chests, chestsParentInstance.transform.position + Vector3.up * 3, Quaternion.identity).transform.parent = chestsParentInstance.transform;
