@@ -8,19 +8,46 @@ public class Boss : Enemy
     public GameObject stopBulletLauncher;
     public GameObject[] normalBulletLauncher;
     public GameObject arcBulletLauncher;
+    public GameObject spawnBulletLauncher;
     // Start is called before the first frame update
+    private void Awake()
+    {
+        isAlive = true;
+        player = PlayerController.instance.transform;
+        sprite = GetComponent<SpriteRenderer>();
+        rigid = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+    }
     void Start()
     {
-        //InvokeRepeating("LaunchStopBullet", 15f, 15f);
+        isBoss = true;
+        foreach (GameObject point in GameObject.FindGameObjectsWithTag("Point"))
+        {
+            pathPointsPos.Add(point.transform.position);
+        }
+        InvokeRepeating("LaunchStopBullet", 15f, 15f);
         //间隔时间加5才是真正的间隔时间
-        //InvokeRepeating("LaunchNormalBullet", 8f, 13f);
-        InvokeRepeating("LaunchArcBullet", 8f, 13f);
+        InvokeRepeating("LaunchNormalBullet", 8f, 13f);
+        InvokeRepeating("LaunchArcBullet", 12f, 10f);
+        InvokeRepeating("LaunchSpawnBullet", 3f, 20f);
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+    private void LaunchSpawnBullet()
+    {
+        spawnBulletLauncher.GetComponent<SpawnBulletLauncher>().enabled = true;
+        Invoke("SetNotLaunchSpawnBullet", 5.0f);
+        //stopBulletLauncher.GetComponent<StopBulletLauncher>().enabled = false;
+    }
+
+    private void SetNotLaunchSpawnBullet()
+    {
+        //stopBulletLauncher.GetComponent<StopBulletLauncher>().enabled = true;
+        spawnBulletLauncher.GetComponent<SpawnBulletLauncher>().enabled = false;
     }
     private void LaunchArcBullet()
     {

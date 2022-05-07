@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
+    public bool isBoss;
     public float attackTimer;
     public bool isAlive = true;
     public float health;
@@ -77,7 +78,7 @@ public abstract class Enemy : MonoBehaviour
     //public LayerMask enemyLayer;
     public LayerMask playerLayer;
     //protected GameObject[] pathPoints;
-    protected List<Vector3> pathPointsPos = new List<Vector3>();
+    public List<Vector3> pathPointsPos = new List<Vector3>();
     protected Vector2 desTraget;
     public Vector2 senseOffset;
     //public float rayDis;
@@ -349,8 +350,12 @@ public abstract class Enemy : MonoBehaviour
 
     public void Repel(float distance)
     {
-        Vector3 dir = ((Vector2)transform.position - (Vector2)player.position).normalized;
-        StartCoroutine(Repeling(dir, distance * (1 - metalResistance), 0.2f));
+        if (!isBoss)
+        {
+            Vector3 dir = ((Vector2)transform.position - (Vector2)player.position).normalized;
+            StartCoroutine(Repeling(dir, distance * (1 - metalResistance), 0.2f));
+        }
+        
     }
 
     IEnumerator Repeling(Vector3 dir, float distance, float duration)

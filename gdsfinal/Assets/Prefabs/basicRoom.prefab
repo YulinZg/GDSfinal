@@ -82,6 +82,7 @@ MonoBehaviour:
   num4: 0
   num5: 0
   num6: 0
+  boss: {fileID: 7081096497988777316, guid: 28d9cc7bce3397047bb5ec91cf8c3860, type: 3}
 --- !u!61 &6519128629888106651
 BoxCollider2D:
   m_ObjectHideFlags: 0

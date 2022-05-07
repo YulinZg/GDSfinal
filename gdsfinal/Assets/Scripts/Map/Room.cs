@@ -39,6 +39,7 @@ public class Room : MonoBehaviour
     public int num5;
     public int num6;
 
+    [SerializeField] private GameObject boss;
     public void UpdateRoom(float xOffset, float yOffset, bool isUpDataDoorNumber)
     {
         //Debug.Log(transform.position);
@@ -90,8 +91,9 @@ public class Room : MonoBehaviour
                 {
                     isCleanAllEnemy = true;
                     isAppearChests = true;
-                    roomTerrainGenerator.DestroyAllPoints();
+                    //roomTerrainGenerator.DestroyAllPoints();
                     //enemyGenerator.GenerateEnemy(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                    Instantiate(boss, transform.position, Quaternion.identity);
                     OpenDoor();
                 }
                 else if (GameManagement.instance.roomCounter < 3)

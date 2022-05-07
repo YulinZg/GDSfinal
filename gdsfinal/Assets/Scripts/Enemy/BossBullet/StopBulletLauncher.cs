@@ -15,7 +15,7 @@ public class StopBulletLauncher : MonoBehaviour
     // Start is called before the first frame update
     private void OnEnable()
     {
-        StartCoroutine(ShotFirstType(72, 2f, 360f, 2));
+        StartCoroutine(ShotFirstType(60, 2f, 360f, 2));
     }
 
     IEnumerator ShotFirstType(int bulletNum, float duration, float rotateAngle, int numOfWave)
