@@ -410,7 +410,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.108977854}
+  m_Offset: {x: 0, y: -0.1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -421,7 +421,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.38111496, y: 0.56408876}
+  m_Size: {x: 0.35, y: 0.7}
   m_EdgeRadius: 0
 --- !u!50 &8995325589162135094
 Rigidbody2D:
@@ -673,6 +673,7 @@ MonoBehaviour:
   arrow: {fileID: 5297646316335393566}
   weaponUI: {fileID: 0}
   statusUI: {fileID: 0}
+  canTryWeapon: 0
   canInput: 0
   isAttacking: 0
   isSkilling: 0

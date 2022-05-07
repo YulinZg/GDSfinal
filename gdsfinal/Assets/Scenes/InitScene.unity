@@ -1890,6 +1890,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1035108576}
     - target: {fileID: 2741019207210238514, guid: 3d0d73c21a3bf6a4db908af2fef627be, type: 3}
+      propertyPath: canInput
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2741019207210238514, guid: 3d0d73c21a3bf6a4db908af2fef627be, type: 3}
       propertyPath: statusUI
       value: 
       objectReference: {fileID: 1286086576}
@@ -1900,10 +1904,6 @@ PrefabInstance:
     - target: {fileID: 2741019207210238514, guid: 3d0d73c21a3bf6a4db908af2fef627be, type: 3}
       propertyPath: canTryWeapon
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8554495002776236972, guid: 3d0d73c21a3bf6a4db908af2fef627be, type: 3}
-      propertyPath: damageF
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8554495002776236972, guid: 3d0d73c21a3bf6a4db908af2fef627be, type: 3}
       propertyPath: skillUI
@@ -1927,7 +1927,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8995325589162135095, guid: 3d0d73c21a3bf6a4db908af2fef627be, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8995325589162135095, guid: 3d0d73c21a3bf6a4db908af2fef627be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9848,7 +9848,7 @@ Transform:
   - {fileID: 1019211781}
   - {fileID: 990190042}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1594849493
 BoxCollider2D:
