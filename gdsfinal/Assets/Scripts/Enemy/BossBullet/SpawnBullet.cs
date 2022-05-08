@@ -36,7 +36,7 @@ public class SpawnBullet : MonoBehaviour
     }
     IEnumerator PrepareShoot(float prepareDuration, int bulletNum, float attackDuration)
     {
-        rotarionAngle = Mathf.Atan2(transform.position.y - PlayerController.instance.transform.position.y, transform.position.x - PlayerController.instance.transform.position.x) * Mathf.Rad2Deg + Random.Range(-90,91) - 270f;
+        rotarionAngle = Mathf.Atan2(transform.position.y - PlayerController.instance.transform.position.y, transform.position.x - PlayerController.instance.transform.position.x) * Mathf.Rad2Deg + Random.Range(-20,26) - 270f;
         CreateLaser(rotarionAngle);
         yield return new WaitForSeconds(prepareDuration);
         StartCoroutine(shotFirstType(bulletNum, attackDuration, rotarionAngle));

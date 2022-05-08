@@ -12,7 +12,9 @@ public class Boss : Enemy
     // Start is called before the first frame update
     private void Awake()
     {
+        isBoss = true;
         isAlive = true;
+        material = gameObject.GetComponent<SpriteRenderer>().material;
         player = PlayerController.instance.transform;
         sprite = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
@@ -20,7 +22,7 @@ public class Boss : Enemy
     }
     void Start()
     {
-        isBoss = true;
+        //material.SetFloat("streng", 0.5f);
         foreach (GameObject point in GameObject.FindGameObjectsWithTag("Point"))
         {
             pathPointsPos.Add(point.transform.position);
@@ -35,7 +37,7 @@ public class Boss : Enemy
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     private void LaunchSpawnBullet()
     {
