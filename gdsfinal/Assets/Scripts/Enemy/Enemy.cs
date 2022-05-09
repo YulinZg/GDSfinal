@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
+
     public bool isBoss;
     public float attackTimer;
     public bool isAlive = true;
@@ -70,7 +71,7 @@ public abstract class Enemy : MonoBehaviour
     private float burnDamage;
     private float burnTime;
     private float burnInterval;
-
+    protected Material material;
     [Header("AI")]
     //public float attackInterval;
     public float senseRadius;
@@ -144,15 +145,23 @@ public abstract class Enemy : MonoBehaviour
             }
             if (health <= 0 && isAlive)
             {
-                
-                Die();
+                if (isBoss)
+                {
+                    StartCoroutine(BossDisAppear(2.0f));
+                    CancelInvoke();
+                    
+
+
+                }
+                else    
+                    Die();
             }
         }
     }
 
     public void Die()
     {
-        
+
         //gameObject.GetComponent<Collider2D>().enabled = false;
         health = 0;
         rigid.simulated = false;
@@ -217,7 +226,7 @@ public abstract class Enemy : MonoBehaviour
         this.burnTime = burnTime;
         this.burnInterval = burnInterval;
         if (!isFireMarked)
-            fireMarkCoroutine =  StartCoroutine(FireMarking(time));
+            fireMarkCoroutine = StartCoroutine(FireMarking(time));
     }
 
     IEnumerator FireMarking(float time)
@@ -355,7 +364,7 @@ public abstract class Enemy : MonoBehaviour
             Vector3 dir = ((Vector2)transform.position - (Vector2)player.position).normalized;
             StartCoroutine(Repeling(dir, distance * (1 - metalResistance), 0.2f));
         }
-        
+
     }
 
     IEnumerator Repeling(Vector3 dir, float distance, float duration)
@@ -382,30 +391,34 @@ public abstract class Enemy : MonoBehaviour
 
     IEnumerator StopMove(float time)
     {
-        if (isStun)
+        if (!isBoss)
         {
-            anim.SetBool("isHurt", true);
+            if (isStun)
+            {
+                anim.SetBool("isHurt", true);
+            }
+
+            speed = 0;
+            attackTimer = 0;
+            while (stopTimer <= time)
+            {
+                stopTimer += Time.deltaTime;
+                if (isDecelerate)
+                    speed = 0;
+                yield return null;
+            }
+            isHurt = false;
+            if (!isStun)
+            {
+                anim.SetBool("isHurt", false);
+            }
+            if (!isStun && canBeAttacked && !isAttacking)
+            {
+                speed = currentSpeed;
+            }
         }
-        
-        speed = 0;
-        attackTimer = 0;
-        while (stopTimer <= time)
-        {
-            stopTimer += Time.deltaTime;
-            if (isDecelerate)
-                speed = 0;
-            yield return null;
-        }
-        isHurt = false;
-        if (!isStun)
-        {    
-            anim.SetBool("isHurt", false);   
-        }
-        if (!isStun && canBeAttacked && !isAttacking)
-        {
-            speed = currentSpeed; 
-        }
-        
+
+
     }
 
     IEnumerator DoBlinks(Color color, int blinkNum, float interval)
@@ -419,6 +432,23 @@ public abstract class Enemy : MonoBehaviour
             yield return new WaitForSeconds(interval);
         }
         sprite.color = Color.white;
+    }
+
+    IEnumerator BossDisAppear(float duration)
+    {
+        attack = 0;
+        health = 0;
+        rigid.simulated = false;
+        speed = 0;
+        isAlive = false;
+        pathPointsPos.Clear();
+        for (int i = 255; i >= 0; i--)
+        {
+            material.SetFloat("streng", (float)i / 255f);
+            yield return new WaitForSeconds(duration / 255f);
+        }
+        Destroy(gameObject);
+        //parent.setSpeed(parent.getCurrentSpeed());
     }
 
     public void DestroySelf()
