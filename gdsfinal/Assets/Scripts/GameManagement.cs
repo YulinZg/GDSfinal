@@ -24,6 +24,8 @@ public class GameManagement : MonoBehaviour
     public int enemyCount;
     public int roomCounter;
 
+    public GameObject bossEffect;
+
     private void Awake()
     {
         roomCounter = 0;

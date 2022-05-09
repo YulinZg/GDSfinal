@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MagicCircle : MonoBehaviour
 {
@@ -18,14 +17,7 @@ public class MagicCircle : MonoBehaviour
             GetComponent<Collider2D>().enabled = false;
             enterEffect.SetActive(true);
             player.SetCannotInput();
-            Invoke(nameof(Enter), 0.5f);
         }
-    }
-
-    private void Enter()
-    {
-        if (SceneManager.GetActiveScene().buildIndex == 0)
-            SceneManager.LoadScene(1);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

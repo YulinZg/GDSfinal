@@ -147,11 +147,8 @@ public abstract class Enemy : MonoBehaviour
             {
                 if (isBoss)
                 {
-                    StartCoroutine(BossDisAppear(2.0f));
+                    StartCoroutine(BossDisAppear(4.0f));
                     CancelInvoke();
-                    
-
-
                 }
                 else    
                     Die();
@@ -436,15 +433,17 @@ public abstract class Enemy : MonoBehaviour
 
     IEnumerator BossDisAppear(float duration)
     {
+        anim.enabled = false;
         attack = 0;
         health = 0;
         rigid.simulated = false;
         speed = 0;
         isAlive = false;
         pathPointsPos.Clear();
+        GameManagement.instance.bossEffect.SetActive(true);
         for (int i = 255; i >= 0; i--)
         {
-            material.SetFloat("streng", (float)i / 255f);
+            material.SetFloat("streng", i / 255f);
             yield return new WaitForSeconds(duration / 255f);
         }
         Destroy(gameObject);

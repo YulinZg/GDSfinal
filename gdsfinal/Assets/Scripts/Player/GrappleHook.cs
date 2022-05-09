@@ -8,7 +8,8 @@ public class GrappleHook : MonoBehaviour
     {
         none,
         wall,
-        enemy
+        enemy,
+        boss
     }
 
     [SerializeField] private LayerMask layer;
@@ -53,6 +54,8 @@ public class GrappleHook : MonoBehaviour
                     enemy = hit.collider.gameObject;
                     StartCoroutine(Grappling(dir, Vector2.Distance(transform.position, target), resetSpeed, HitType.enemy, damage));
                 }
+                else if (hit.collider.CompareTag("Boss"))
+                    StartCoroutine(Grappling(dir, Vector2.Distance(transform.position, target), resetSpeed, HitType.boss, damage));
                 else
                     StartCoroutine(Grappling(dir, Vector2.Distance(transform.position, target), resetSpeed, HitType.wall, 0));
             }
@@ -79,7 +82,7 @@ public class GrappleHook : MonoBehaviour
         line.SetPosition(1, transform.position);
         GameObject hookInstance = Instantiate(hook, transform.position, Quaternion.identity);
         hookInstance.GetComponent<Bullet>().Setup(dir, 0, damage, status.GetCritProbability(), status.GetCritRate(), 10f, Bullet.BulletType.penetrable);
-        if (hitType != HitType.enemy)
+        if (hitType != HitType.enemy && hitType != HitType.boss)
             hookInstance.GetComponent<Collider2D>().enabled = false;
         float timer = 0;
         float duration = distance / shootSpeed;
@@ -108,6 +111,7 @@ public class GrappleHook : MonoBehaviour
                 }
                 break;
             case HitType.wall:
+            case HitType.boss:
                 yield return StartCoroutine(player.Dashing(dir, distance, distance / grappleSpeed));
                 break;
             case HitType.enemy:
