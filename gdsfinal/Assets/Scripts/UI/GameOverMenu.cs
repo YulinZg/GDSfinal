@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class GameOverMenu : MonoBehaviour
 {
+    public GameObject home;
+    public GameObject resurrection;
+
     public void Restart()
     {
         SceneManager.LoadScene(1);
@@ -18,5 +21,17 @@ public class GameOverMenu : MonoBehaviour
     public void Quit()
     {
         Application.Quit();
+    }
+
+    public void Resurrection()
+    {
+        home.SetActive(false);
+        resurrection.SetActive(true);
+    }
+
+    public void Back()
+    {
+        resurrection.SetActive(false);
+        home.SetActive(true);
     }
 }

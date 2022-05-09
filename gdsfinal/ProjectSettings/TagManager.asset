@@ -9,6 +9,7 @@ TagManager:
   - TerrainGenerator
   - Canvas
   - chests
+  - Boss
   layers:
   - Default
   - TransparentFX

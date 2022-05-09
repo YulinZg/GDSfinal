@@ -186,7 +186,7 @@ public class PlayerController : MonoBehaviour
         weapon.enabled = false;
         status.enabled = false;
         enabled = false;
-        Invoke(nameof(GameOver), 0.5f);
+        Invoke(nameof(GameOver), 1f);
     }
 
     private void GameOver()

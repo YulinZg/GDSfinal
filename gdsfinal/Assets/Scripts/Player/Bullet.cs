@@ -147,7 +147,7 @@ public class Bullet : MonoBehaviour
 
     public void Hit(Collider2D col)
     {
-        if (col.CompareTag("Enemy"))
+        if (col.CompareTag("Enemy") || col.CompareTag("Boss"))
         {
             HitEnemy(col.gameObject);
         }
