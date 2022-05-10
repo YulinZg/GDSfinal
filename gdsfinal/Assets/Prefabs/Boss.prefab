@@ -313,11 +313,11 @@ MonoBehaviour:
   isBoss: 0
   attackTimer: 0
   isAlive: 1
-  health: 7000
+  health: 10000
   attack: 50
   playerStopTime: 0
   moveSpeed: 0
-  debuffResistance: 100
+  debuffResistance: 1
   fireResistance: 0
   waterResistance: 0
   earthResistance: 0
