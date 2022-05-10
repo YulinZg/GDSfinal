@@ -313,8 +313,8 @@ MonoBehaviour:
   isBoss: 0
   attackTimer: 0
   isAlive: 1
-  health: 10000
-  attack: 50
+  health: 20000
+  attack: 60
   playerStopTime: 0
   moveSpeed: 0
   debuffResistance: 1

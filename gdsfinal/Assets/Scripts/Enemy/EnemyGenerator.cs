@@ -41,22 +41,35 @@ public class EnemyGenerator : MonoBehaviour
                 }
                 else if (GameManagement.instance.roomCounter < 6)
                 {
-                    temp.GetComponent<Enemy>().health *= 1.3f;
-                    temp.GetComponent<Enemy>().attack *= 1.3f;
+                    temp.GetComponent<Enemy>().health *= 2.0f;
+                    temp.GetComponent<Enemy>().attack *= 2.0f;
                 }
                 else if (GameManagement.instance.roomCounter < 10)
                 {
-                    temp.GetComponent<Enemy>().health *= 1.6f;
-                    temp.GetComponent<Enemy>().attack *= 1.6f;
+                    temp.GetComponent<Enemy>().health *= 3.0f;
+                    temp.GetComponent<Enemy>().attack *= 3.0f;
                     //enemyGenerator.GenerateEnemy(Random.Range(3, 6), Random.Range(3, 7), 1, Random.Range(2, 4), Random.Range(3, 5), 0, Random.Range(1, 3), 100, 100, 5, 70, 0, 60);
                 }
-                else
+                else if (GameManagement.instance.roomCounter < 15)
                 {
-                    temp.GetComponent<Enemy>().health *= 1.8f;
-                    temp.GetComponent<Enemy>().attack *= 1.8f;
+                    temp.GetComponent<Enemy>().health *= 4.0f;
+                    temp.GetComponent<Enemy>().attack *= 4.0f;
+
                     //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
                 }
-                
+                else if (GameManagement.instance.roomCounter < 20)
+                {
+                    temp.GetComponent<Enemy>().health *= 5.0f;
+                    temp.GetComponent<Enemy>().attack *= 5.0f;
+                    //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
+                }
+                else if (GameManagement.instance.roomCounter < 30)
+                {
+                    temp.GetComponent<Enemy>().health *= 5.5f;
+                    temp.GetComponent<Enemy>().attack *= 5.5f;
+                    //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
+                }
+
             }     
         }
 
@@ -72,35 +85,35 @@ public class EnemyGenerator : MonoBehaviour
                 if (GameManagement.instance.roomCounter < 3)
                 {
                     temp.GetComponent<Enemy>().health *= 1;
-                    temp.GetComponent<Enemy>().attack *= 1;
+                   
                 }
                 else if (GameManagement.instance.roomCounter < 6)
                 {
                     temp.GetComponent<Enemy>().health *= 1.5f;
-                    temp.GetComponent<Enemy>().attack *= 1.5f;
+                    
                 }
                 else if (GameManagement.instance.roomCounter < 10)
                 {
                     temp.GetComponent<Enemy>().health *= 1.8f;
-                    temp.GetComponent<Enemy>().attack *= 1.8f;
+                    
                     //enemyGenerator.GenerateEnemy(Random.Range(3, 6), Random.Range(3, 7), 1, Random.Range(2, 4), Random.Range(3, 5), 0, Random.Range(1, 3), 100, 100, 5, 70, 0, 60);
                 }
                 else if (GameManagement.instance.roomCounter < 15)
                 {
                     temp.GetComponent<Enemy>().health *= 2.0f;
-                    temp.GetComponent<Enemy>().attack *= 2.0f;
+                    
                     //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
                 }
                 else if (GameManagement.instance.roomCounter < 20)
                 {
                     temp.GetComponent<Enemy>().health *= 2.5f;
-                    temp.GetComponent<Enemy>().attack *= 2.5f;
+                    
                     //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
                 }
                 else if (GameManagement.instance.roomCounter < 30)
                 {
                     temp.GetComponent<Enemy>().health *= 3.0f;
-                    temp.GetComponent<Enemy>().attack *= 3.0f;
+                    
                     //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
                 }
             }
@@ -124,19 +137,32 @@ public class EnemyGenerator : MonoBehaviour
                 }
                 else if (GameManagement.instance.roomCounter < 6)
                 {
-                    temp.GetComponent<Enemy>().health *= 1.3f;
-                    temp.GetComponent<Enemy>().attack *= 1.3f;
+                    temp.GetComponent<Enemy>().health *= 2.0f;
+                    temp.GetComponent<Enemy>().attack *= 2.0f;
                 }
                 else if (GameManagement.instance.roomCounter < 10)
                 {
-                    temp.GetComponent<Enemy>().health *= 1.6f;
-                    temp.GetComponent<Enemy>().attack *= 1.6f;
+                    temp.GetComponent<Enemy>().health *= 3.0f;
+                    temp.GetComponent<Enemy>().attack *= 3.0f;
                     //enemyGenerator.GenerateEnemy(Random.Range(3, 6), Random.Range(3, 7), 1, Random.Range(2, 4), Random.Range(3, 5), 0, Random.Range(1, 3), 100, 100, 5, 70, 0, 60);
                 }
-                else
+                else if (GameManagement.instance.roomCounter < 15)
                 {
-                    temp.GetComponent<Enemy>().health *= 1.8f;
-                    temp.GetComponent<Enemy>().attack *= 1.8f;
+                    temp.GetComponent<Enemy>().health *= 4.0f;
+                    temp.GetComponent<Enemy>().attack *= 4.0f;
+
+                    //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
+                }
+                else if (GameManagement.instance.roomCounter < 20)
+                {
+                    temp.GetComponent<Enemy>().health *= 5.0f;
+                    temp.GetComponent<Enemy>().attack *= 5.0f;
+                    //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
+                }
+                else if (GameManagement.instance.roomCounter < 30)
+                {
+                    temp.GetComponent<Enemy>().health *= 5.5f;
+                    temp.GetComponent<Enemy>().attack *= 5.5f;
                     //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
                 }
             }
@@ -163,19 +189,32 @@ public class EnemyGenerator : MonoBehaviour
                 }
                 else if (GameManagement.instance.roomCounter < 6)
                 {
-                    temp.GetComponent<Enemy>().health *= 1.3f;
-                    temp.GetComponent<Enemy>().attack *= 1.3f;
+                    temp.GetComponent<Enemy>().health *= 2.0f;
+                    temp.GetComponent<Enemy>().attack *= 2.0f;
                 }
                 else if (GameManagement.instance.roomCounter < 10)
                 {
-                    temp.GetComponent<Enemy>().health *= 1.6f;
-                    temp.GetComponent<Enemy>().attack *= 1.6f;
+                    temp.GetComponent<Enemy>().health *= 3.0f;
+                    temp.GetComponent<Enemy>().attack *= 3.0f;
                     //enemyGenerator.GenerateEnemy(Random.Range(3, 6), Random.Range(3, 7), 1, Random.Range(2, 4), Random.Range(3, 5), 0, Random.Range(1, 3), 100, 100, 5, 70, 0, 60);
                 }
-                else
+                else if (GameManagement.instance.roomCounter < 15)
                 {
-                    temp.GetComponent<Enemy>().health *= 1.8f;
-                    temp.GetComponent<Enemy>().attack *= 1.8f;
+                    temp.GetComponent<Enemy>().health *= 4.0f;
+                    temp.GetComponent<Enemy>().attack *= 4.0f;
+
+                    //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
+                }
+                else if (GameManagement.instance.roomCounter < 20)
+                {
+                    temp.GetComponent<Enemy>().health *= 5.0f;
+                    temp.GetComponent<Enemy>().attack *= 5.0f;
+                    //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
+                }
+                else if (GameManagement.instance.roomCounter < 30)
+                {
+                    temp.GetComponent<Enemy>().health *= 5.5f;
+                    temp.GetComponent<Enemy>().attack *= 5.5f;
                     //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
                 }
             }
@@ -197,19 +236,32 @@ public class EnemyGenerator : MonoBehaviour
                 }
                 else if (GameManagement.instance.roomCounter < 6)
                 {
-                    temp.GetComponent<Enemy>().health *= 1.3f;
-                    temp.GetComponent<Enemy>().attack *= 1.3f;
+                    temp.GetComponent<Enemy>().health *= 2.0f;
+                    temp.GetComponent<Enemy>().attack *= 2.0f;
                 }
                 else if (GameManagement.instance.roomCounter < 10)
                 {
-                    temp.GetComponent<Enemy>().health *= 1.6f;
-                    temp.GetComponent<Enemy>().attack *= 1.6f;
+                    temp.GetComponent<Enemy>().health *= 3.0f;
+                    temp.GetComponent<Enemy>().attack *= 3.0f;
                     //enemyGenerator.GenerateEnemy(Random.Range(3, 6), Random.Range(3, 7), 1, Random.Range(2, 4), Random.Range(3, 5), 0, Random.Range(1, 3), 100, 100, 5, 70, 0, 60);
                 }
-                else
+                else if (GameManagement.instance.roomCounter < 15)
                 {
-                    temp.GetComponent<Enemy>().health *= 1.8f;
-                    temp.GetComponent<Enemy>().attack *= 1.8f;
+                    temp.GetComponent<Enemy>().health *= 4.0f;
+                    temp.GetComponent<Enemy>().attack *= 4.0f;
+
+                    //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
+                }
+                else if (GameManagement.instance.roomCounter < 20)
+                {
+                    temp.GetComponent<Enemy>().health *= 5.0f;
+                    temp.GetComponent<Enemy>().attack *= 5.0f;
+                    //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
+                }
+                else if (GameManagement.instance.roomCounter < 30)
+                {
+                    temp.GetComponent<Enemy>().health *= 5.5f;
+                    temp.GetComponent<Enemy>().attack *= 5.5f;
                     //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
                 }
             }
@@ -232,19 +284,32 @@ public class EnemyGenerator : MonoBehaviour
                 }
                 else if (GameManagement.instance.roomCounter < 6)
                 {
-                    temp.GetComponent<Enemy>().health *= 1.5f;
-                    temp.GetComponent<Enemy>().attack *= 1.5f;
+                    temp.GetComponent<Enemy>().health *= 2.0f;
+                    temp.GetComponent<Enemy>().attack *= 2.0f;
                 }
                 else if (GameManagement.instance.roomCounter < 10)
                 {
-                    temp.GetComponent<Enemy>().health *= 2.0f;
-                    temp.GetComponent<Enemy>().attack *= 2.0f;
+                    temp.GetComponent<Enemy>().health *= 3.0f;
+                    temp.GetComponent<Enemy>().attack *= 3.0f;
                     //enemyGenerator.GenerateEnemy(Random.Range(3, 6), Random.Range(3, 7), 1, Random.Range(2, 4), Random.Range(3, 5), 0, Random.Range(1, 3), 100, 100, 5, 70, 0, 60);
                 }
-                else
+                else if (GameManagement.instance.roomCounter < 15)
                 {
-                    temp.GetComponent<Enemy>().health *= 2.5f;
-                    temp.GetComponent<Enemy>().attack *= 2.5f;
+                    temp.GetComponent<Enemy>().health *= 4.0f;
+                    temp.GetComponent<Enemy>().attack *= 4.0f;
+
+                    //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
+                }
+                else if (GameManagement.instance.roomCounter < 20)
+                {
+                    temp.GetComponent<Enemy>().health *= 5.0f;
+                    temp.GetComponent<Enemy>().attack *= 5.0f;
+                    //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
+                }
+                else if (GameManagement.instance.roomCounter < 30)
+                {
+                    temp.GetComponent<Enemy>().health *= 5.5f;
+                    temp.GetComponent<Enemy>().attack *= 5.5f;
                     //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
                 }
             }
