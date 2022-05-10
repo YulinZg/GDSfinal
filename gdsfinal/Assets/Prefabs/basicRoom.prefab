@@ -61,6 +61,7 @@ MonoBehaviour:
   roomUp: 0
   roomDown: 0
   roomNumberToStart: 0
+  step: {fileID: 3126341593174233908}
   isCleanAllEnemy: 0
   doorNumber: 0
   roomTerrainGenerator: {fileID: 3231157448882060418}
@@ -278,7 +279,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2558242262352474133}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
   m_Camera: {fileID: 0}
@@ -5692,11 +5693,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 23
+    m_Font: {fileID: 12800000, guid: bd9c35a5f1aa3864fb508eea099b2165, type: 3}
+    m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 3
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0

@@ -9,7 +9,7 @@ public class Room : MonoBehaviour
     public bool roomLeft, roomRight, roomUp, roomDown;
 
     public int roomNumberToStart;
-    //public Text step;
+    public Text step;
 
     public bool isCleanAllEnemy;
     public int doorNumber;
@@ -91,9 +91,8 @@ public class Room : MonoBehaviour
                 {
                     isCleanAllEnemy = true;
                     isAppearChests = true;
-                    //roomTerrainGenerator.DestroyAllPoints();
+                    roomTerrainGenerator.DestroyAllPoints();
                     //enemyGenerator.GenerateEnemy(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-                    Instantiate(boss, transform.position, Quaternion.identity);
                     OpenDoor();
                 }
                 else if (GameManagement.instance.roomCounter < 3)
@@ -116,7 +115,7 @@ public class Room : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Boss Room");
+                Instantiate(boss, transform.position, Quaternion.identity);
             }
             //Debug.Log(1);
         }
