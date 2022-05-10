@@ -108,9 +108,17 @@ public class Room : MonoBehaviour
                 {
                     enemyGenerator.GenerateEnemy(Random.Range(3, 6), Random.Range(3, 7), 1, Random.Range(2, 4), Random.Range(3, 5), 0, Random.Range(1, 3), 100, 100, 7, 70, 0, 80);
                 }
+                else if(GameManagement.instance.roomCounter < 15)
+                {
+                    enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(2, 4), Random.Range(2, 4), 100, 100, 7, 70, 70, 80);
+                }
+                else if (GameManagement.instance.roomCounter < 20)
+                {
+                    enemyGenerator.GenerateEnemy(Random.Range(4, 8), Random.Range(5, 10), 1, Random.Range(3, 7), Random.Range(4, 6), Random.Range(2, 5), Random.Range(2, 5), 100, 100, 7, 70, 70, 80);
+                }
                 else
                 {
-                    enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 7, 70, 70, 80);
+                    enemyGenerator.GenerateEnemy(Random.Range(4, 8), Random.Range(5, 10), 1, Random.Range(3, 7), Random.Range(4, 6), Random.Range(2, 5), Random.Range(2, 5), 100, 100, 7, 100, 100, 80);
                 }
             }
             else

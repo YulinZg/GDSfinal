@@ -27,10 +27,10 @@ public class Boss : Enemy
         {
             pathPointsPos.Add(point.transform.position);
         }
-        InvokeRepeating("LaunchStopBullet", 15f, 15f);
+        InvokeRepeating("LaunchStopBullet", 15f, 25f);
         //间隔时间加5才是真正的间隔时间
-        InvokeRepeating("LaunchNormalBullet", 8f, 13f);
-        InvokeRepeating("LaunchArcBullet", 12f, 10f);
+        InvokeRepeating("LaunchNormalBullet", 8f, 25f);
+        InvokeRepeating("LaunchArcBullet", 12f, 20f);
         InvokeRepeating("LaunchSpawnBullet", 3f, 20f);
     }
 
