@@ -149,7 +149,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3904264784345844831}
   - component: {fileID: 8207081046998261355}
-  - component: {fileID: 2744285763813915792}
+  - component: {fileID: 4692185000468021570}
   m_Layer: 9
   m_Name: fireSkill1
   m_TagString: Untagged
@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeTime: 0.7
---- !u!114 &2744285763813915792
+--- !u!114 &4692185000468021570
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -197,4 +197,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51cfdbf724a8f014ea43bd3ded4e63ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 0.15
+  time: 0.1

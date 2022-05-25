@@ -6,7 +6,7 @@ public class SpawnBullet : MonoBehaviour
 {
     public float speed;
     public Vector3 target;
-
+    public float attack;
     public GameObject bullet;
     public GameObject laser;
     float rotarionAngle;
@@ -53,7 +53,8 @@ public class SpawnBullet : MonoBehaviour
 
     private void CreateBullet(float angle)
     {
-        Instantiate(bullet, transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
+        EnemyAttack instance = Instantiate(bullet, transform.position, Quaternion.AngleAxis(angle, Vector3.forward)).GetComponent<EnemyAttack>();
+        instance.attack = attack;
     }
 
     private void CreateLaser(float angle)

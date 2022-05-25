@@ -18,13 +18,10 @@ public class SpawnBulletLauncher : MonoBehaviour
     {
         for (int i = 0; i < bulletNum; i++)
         {
-            temp = CreateBullet();
+            temp = Instantiate(bullet, transform.position, Quaternion.identity);
             temp.GetComponent<SpawnBullet>().target = parent.pathPointsPos[Random.Range(0, parent.pathPointsPos.Count)];
+            temp.GetComponent<SpawnBullet>().attack = parent.attack;
+            temp.GetComponent<EnemyAttack>().attack = parent.attack;
         }
-    }
-
-    private GameObject CreateBullet()
-    {
-        return Instantiate(bullet, transform.position, Quaternion.identity);
     }
 }

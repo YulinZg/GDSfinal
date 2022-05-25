@@ -583,8 +583,9 @@ public class Weapon : MonoBehaviour
 
         if (isPassiveAttacking)
         {
-            float angle = Vector3.SignedAngle(waterRotater.up, Camera.main.ScreenToWorldPoint(Input.mousePosition) - waterRotater.position, Vector3.forward);
-            waterRotater.Rotate(new Vector3(0, 0, Mathf.Sign(angle) * sprayRotateSpeed * Time.deltaTime));
+            float angle = Vector3.SignedAngle(waterRotater.up, (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - (Vector2)waterRotater.position, Vector3.forward);
+            if (Mathf.Abs(angle) > 1f)
+                waterRotater.Rotate(new Vector3(0, 0, Mathf.Sign(angle) * sprayRotateSpeed * Time.deltaTime));
         }
 
         if (Input.GetKeyDown(KeyCode.F))
@@ -721,7 +722,7 @@ public class Weapon : MonoBehaviour
         }
 
         if (isShooting)
-            player.Attack(MouseDir(), Time.deltaTime * 5, false, moveSpeedE, true, false);
+            player.Attack(MouseDir(), 0.1f, false, moveSpeedE, true, false);
 
         if (isShooting || isAiming)
         {
@@ -799,6 +800,8 @@ public class Weapon : MonoBehaviour
         {
             earthSkill earthSkill = Instantiate(skillE[1], transform.position + RotateVector(Vector3.right, Random.Range(0, 360f)) * Random.Range(skillRangeEMin, skillRangeEMax) + new Vector3(0, 16F + skillRangeEMax, 0), Quaternion.identity).GetComponent<earthSkill>();
             earthSkill.Setup(GetDamage(skillDamageE), status.GetCritProbability(), status.GetCritRate(), stunValueSkill, stunTime, 16f + skillRangeEMax);
+            earthSkill = Instantiate(skillE[1], transform.position + RotateVector(Vector3.right, Random.Range(0, 360f)) * Random.Range(skillRangeEMin, skillRangeEMax) + new Vector3(0, 16F + skillRangeEMax, 0), Quaternion.identity).GetComponent<earthSkill>();
+            earthSkill.Setup(GetDamage(skillDamageE), status.GetCritProbability(), status.GetCritRate(), stunValueSkill, stunTime, 16f + skillRangeEMax);
             dropTimer = dropInterval;
         }
         dropTimer -= Time.deltaTime;
@@ -846,7 +849,7 @@ public class Weapon : MonoBehaviour
         bulletInstance.Setup(MouseDir(), 0, GetDamage(damageL), status.GetCritProbability(), status.GetCritRate(), stayTime, Bullet.BulletType.penetrable);
         SetPalsy(bulletInstance);
         bulletInstance.transform.parent = lightningBalls;
-        player.Attack(MouseDir(), 0.2f, false, moveSpeedL, false, false);
+        player.Attack(MouseDir(), intervalL, false, moveSpeedL, false, false);
     }
 
     private void NormalAttackL1()

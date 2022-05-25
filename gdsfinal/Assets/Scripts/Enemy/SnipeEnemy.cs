@@ -38,6 +38,7 @@ public class SnipeEnemy : Enemy
         sprite = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Start is called before the first frame update
@@ -151,7 +152,7 @@ public class SnipeEnemy : Enemy
                 else if (Vector2.Distance(player.position, transform.position) < 3f && disappearCoolDownTimer >= disappearCoolDown)
                 {
                     currentState = EnemyState.back;
-                    StartCoroutine(Disappear(1.0f));
+                    StartCoroutine(Disappear(0.25f));
                     anim.SetBool("isIdle", true);
                     StopAttack();
                     speed = 0;

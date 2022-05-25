@@ -7,7 +7,6 @@ public class RoomTerrainGenerator : MonoBehaviour
     // Start is called before the first frame update
     private int[,] map = new int[24, 10];
 
-    public GameObject floor;
     public List<GameObject> points = new List<GameObject>();
     public GameObject pathPoint;
 

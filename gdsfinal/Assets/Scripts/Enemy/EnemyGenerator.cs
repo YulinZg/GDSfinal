@@ -5,327 +5,131 @@ using UnityEngine;
 public class EnemyGenerator : MonoBehaviour
 {
     public int enemyCount;
-    //public int currentEnemyNum;
+
+    [SerializeField] private float weights;
     [SerializeField] private GameObject enemyBasic;
+    [SerializeField] private float weight0;
     [SerializeField] private GameObject enemySelfBursting;
-    [SerializeField] private GameObject enemyTouchFish;
+    [SerializeField] private float weight1;
     [SerializeField] private GameObject enemyHatch;
+    [SerializeField] private float weight2;
     [SerializeField] private GameObject enemyScatter;
+    [SerializeField] private float weight3;
     [SerializeField] private GameObject enemySnipe;
-    //public int enemyBasicNum;
-    //public int enemySelfBurstingNum;
-    //public int enemyTouchFishNum;
-    //public int enemyHatchNum;
-    //public int numberOfChildren;
-    //public int enemyScatterNum;
-    //public int enemySnipeNum;
+    [SerializeField] private float weight4;
+    [SerializeField] private GameObject enemyTouchFish;
+
     [SerializeField] private RoomTerrainGenerator roomTerrainGenerator;
-    //private List<GameObject> enemyArray = new List<GameObject>();
 
-    public void GenerateEnemy(int enemyBasicNum, int enemySelfBurstingNum, int enemyTouchFishNum, int enemyHatchNum, int numberOfChildren, int enemyScatterNum, int enemySnipeNum,
-                              int probability1, int probability2, int probability3, int probability4, int probability5, int probability6)
+    public void GenerateEnemy()
     {
-        for (int i = 0; i < enemyBasicNum; i++)
+        int i = GameManagement.instance.roomCount - 2;
+        weights += (weights * 0.25f) * i;
+        int scCount = 0;
+        int snCount = 0;
+        while (weights > 0)
         {
-            //currentEnemyNumt++;
-            //enemyCount++;
-            if (probability1 > Random.Range(0, 100))
+            GameManagement.instance.enemyCount++;
+            int randomNum = Random.Range(0, 5);
+            switch (randomNum)
             {
-                GameObject temp;
-                GameManagement.instance.enemyCount++;
-                temp = Instantiate(enemyBasic, roomTerrainGenerator.points[Random.Range(0, roomTerrainGenerator.points.Count)].transform.position, Quaternion.identity);
-                if (GameManagement.instance.roomCounter < 3)
-                {
-                    temp.GetComponent<Enemy>().health *= 1;
-                    temp.GetComponent<Enemy>().attack *= 1;
-                }
-                else if (GameManagement.instance.roomCounter < 6)
-                {
-                    temp.GetComponent<Enemy>().health *= 2.0f;
-                    temp.GetComponent<Enemy>().attack *= 2.0f;
-                }
-                else if (GameManagement.instance.roomCounter < 10)
-                {
-                    temp.GetComponent<Enemy>().health *= 3.0f;
-                    temp.GetComponent<Enemy>().attack *= 3.0f;
-                    //enemyGenerator.GenerateEnemy(Random.Range(3, 6), Random.Range(3, 7), 1, Random.Range(2, 4), Random.Range(3, 5), 0, Random.Range(1, 3), 100, 100, 5, 70, 0, 60);
-                }
-                else if (GameManagement.instance.roomCounter < 15)
-                {
-                    temp.GetComponent<Enemy>().health *= 4.0f;
-                    temp.GetComponent<Enemy>().attack *= 4.0f;
-
-                    //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
-                }
-                else if (GameManagement.instance.roomCounter < 20)
-                {
-                    temp.GetComponent<Enemy>().health *= 5.0f;
-                    temp.GetComponent<Enemy>().attack *= 5.0f;
-                    //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
-                }
-                else if (GameManagement.instance.roomCounter < 30)
-                {
-                    temp.GetComponent<Enemy>().health *= 5.5f;
-                    temp.GetComponent<Enemy>().attack *= 5.5f;
-                    //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
-                }
-
-            }     
-        }
-
-        for(int i = 0; i < enemySelfBurstingNum; i++)
-        {
-            //currentEnemyNumt++;
-            //enemyCount++;
-            if (probability2 > Random.Range(0, 100))
-            {
-                GameObject temp;
-                GameManagement.instance.enemyCount++;
-                temp = Instantiate(enemySelfBursting, roomTerrainGenerator.points[Random.Range(0, roomTerrainGenerator.points.Count)].transform.position, Quaternion.identity);
-                if (GameManagement.instance.roomCounter < 3)
-                {
-                    temp.GetComponent<Enemy>().health *= 1;
-                   
-                }
-                else if (GameManagement.instance.roomCounter < 6)
-                {
-                    temp.GetComponent<Enemy>().health *= 1.5f;
-                    
-                }
-                else if (GameManagement.instance.roomCounter < 10)
-                {
-                    temp.GetComponent<Enemy>().health *= 1.8f;
-                    
-                    //enemyGenerator.GenerateEnemy(Random.Range(3, 6), Random.Range(3, 7), 1, Random.Range(2, 4), Random.Range(3, 5), 0, Random.Range(1, 3), 100, 100, 5, 70, 0, 60);
-                }
-                else if (GameManagement.instance.roomCounter < 15)
-                {
-                    temp.GetComponent<Enemy>().health *= 2.0f;
-                    
-                    //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
-                }
-                else if (GameManagement.instance.roomCounter < 20)
-                {
-                    temp.GetComponent<Enemy>().health *= 2.5f;
-                    
-                    //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
-                }
-                else if (GameManagement.instance.roomCounter < 30)
-                {
-                    temp.GetComponent<Enemy>().health *= 3.0f;
-                    
-                    //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
-                }
+                case 0:
+                    SpawnBasic();
+                    break;
+                case 1:
+                    SpawnSelfBurst();
+                    break;
+                case 2:
+                    SpawnHatch();
+                    break;
+                case 3:
+                    if (scCount < 2)
+                    {
+                        GameObject enemyInstance = Instantiate(enemyScatter, roomTerrainGenerator.points[Random.Range(0, roomTerrainGenerator.points.Count)].transform.position, Quaternion.identity);
+                        AddEnemyStatus(enemyInstance.GetComponent<Enemy>());
+                        weights -= weight3;
+                        scCount++;
+                    }
+                    else
+                    {
+                        int n = Random.Range(0, 3);
+                        switch (n)
+                        {
+                            case 0:
+                                SpawnBasic();
+                                break;
+                            case 1:
+                                SpawnSelfBurst();
+                                break;
+                            case 2:
+                                SpawnHatch();
+                                break;
+                        }
+                    }
+                    break;
+                case 4:
+                    if (snCount < 2)
+                    {
+                        GameObject enemyInstance = Instantiate(enemySnipe, roomTerrainGenerator.points[Random.Range(0, roomTerrainGenerator.points.Count)].transform.position, Quaternion.identity);
+                        AddEnemyStatus(enemyInstance.GetComponent<Enemy>());
+                        weights -= weight4;
+                        snCount++;
+                    }
+                    else
+                    {
+                        int n = Random.Range(0, 3);
+                        switch (n)
+                        {
+                            case 0:
+                                SpawnBasic();
+                                break;
+                            case 1:
+                                SpawnSelfBurst();
+                                break;
+                            case 2:
+                                SpawnHatch();
+                                break;
+                        }
+                    }
+                    break;
             }
-
-                
         }
-
-        for (int i = 0; i < enemyTouchFishNum; i++)
+        if (Random.Range(0, 100) < 7)
         {
-            //currentEnemyNumt++;
-            //enemyCount++;
-            if (probability3 > Random.Range(0, 100))
-            {
-                GameObject temp;
-                GameManagement.instance.enemyCount++;
-                temp = Instantiate(enemyTouchFish, roomTerrainGenerator.points[Random.Range(0, roomTerrainGenerator.points.Count)].transform.position, Quaternion.identity);
-                if (GameManagement.instance.roomCounter < 3)
-                {
-                    temp.GetComponent<Enemy>().health *= 1;
-                    temp.GetComponent<Enemy>().attack *= 1;
-                }
-                else if (GameManagement.instance.roomCounter < 6)
-                {
-                    temp.GetComponent<Enemy>().health *= 2.0f;
-                    temp.GetComponent<Enemy>().attack *= 2.0f;
-                }
-                else if (GameManagement.instance.roomCounter < 10)
-                {
-                    temp.GetComponent<Enemy>().health *= 3.0f;
-                    temp.GetComponent<Enemy>().attack *= 3.0f;
-                    //enemyGenerator.GenerateEnemy(Random.Range(3, 6), Random.Range(3, 7), 1, Random.Range(2, 4), Random.Range(3, 5), 0, Random.Range(1, 3), 100, 100, 5, 70, 0, 60);
-                }
-                else if (GameManagement.instance.roomCounter < 15)
-                {
-                    temp.GetComponent<Enemy>().health *= 4.0f;
-                    temp.GetComponent<Enemy>().attack *= 4.0f;
-
-                    //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
-                }
-                else if (GameManagement.instance.roomCounter < 20)
-                {
-                    temp.GetComponent<Enemy>().health *= 5.0f;
-                    temp.GetComponent<Enemy>().attack *= 5.0f;
-                    //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
-                }
-                else if (GameManagement.instance.roomCounter < 30)
-                {
-                    temp.GetComponent<Enemy>().health *= 5.5f;
-                    temp.GetComponent<Enemy>().attack *= 5.5f;
-                    //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
-                }
-            }
-               
+            GameManagement.instance.enemyCount++;
+            GameObject enemyInstance = Instantiate(enemyTouchFish, roomTerrainGenerator.points[Random.Range(0, roomTerrainGenerator.points.Count)].transform.position, Quaternion.identity);
+            AddEnemyStatus(enemyInstance.GetComponent<Enemy>());
         }
-
-        for (int i = 0; i < enemyHatchNum; i++)
-        {
-            //currentEnemyNumt++;
-            //enemyCount++;
-            if (probability4 > Random.Range(0, 100))
-            {
-                GameManagement.instance.enemyCount++;
-                GameObject temp = Instantiate(enemyHatch, roomTerrainGenerator.points[Random.Range(0, roomTerrainGenerator.points.Count)].transform.position, Quaternion.identity);
-                if (temp.GetComponent<HatchEnemy>())
-                {
-                    temp.GetComponent<HatchEnemy>().setChild(numberOfChildren);
-                    GameManagement.instance.enemyCount += numberOfChildren;
-                }
-                if (GameManagement.instance.roomCounter < 3)
-                {
-                    temp.GetComponent<Enemy>().health *= 1;
-                    temp.GetComponent<Enemy>().attack *= 1;
-                }
-                else if (GameManagement.instance.roomCounter < 6)
-                {
-                    temp.GetComponent<Enemy>().health *= 2.0f;
-                    temp.GetComponent<Enemy>().attack *= 2.0f;
-                }
-                else if (GameManagement.instance.roomCounter < 10)
-                {
-                    temp.GetComponent<Enemy>().health *= 3.0f;
-                    temp.GetComponent<Enemy>().attack *= 3.0f;
-                    //enemyGenerator.GenerateEnemy(Random.Range(3, 6), Random.Range(3, 7), 1, Random.Range(2, 4), Random.Range(3, 5), 0, Random.Range(1, 3), 100, 100, 5, 70, 0, 60);
-                }
-                else if (GameManagement.instance.roomCounter < 15)
-                {
-                    temp.GetComponent<Enemy>().health *= 4.0f;
-                    temp.GetComponent<Enemy>().attack *= 4.0f;
-
-                    //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
-                }
-                else if (GameManagement.instance.roomCounter < 20)
-                {
-                    temp.GetComponent<Enemy>().health *= 5.0f;
-                    temp.GetComponent<Enemy>().attack *= 5.0f;
-                    //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
-                }
-                else if (GameManagement.instance.roomCounter < 30)
-                {
-                    temp.GetComponent<Enemy>().health *= 5.5f;
-                    temp.GetComponent<Enemy>().attack *= 5.5f;
-                    //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
-                }
-            }
-               
-            
-
-        }
-        for (int i = 0; i < enemyScatterNum; i++)
-        {
-            if (probability5 > Random.Range(0, 100))
-            {
-                GameObject temp;
-                GameManagement.instance.enemyCount++;
-                temp = Instantiate(enemyScatter, roomTerrainGenerator.points[Random.Range(0, roomTerrainGenerator.points.Count)].transform.position, Quaternion.identity);
-                if (GameManagement.instance.roomCounter < 3)
-                {
-                    temp.GetComponent<Enemy>().health *= 1;
-                    temp.GetComponent<Enemy>().attack *= 1;
-                }
-                else if (GameManagement.instance.roomCounter < 6)
-                {
-                    temp.GetComponent<Enemy>().health *= 2.0f;
-                    temp.GetComponent<Enemy>().attack *= 2.0f;
-                }
-                else if (GameManagement.instance.roomCounter < 10)
-                {
-                    temp.GetComponent<Enemy>().health *= 3.0f;
-                    temp.GetComponent<Enemy>().attack *= 3.0f;
-                    //enemyGenerator.GenerateEnemy(Random.Range(3, 6), Random.Range(3, 7), 1, Random.Range(2, 4), Random.Range(3, 5), 0, Random.Range(1, 3), 100, 100, 5, 70, 0, 60);
-                }
-                else if (GameManagement.instance.roomCounter < 15)
-                {
-                    temp.GetComponent<Enemy>().health *= 4.0f;
-                    temp.GetComponent<Enemy>().attack *= 4.0f;
-
-                    //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
-                }
-                else if (GameManagement.instance.roomCounter < 20)
-                {
-                    temp.GetComponent<Enemy>().health *= 5.0f;
-                    temp.GetComponent<Enemy>().attack *= 5.0f;
-                    //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
-                }
-                else if (GameManagement.instance.roomCounter < 30)
-                {
-                    temp.GetComponent<Enemy>().health *= 5.5f;
-                    temp.GetComponent<Enemy>().attack *= 5.5f;
-                    //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
-                }
-            }
-                //currentEnemyNumt++;
-                
-        }
-        for (int i = 0; i < enemySnipeNum; i++)
-        {
-            //currentEnemyNumt++;
-            //enemyCount++;
-            if (probability6 > Random.Range(0, 100))
-            {
-                GameObject temp;
-                GameManagement.instance.enemyCount++;
-                temp = Instantiate(enemySnipe, roomTerrainGenerator.points[Random.Range(0, roomTerrainGenerator.points.Count)].transform.position, Quaternion.identity);
-                if (GameManagement.instance.roomCounter < 3)
-                {
-                    temp.GetComponent<Enemy>().health *= 1;
-                    temp.GetComponent<Enemy>().attack *= 1;
-                }
-                else if (GameManagement.instance.roomCounter < 6)
-                {
-                    temp.GetComponent<Enemy>().health *= 2.0f;
-                    temp.GetComponent<Enemy>().attack *= 2.0f;
-                }
-                else if (GameManagement.instance.roomCounter < 10)
-                {
-                    temp.GetComponent<Enemy>().health *= 3.0f;
-                    temp.GetComponent<Enemy>().attack *= 3.0f;
-                    //enemyGenerator.GenerateEnemy(Random.Range(3, 6), Random.Range(3, 7), 1, Random.Range(2, 4), Random.Range(3, 5), 0, Random.Range(1, 3), 100, 100, 5, 70, 0, 60);
-                }
-                else if (GameManagement.instance.roomCounter < 15)
-                {
-                    temp.GetComponent<Enemy>().health *= 4.0f;
-                    temp.GetComponent<Enemy>().attack *= 4.0f;
-
-                    //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
-                }
-                else if (GameManagement.instance.roomCounter < 20)
-                {
-                    temp.GetComponent<Enemy>().health *= 5.0f;
-                    temp.GetComponent<Enemy>().attack *= 5.0f;
-                    //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
-                }
-                else if (GameManagement.instance.roomCounter < 30)
-                {
-                    temp.GetComponent<Enemy>().health *= 5.5f;
-                    temp.GetComponent<Enemy>().attack *= 5.5f;
-                    //enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(1, 3), Random.Range(1, 3), 100, 100, 5, 70, 50, 60);
-                }
-            }
-                
-        }
-        Debug.LogWarning(GameManagement.instance.enemyCount);
     }
-    
-    //private void Update()
-    //{
-    //    if (enemyArray.Count == 0)
-    //    {
-    //        Debug.LogWarning("111111");
 
-    //    }
-    //    else
-    //        Debug.LogWarning("22222");
-    //}
+    private void SpawnBasic()
+    {
+        GameObject enemyInstance = Instantiate(enemyBasic, roomTerrainGenerator.points[Random.Range(0, roomTerrainGenerator.points.Count)].transform.position, Quaternion.identity);
+        AddEnemyStatus(enemyInstance.GetComponent<Enemy>());
+        weights -= weight0;
+    }
+
+    private void SpawnSelfBurst()
+    {
+        GameObject enemyInstance = Instantiate(enemySelfBursting, roomTerrainGenerator.points[Random.Range(0, roomTerrainGenerator.points.Count)].transform.position, Quaternion.identity);
+        AddEnemyStatus(enemyInstance.GetComponent<Enemy>());
+        weights -= weight1;
+    }
+
+    private void SpawnHatch()
+    {
+        GameObject enemyInstance = Instantiate(enemyHatch, roomTerrainGenerator.points[Random.Range(0, roomTerrainGenerator.points.Count)].transform.position, Quaternion.identity);
+        AddEnemyStatus(enemyInstance.GetComponent<Enemy>());
+        weights -= weight2;
+        int childNum = Random.Range(2, 6);
+        enemyInstance.GetComponent<HatchEnemy>().setChild(childNum);
+        GameManagement.instance.enemyCount += childNum;
+    }
+
+    private void AddEnemyStatus(Enemy enemy)
+    {
+        int i = GameManagement.instance.roomCount - 2;
+        enemy.AddHealth(i);
+        enemy.AddAttack(i);
+    }
 }

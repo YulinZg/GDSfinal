@@ -22,13 +22,13 @@ public class GameManagement : MonoBehaviour
     private GameObject metalScroll;
 
     public int enemyCount;
-    public int roomCounter;
+    public int roomCount;
 
     public GameObject bossEffect;
 
     private void Awake()
     {
-        roomCounter = 0;
+        roomCount = 0;
         enemyCount = 0;
         instance = this;
         fireScroll = scrolls[0];

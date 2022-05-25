@@ -11,6 +11,7 @@ public class BasicEnemy : Enemy
     private float stuckWallTimer;
     private float stuckWallInterval;
     private Vector2 temp;
+    public EnemyAttack enemyAttack;
     private enum EnemyState
     {
         Wander,
@@ -33,6 +34,7 @@ public class BasicEnemy : Enemy
         sprite = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnDestroy()
@@ -51,6 +53,7 @@ public class BasicEnemy : Enemy
             pathPointsPos.Add(point.transform.position);
         }
         GetNewTargetPoint();
+        enemyAttack.attack = attack;
     }
 
     // Update is called once per frame

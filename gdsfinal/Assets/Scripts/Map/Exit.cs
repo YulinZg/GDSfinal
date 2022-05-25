@@ -6,6 +6,11 @@ public class Exit : MonoBehaviour
 {
     public PlayerController player;
 
+    private void Start()
+    {
+        BGMController.instance.PlayBGM();
+    }
+
     private void OnEnable()
     {
         Invoke(nameof(E), 0.5f);

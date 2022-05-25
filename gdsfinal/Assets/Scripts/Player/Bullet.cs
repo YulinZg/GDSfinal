@@ -160,16 +160,17 @@ public class Bullet : MonoBehaviour
     private void HitEnemy(GameObject e)
     {
         Enemy enemy = e.GetComponent<Enemy>();
+        float d = damage;
         if (enemy.canBeAttacked)
         {
             Color color = Color.white;
             int i = Random.Range(0, 100);
             if (i < 100 * critProbability)
             {
-                damage *= critRate;
+                d *= critRate;
                 color = Color.yellow;
             }
-            enemy.TakeDamage(damage * Random.Range(0.95f, 1.05f), color, blinkTime, blinkColor, ifHurtStop, property, true);
+            enemy.TakeDamage(d * Random.Range(0.95f, 1.05f), color, blinkTime, blinkColor, ifHurtStop, property, true);
             switch (property)
             {
                 case DamageProperty.fire:

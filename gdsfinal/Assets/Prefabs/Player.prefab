@@ -320,6 +320,7 @@ GameObject:
   - component: {fileID: 2741019207210238514}
   - component: {fileID: 7771505069829453882}
   - component: {fileID: 936156748081453381}
+  - component: {fileID: 6207486928761340973}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -509,11 +510,11 @@ MonoBehaviour:
   markTime: 5
   explosionDamage: 5
   skillF: {fileID: 6194500801451384584, guid: e4cc07f0b764f2848981a4db1de1a6ee, type: 3}
-  damageW: 4
-  damageW1: 6
-  damageW2: 10
-  damageW3: 16
-  damageW4: 3
+  damageW: 5
+  damageW1: 10
+  damageW2: 15
+  damageW3: 20
+  damageW4: 5
   intervalW: 0.75
   bulletSpeedW: 15
   rangeW: 10
@@ -526,7 +527,7 @@ MonoBehaviour:
   standTimeW1: 1
   chargeTime: 1
   sprayTime: 1.5
-  sprayRotateSpeed: 30
+  sprayRotateSpeed: 45
   bulletsW:
   - {fileID: 4896306263825385891, guid: cc3614a27abe4ca44afa934ec273a7ec, type: 3}
   - {fileID: 7169208002471941264, guid: d45954436935e4f4aa21d81e4fca983e, type: 3}
@@ -535,7 +536,7 @@ MonoBehaviour:
   decelerateTime: 10
   skillDamageW: 1
   skillTimeW: 5
-  skillRangeW: 4
+  skillRangeW: 5
   cooldownTimeW: 10
   skillW: {fileID: 5564890643772854602, guid: c8e3df3096f17964ebd5e7edae4e1024, type: 3}
   damageE: 1
@@ -548,15 +549,15 @@ MonoBehaviour:
   moveSpeedE1: 1
   preheatTimes: 5
   scatterAngle: 22.5
-  rockTimes: 50
+  rockTimes: 30
   bulletsE:
   - {fileID: 7155690323364293923, guid: 33387e5d792fa554ea58f3347cb39fc5, type: 3}
   - {fileID: 8061944940312639690, guid: 527b057eb96fb6c40aa61c93bcb20760, type: 3}
   stunValue: 1
   stunValue1: 15
-  stunValueSkill: 20
+  stunValueSkill: 15
   stunTime: 5
-  skillDamageE: 8
+  skillDamageE: 5
   skillTimeE: 10
   skillRangeEMin: 2
   skillRangeEMax: 4
@@ -567,7 +568,7 @@ MonoBehaviour:
   - {fileID: 5796760234372886280, guid: 38d2224ab4924e6498d1b0fbd79a893e, type: 3}
   damageL: 2
   damageL1: 5
-  intervalL: 0.25
+  intervalL: 0.15
   moveSpeedL: 5
   standTimeL: 1
   maxBulletNum: 5
@@ -580,8 +581,8 @@ MonoBehaviour:
   palsyInterval: 3
   skillDamageL: 10
   skillTimeL: 5
-  skillRangeL: 7
-  cooldownTimeL: 5
+  skillRangeL: 10
+  cooldownTimeL: 3
   skillL:
   - {fileID: 2623331876852604324, guid: 4b692d02d2f7a2642b3b98cdfaf56c13, type: 3}
   - {fileID: 4701847348782030362, guid: 99b4d4bcb1d214e4aaf941b414878be7, type: 3}
@@ -609,7 +610,7 @@ MonoBehaviour:
   repelDistance5: 2.5
   skillDamageM: 5
   skillRangeM: 15
-  cooldownTimeM: 3
+  cooldownTimeM: 1.5
 --- !u!114 &936681498720812073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -646,6 +647,7 @@ MonoBehaviour:
   - {fileID: 6453445977433177735, guid: e45d3b9a158ca454d9b23a9c28311985, type: 3}
   - {fileID: 7741095758156833478, guid: d68a012ef4878be44954a8e10c8a9414, type: 3}
   - {fileID: 3117177865002912956, guid: 49ec18af02840574886abc503c46d3c1, type: 3}
+  hurtClip: {fileID: 8300000, guid: 44c62c5c332c8aa4da66600b9ee76fd8, type: 3}
   breathAmount: 10
   breathAddition: 10
   perfectStrengthen: 0.5
@@ -656,8 +658,8 @@ MonoBehaviour:
   violentStrengthenAddition: 0.2
   gutsBloodLine: 0.2
   gutsBloodLineAddition: 0.02
-  quickTime: 5
-  quickTimeLineAddition: 1
+  quickTime: 4
+  quickTimeAddition: 2
 --- !u!114 &2741019207210238514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -674,6 +676,7 @@ MonoBehaviour:
   weaponUI: {fileID: 0}
   statusUI: {fileID: 0}
   canTryWeapon: 0
+  dodgeEffect: {fileID: 5284432714171134326, guid: 458f689e85c08fc44a26037c342f3d98, type: 3}
   canInput: 0
   isAttacking: 0
   isSkilling: 0
@@ -797,3 +800,99 @@ MonoBehaviour:
   shootSpeed: 60
   grappleSpeed: 20
   isInvincible: 0
+--- !u!82 &6207486928761340973
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8995325589162135081}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: d293a50f9a97a7644a97972b4f404388, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.25
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

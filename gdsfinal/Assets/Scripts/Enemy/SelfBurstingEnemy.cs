@@ -10,8 +10,9 @@ public class SelfBurstingEnemy : Enemy
     private int chasingPro;
 
     private bool hasJudge;
+    public EnemyAttack enemyAttack;
 
-    
+
     private enum ChasingTarget
     {
         none,
@@ -38,6 +39,7 @@ public class SelfBurstingEnemy : Enemy
         sprite = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Start is called before the first frame update
@@ -73,6 +75,7 @@ public class SelfBurstingEnemy : Enemy
             pathPointsPos.Add(point.transform.position);
         }
         GetNewTargetPoint();
+        enemyAttack.attack = attack;
     }
 
     // Update is called once per frame

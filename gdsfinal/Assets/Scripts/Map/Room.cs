@@ -25,20 +25,6 @@ public class Room : MonoBehaviour
     public bool isPlayerEnter = false;
     public bool isOpenDoor = false;
 
-    public int probability1;
-    public int probability2;
-    public int probability3;
-    public int probability4;
-    public int probability5;
-    public int probability6;
-
-    public int num1;
-    public int num2;
-    public int num3;
-    public int num4;
-    public int num5;
-    public int num6;
-
     [SerializeField] private GameObject boss;
     public void UpdateRoom(float xOffset, float yOffset, bool isUpDataDoorNumber)
     {
@@ -72,7 +58,7 @@ public class Room : MonoBehaviour
 
         if (collision.CompareTag("Player") && !isPlayerEnter)
         {
-            GameManagement.instance.roomCounter++;
+            GameManagement.instance.roomCount++;
             chestsParentInstance = Instantiate(chestsParent, transform.position, Quaternion.identity);
             chestsParentInstance.transform.parent = transform;
             //chestsParentInstance.transform.position = transform.position;
@@ -87,38 +73,16 @@ public class Room : MonoBehaviour
             roomTerrainGenerator.GeneratePathPoint();
             if (gameObject.name != "Boss")
             {
-                if (GameManagement.instance.roomCounter == 1)
+                if (GameManagement.instance.roomCount == 1)
                 {
                     isCleanAllEnemy = true;
                     isAppearChests = true;
                     roomTerrainGenerator.DestroyAllPoints();
-                    //enemyGenerator.GenerateEnemy(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
                     OpenDoor();
                 }
-                else if (GameManagement.instance.roomCounter < 3)
+                else 
                 {
-                    enemyGenerator.GenerateEnemy(Random.Range(1, 4), Random.Range(1, 4), 1, 0, 0, 0, 0, 100, 100, 7, 0, 0, 0);
-                    //enemyGenerator.GenerateEnemy(0, 0, 0, 0, 0, 0, 1, 100, 100, 5, 0, 0, 100);
-                }
-                else if (GameManagement.instance.roomCounter < 6)
-                {
-                    enemyGenerator.GenerateEnemy(Random.Range(2, 5), Random.Range(2, 5), 1, Random.Range(1, 3), Random.Range(2, 4), 0, 0, 100, 100, 7, 70, 0, 0);
-                }
-                else if (GameManagement.instance.roomCounter < 10)
-                {
-                    enemyGenerator.GenerateEnemy(Random.Range(3, 6), Random.Range(3, 7), 1, Random.Range(2, 4), Random.Range(3, 5), 0, Random.Range(1, 3), 100, 100, 7, 70, 0, 80);
-                }
-                else if(GameManagement.instance.roomCounter < 15)
-                {
-                    enemyGenerator.GenerateEnemy(Random.Range(3, 7), Random.Range(3, 7), 1, Random.Range(2, 5), Random.Range(4, 6), Random.Range(2, 4), Random.Range(2, 4), 100, 100, 7, 70, 70, 80);
-                }
-                else if (GameManagement.instance.roomCounter < 20)
-                {
-                    enemyGenerator.GenerateEnemy(Random.Range(4, 8), Random.Range(5, 10), 1, Random.Range(3, 7), Random.Range(4, 6), Random.Range(2, 5), Random.Range(2, 5), 100, 100, 7, 70, 70, 80);
-                }
-                else
-                {
-                    enemyGenerator.GenerateEnemy(Random.Range(4, 8), Random.Range(5, 10), 1, Random.Range(3, 7), Random.Range(4, 6), Random.Range(2, 5), Random.Range(2, 5), 100, 100, 7, 100, 100, 80);
+                    enemyGenerator.GenerateEnemy();
                 }
             }
             else
@@ -128,14 +92,6 @@ public class Room : MonoBehaviour
             //Debug.Log(1);
         }
     }
-
-    //private void OnTriggerStay2D(Collider2D collision)
-    //{
-    //if (collision.CompareTag("Player"))
-    //{
-    //Debug.LogError("no enemy");
-    //}
-    //}
 
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -168,9 +124,10 @@ public class Room : MonoBehaviour
                 isAppearChests = true;
                 roomTerrainGenerator.DestroyAllPoints();
                 UIManager.instance.roomClearPanel.SetActive(true);
+                Status playerStatus = PlayerController.instance.gameObject.GetComponent<Status>();
+                playerStatus.RestoreHp(playerStatus.GetMaxHP() * 0.5f);
             }
         }
-        
     }
 
     public void OpenDoor()

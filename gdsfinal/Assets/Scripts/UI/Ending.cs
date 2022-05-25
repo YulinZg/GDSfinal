@@ -23,6 +23,8 @@ public class Ending : MonoBehaviour
         anim = GetComponent<Animator>();
         text = GetComponent<Text>(); 
         Invoke(nameof(ShowTitle1), 1f);
+        BGMController.instance.PlayEnding();
+        PlayerPrefs.SetInt("clear", 1);
     }
 
     // Update is called once per frame

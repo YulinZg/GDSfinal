@@ -115,7 +115,7 @@ public class Pickup : MonoBehaviour
                     s = description1;
                 break;
             case ScrollType.metal:
-                if (GameManagement.instance.waterCount >= 2)
+                if (GameManagement.instance.metalCount >= 2)
                     s = description2;
                 else if (GameManagement.instance.metalCount == 1)
                     s = description1; 

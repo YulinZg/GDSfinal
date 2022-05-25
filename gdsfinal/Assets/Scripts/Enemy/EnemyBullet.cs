@@ -21,19 +21,19 @@ public class EnemyBullet : MonoBehaviour
         //transform.parent = null;
         if (count >= 4)
         {
-            StartCoroutine(ShotFirstType(18, 1f, 360f, 1, true));
+            StartCoroutine(ShotFirstType(6, 360f, true));
             Debug.Log("big attack");
             count = 0;
         }
         else
         {
             
-            StartCoroutine(ShotFirstType(6, 1f, 90f, 1, false));
+            StartCoroutine(ShotFirstType(3, 135f, false));
             Debug.Log("normal");
         }
     }
 
-    IEnumerator ShotFirstType(int bulletNum, float duration, float rotateAngle, int numOfWave, bool isWait)
+    IEnumerator ShotFirstType(int bulletNum, float rotateAngle, bool isWait)
     {
         float rotarionAngle;
         //if (parent.getMoveDir().x > 0)
@@ -79,27 +79,23 @@ public class EnemyBullet : MonoBehaviour
         //        yield return new WaitForSeconds(duration / numOfWave);
         //    }
         //}
-        for (int i = 0; i < numOfWave; i++)
+        rotarionAngle = Mathf.Atan2(parent.getMoveDir().y, parent.getMoveDir().x) * Mathf.Rad2Deg - 135 - rotateAngle / bulletNum;
+        for (int j = 0; j < bulletNum; j++)
         {
-            rotarionAngle = Mathf.Atan2(parent.getMoveDir().y, parent.getMoveDir().x) * Mathf.Rad2Deg - 135 - rotateAngle / bulletNum;
-            for (int j = 0; j < bulletNum; j++)
+            rotarionAngle += rotateAngle / bulletNum;
+            if (rotarionAngle > 360)
             {
-                rotarionAngle += rotateAngle / bulletNum;
-                if (rotarionAngle > 360)
-                {
-                    rotarionAngle = rotarionAngle % 360;
-                }
-                else if (rotarionAngle < 0)
-                {
-                    rotarionAngle += 360;
-                }
-                CreateBullet(rotarionAngle);
-                if (isWait)
-                {
-                    yield return new WaitForSeconds(0.05f);
-                }
+                rotarionAngle %= 360;
             }
-            yield return new WaitForSeconds(duration / numOfWave);
+            else if (rotarionAngle < 0)
+            {
+                rotarionAngle += 360;
+            }
+            CreateBullet(rotarionAngle);
+            if (isWait)
+            {
+                yield return new WaitForSeconds(0.1f);
+            }
         }
         parent.isShooting = false;
         
@@ -108,6 +104,7 @@ public class EnemyBullet : MonoBehaviour
 
     private void CreateBullet(float angle)
     {
-        Instantiate(bullet, transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
+        EnemyAttack instance = Instantiate(bullet, transform.position, Quaternion.AngleAxis(angle, Vector3.forward)).GetComponent<EnemyAttack>();
+        instance.attack = parent.attack;
     }
 }

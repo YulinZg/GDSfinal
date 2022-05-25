@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour
     public UIManager UIManager;
     public GameObject home;
     public GameObject settings;
+    public Text[] title;
     public int initRoomNumber;
     public int minRoomNumber;
     public int maxRoomNumber;
@@ -30,6 +31,16 @@ public class MainMenu : MonoBehaviour
         minusBig.interactable = !(roomNumber == minRoomNumber);
         plusSmall.interactable = !(roomNumber == maxRoomNumber);
         plusBig.interactable = !(roomNumber == maxRoomNumber);
+        if (!PlayerPrefs.HasKey("clear"))
+            BGMController.instance.PlayMenu();
+        else
+        {
+            BGMController.instance.PlayEnding();
+            foreach (Text t in title)
+            {
+                t.color = Color.yellow;
+            }
+        }
     }
 
     public void StartGame()
@@ -38,6 +49,8 @@ public class MainMenu : MonoBehaviour
         gameObject.SetActive(false);
         UIPanel.SetActive(true);
         UIManager.enabled = true;
+        PlayerPrefs.SetInt("roomNumber", roomNumber);
+        BGMController.instance.PlayBGM();
     }
 
     public void Settings()
@@ -64,11 +77,11 @@ public class MainMenu : MonoBehaviour
     {
         settings.SetActive(false);
         home.SetActive(true);
-        PlayerPrefs.SetInt("roomNumber", roomNumber);
     }
 
     public void Quit()
     {
+        PlayerPrefs.DeleteAll();
         Application.Quit();
     }
 }
