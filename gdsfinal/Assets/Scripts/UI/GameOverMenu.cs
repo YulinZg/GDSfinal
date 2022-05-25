@@ -20,6 +20,7 @@ public class GameOverMenu : MonoBehaviour
 
     public void Quit()
     {
+        PlayerPrefs.DeleteAll();
         Application.Quit();
     }
 

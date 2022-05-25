@@ -9,6 +9,7 @@ public class Boss : Enemy
     public GameObject[] normalBulletLauncher;
     public GameObject arcBulletLauncher;
     public GameObject spawnBulletLauncher;
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -19,10 +20,11 @@ public class Boss : Enemy
         sprite = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
     void Start()
     {
-        //material.SetFloat("streng", 0.5f);
+        ChangeStatus(PlayerPrefs.GetInt("roomNumber"));
         foreach (GameObject point in GameObject.FindGameObjectsWithTag("Point"))
         {
             pathPointsPos.Add(point.transform.position);
@@ -32,6 +34,7 @@ public class Boss : Enemy
         InvokeRepeating("LaunchNormalBullet", 8f, 25f);
         InvokeRepeating("LaunchArcBullet", 12f, 20f);
         InvokeRepeating("LaunchSpawnBullet", 3f, 20f);
+        BGMController.instance.PlayMenu();
     }
 
     // Update is called once per frame
@@ -128,5 +131,11 @@ public class Boss : Enemy
     public override void Move()
     {
         throw new System.NotImplementedException();
+    }
+
+    private void ChangeStatus(int i)
+    {
+        health += 500 * i;
+        attack += 3 * i;
     }
 }

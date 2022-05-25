@@ -6,6 +6,7 @@ public class HatchEnemy : Enemy
 {
     [Header("Own")]
     public GameObject child;
+    public EnemyAttack enemyAttack;
     private int numberOfChildren;
     //private float attackTimer;
     private float attackInterval;
@@ -38,6 +39,7 @@ public class HatchEnemy : Enemy
         sprite = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -89,6 +91,7 @@ public class HatchEnemy : Enemy
             pathPointsPos.Add(point.transform.position);
         }
         GetNewTargetPoint();
+        enemyAttack.attack = attack;
     }
     private void OnDestroy()
     {

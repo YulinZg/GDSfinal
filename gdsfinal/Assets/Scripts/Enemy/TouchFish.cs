@@ -13,6 +13,7 @@ public class TouchFish : Enemy
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         player = PlayerController.instance.transform;
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Start is called before the first frame update

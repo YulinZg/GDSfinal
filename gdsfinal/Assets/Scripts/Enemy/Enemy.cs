@@ -25,6 +25,7 @@ public abstract class Enemy : MonoBehaviour
     protected SpriteRenderer sprite;
     protected Rigidbody2D rigid;
     protected Animator anim;
+    protected AudioSource audioSource;
 
     public float effectSize;
     public float effectOffsetY;
@@ -85,7 +86,6 @@ public abstract class Enemy : MonoBehaviour
     //public float rayDis;
     //public LayerMask wall;
 
-
     public abstract void UpdateState();
     public abstract void Move();
 
@@ -131,7 +131,11 @@ public abstract class Enemy : MonoBehaviour
             health -= d;
             DamageUI damageUI = Instantiate(damageText, transform.position + new Vector3(Random.Range(damageUIOffsetXMin, damageUIOffsetXMax), Random.Range(damageUIOffsetYMin, damageUIOffsetYMin), 0), Quaternion.identity).GetComponent<DamageUI>();
             damageUI.ShowUIDamage(d, damageColor);
-
+            if (isBullet)
+            {
+                audioSource.Stop();
+                audioSource.PlayOneShot(audioSource.clip);
+            }
             if (blinkTime != 0)
                 StartCoroutine(DoBlinks(blinkColor, (int)(blinkTime / 0.05f), 0.05f));
             if (hurtStop && !isStun)
@@ -148,6 +152,8 @@ public abstract class Enemy : MonoBehaviour
                 if (isBoss)
                 {
                     StartCoroutine(BossDisAppear(4.0f));
+                    PlayerController.instance.SetCannotInput();
+                    player.GetComponent<Collider2D>().enabled = false;
                     CancelInvoke();
                 }
                 else    
@@ -510,5 +516,15 @@ public abstract class Enemy : MonoBehaviour
     public float getCurrentSpeed()
     {
         return currentSpeed;
+    }
+
+    public void AddHealth(int i)
+    {
+        health += (health * 0.6f) * i;
+    }
+
+    public void AddAttack(int i)
+    {
+        attack += (attack * 0.3f) * i;
     }
 }

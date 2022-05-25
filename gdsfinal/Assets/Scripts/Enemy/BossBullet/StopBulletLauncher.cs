@@ -36,6 +36,7 @@ public class StopBulletLauncher : MonoBehaviour
                     rotarionAngle += 360;
                 }
                 temp = CreateBullet(rotarionAngle);
+                temp.GetComponent<EnemyAttack>().attack = parent.attack;
                 if (j % 2 == 0)
                 {
                     temp.GetComponent<StopBullet>().isRight = true;

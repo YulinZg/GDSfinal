@@ -99,6 +99,7 @@ public class NormalBulletLauncher : MonoBehaviour
 
     private void CreateBullet(float angle)
     {
-        Instantiate(bullet, transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
+        EnemyAttack instance = Instantiate(bullet, transform.position, Quaternion.AngleAxis(angle, Vector3.forward)).GetComponent<EnemyAttack>();
+        instance.attack = parent.attack;
     }
 }

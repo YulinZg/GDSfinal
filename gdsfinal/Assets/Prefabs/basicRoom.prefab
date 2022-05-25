@@ -71,18 +71,6 @@ MonoBehaviour:
   isAppearChests: 0
   isPlayerEnter: 0
   isOpenDoor: 0
-  probability1: 0
-  probability2: 0
-  probability3: 0
-  probability4: 0
-  probability5: 0
-  probability6: 0
-  num1: 0
-  num2: 0
-  num3: 0
-  num4: 0
-  num5: 0
-  num6: 0
   boss: {fileID: 7081096497988777316, guid: 28d9cc7bce3397047bb5ec91cf8c3860, type: 3}
 --- !u!61 &6519128629888106651
 BoxCollider2D:
@@ -5624,7 +5612,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3950804c9ad4dbb41b4f1ca236a180ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floor: {fileID: 0}
   points: []
   pathPoint: {fileID: 4747762131144913379, guid: e65d3a1ca73cb684c9624d055fdfa134, type: 3}
 --- !u!1 &5628348025540946404
@@ -5917,10 +5904,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCount: 0
+  weights: 100
   enemyBasic: {fileID: 207990868200254069, guid: 1cf5ef791ebb40e459914593c6c7597d, type: 3}
+  weight0: 30
   enemySelfBursting: {fileID: 2923880042827918057, guid: fded80e77a19f064cacc1a8bea91133d, type: 3}
-  enemyTouchFish: {fileID: 1924205829743773431, guid: af3a10029dbea8442bacf9f50efef685, type: 3}
+  weight1: 20
   enemyHatch: {fileID: 6574388021621534584, guid: e1feb6ae3b3ca7843bbe69f6fa8495ba, type: 3}
+  weight2: 50
   enemyScatter: {fileID: 1975638847083170482, guid: 5fb44a5cf31be1e49ad812dba87e9d65, type: 3}
+  weight3: 30
   enemySnipe: {fileID: 2567320152254174609, guid: 9cebe1973ddb69446b3bc3f5fd848fac, type: 3}
+  weight4: 40
+  enemyTouchFish: {fileID: 1924205829743773431, guid: af3a10029dbea8442bacf9f50efef685, type: 3}
   roomTerrainGenerator: {fileID: 3231157448882060418}

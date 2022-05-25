@@ -25,10 +25,12 @@ public class Status : MonoBehaviour
     [SerializeField] private float damageUIOffsetYMax;
 
     [SerializeField] private GameObject[] bloodEffects;
+    [SerializeField] private AudioClip hurtClip;
 
     private float maxHp;
     private float currentHp;
     private PlayerController player;
+    private AudioSource audioSource;
 
     [Header("Scroll")]
     [SerializeField] private float breathAmount;
@@ -50,7 +52,7 @@ public class Status : MonoBehaviour
     private bool gutsScroll = false;
 
     [SerializeField] private float quickTime;
-    [SerializeField] private float quickTimeLineAddition;
+    [SerializeField] private float quickTimeAddition;
     private bool quickHandsScroll = false;
     private bool isQuick = false;
     private float quickTimer = 0;
@@ -58,6 +60,7 @@ public class Status : MonoBehaviour
     private void Awake()
     {
         player = GetComponent<PlayerController>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Start is called before the first frame update
@@ -72,8 +75,8 @@ public class Status : MonoBehaviour
         float hp = currentHp;
         damage -= defense * defenseUnit;
         float d = Mathf.Floor(damage);
-        if (d < 0)
-            d = 0;
+        if (d < 1f)
+            d = 1f;
         currentHp -= d;
         DamageUI damageUI = Instantiate(damageText, transform.position + new Vector3(Random.Range(damageUIOffsetXMin, damageUIOffsetXMax), Random.Range(damageUIOffsetYMin, damageUIOffsetYMax), 0), Quaternion.identity).GetComponent<DamageUI>();
         damageUI.ShowUIDamage(d, Color.red);
@@ -93,6 +96,7 @@ public class Status : MonoBehaviour
             DieEffect();
             player.Die();
         }
+        audioSource.PlayOneShot(hurtClip);
     }
 
     private void DieEffect()
@@ -164,6 +168,11 @@ public class Status : MonoBehaviour
         if (moveSpeed > 100)
             moveSpeed = 100;
         statusUI.SetMoveSpeed(moveSpeed);
+    }
+
+    public float GetMaxHP()
+    {
+        return maxHp;
     }
 
     public int GetAttack()
@@ -269,7 +278,7 @@ public class Status : MonoBehaviour
     {
         if (quickHandsScroll)
         {
-            quickTime += quickTimeLineAddition;
+            quickTime += quickTimeAddition;
         }
         else
             quickHandsScroll = true;

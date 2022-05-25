@@ -10,10 +10,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private WeaponUI weaponUI;
     [SerializeField] private StatusUI statusUI;
     [SerializeField] private bool canTryWeapon = false;
+    [SerializeField] private GameObject dodgeEffect;
 
     private Camera cam;
     private Animator anim;
     private Rigidbody2D rigid;
+    private SpriteRenderer spriteRenderer;
+    private AudioSource audioSource;
     private Vector3 moveDir;
     private Vector3 lastDir = Vector3.down;
     private Vector3 mousePos;
@@ -57,6 +60,8 @@ public class PlayerController : MonoBehaviour
         cam = Camera.main;
         anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
         weapon = GetComponent<Weapon>();
         status = GetComponent<Status>();
     }
@@ -80,10 +85,9 @@ public class PlayerController : MonoBehaviour
             }
             if (Input.GetKey(KeyCode.S))
             {
+                moveY = -1f;
                 if (Input.GetKey(KeyCode.W))
                     moveY = 0;
-                else
-                    moveY = -1f;
             }
             if (Input.GetKey(KeyCode.D))
             {
@@ -91,10 +95,9 @@ public class PlayerController : MonoBehaviour
             }
             if (Input.GetKey(KeyCode.A))
             {
+                moveX = -1f;
                 if (Input.GetKey(KeyCode.D))
                     moveX = 0;
-                else
-                    moveX = -1f;
             }
             moveDir = new Vector3(moveX, moveY).normalized;
             if (moveX != 0 || moveY != 0)
@@ -187,11 +190,13 @@ public class PlayerController : MonoBehaviour
         status.enabled = false;
         enabled = false;
         Invoke(nameof(GameOver), 1f);
+        audioSource.Stop();
     }
 
     private void GameOver()
     {
         UIManager.instance.ShowGameOver();
+        BGMController.instance.Stop();
     }
 
     public void SetSpeed(float s)
@@ -209,6 +214,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator Attacking(Vector3 dir, float time, bool ifStop, float resetSpeed, bool canRotate, bool isSkill)
     {
         isAttacking = true;
+        audioSource.Play();
         isSkilling = isSkill;
         canAvoid = !ifStop;
         yield return null;
@@ -249,6 +255,7 @@ public class PlayerController : MonoBehaviour
         this.canRotate = true;
         canChangeWeapon = true;
         isAttacking = false;
+        audioSource.Stop();
         isSkilling = false;
         canAvoid = true;
         anim.SetBool("isRightAttacking", false);
@@ -285,6 +292,7 @@ public class PlayerController : MonoBehaviour
         gameObject.layer = 8;
         col.layer = 8;
         layerBack = false;
+        spriteRenderer.color = new Color(1, 1, 1, 0.25f);
         while (timer < time)
         {
             sp -= sp * 5f * Time.fixedDeltaTime;
@@ -294,6 +302,12 @@ public class PlayerController : MonoBehaviour
                 gameObject.layer = 3;
                 col.layer = 3;
                 layerBack = true;
+                spriteRenderer.color = Color.white;
+            }
+            else
+            {
+                GameObject effectInstance = Instantiate(dodgeEffect, transform.position, Quaternion.identity);
+                effectInstance.GetComponent<SpriteRenderer>().sprite = spriteRenderer.sprite;
             }
             timer += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
@@ -332,6 +346,8 @@ public class PlayerController : MonoBehaviour
         canRotate = false;
         canChangeWeapon = false;
         isAttacking = false;
+        canAvoid = true;
+        audioSource.Stop();
         while (hurtTimer < time)
         {
             hurtTimer += Time.deltaTime;

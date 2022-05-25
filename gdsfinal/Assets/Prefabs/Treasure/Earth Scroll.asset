@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Earth Scroll
   m_EditorClassIdentifier: 
   strengthenText: {fileID: 4318804278247988162, guid: d8ab669f8ef30064497cad64bd4f4f2f, type: 3}
-  reduceTimes: 15
+  reduceTimes: 10

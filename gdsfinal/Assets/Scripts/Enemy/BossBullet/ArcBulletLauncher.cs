@@ -58,7 +58,7 @@ public class ArcBulletLauncher : MonoBehaviour
                 temp2 += rotateAngle / bulletNum;
                 if (temp2 > 360)
                 {
-                    temp1 = temp2 % 360;
+                    temp2 = temp2 % 360;
                 }
                 else if (temp2 < 0)
                 {
@@ -73,6 +73,7 @@ public class ArcBulletLauncher : MonoBehaviour
 
     private void CreateBullet(float angle)
     {
-        Instantiate(bullet, transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
+        EnemyAttack instance = Instantiate(bullet, transform.position, Quaternion.AngleAxis(angle, Vector3.forward)).GetComponent<EnemyAttack>();
+        instance.attack = parent.attack;
     }
 }

@@ -22,13 +22,13 @@ public class SnipeBulletSpawner : MonoBehaviour
         //transform.parent = null;
         if (count >= 4)
         {
-            StartCoroutine(PrepareShoot(0.5f, 3, 1f));
+            StartCoroutine(PrepareShoot(1f, 3, 1f));
             Debug.Log("big attack");
             count = 0;
         }
         else
         {
-            StartCoroutine(PrepareShoot(0.5f, 1, 0.5f));
+            StartCoroutine(PrepareShoot(1f, 1, 0.5f));
             Debug.Log("normal");
         }
     }
@@ -54,12 +54,13 @@ public class SnipeBulletSpawner : MonoBehaviour
 
     private void CreateBullet(float angle)
     {
-        Instantiate(bullet, transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
+        EnemyAttack instance = Instantiate(bullet, transform.position, Quaternion.AngleAxis(angle, Vector3.forward)).GetComponent<EnemyAttack>();
+        instance.attack = parent.attack;
     }
 
     private void CreateLaser(float angle)
     {
-        Destroy(Instantiate(laser, transform.position, Quaternion.AngleAxis(angle, Vector3.forward)), 0.5f);
+        Destroy(Instantiate(laser, transform.position, Quaternion.AngleAxis(angle, Vector3.forward)), 1f);
     }
 
 }
