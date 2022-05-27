@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private StatusUI statusUI;
     [SerializeField] private bool canTryWeapon = false;
     [SerializeField] private GameObject dodgeEffect;
+    [SerializeField] private Sprite dieSprite;
 
     private Camera cam;
     private Animator anim;
@@ -70,6 +71,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         GetWeapons();
+        if (PlayerPrefs.HasKey("DM"))
+            DevelopMode();
     }
 
     // Update is called once per frame
@@ -453,5 +456,17 @@ public class PlayerController : MonoBehaviour
     public void SetCanInput()
     {
         canInput = true;
+    }
+
+    public void DevelopMode()
+    {
+        spriteRenderer.sprite = dieSprite;
+        anim.enabled = false;
+        canTryWeapon = true;
+        status.DM = true;
+        status.AddAttack(100);
+        status.AddCritProbability(100);
+        status.AddCritRate(100);
+        status.AddMoveSpeed(100);
     }
 }

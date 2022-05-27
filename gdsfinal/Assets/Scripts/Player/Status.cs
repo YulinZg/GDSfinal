@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Status : MonoBehaviour
 {
+    public bool DM = false;
     [SerializeField] private int health = 10;
     [SerializeField] private float healthUnit;
     [SerializeField] private int attack = 10;
@@ -72,6 +73,7 @@ public class Status : MonoBehaviour
 
     public void TakeDamage(float damage, float stopTime)
     {
+        if (DM) return;
         float hp = currentHp;
         damage -= defense * defenseUnit;
         float d = Mathf.Floor(damage);

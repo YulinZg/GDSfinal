@@ -567,7 +567,7 @@ MonoBehaviour:
   - {fileID: 932404508066485890, guid: 63d73eda171f8234e836c1d4a9fef9b4, type: 3}
   - {fileID: 5796760234372886280, guid: 38d2224ab4924e6498d1b0fbd79a893e, type: 3}
   damageL: 2
-  damageL1: 5
+  damageL1: 8
   intervalL: 0.15
   moveSpeedL: 5
   standTimeL: 1
@@ -623,6 +623,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba643dae812721746819b3fcaa6c354a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DM: 0
   health: 10
   healthUnit: 10
   attack: 10
@@ -677,6 +678,7 @@ MonoBehaviour:
   statusUI: {fileID: 0}
   canTryWeapon: 0
   dodgeEffect: {fileID: 5284432714171134326, guid: 458f689e85c08fc44a26037c342f3d98, type: 3}
+  dieSprite: {fileID: 1690971841481672638, guid: 2d364ef745769e5418d6bdc12275c052, type: 3}
   canInput: 0
   isAttacking: 0
   isSkilling: 0

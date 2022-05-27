@@ -20,9 +20,13 @@ public class MainMenu : MonoBehaviour
     public Button minusBig;
     public Button plusSmall;
     public Button plusBig;
+    public Button playerButton;
+    private int hp = 10;
 
     private void Start()
     {
+        if (PlayerPrefs.HasKey("DM"))
+            PlayerPrefs.DeleteKey("DM");
         if (!PlayerPrefs.HasKey("roomNumber"))
             PlayerPrefs.SetInt("roomNumber", initRoomNumber);
         roomNumber = PlayerPrefs.GetInt("roomNumber");
@@ -83,5 +87,18 @@ public class MainMenu : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
         Application.Quit();
+    }
+
+    public void Hurt()
+    {
+        hp--;
+        if (hp <= 0)
+            Die();
+    }
+
+    private void Die()
+    {
+        playerButton.interactable = false;
+        PlayerPrefs.SetInt("DM", 1);
     }
 }
